@@ -1,0 +1,29 @@
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  RunRailsCops: true
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+  Exclude:
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'config/**/*'
+Rails/DefaultScope:
+  Include:
+    - 'app/models/*.rb'
+Style/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+Style/CommandLiteral:
+  EnforcedStyle: mixed
+Style/LeadingCommentSpace:
+  Exclude:
+    - 'config.ru'
+Metrics/LineLength:
+  Max: 138
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'test/test_helper.rb'
+Style/SpaceAroundEqualsInParameterDefault:
+  Enabled: false

@@ -16,3 +16,6 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+
+# Ignore test/build/doc artifacts.
+/coverage

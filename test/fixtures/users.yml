@@ -1,0 +1,12 @@
+# name: MyString
+# email: MyString
+# password_digest: MyString
+# eppn: MyString
+# ssh_public_keys: MyText
+# neptun: MyString
+
+# student 1
+student1:
+  name: Gipsz Jakab
+  email: student+test@db.bme.hu
+  neptun: test01

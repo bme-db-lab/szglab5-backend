@@ -1,14 +1,15 @@
 source 'https://rubygems.org'
 
-gem 'rails', path: "/home/szglab5/.rvm/gems/ruby-2.2.3/bundler/gems/rails-54c87a1676b6"
-gem 'sprockets-rails', github: "rails/sprockets-rails"
-gem 'sprockets', github: "rails/sprockets"
-gem 'sass-rails', github: "rails/sass-rails"
-gem 'arel', github: "rails/arel"
-gem 'rack', github: "rack/rack"
+gem 'rails', github: 'rails/rails'
+gem 'sprockets-rails', github: 'rails/sprockets-rails'
+gem 'sprockets', github: 'rails/sprockets'
+gem 'sass-rails', github: 'rails/sass-rails'
+gem 'arel', github: 'rails/arel'
+gem 'rack', github: 'rack/rack'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -27,9 +28,19 @@ gem 'active_model_serializers', '~> 0.10.0.rc2'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'rubocop', require: false
+
+  # Automation
+  gem 'travis', '~>1.8.0'
+  gem 'travis-lint'
 end
 
 group :development do
+end
+
+group :test do
+  gem 'simplecov', platform: :ruby
+  gem 'coveralls', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

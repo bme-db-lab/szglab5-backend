@@ -1,0 +1,4 @@
+dblab_2015_2016_spring:
+  course: dblab
+  academic_year: 2015 # / 2016
+  academic_term: 2 # == spring, 1 == fall
