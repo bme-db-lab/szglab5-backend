@@ -10,5 +10,6 @@ class CourseTest < ActiveSupport::TestCase
   test 'associations' do
     course = courses(:dblab)
     assert_respond_to course, :semesters
+    assert_respond_to course, :exercise_categories
   end
 end

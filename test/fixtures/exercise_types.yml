@@ -1,0 +1,30 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+dblab_dbms_video:
+  name: Videotéka
+  short_name: Video
+  exercise_number: 33
+  language: hun
+  exercise_category: dblab_dbms
+
+dblab_dbms_auto:
+  name: Autókölcsönző
+  short_name: Auto
+  exercise_number: 22
+  language: hun
+  exercise_category: dblab_dbms
+
+dblab_sql_video:
+  name: Videotéka
+  short_name: Video
+  exercise_number: 33
+  language: hun
+  exercise_category: dblab_sql
+
+dblab_sql_auto:
+  name: Autókölcsönző
+  short_name: Auto
+  exercise_number: 22
+  language: hun
+  exercise_category: dblab_sql
+

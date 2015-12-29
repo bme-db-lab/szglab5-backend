@@ -11,12 +11,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151129155035) do
+ActiveRecord::Schema.define(version: 20151228223910) do
 
   create_table "courses", force: :cascade do |t|
     t.string "code", null: false
     t.string "name", null: false
     t.index ["code"], name: "index_courses_on_code", unique: true
+  end
+
+  create_table "exercise_categories", force: :cascade do |t|
+    t.string   "name",       limit: 100
+    t.string   "short_name", limit: 30
+    t.integer  "course_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["course_id"], name: "index_exercise_categories_on_course_id"
+  end
+
+  create_table "exercise_types", force: :cascade do |t|
+    t.string   "name",                 limit: 100
+    t.string   "short_name",           limit: 30
+    t.integer  "exercise_number"
+    t.integer  "language_id"
+    t.integer  "exercise_category_id"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.index ["exercise_category_id"], name: "index_exercise_types_on_exercise_category_id"
+    t.index ["language_id"], name: "index_exercise_types_on_language_id"
+  end
+
+  create_table "languages", force: :cascade do |t|
+    t.string   "code",       limit: 3
+    t.string   "name",       limit: 30
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "semesters", force: :cascade do |t|

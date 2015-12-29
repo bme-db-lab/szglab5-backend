@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+dblab_dbms:
+  name: Oracle, mint rendszer
+  short_name: DBMS-Oracle
+  course: dblab
+
+dblab_sql:
+  name: Az SQL relációs lekérdezőnyelv
+  short_name: SQL
+  course: dblab
