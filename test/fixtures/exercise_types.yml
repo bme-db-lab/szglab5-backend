@@ -28,3 +28,44 @@ dblab_sql_auto:
   language: hun
   exercise_category: dblab_sql
 
+dblab_jdbc_video:
+  name: Videotéka
+  short_name: Video
+  exercise_number: 33
+  language: hun
+  exercise_category: dblab_jdbc
+
+dblab_jdbc_auto:
+  name: Autókölcsönző
+  short_name: Auto
+  exercise_number: 22
+  language: hun
+  exercise_category: dblab_jdbc
+
+dblab_xml_video:
+  name: Videotéka
+  short_name: Video
+  exercise_number: 33
+  language: hun
+  exercise_category: dblab_xml
+
+dblab_xml_auto:
+  name: Autókölcsönző
+  short_name: Auto
+  exercise_number: 22
+  language: hun
+  exercise_category: dblab_xml
+
+dblab_soa_video:
+  name: Videotéka
+  short_name: Video
+  exercise_number: 33
+  language: hun
+  exercise_category: dblab_soa
+
+dblab_soa_auto:
+  name: Autókölcsönző
+  short_name: Auto
+  exercise_number: 22
+  language: hun
+  exercise_category: dblab_soa

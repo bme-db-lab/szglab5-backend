@@ -1,0 +1,61 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+appointment01:
+  date: 2016-01-05 14:15:00
+  location: IL.105.
+  student_group: greats_group
+  event_template: dbms_meres_template
+
+appointment02:
+  date: 2016-01-19 14:15:00
+  location: IL.105.
+  student_group: greats_group
+  event_template: sql_meres_template
+
+appointment03:
+  date: 2016-02-02 14:15:00
+  location: IL.105.
+  student_group: greats_group
+  event_template: jdbc_meres_template
+
+appointment04:
+  date: 2016-02-16 14:15:00
+  location: IL.105.
+  student_group: greats_group
+  event_template: xml_meres_template
+
+appointment05:
+  date: 2016-03-01 14:15:00
+  location: IL.105.
+  student_group: greats_group
+  event_template: soa_meres_template
+
+appointment11:
+  date: 2016-02-23 10:15:00
+  location: IL.105.
+  student_group: english_group
+  event_template: dbms_meres_template
+
+appointment12:
+  date: 2016-03-08 10:15:00
+  location: IL.105.
+  student_group: english_group
+  event_template: sql_meres_template
+
+appointment13:
+  date: 2016-03-22 10:15:00
+  location: IL.105.
+  student_group: english_group
+  event_template: jdbc_meres_template
+
+appointment14:
+  date: 2016-04-05 10:15:00
+  location: IL.105.
+  student_group: english_group
+  event_template: xml_meres_template
+
+appointment15:
+  date: 2016-04-19 10:15:00
+  location: IL.105.
+  student_group: english_group
+  event_template: soa_meres_template

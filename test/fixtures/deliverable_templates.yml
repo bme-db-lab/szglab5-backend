@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+dbms_deliverable_template:
+  format: repository
+  deadline: 4
+  title: Jegyzőkönyv
+  description: PDF a megoldás ismertetésével, indoklással, screenshotokkal
+  event_template: dbms_meres_template
+
+sql_deliverable_template:
+  format: repository
+  deadline: 4
+  title: Jegyzőkönyv
+  description: SQL scriptfájl formájú megoldás
+  event_template: sql_meres_template

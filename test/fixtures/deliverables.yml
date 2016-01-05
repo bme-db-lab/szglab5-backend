@@ -1,0 +1,56 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+deliverable01dbms:
+  type: Deliverable
+  deadline: 2016-01-09 14:15:00
+  submitted_date: 2016-01-07 19:05:23
+  grade: 5
+  title: Jegyzőkönyv
+  description: PDF a megoldás ismertetésével, indoklással, screenshotokkal
+  event: event01dbms
+  deliverable_template: dbms_deliverable_template
+  evaluator:
+
+deliverable02dbms:
+  type: Deliverable
+  deadline: 2016-01-09 14:15:00
+  submitted_date: 2016-01-07 19:05:23
+  grade: 1
+  title: Jegyzőkönyv
+  description: PDF a megoldás ismertetésével, indoklással, screenshotokkal
+  event: event02dbms
+  deliverable_template: dbms_deliverable_template
+  evaluator:
+
+deliverable03dbms:
+  type: Deliverable
+  deadline: 2016-02-27 10:15:00
+  submitted_date:
+  grade: 5
+  title: Jegyzőkönyv
+  description: PDF a megoldás ismertetésével, indoklással, screenshotokkal
+  event: event03dbms
+  deliverable_template: dbms_deliverable_template
+  evaluator:
+
+deliverable04dbms:
+  type: Deliverable
+  deadline: 2016-01-09 14:15:00
+  submitted_date: 2016-01-07 19:05:23
+  grade: 5
+  title: Jegyzőkönyv
+  description: PDF a megoldás ismertetésével, indoklással, screenshotokkal
+  event: event04dbms
+  deliverable_template: dbms_deliverable_template
+  evaluator:
+
+deliverable05dbms:
+  type: Deliverable
+  deadline: 2016-02-27 10:15:00
+  submitted_date:
+  grade: 5
+  title: Jegyzőkönyv
+  description: PDF a megoldás ismertetésével, indoklással, screenshotokkal
+  event: event05dbms
+  deliverable_template: dbms_deliverable_template
+  evaluator:

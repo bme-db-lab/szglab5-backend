@@ -1,0 +1,36 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+student01:
+  neptun_subject_code: VITMA308
+  neptun_course_code: 01
+  language: hun
+  semester: dblab_2015_2016_spring
+  user: user01
+
+student02:
+  neptun_subject_code: VITMA308
+  neptun_course_code: 01
+  language: hun
+  semester: dblab_2015_2016_spring
+  user: user02
+
+student03:
+  neptun_subject_code: VITMA308
+  neptun_course_code: 02
+  language: eng
+  semester: dblab_2015_2016_spring
+  user: user03
+
+student04:
+  neptun_subject_code: VITMAB02
+  neptun_course_code: 01
+  language: hun
+  semester: dblab_2015_2016_spring
+  user: user04
+
+student05:
+  neptun_subject_code: VITMAB02
+  neptun_course_code: 02
+  language: eng
+  semester: dblab_2015_2016_spring
+  user: user05
