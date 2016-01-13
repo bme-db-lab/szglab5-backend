@@ -20,5 +20,6 @@ class EventTest < ActiveSupport::TestCase
     assert_respond_to event, :upstream_event
     assert_respond_to event, :related_events
     assert_respond_to event, :deliverables
+    assert_respond_to event, :evaluations
   end
 end

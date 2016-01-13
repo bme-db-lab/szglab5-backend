@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160113143309) do
+ActiveRecord::Schema.define(version: 20160113155440) do
 
   create_table "appointments", force: :cascade do |t|
     t.datetime "date"
@@ -45,19 +45,39 @@ ActiveRecord::Schema.define(version: 20160113143309) do
     t.string   "type",                    limit: 30
     t.datetime "deadline"
     t.datetime "submitted_date"
-    t.integer  "grade"
     t.string   "title",                   limit: 30
     t.string   "description"
     t.integer  "event_id"
     t.integer  "deliverable_template_id"
-    t.integer  "evaluator_id"
     t.integer  "upstream_deliverable_id"
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.index ["deliverable_template_id"], name: "index_deliverables_on_deliverable_template_id"
-    t.index ["evaluator_id"], name: "index_deliverables_on_evaluator_id"
     t.index ["event_id"], name: "index_deliverables_on_event_id"
     t.index ["upstream_deliverable_id"], name: "index_deliverables_on_upstream_deliverable_id"
+  end
+
+  create_table "evaluation_types", force: :cascade do |t|
+    t.string   "name",        limit: 30
+    t.string   "description"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "evaluations", force: :cascade do |t|
+    t.integer  "grade"
+    t.date     "grade_date"
+    t.string   "comment"
+    t.string   "comment_for_staff"
+    t.integer  "evaluation_type_id"
+    t.integer  "staff_id"
+    t.string   "evaluatable_type"
+    t.integer  "evaluatable_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["evaluatable_type", "evaluatable_id"], name: "index_evaluations_on_evaluatable_type_and_evaluatable_id"
+    t.index ["evaluation_type_id"], name: "index_evaluations_on_evaluation_type_id"
+    t.index ["staff_id"], name: "index_evaluations_on_staff_id"
   end
 
   create_table "event_templates", force: :cascade do |t|

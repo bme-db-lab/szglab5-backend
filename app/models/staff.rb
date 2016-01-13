@@ -3,5 +3,5 @@
 class Staff < ActiveRecord::Base
   belongs_to :semester
   belongs_to :user, inverse_of: :staffs
-  has_many :evaluator_of_deliverables, class_name: 'Deliverable', foreign_key: 'evaluator_id'
+  has_many :evaluations_given, class_name: 'Evaluation', foreign_key: 'staff_id'
 end

@@ -10,6 +10,6 @@ class StaffTest < ActiveSupport::TestCase
     staff = staffs(:staff80)
     assert_respond_to staff, :semester
     assert_respond_to staff, :user
-    assert_respond_to staff, :evaluator_of_deliverables
+    assert_respond_to staff, :evaluations_given
   end
 end

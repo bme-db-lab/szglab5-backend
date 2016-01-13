@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+report_grade:
+  name: Jegyzőkönyv jegy
+  description: A jegyzőkönyv értékelése során kialakult jegy
+
+laboratory_grade:
+  name: Laborjegy
+  description: A labormérés és feladat alapján kialakult jegy
+
+final_midterm_grade:
+  name: Félévközi jegy
+  description: Félévközi munka alapján kialakult jegy
+
+exam_grade:
+  name: Vizsgajegy
+  description: Vizsgán megszerzett érdemjegy

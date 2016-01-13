@@ -14,5 +14,6 @@ class StudentTest < ActiveSupport::TestCase
     assert_respond_to student, :events
     assert_respond_to student, :user
     assert_respond_to student, :student_groups
+    assert_respond_to student, :evaluations
   end
 end

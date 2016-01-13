@@ -11,4 +11,5 @@ class Event < ActiveRecord::Base
   belongs_to :upstream_event, class_name: 'Event'
   has_many :related_events, class_name: 'Event', foreign_key: 'upstream_event_id'
   has_many :deliverables
+  has_many :evaluations, as: :evaluatable
 end

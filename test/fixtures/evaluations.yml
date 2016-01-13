@@ -1,0 +1,64 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+evaluation01:
+  grade: 4
+  grade_date: 2016-01-30
+  comment:
+  comment_for_staff:
+  evaluation_type: final_midterm_grade
+  staff: staff84
+  evaluatable: student02 (Student)
+
+evaluation02:
+  grade: 4
+  grade_date: 2016-01-13
+  comment: Comment String
+  comment_for_staff: Secret comment.
+  evaluation_type: laboratory_grade
+  staff: staff83
+  evaluatable: event02dbms (Event)
+
+evaluation_for_deliverable01dbms:
+  grade: 5
+  grade_date: 2016-01-12 19:05:23
+  comment: Comment String
+  comment_for_staff: Secret comment, probably from automatic evaluation.
+  evaluation_type: report_grade
+  staff: staff83
+  evaluatable: deliverable01dbms (Deliverable)
+
+evaluation_for_deliverable02dbms:
+  grade: 1
+  grade_date: 2016-01-12 19:05:23
+  comment: Comment String
+  comment_for_staff: Secret comment, probably from automatic evaluation.
+  evaluation_type: report_grade
+  staff: staff83
+  evaluatable: deliverable02dbms (Deliverable)
+
+evaluation_for_deliverable03dbms:
+  grade: 5
+  grade_date: 2016-01-12 19:05:23
+  comment: Comment String
+  comment_for_staff: Secret comment, probably from automatic evaluation.
+  evaluation_type: report_grade
+  staff: staff83
+  evaluatable: deliverable03dbms (Deliverable)
+
+evaluation_for_deliverable04dbms:
+  grade: 5
+  grade_date: 2016-01-12 19:05:23
+  comment: Comment String
+  comment_for_staff: Secret comment, probably from automatic evaluation.
+  evaluation_type: report_grade
+  staff: staff83
+  evaluatable: deliverable04dbms (Deliverable)
+
+evaluation_for_deliverable05dbms:
+  grade: 5
+  grade_date: 2016-01-12 19:05:23
+  comment: Comment String
+  comment_for_staff: Secret comment, probably from automatic evaluation.
+  evaluation_type: report_grade
+  staff: staff83
+  evaluatable: deliverable05dbms (Deliverable)
