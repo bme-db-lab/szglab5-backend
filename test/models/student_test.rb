@@ -11,6 +11,7 @@ class StudentTest < ActiveSupport::TestCase
     student = students(:student01)
     assert_respond_to student, :language
     assert_respond_to student, :semester
+    assert_respond_to student, :events
     assert_respond_to student, :user
     assert_respond_to student, :student_groups
   end

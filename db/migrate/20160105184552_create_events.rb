@@ -10,7 +10,6 @@ class CreateEvents < ActiveRecord::Migration
       t.references :student_group, index: true, foreign_key: true
       t.references :event_template, index: true, foreign_key: true
       t.references :demonstrator, index: true, foreign_key: {to_table: :staff}
-      t.references :student, index: true, foreign_key: true
       t.references :exercise_type, index: true, foreign_key: true
       t.references :upstream_event, index: true, foreign_key: {to_table: :event}
 

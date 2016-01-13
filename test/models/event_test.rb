@@ -15,7 +15,7 @@ class EventTest < ActiveSupport::TestCase
     assert_respond_to event, :student_group
     assert_respond_to event, :event_template
     assert_respond_to event, :demonstrator
-    assert_respond_to event, :student
+    assert_respond_to event, :students
     assert_respond_to event, :exercise_type
     assert_respond_to event, :upstream_event
     assert_respond_to event, :related_events

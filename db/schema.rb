@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160105190523) do
+ActiveRecord::Schema.define(version: 20160113143309) do
 
   create_table "appointments", force: :cascade do |t|
     t.datetime "date"
@@ -80,7 +80,6 @@ ActiveRecord::Schema.define(version: 20160105190523) do
     t.integer  "student_group_id"
     t.integer  "event_template_id"
     t.integer  "demonstrator_id"
-    t.integer  "student_id"
     t.integer  "exercise_type_id"
     t.integer  "upstream_event_id"
     t.datetime "created_at",                   null: false
@@ -89,7 +88,6 @@ ActiveRecord::Schema.define(version: 20160105190523) do
     t.index ["event_template_id"], name: "index_events_on_event_template_id"
     t.index ["exercise_type_id"], name: "index_events_on_exercise_type_id"
     t.index ["student_group_id"], name: "index_events_on_student_group_id"
-    t.index ["student_id"], name: "index_events_on_student_id"
     t.index ["upstream_event_id"], name: "index_events_on_upstream_event_id"
   end
 
@@ -146,6 +144,15 @@ ActiveRecord::Schema.define(version: 20160105190523) do
     t.datetime "updated_at",                 null: false
     t.index ["language_id"], name: "index_student_groups_on_language_id"
     t.index ["semester_id"], name: "index_student_groups_on_semester_id"
+  end
+
+  create_table "student_to_events", force: :cascade do |t|
+    t.integer  "student_id"
+    t.integer  "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_student_to_events_on_event_id"
+    t.index ["student_id"], name: "index_student_to_events_on_student_id"
   end
 
   create_table "student_to_student_groups", force: :cascade do |t|
