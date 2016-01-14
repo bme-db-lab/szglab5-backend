@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160113155440) do
+ActiveRecord::Schema.define(version: 20160114192756) do
 
   create_table "appointments", force: :cascade do |t|
     t.datetime "date"
@@ -55,6 +55,15 @@ ActiveRecord::Schema.define(version: 20160113155440) do
     t.index ["deliverable_template_id"], name: "index_deliverables_on_deliverable_template_id"
     t.index ["event_id"], name: "index_deliverables_on_event_id"
     t.index ["upstream_deliverable_id"], name: "index_deliverables_on_upstream_deliverable_id"
+  end
+
+  create_table "directories", force: :cascade do |t|
+    t.string   "description",   limit: 30
+    t.string   "relative_path"
+    t.integer  "semester_id"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["semester_id"], name: "index_directories_on_semester_id"
   end
 
   create_table "evaluation_types", force: :cascade do |t|

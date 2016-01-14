@@ -1,0 +1,6 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+dblab_2015_2016_spring_directory:
+  description: DBlab2016 spring file store
+  relative_path: assetstore/dblab/2016
+  semester: dblab_2015_2016_spring
