@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: szlbas
+  name: szglab5-base
+  extends: 
+  course: 
+  default_language: 
+
+two:
+  code: 
+  name: 
+  extends: 
+  course: 
+  default_language: 
