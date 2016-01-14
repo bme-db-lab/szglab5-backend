@@ -3,7 +3,6 @@
 swl5base:
   code: swlab5_base
   name: Szoftver Labor 5 alap kliens
-  extends: null
   course: dblab
   default_language: hun
 

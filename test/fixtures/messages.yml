@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  code: 
-  message_text: 
-  client: 
-  language: 
+uploadsuccessful_en:
+  code: upload_successful_en
+  message_text: Upload successful
+  client: swl5enstudent
+  language: eng
 
-two:
-  code: 
-  message_text: 
-  client: 
-  language: 
+uploadsuccessful_hun:
+  code: upload_successful_hun
+  message_text: A feltöltés sikeres
+  client: swl5student
+  language: hun
