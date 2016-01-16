@@ -9,7 +9,7 @@ class ExerciseTypeTest < ActiveSupport::TestCase
 
     # computed attributes/properties
     assert_respond_to exercise_type, :display_codename
-    assert_equal '33-VIDEO', exercise_type.display_codename
+    assert_equal '33-VIDEo', exercise_type.display_codename
   end
 
   test 'associations' do
