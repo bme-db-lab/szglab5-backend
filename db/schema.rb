@@ -50,9 +50,17 @@ ActiveRecord::Schema.define(version: 20160114192756) do
     t.integer  "event_id"
     t.integer  "deliverable_template_id"
     t.integer  "upstream_deliverable_id"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.string   "url",                     limit: 100
+    t.string   "commit",                  limit: 100
+    t.integer  "size"
+    t.string   "checksum_algorithm",      limit: 30
+    t.string   "checksum"
+    t.string   "filename",                limit: 30
+    t.integer  "directory_id"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.index ["deliverable_template_id"], name: "index_deliverables_on_deliverable_template_id"
+    t.index ["directory_id"], name: "index_deliverables_on_directory_id"
     t.index ["event_id"], name: "index_deliverables_on_event_id"
     t.index ["upstream_deliverable_id"], name: "index_deliverables_on_upstream_deliverable_id"
   end

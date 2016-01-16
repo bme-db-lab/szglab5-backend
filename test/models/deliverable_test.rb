@@ -1,21 +1,16 @@
 require 'test_helper'
+require 'models/deliverable_test_helper'
 
 class DeliverableTest < ActiveSupport::TestCase
+  include DeliverableTestHelper
+
   test 'attributes' do
-    deliverable = deliverables(:deliverable01dbms)
-    assert_respond_to deliverable, :type
-    assert_respond_to deliverable, :deadline
-    assert_respond_to deliverable, :submitted_date
-    assert_respond_to deliverable, :title
-    assert_respond_to deliverable, :description
+    deliverable = deliverables(:pure_deliverable)
+    check_deliverable_base_attributes(deliverable)
   end
 
   test 'associations' do
-    deliverable = deliverables(:deliverable01dbms)
-    assert_respond_to deliverable, :event
-    assert_respond_to deliverable, :deliverable_template
-    assert_respond_to deliverable, :evaluations
-    assert_respond_to deliverable, :upstream_deliverable
-    assert_respond_to deliverable, :related_deliverables
+    deliverable = deliverables(:pure_deliverable)
+    check_deliverable_base_associations(deliverable)
   end
 end
