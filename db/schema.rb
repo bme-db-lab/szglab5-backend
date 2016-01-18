@@ -24,6 +24,19 @@ ActiveRecord::Schema.define(version: 20160114192756) do
     t.index ["student_group_id"], name: "index_appointments_on_student_group_id"
   end
 
+  create_table "clients", force: :cascade do |t|
+    t.string   "code"
+    t.string   "name"
+    t.integer  "course_id"
+    t.integer  "default_language_id"
+    t.integer  "extended_client_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["course_id"], name: "index_clients_on_course_id"
+    t.index ["default_language_id"], name: "index_clients_on_default_language_id"
+    t.index ["extended_client_id"], name: "index_clients_on_extended_client_id"
+  end
+
   create_table "courses", force: :cascade do |t|
     t.string "code", null: false
     t.string "name", null: false
@@ -154,6 +167,17 @@ ActiveRecord::Schema.define(version: 20160114192756) do
     t.string   "name",       limit: 30
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.string   "code"
+    t.string   "message_text"
+    t.integer  "client_id"
+    t.integer  "language_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["client_id"], name: "index_messages_on_client_id"
+    t.index ["language_id"], name: "index_messages_on_language_id"
   end
 
   create_table "semesters", force: :cascade do |t|

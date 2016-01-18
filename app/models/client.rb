@@ -1,3 +1,5 @@
+# TODO: documentation
+#
 class Client < ActiveRecord::Base
   belongs_to :extended_client, class_name: 'Client'
   belongs_to :course

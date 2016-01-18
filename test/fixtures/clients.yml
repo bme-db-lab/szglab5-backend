@@ -9,27 +9,27 @@ swl5base:
 swl5student:
   code: swlab5_student
   name: Szoftver Labor 5 hallgatói kliens
-  extends: swl5base
+  extended_client: swl5base
   course: dblab
   default_language: hun
 
 swl5lecturer:
   code: swlab5_lecturer
   name: Szoftver Labor 5 oktatói kliens
-  extends: swl5base
+  extended_client: swl5base
   course: dblab
   default_language: hun
 
 swl5enstudent:
   code: swlab5_eng_student
   name: Szoftver Labor 5 angol hallgatói kliens
-  extends: swl5base
+  extended_client: swl5bCase
   course: dblab
   default_language: eng
 
 swl5admin:
   code: swlab5_admin
   name: Szoftver Labor 5 adminisztrátori kliens
-  extends: swl5base
+  extended_client: swl5base
   course: dblab
   default_language: hun
