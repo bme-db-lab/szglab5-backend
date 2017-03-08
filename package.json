@@ -12,7 +12,7 @@
   },
   "betterScripts": {
     "start:dev": {
-      "command": "nodemon server.js",
+      "command": "./node_modules/nodemon/bin/nodemon.js server.js",
       "env": {
         "NODE_ENV": "dev"
       }
