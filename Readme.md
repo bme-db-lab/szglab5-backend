@@ -2,8 +2,8 @@
 
 ### Fejlesztői környezet kialakítása
 #### Szoftverek
-* Adatbázis: PostgreSQL https://www.postgresql.org/
-* NodeJS: 6.1 LTS https://nodejs.org/en/
+* Adatbázis: PostgreSQL https://www.postgresql.org/ (BigSQL)
+* NodeJS: 6.10 (LTS) https://nodejs.org/en/
 * Szövegszerkesztő: https://Atom.io (ajánlott), lehet más is, csak legyen hozzá eslint plugin
 
 #### Adatbázis konfig

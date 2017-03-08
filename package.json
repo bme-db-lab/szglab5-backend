@@ -4,23 +4,51 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon server.js",
-    "start:prod": "echo TODO",
-    "cli:dev": "NODE_ENV=dev node ./bin/labadmin.js",
-    "cli:prod": "echo TODO",
+    "start:dev": "better-npm-run start:dev",
+    "start:prod": "better-npm-run start:prod",
+    "cli:dev": "better-npm-run cli:dev",
+    "cli:prod": "better-npm-run cli:prod",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "betterScripts": {
+    "start:dev": {
+      "command": "nodemon server.js",
+      "env": {
+        "NODE_ENV": "dev"
+      }
+    },
+    "start:prod": {
+      "command": "nodemon server.js",
+      "env": {
+        "NODE_ENV": "dev"
+      }
+    },
+    "cli:dev": {
+      "command": "node ./bin/labadmin.js",
+      "env": {
+        "NODE_ENV": "dev"
+      }
+    },
+    "cli:start": {
+      "command": "node ./bin/labadmin.js",
+      "env": {
+        "NODE_ENV": "prod"
+      }
+    }
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "async": "^2.1.5",
+    "body-parser": "^1.17.1",
     "express": "^4.15.1",
     "lodash": "^4.17.4",
     "sequelize": "^3.30.2",
     "winston": "^2.3.1"
   },
   "devDependencies": {
-    "eslint": "^3.17.0"
+    "eslint": "^3.17.0",
+    "morgan": "^1.8.1"
   }
 }
