@@ -6,8 +6,8 @@ const bodyParser = require('body-parser');
 const config = require('./config/config.js');
 const { port } = config.api;
 const { initDB } = require('./db/db.js');
-
 const addEndpoints = require('./endpoints');
+
 initDB()
   .then(() => {
     console.log('Db initializing succeed!');

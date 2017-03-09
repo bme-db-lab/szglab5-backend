@@ -24,6 +24,7 @@ git clone https://github.com/bme-db-lab/szglab5-backend.git
 * NPM packagek letöltése
 ```
 npm install
+npm install nodemon -g
 ```
 * Adatbázis feltöltése a seed adatokkal
 ```
