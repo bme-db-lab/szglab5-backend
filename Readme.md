@@ -12,6 +12,7 @@
 #### Atom.io konfig (vagy egyéb szerkesztő)
 Szükséges packagek
 * linter-eslint
+
 Ajánlott packagek
 * file-icons
 * tree-view-copy-relative-path

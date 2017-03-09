@@ -25,9 +25,7 @@ function initDB(_options) {
 
     const modelsPath = path.join(__dirname, '../models');
     const files = fs.readdirSync(modelsPath);
-    const modelFiles = files.filter((file) => {
-      return ((file !== 'index.js') && (file.indexOf('.') !== 0));
-    });
+    const modelFiles = files.filter(file => (file !== 'index.js') && (file.indexOf('.') !== 0));
 
     modelFiles.forEach((file) => {
       const model = sequelize.import(path.join(modelsPath, file));
@@ -40,7 +38,7 @@ function initDB(_options) {
         if ('associate' in db[modelName]) {
           db[modelName].associate(db);
         }
-      } catch(err) {
+      } catch (err) {
         associateErr = err;
       }
     });
@@ -59,17 +57,17 @@ function initDB(_options) {
             console.log(`Syncing model ${modelName} succeed!`);
             callback(null);
           })
-          .catch((err) =>{
+          .catch((err) => {
             // console.log(`Error during syncing model ${modelName}: ${err.message}`);
             callback(err);
           });
       },
       (err) => {
         if (err) {
-          reject(err);
+          return reject(err);
         }
         db.sequelize = sequelize;
-        resolve(db);
+        return resolve(db);
       }
     );
   });

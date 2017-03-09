@@ -3,7 +3,7 @@ module.exports = {
         "es6": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "extends": "airbnb-base",
     "rules": {
         "quotes": [
             "error",
@@ -13,6 +13,8 @@ module.exports = {
             "error",
             "always"
         ],
-        "no-console": 1
+        "no-console": 1,
+        "indent": ["error", 2],
+        "comma-dangle": 0
     }
 };
