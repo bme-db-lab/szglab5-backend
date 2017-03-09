@@ -1,125 +1,58 @@
 const async = require('async');
 
 const config = require('../config/config.js');
-// -----------------QuestionTypes
-const questionTypes = [
-  {
-    name: 'Oracle'
-  },
-  {
-    name: 'SQL'
-  },
-  {
-    name: 'DBM'
-  }
-];
-
-function createQuestionTypes(db) {
-  return new Promise((resolve, reject) => {
-    async.eachSeries(questionTypes,
-      (questionType, callback) => {
-        db.QuestionType.create({
-          name: questionType.name
-        })
-        .then(() => callback(null))
-        .catch((err) => callback(err));
-      },
-      (err) => {
-        if (err) {
-          return reject(err);
-        }
-        return resolve(db);
-      }
-    );
-  });
+let seed;
+switch (config.env) {
+  case 'dev':
+    seed = require('./dev.seed.js');
+    break;
+  case 'test':
+    seed = require('./test.seed.js');
+    break;
+  case 'prod':
+    seed = require('./prod.seed.js');
+    break;
+  default:
+    seed = null;
 }
-// -----------------Tests
-const tests =  [
-  {
-    title: 'szuper teszt'
-  },
-  {
-    title: 'teszt adas'
-  }
-];
 
-function createTests(db) {
+function seedDB(db, modelName, data) {
   return new Promise((resolve, reject) => {
-    async.eachSeries(tests,
-      (test, callback) => {
-        db.Test.create({
-          title: test.name
-        })
+    async.eachSeries(data,
+      (modelInstance, callback) => {
+        db[modelName].create(modelInstance)
         .then(() => callback(null))
         .catch((err) => callback(err));
-      },
-      (err) => {
-        if (err) {
-          return reject(err);
-        }
-        return resolve(db);
+    },
+    (err) => {
+      if (err) {
+        return reject(err);
       }
-    );
-  });
-}
-// -----------------Test Questions
-const testQuestions =  [
-  {
-    text: 'Question 1',
-    TestId: 1,
-    QuestionTypeId: 1
-  },
-  {
-    text: 'Question 2',
-    TestId: 1,
-    QuestionTypeId: 2
-  }
-];
-
-function createTestQuestions(db) {
-  return new Promise((resolve, reject) => {
-    async.eachSeries(testQuestions,
-      (testQuestion, callback) => {
-        db.TestQuestion.create({
-          text: testQuestion.text,
-          TestId: testQuestion.TestId,
-          QuestionTypeId: testQuestion.QuestionTypeId
-        })
-        .then(() => callback(null))
-        .catch((err) => callback(err));
-      },
-      (err) => {
-        if (err) {
-          return reject(err);
-        }
-        return resolve(db);
-      }
-    );
+      resolve(db);
+    });
   });
 }
 
 module.exports = (db) => {
   return new Promise((resolve, reject) => {
-    switch (config.env) {
-      case 'dev':
-        createQuestionTypes(db)
-        .then(createTests)
-        .then(createTestQuestions)
-        .then(() => {
-          resolve();
-        })
-        .catch((err) => {
-          reject(err);
-        });
-        break;
-      default:
-        createQuestionTypes(db)
-        .then(() => {
-          resolve();
-        })
-        .catch((err) => {
-          reject(err);
-        });
+    if (seed !== null) {
+      async.eachSeries(Object.keys(seed),
+      (modelName, callback) => {
+        const model = seed[modelName];
+        seedDB(db, modelName, model)
+          .then(() => { callback(null); })
+          .catch((err) => { callback(err); });
+      },
+      (err) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve(err);
+      }
+    );
+    } else {
+      console.log('No seed data provided');
+      resolve();
     }
   });
 };

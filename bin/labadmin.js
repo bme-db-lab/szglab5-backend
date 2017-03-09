@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 
 const method = process.argv[2];
+if (!method) {
+  console.log('Please specify the method, with process arguments!');
+  process.exit();
+}
 
 // SEED
 if (method === 'seed') {
@@ -17,5 +21,5 @@ if (method === 'seed') {
     console.log(`Seed failed: ${err.message}`);
   });
 } else {
-  console.log(`Not supported method: ${method}`);
+  console.log(`Not supported method: "${method}"`);
 }
