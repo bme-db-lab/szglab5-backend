@@ -14,7 +14,14 @@ module.exports = {
             "always"
         ],
         "no-console": 1,
-        "indent": ["error", 2],
-        "comma-dangle": 0
+        "indent": [
+            "error",
+            2,
+            {
+              "SwitchCase": 1
+            }
+        ],
+        "comma-dangle": 0,
+        "global-require": 0
     }
 };

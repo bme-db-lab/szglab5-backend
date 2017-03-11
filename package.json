@@ -6,8 +6,10 @@
   "scripts": {
     "start:dev": "better-npm-run start:dev",
     "start:prod": "better-npm-run start:prod",
+    "start:test": "better-npm-run start:test",
     "cli:dev": "better-npm-run cli:dev",
     "cli:prod": "better-npm-run cli:prod",
+    "cli:test": "better-npm-run cli:test",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "betterScripts": {
@@ -18,9 +20,15 @@
       }
     },
     "start:prod": {
-      "command": "nodemon server.js",
+      "command": "node server.js",
       "env": {
-        "NODE_ENV": "dev"
+        "NODE_ENV": "prod"
+      }
+    },
+    "start:test": {
+      "command": "node server.js",
+      "env": {
+        "NODE_ENV": "test"
       }
     },
     "cli:dev": {
@@ -29,10 +37,16 @@
         "NODE_ENV": "dev"
       }
     },
-    "cli:start": {
+    "cli:prod": {
       "command": "node ./bin/labadmin.js",
       "env": {
         "NODE_ENV": "prod"
+      }
+    },
+    "cli:test": {
+      "command": "node ./bin/labadmin.js",
+      "env": {
+        "NODE_ENV": "test"
       }
     }
   },

@@ -1,20 +1,6 @@
 const async = require('async');
-
-const config = require('../config/config.js');
-let seed;
-switch (config.env) {
-  case 'dev':
-    seed = require('./dev.seed.js');
-    break;
-  case 'test':
-    seed = require('./test.seed.js');
-    break;
-  case 'prod':
-    seed = require('./prod.seed.js');
-    break;
-  default:
-    seed = null;
-}
+const fs = require('fs');
+const path = require('path');
 
 function seedDB(db, modelName, data) {
   return new Promise((resolve, reject) => {
@@ -22,19 +8,29 @@ function seedDB(db, modelName, data) {
       (modelInstance, callback) => {
         db[modelName].create(modelInstance)
         .then(() => callback(null))
-        .catch((err) => callback(err));
-    },
+        .catch(err => callback(err));
+      },
     (err) => {
       if (err) {
         return reject(err);
       }
-      resolve(db);
+      return resolve(db);
     });
   });
 }
 
 module.exports = (db) => {
   return new Promise((resolve, reject) => {
+    const seedDataPath = process.argv[3] ? process.argv[3] : './dev.seed.json';
+    let seed = null;
+    try {
+      const seedFile = fs.readFileSync(path.join(__dirname, './seedData', seedDataPath));
+      seed = JSON.parse(seedFile.toString());
+    } catch (err) {
+      reject(err);
+      return;
+    }
+
     if (seed !== null) {
       async.eachSeries(Object.keys(seed),
       (modelName, callback) => {
@@ -47,7 +43,7 @@ module.exports = (db) => {
         if (err) {
           return reject(err);
         }
-        resolve(err);
+        return resolve(err);
       }
     );
     } else {

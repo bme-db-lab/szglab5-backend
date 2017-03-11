@@ -35,3 +35,18 @@ npm run cli:dev seed
 ```
 npm run start:dev
 ```
+
+### Parancsok (ENV = 'dev' | 'prod' | 'test')
+#### CLI (npm run start cli:"ENV" "command")
+##### seed [filepath]
+* filepath: the json file path that contains the seed data, relative to /db/seedData (__default__: 'dev.seed.json')
+* example:
+```
+npm run cli:dev seed test1.seed.json
+```
+
+#### START (npm run start:"ENV")
+Elindítja az API szervert
+```
+npm run start:dev
+```

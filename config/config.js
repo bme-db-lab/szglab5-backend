@@ -25,14 +25,14 @@ switch (env) {
   case 'dev':
     _.merge(config, {
       db: {
-        host: envDBHost ? envDBHost : 'localhost',
-        port: envDBPort ? envDBPort : '5432',
-        database: envDBName ? envDBName : 'laboradmin',
-        username: envDBUsername ? envDBUsername : 'postgres',
-        password: envDBPassword ? envDBPassword : 'devpass'
+        host: envDBHost !== undefined ? envDBHost : 'localhost',
+        port: envDBPort !== undefined ? envDBPort : '5432',
+        database: envDBName !== undefined ? envDBName : 'laboradmin',
+        username: envDBUsername !== undefined ? envDBUsername : 'postgres',
+        password: envDBPassword !== undefined ? envDBPassword : 'devpass'
       },
       api: {
-        port: envAPIPort ? envAPIPort : 7000
+        port: envAPIPort !== undefined ? envAPIPort : 7000
       }
     });
     break;
