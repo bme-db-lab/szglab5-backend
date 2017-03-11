@@ -4,8 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        // Test.hasMany(models.TestQuestion, {as: 'questions'});
-        QuestonType.hasMany(models.TestQuestion, {as: 'questionType'});
+        QuestonType.hasMany(models.Question, { as: 'questionType' });
       }
     }
   });

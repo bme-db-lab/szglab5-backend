@@ -34,6 +34,10 @@ module.exports = (db) => {
     if (seed !== null) {
       async.eachSeries(Object.keys(seed),
       (modelName, callback) => {
+        if (!(modelName in db)) {
+          callback(new Error(`DB has no model with name: "${modelName}"`));
+          return;
+        }
         const model = seed[modelName];
         seedDB(db, modelName, model)
           .then(() => { callback(null); })

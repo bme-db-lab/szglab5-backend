@@ -18,7 +18,7 @@
       "title": "teszt adas"
     }
   ],
-  "TestQuestion": [
+  "Question": [
     {
       "text": "Question 1",
       "TestId": 1,
