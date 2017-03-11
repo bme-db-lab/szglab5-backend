@@ -1,5 +1,14 @@
 const { getDB } = require('../../db/db.js');
 
+/**
+ * @api {get} /test list Tests
+ * @apiName ListTests
+ * @apiGroup Test
+ *
+ *
+ * @apiSuccess {String} firstname Firstname of the User.
+ * @apiSuccess {String} lastname  Lastname of the User.
+ */
 module.exports = (req, res) => {
   // TODO query the tests for the database and send back
   const db = getDB();
