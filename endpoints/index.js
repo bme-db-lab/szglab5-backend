@@ -1,7 +1,9 @@
 const testEndpoints = require('./test');
-const testQuestionEndpoints = require('./testQuestion');
+const questionEndpoints = require('./question');
+const questionTypeEndpoints = require('./questiontype');
 
 module.exports = (app) => {
   testEndpoints(app);
-  testQuestionEndpoints(app);
+  questionEndpoints(app);
+  questionTypeEndpoints(app);
 };
