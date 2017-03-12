@@ -1,5 +1,16 @@
 const { getDB } = require('../../../db/db.js');
 
+/**
+ * @api {delete} /tests/:id delete
+ * @apiName DeleteTest
+ * @apiGroup Test
+ *
+ * @apiParam {Number} id Tests unique ID
+ *
+ * @apiSuccessExample {json} Success-Response:
+ * HTTP/1.1 204 No Content
+ * {}
+ */
 module.exports = (req, res) => {
   const db = getDB();
   const { id } = req.params;

@@ -1,5 +1,24 @@
 const { getDB } = require('../../../db/db.js');
 
+/**
+ * @api {get} /tests/:id get
+ * @apiName getTest
+ * @apiGroup Test
+ *
+ * @apiParam {Number} id Tests unique ID
+ *
+ * @apiSuccessExample {json} Success-Response:
+ * HTTP/1.1 200 OK
+ * {
+ *  "data": {
+ *    "type": "tests",
+ *    "id": 3,
+ *    "attributes": {
+ *      "title": "Szuper teszt"
+ *    }
+ *  }
+ * }
+ */
 module.exports = (req, res) => {
   try {
     const db = getDB();

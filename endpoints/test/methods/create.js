@@ -3,6 +3,32 @@ const Joi = require('joi');
 const { getDB } = require('../../../db/db.js');
 const schema = require('../schema');
 
+/**
+ * @api {post} /tests create
+ * @apiName CreateTest
+ * @apiGroup Test
+ *
+ *
+ * @apiParamExample {json} Request-Example:
+*     {
+*       "data": {
+*         "attributes": {
+*           "title": "Szuper teszt",
+*         },
+*         "type": "tests"
+*       }
+*     }
+* @apiSuccessExample {json} Success-Response:
+* HTTP/1.1 201 Created
+* {
+*  "data": {
+*    "attributes": {
+*      "text": "Szuper teszt"
+*    },
+*    "type": "tests",
+*    "id": 3
+*  }
+ */
 module.exports = (req, res) => {
   try {
     const db = getDB();

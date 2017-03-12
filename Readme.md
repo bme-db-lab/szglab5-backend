@@ -50,3 +50,9 @@ Elindítja az API szervert
 ```
 npm run start:dev
 ```
+
+#### APIDOC (npm run apidoc)
+Elkészíti az api dokumentációt -> /apidoc/index.html
+```
+npm run apidoc
+```
