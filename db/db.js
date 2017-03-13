@@ -47,29 +47,17 @@ function initDB(_options) {
     }
 
     // sync models to the database
-    async.eachSeries(Object.keys(db),
-      (modelName, callback) => {
-        console.log(`Syncing model ${modelName}...`);
-        db[modelName].sync({
-          force: options.force // force sync: drop the existing database
-        })
-          .then(() => {
-            console.log(`Syncing model ${modelName} succeed!`);
-            callback(null);
-          })
-          .catch((err) => {
-            // console.log(`Error during syncing model ${modelName}: ${err.message}`);
-            callback(err);
-          });
-      },
-      (err) => {
-        if (err) {
-          return reject(err);
-        }
+    sequelize.sync({
+      force: options.force
+    })
+      .then(() => {
         db.sequelize = sequelize;
-        return resolve(db);
-      }
-    );
+        resolve(db);
+      })
+      .catch((err) => {
+        reject(err);
+        return;
+      });
   });
 }
 

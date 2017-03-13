@@ -12,8 +12,6 @@ function seedDB(db, modelName, data) {
         if (includes !== undefined) {
           includeModels = includes.map(include => db[include]);
         }
-        console.log(obj);
-        console.log(includeModels);
         db[modelName].create(obj, { include: includeModels })
         .then(() => {
           callback(null);
