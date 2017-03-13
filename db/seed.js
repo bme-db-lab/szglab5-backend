@@ -6,9 +6,21 @@ function seedDB(db, modelName, data) {
   return new Promise((resolve, reject) => {
     async.eachSeries(data,
       (modelInstance, callback) => {
-        db[modelName].create(modelInstance)
-        .then(() => callback(null))
-        .catch(err => callback(err));
+        const obj = modelInstance.data;
+        const includes = modelInstance.include;
+        let includeModels = [];
+        if (includes !== undefined) {
+          includeModels = includes.map(include => db[include]);
+        }
+        console.log(obj);
+        console.log(includeModels);
+        db[modelName].create(obj, { include: includeModels })
+        .then(() => {
+          callback(null);
+        })
+        .catch((err) => {
+          callback(err);
+        });
       },
     (err) => {
       if (err) {

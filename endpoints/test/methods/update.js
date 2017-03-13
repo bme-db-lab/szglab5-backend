@@ -4,55 +4,39 @@ const { getDB } = require('../../../db/db.js');
 const schema = require('../schema');
 
 /**
- * @api {post} /questions create
- * @apiName createQuestion
- * @apiGroup Question
+ * @api {path} /tests update
+ * @apiName updateTest
+ * @apiGroup Test
  *
  * @apiParamExample {json} Request-Example:
 *     {
 *       "data": {
+*         "id": 2
 *         "attributes": {
 *           "text": "What is the meaning of life?",
 *           "TestId": 1
 *         },
-*         "type": "questions"
+*         "type": "tests"
 *       }
 *     }
 * @apiSuccessExample {json} Success-Response:
-* HTTP/1.1 201 Created
-* {
-*  "data": {
-*    "attributes": {
-*      "text": "What is the meaning of life?"
-*    },
-*    "type": "questions",
-*    "id": 7
-*  }
-*}
+* HTTP/1.1 204
  */
 module.exports = (req, res) => {
   try {
     const db = getDB();
-    const questionToSave = req.body.data.attributes;
-    const { error } = Joi.validate(questionToSave, schema);
+    const testToUpdate = req.body.data.attributes;
+    const id = req.body.data.id;
+    const { error } = Joi.validate(testToUpdate, schema);
     if (error) {
       res.status(400).send({
         errors: [error]
       });
       return;
     }
-    db.Question.create(questionToSave)
-      .then((newQuestion) => {
-        const { id, text } = newQuestion.dataValues;
-        res.status(201).send({
-          data: {
-            attributes: {
-              text
-            },
-            type: 'questions',
-            id
-          },
-        });
+    db.Test.update(testToUpdate, { where: { id } })
+      .then(() => {
+        res.status(204).send();
       })
       .catch((err) => {
         res.status(500).send({ error: [err.message] });

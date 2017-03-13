@@ -32,13 +32,28 @@ module.exports = (req, res) => {
     const db = getDB();
     db.Test.findAll({})
       .then((tests) => {
-        const testsToSend = tests.map(test => ({
-          type: 'tests',
-          id: test.id,
-          attributes: {
-            title: test.title
-          }
-        }));
+        // const testsToSend = tests.map(test => ({
+        //   type: 'tests',
+        //   id: test.id,
+        //   attributes: {
+        //     title: test.title
+        //   }
+        // }));
+        const testsToSend = tests.map((test) => {
+          return {
+            type: 'tests',
+            id: test.id,
+            attributes: {
+              title: test.title
+            },
+            relationships: {
+              Language: {
+                type: 'languages',
+                id: test.LanguageId
+              }
+            }
+          };
+        });
         res.send({
           data: testsToSend
         });

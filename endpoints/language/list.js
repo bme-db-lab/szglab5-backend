@@ -1,9 +1,9 @@
 const { getDB } = require('../../db/db.js');
 
 /**
- * @api {get} /questiontypes list
- * @apiName ListQuestionTypes
- * @apiGroup QuestionType
+ * @api {get} /languages list
+ * @apiName ListLanguages
+ * @apiGroup Language
  *
  *
  * @apiSuccessExample {json} Success-Response:
@@ -11,21 +11,21 @@ const { getDB } = require('../../db/db.js');
  *  {
  *   "data": [
  *    {
- *     "type": "QuestionType",
+ *     "type": "Language",
  *       "id": 1,
  *       "attributes": {
  *         "name": "Oracle"
  *       }
  *     },
  *     {
- *       "type": "QuestionType",
+ *       "type": "Language",
  *       "id": 2,
  *       "attributes": {
  *         "name": "SQL"
  *       }
  *     },
  *     {
- *       "type": "QuestionType",
+ *       "type": "Language",
  *       "id": 3,
  *       "attributes": {
  *         "name": "DBM"
@@ -41,7 +41,7 @@ module.exports = (req, res) => {
     db.QuestionType.findAll({})
       .then((tests) => {
         const questionTypesData = tests.map(questionType => ({
-          type: 'QuestionType',
+          type: 'Language',
           id: questionType.id,
           attributes: {
             name: questionType.name

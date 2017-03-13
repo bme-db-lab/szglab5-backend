@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        Test.belongsToMany(models.Question, { through: 'TestQuestion' });
+        Test.hasMany(models.Question);
+        Test.belongsTo(models.Language);
       }
     }
   });

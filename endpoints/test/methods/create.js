@@ -23,7 +23,7 @@ const schema = require('../schema');
 * {
 *  "data": {
 *    "attributes": {
-*      "text": "Szuper teszt"
+*      "title": "Szuper teszt"
 *    },
 *    "type": "tests",
 *    "id": 3

@@ -1,33 +1,54 @@
 {
-  "QuestionType": [
-    {
-      "name": "Oracle"
-    },
-    {
-      "name": "SQL"
-    },
-    {
-      "name": "DBM"
-    }
-  ],
   "Test": [
     {
-      "title": "szuper teszt"
+      "data": {
+        "title": "szuper teszt",
+        "Language": {
+          "name": "SQL"
+        }
+      },
+      "include": [ "Language" ]
     },
     {
-      "title": "teszt adas"
+      "data": {
+        "title": "Teszt 2",
+        "Language": {
+          "name": "Oracle"
+        }
+      },
+      "include": [ "Language" ]
+    },
+    {
+      "data": {
+        "title": "Teszt 3",
+        "LanguageId": 1
+      }
     }
   ],
   "Question": [
     {
-      "text": "Question 1",
-      "TestId": 1,
-      "QuestionTypeId": 1
+      "data": {
+        "text": "Kérdés 1",
+        "TestId": 1
+      }
     },
     {
-      "text": "Question 2",
-      "TestId": 1,
-      "QuestionTypeId": 2
+      "data": {
+        "text": "Kérdés 2",
+        "TestId": 1
+      }
+    },
+    {
+      "data": {
+        "text": "Kérdés 3",
+        "TestId": 1
+      }
+    },
+    {
+      "data": {
+        "text": "tuturu 2",
+        "TestId": 2
+      }
     }
   ]
 }

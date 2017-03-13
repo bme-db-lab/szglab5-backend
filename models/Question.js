@@ -3,9 +3,9 @@ module.exports = (sequelize, DataTypes) => {
     text: DataTypes.STRING
   }, {
     classMethods: {
-      associate: (models) => {
-        Question.belongsToMany(models.Test, { through: 'TestQuestion' });
-      }
+      // associate: (models) => {
+      //   Question.belongsTo(models.Test);
+      // }
     }
   });
 

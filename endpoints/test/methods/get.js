@@ -34,6 +34,12 @@ module.exports = (req, res) => {
           id: test.id,
           attributes: {
             title: test.title
+          },
+          relationships: {
+            Language: {
+              type: 'languages',
+              id: test.LanguageId
+            }
           }
         };
         res.send({

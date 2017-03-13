@@ -37,6 +37,14 @@ module.exports = (req, res) => {
           id: testQuestion.id,
           attributes: {
             text: testQuestion.text
+          },
+          relationships: {
+            test: {
+              data: {
+                type: 'test',
+                id: testQuestion.id
+              }
+            }
           }
         }));
         res.send({
