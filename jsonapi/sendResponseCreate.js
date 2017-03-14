@@ -33,39 +33,57 @@ module.exports = (req, res) => {
     const resourceToSave = req.body.data.attributes;
     const { relationships } = req.body.data;
     console.log(relationships);
-    getRelationshipObjects(db, relationships)
-      .then((relGroups) => {
-        // all relationships object ready
-        console.log('getRelationshipObjects results: ');
-        console.log(relGroups);
-        db[modelName].create(resourceToSave)
-          .then((resource) => {
-            setRelations(resource, relGroups)
-              .then(() => {
-                const attributes = resource.dataValues;
-                const resourcesToSend = {
-                  type: modelNamePlural,
-                  id: resource.id,
-                  attributes
-                };
-                res.send({
-                  data: resourcesToSend
-                });
-              })
-              .catch((err) => {
-                res.status(500).send(genErrorObj([err.message]));
-              });
-          })
-          .catch((err) => {
-            res.status(500).send(genErrorObj([err.message]));
-          })
+    if (!relationships) {
+      db[modelName].create(resourceToSave)
+        .then((resource) => {
+          const attributes = resource.dataValues;
+          const resourcesToSend = {
+            type: modelNamePlural,
+            id: resource.id,
+            attributes
+          };
+          res.send({
+            data: resourcesToSend
+          });
+        })
         .catch((err) => {
           res.status(500).send(genErrorObj([err.message]));
         });
-      })
-      .catch((err) => {
-        res.status(404).send(genErrorObj([err.message]));
-      });
+    } else {
+      getRelationshipObjects(db, relationships)
+        .then((relGroups) => {
+          // all relationships object ready
+          console.log('getRelationshipObjects results: ');
+          console.log(relGroups);
+          db[modelName].create(resourceToSave)
+            .then((resource) => {
+              setRelations(resource, relGroups)
+                .then(() => {
+                  const attributes = resource.dataValues;
+                  const resourcesToSend = {
+                    type: modelNamePlural,
+                    id: resource.id,
+                    attributes
+                  };
+                  res.send({
+                    data: resourcesToSend
+                  });
+                })
+                .catch((err) => {
+                  res.status(500).send(genErrorObj([err.message]));
+                });
+            })
+            .catch((err) => {
+              res.status(500).send(genErrorObj([err.message]));
+            })
+          .catch((err) => {
+            res.status(500).send(genErrorObj([err.message]));
+          });
+        })
+        .catch((err) => {
+          res.status(404).send(genErrorObj([err.message]));
+        });
+    }
   } catch (err) {
     console.log(err);
     res.status(500).send(genErrorObj([err.message]));
