@@ -78,8 +78,14 @@ function getAssociatedObjects(db, resource, modelName) {
         if (err) {
           reject(err);
         } else {
+          const resultObj = {};
+          result.forEach((resultItem) => {
+            Object.keys(resultItem).forEach((objKey) => {
+              resultObj[objKey] = resultItem[objKey];
+            });
+          });
           resolve({
-            relationships: result
+            relationships: resultObj
           });
         }
       });
