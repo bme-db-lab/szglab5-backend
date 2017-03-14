@@ -3,9 +3,9 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING
   }, {
     classMethods: {
-      // associate: (models) => {
-      //   Language.hasMany(models.Test);
-      // }
+      associate: (models) => {
+        Language.hasMany(models.test);
+      }
     }
   });
 

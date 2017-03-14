@@ -1,5 +1,6 @@
 const pluralize = require('pluralize');
-const { genErrorObj, checkIfModelIsAllowed, checkIfDbHasModel } = require('./utils.js');
+const async = require('async');
+const { genErrorObj, checkIfModelIsAllowed, checkIfDbHasModel, getAssociatedObjects } = require('./utils.js');
 const { getDB } = require('../db/db.js');
 
 
@@ -31,24 +32,52 @@ module.exports = (req, res) => {
     // all check passed
     db[modelName].findAll({})
       .then((resources) => {
-        const resourcesToSend = resources.map((resource) => {
-          // TODO resource.dataValues return all the attributes
-          const attributes = resource.dataValues;
-          return {
-            type: modelNamePlural,
-            id: resource.id,
-            attributes
-          };
-        });
-        res.send({
-          data: resourcesToSend
-        });
+        async.mapSeries(resources,
+          (resource, callback) => {
+            const attributes = resource.dataValues;
+            // sync things
+            const syncPart = {
+              type: modelNamePlural,
+              id: resource.id,
+              attributes
+            };
+            // async things
+            getAssociatedObjects(db, resource, modelName)
+              .then((assoc) => {
+                const relationships = assoc;
+                callback(null, Object.assign({}, syncPart, relationships));
+              })
+              .catch((err) => {
+                callback(err);
+              });
+          },
+          (err, result) => {
+            if (err) {
+              res.status(500).send(genErrorObj([err.message]));
+              return;
+            }
+            res.send({
+              data: result,
+            });
+          });
       })
       .catch((err) => {
         res.status(500).send(genErrorObj([err.message]));
       });
   } catch (err) {
-    console.log(err);
     res.status(500).send(genErrorObj([err.message]));
   }
 };
+
+
+// const associations = db[modelName].associations;
+// const relationships = {};
+//
+// Object.keys(associations).forEach((assoc) => {
+//   const getFunc = `get${capitalizeFirstLetter(assoc)}`;
+//   resource[getFunc]().then((obj) => {
+//     console.log(obj);
+//   });
+//   relationships[assoc] = {
+//
+//   };
