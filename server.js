@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 //
 const config = require('./config/config.js');
+const cors = require('cors');
 
 const { port } = config.api;
 const { initDB } = require('./db/db.js');
@@ -15,6 +16,16 @@ initDB()
     console.log('Db initializing succeed!');
     const app = express();
     app.use(bodyParser.json({ limit: '10mb' }));
+
+    let whitelist = [];
+    if (config.env === 'dev') {
+      whitelist = [`http://localhost:${config.frontend.port}`];
+    }
+    const corsOptions = {
+      origin: whitelist
+    };
+    app.use(cors(corsOptions));
+
     // app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
     addMiddlewares(app);
     addEndpoints(app);

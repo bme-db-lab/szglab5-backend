@@ -13,6 +13,8 @@ const envDBUsername = process.env.LAB_ADMIN_DB_USER;
 const envDBPassword = process.env.LAB_ADMIN_DB_PASSWORD;
 // API
 const envAPIPort = process.env.LAB_ADMIN_API_PORT;
+// Frontend
+const envFrontendPort = process.env.LAB_ADMIN_FRONTEND_PORT;
 
 // commonly used
 let config = {
@@ -25,14 +27,17 @@ switch (env) {
   case 'dev':
     _.merge(config, {
       db: {
-        host: envDBHost !== undefined ? envDBHost : 'localhost',
-        port: envDBPort !== undefined ? envDBPort : '5432',
-        database: envDBName !== undefined ? envDBName : 'laboradmin',
-        username: envDBUsername !== undefined ? envDBUsername : 'postgres',
-        password: envDBPassword !== undefined ? envDBPassword : 'devpass'
+        host: envDBHost || 'localhost',
+        port: envDBPort || '5432',
+        database: envDBName || 'laboradmin',
+        username: envDBUsername || 'postgres',
+        password: envDBPassword || 'devpass'
       },
       api: {
-        port: envAPIPort !== undefined ? envAPIPort : 7000
+        port: envAPIPort || 7000
+      },
+      frontend: {
+        port: envFrontendPort || 4200
       }
     });
     break;
