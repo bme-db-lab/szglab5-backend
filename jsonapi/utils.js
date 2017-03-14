@@ -51,13 +51,13 @@ function getAssociatedObjects(db, resource, modelName) {
         resource[getFunc]().then((result) => {
           if (isArray(result)) {
             const resultForm = result.map(item => ({
-              data: {
-                id: item.id,
-                type: item.Model.getTableName()
-              }
+              id: item.id,
+              type: item.Model.getTableName()
             }));
             callback(null, {
-              [assocGroup]: resultForm
+              [assocGroup]: {
+                data: resultForm
+              }
             });
           } else if (isObject(result)) {
             const resultForm = {
