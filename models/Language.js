@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Language = sequelize.define('Language', {
+  const Language = sequelize.define('language', {
     name: DataTypes.STRING
   }, {
     classMethods: {

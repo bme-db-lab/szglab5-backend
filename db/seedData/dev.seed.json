@@ -1,53 +1,53 @@
 {
-  "Test": [
+  "test": [
     {
       "data": {
         "title": "szuper teszt",
-        "Language": {
+        "language": {
           "name": "SQL"
         }
       },
-      "include": [ "Language" ]
+      "include": [ "language" ]
     },
     {
       "data": {
         "title": "Teszt 2",
-        "Language": {
+        "language": {
           "name": "Oracle"
         }
       },
-      "include": [ "Language" ]
+      "include": [ "language" ]
     },
     {
       "data": {
         "title": "Teszt 3",
-        "LanguageId": 1
+        "languageId": 1
       }
     }
   ],
-  "Question": [
+  "question": [
     {
       "data": {
         "text": "Kérdés 1",
-        "TestId": 1
+        "testId": 1
       }
     },
     {
       "data": {
         "text": "Kérdés 2",
-        "TestId": 1
+        "testId": 1
       }
     },
     {
       "data": {
         "text": "Kérdés 3",
-        "TestId": 1
+        "testId": 1
       }
     },
     {
       "data": {
         "text": "tuturu 2",
-        "TestId": 2
+        "testId": 2
       }
     }
   ]

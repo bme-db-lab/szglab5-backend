@@ -8,7 +8,8 @@ const cors = require('cors');
 
 const { port } = config.api;
 const { initDB } = require('./db/db.js');
-const addEndpoints = require('./endpoints');
+// const addEndpoints = require('./endpoints');
+const addEndpoints = require('./jsonapi');
 const addMiddlewares = require('./middlewares');
 
 initDB()

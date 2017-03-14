@@ -11,21 +11,21 @@ const { getDB } = require('../../db/db.js');
  *  {
  *   "data": [
  *    {
- *     "type": "Language",
+ *     "type": "languages",
  *       "id": 1,
  *       "attributes": {
  *         "name": "Oracle"
  *       }
  *     },
  *     {
- *       "type": "Language",
+ *       "type": "languages",
  *       "id": 2,
  *       "attributes": {
  *         "name": "SQL"
  *       }
  *     },
  *     {
- *       "type": "Language",
+ *       "type": "languages",
  *       "id": 3,
  *       "attributes": {
  *         "name": "DBM"
@@ -41,7 +41,7 @@ module.exports = (req, res) => {
     db.Language.findAll({})
       .then((languages) => {
         const languageData = languages.map(language => ({
-          type: 'Language',
+          type: 'languages',
           id: language.id,
           attributes: {
             name: language.name
