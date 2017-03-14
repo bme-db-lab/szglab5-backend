@@ -38,23 +38,23 @@ module.exports = (req, res) => {
   // TODO query the tests for the database and send back
   try {
     const db = getDB();
-    db.QuestionType.findAll({})
-      .then((tests) => {
-        const questionTypesData = tests.map(questionType => ({
+    db.Language.findAll({})
+      .then((languages) => {
+        const languageData = languages.map(language => ({
           type: 'Language',
-          id: questionType.id,
+          id: language.id,
           attributes: {
-            name: questionType.name
+            name: language.name
           }
         }));
         res.send({
-          data: questionTypesData
+          data: languageData
         });
       })
       .catch((err) => {
-        res.status(500).send({ errors: [err] });
+        res.status(500).send({ errors: [err.message] });
       });
   } catch (err) {
-    res.status(500).send({ errors: [err] });
+    res.status(500).send({ errors: [err.message] });
   }
 };
