@@ -1,5 +1,6 @@
 const { isString, isObject, isArray, isFunction } = require('lodash');
 const async = require('async');
+const pluralize = require('pluralize');
 
 function genErrorObj(errors) {
   if (!isArray(errors) || errors.length === 0) {
@@ -85,10 +86,130 @@ function getAssociatedObjects(db, resource, modelName) {
   });
 }
 
+function getObject(db, queryObj) {
+  return new Promise((resolve, reject) => {
+    const modelName = pluralize.singular(queryObj.type);
+    db[modelName].findById(queryObj.id)
+      .then((result) => {
+        resolve(result);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
+function getRelationshipObjects(db, relationships) {
+  return new Promise((resolve, reject) => {
+    const relationshipObjects = {};
+    async.eachSeries(Object.keys(relationships),
+      (relGroup, callbackGroup) => {
+        const relGroupObj = relationships[relGroup].data;
+        if (!isArray(relGroupObj)) {
+          // get that obj
+          getObject(db, relGroupObj)
+            .then((res) => {
+              if (res === null) {
+                callbackGroup(new Error(`Resource Object not found, id: ${relGroupObj.id}, type: ${relGroupObj.type}`));
+                return;
+              }
+              relationshipObjects[relGroup] = {
+                id: relGroupObj.id,
+                type: relGroupObj.type,
+                obj: res
+              };
+              callbackGroup(null);
+            })
+            .catch((err) => {
+              callbackGroup(err);
+            });
+        } else {
+          relationshipObjects[relGroup] = [];
+          async.eachSeries(relGroupObj,
+            (relGroupItem, callbackInner) => {
+              getObject(db, relGroupItem)
+                .then((res) => {
+                  if (res === null) {
+                    callbackInner(new Error(`Resource Object not found, id: ${relGroupItem.id}, type: ${relGroupItem.type}`));
+                    return;
+                  }
+                  relationshipObjects[relGroup].push({
+                    id: relGroupItem.id,
+                    type: relGroupItem.type,
+                    obj: res
+                  });
+                  callbackInner(null);
+                })
+                .catch((err) => {
+                  callbackInner(err);
+                });
+            },
+            (err) => {
+              if (err) {
+                callbackGroup(err);
+                return;
+              }
+              callbackGroup(null);
+            });
+        }
+      },
+      (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(relationshipObjects);
+        }
+      });
+  });
+}
+
+function _getSetFunc(type) {
+  return `set${capitalizeFirstLetter(type)}`;
+}
+
+function setRelations(resource, relationGroups) {
+  return new Promise((resolve, reject) => {
+    async.eachSeries(Object.keys(relationGroups),
+      (relGroup, callbackGroup) => {
+        const relGroupObj = relationGroups[relGroup];
+        if (isArray(relGroupObj)) {
+          async.eachSeries(relGroupObj,
+            (relGroupItem, callbackInner) => {
+              const setFunc = _getSetFunc(relGroup);
+              resource[setFunc](relGroupItem.obj)
+                .then(() => callbackInner(null))
+                .catch(err => callbackInner(err));
+            },
+            (err) => {
+              if (err) {
+                callbackGroup(err);
+              } else {
+                callbackGroup(null);
+              }
+            });
+        } else {
+          const setFunc = _getSetFunc(relGroup);
+          resource[setFunc](relGroupObj.obj)
+            .then(() => callbackGroup(null))
+            .catch(err => callbackGroup(err));
+        }
+      },
+      (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+  });
+}
+
 module.exports = {
   checkIfDbHasModel,
   checkIfModelIsAllowed,
   capitalizeFirstLetter,
   getAssociatedObjects,
+  getRelationshipObjects,
+  setRelations,
   genErrorObj
 };

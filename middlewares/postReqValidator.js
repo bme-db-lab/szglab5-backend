@@ -3,7 +3,8 @@ const Joi = require('joi');
 const postReqSchema = Joi.object().keys({
   data: Joi.object().keys({
     attributes: Joi.object().required(),
-    type: Joi.string().required()
+    type: Joi.string().required(),
+    relationships: Joi.object()
   })
 });
 

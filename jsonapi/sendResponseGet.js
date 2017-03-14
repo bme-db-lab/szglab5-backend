@@ -1,5 +1,5 @@
 const pluralize = require('pluralize');
-const { genErrorObj, checkIfModelIsAllowed, checkIfDbHasModel } = require('./utils.js');
+const { genErrorObj, checkIfModelIsAllowed, checkIfDbHasModel, getAssociatedObjects } = require('./utils.js');
 const { getDB } = require('../db/db.js');
 
 
@@ -35,14 +35,21 @@ module.exports = (req, res) => {
           res.status(404).send(genErrorObj([`Model (${modelName}) not found with id (${id})`]));
         }
         const attributes = resource.dataValues;
-        const resourcesToSend = {
+        // sync things
+        const syncPart = {
           type: modelNamePlural,
           id: resource.id,
           attributes
         };
-        res.send({
-          data: resourcesToSend
-        });
+        // async things
+        getAssociatedObjects(db, resource, modelName)
+          .then((assoc) => {
+            const relationships = assoc;
+            res.send(Object.assign({}, syncPart, relationships));
+          })
+          .catch((err) => {
+            res.status(500).send(genErrorObj([err.message]));
+          });
       })
       .catch((err) => {
         res.status(500).send(genErrorObj([err.message]));
