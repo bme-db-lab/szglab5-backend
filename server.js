@@ -15,11 +15,16 @@ initDB()
   .then(() => {
     console.log('Db initializing succeed!');
     const app = express();
-    app.use(bodyParser.json({ limit: '10mb' }));
+    app.use(bodyParser.json({
+      limit: '10mb',
+      type: 'application/vnd.api+json'
+    }));
 
     let whitelist = [];
     if (config.env === 'dev') {
       whitelist = [`http://localhost:${config.frontend.port}`];
+      const morgan = require('morgan');
+      app.use(morgan('dev'));
     }
     const corsOptions = {
       origin: whitelist
