@@ -8,7 +8,7 @@ const allowedModels = [
   'question'
 ];
 
-const methodName = 'list';
+const methodName = 'create';
 
 module.exports = (req, res) => {
   try {
@@ -32,7 +32,6 @@ module.exports = (req, res) => {
     // TODO check resourceToSave attributes to schema
     const resourceToSave = req.body.data.attributes;
     const { relationships } = req.body.data;
-    console.log(relationships);
     if (!relationships) {
       db[modelName].create(resourceToSave)
         .then((resource) => {
@@ -53,8 +52,6 @@ module.exports = (req, res) => {
       getRelationshipObjects(db, relationships)
         .then((relGroups) => {
           // all relationships object ready
-          console.log('getRelationshipObjects results: ');
-          console.log(relGroups);
           db[modelName].create(resourceToSave)
             .then((resource) => {
               setRelations(resource, relGroups)
@@ -85,7 +82,6 @@ module.exports = (req, res) => {
         });
     }
   } catch (err) {
-    console.log(err);
     res.status(500).send(genErrorObj([err.message]));
   }
 };

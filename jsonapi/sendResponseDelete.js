@@ -9,7 +9,7 @@ const allowedModels = [
   'question'
 ];
 
-const methodName = 'list';
+const methodName = 'delete';
 
 module.exports = (req, res) => {
   try {

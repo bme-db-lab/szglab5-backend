@@ -1,7 +1,6 @@
 const pluralize = require('pluralize');
-const { genErrorObj, checkIfModelIsAllowed, checkIfDbHasModel } = require('./utils.js');
+const { genErrorObj, checkIfModelIsAllowed, checkIfDbHasModel, getRelationshipObjects, setRelations } = require('./utils.js');
 const { getDB } = require('../db/db.js');
-
 
 const allowedModels = [
   'test',
@@ -9,7 +8,7 @@ const allowedModels = [
   'question'
 ];
 
-const methodName = 'list';
+const methodName = 'update';
 
 module.exports = (req, res) => {
   try {
@@ -29,16 +28,48 @@ module.exports = (req, res) => {
       return;
     }
     // TODO check resourceToSave attributes to schema
-    const resourceToUpdate = req.body.data.attributes;
     // all check passed
-    db[modelName].update(resourceToUpdate, { where: { id } })
-      .then((rows) => {
-        console.log(rows);
-        res.status(204).send();
-      })
-      .catch((err) => {
-        res.status(500).send(genErrorObj([err.message]));
-      });
+    const resourceToUpdate = req.body.data.attributes;
+    const { relationships } = req.body.data;
+    if (!relationships) {
+      db[modelName].update(resourceToUpdate, { where: { id } })
+        .then((rows) => {
+          console.log(rows);
+          res.status(204).send();
+        })
+        .catch((err) => {
+          res.status(500).send(genErrorObj([err.message]));
+        });
+    } else {
+      getRelationshipObjects(db, relationships)
+        .then((relGroups) => {
+          db[modelName].findById(id).then((resource) => {
+            if (resource === null) {
+              res.status(404).send(genErrorObj([`Model(${modelName}) does not exist with id ${id}`]));
+              return;
+            }
+            db[modelName].update(resourceToUpdate, { where: { id } })
+              .then(() => {
+                setRelations(resource, relGroups)
+                  .then(() => {
+                    res.status(204).send();
+                  })
+                  .catch((err) => {
+                    res.status(500).send(genErrorObj([err.message]));
+                  });
+              })
+              .catch((err) => {
+                res.status(500).send(genErrorObj([err.message]));
+              });
+          })
+          .catch((err) => {
+            res.status(500).send(genErrorObj([err.message]));
+          });
+        })
+        .catch((err) => {
+          res.status(500).send(genErrorObj([err.message]));
+        });
+    }
   } catch (err) {
     console.log(err);
     res.status(500).send(genErrorObj([err.message]));
