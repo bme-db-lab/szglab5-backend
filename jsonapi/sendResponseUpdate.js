@@ -31,7 +31,7 @@ module.exports = (req, res) => {
     // all check passed
     const resourceToUpdate = req.body.data.attributes;
     const { relationships } = req.body.data;
-    if (!relationships) {
+    if (!relationships && resourceToUpdate) {
       db[modelName].update(resourceToUpdate, { where: { id } })
         .then((rows) => {
           console.log(rows);
@@ -48,19 +48,29 @@ module.exports = (req, res) => {
               res.status(404).send(genErrorObj([`Model(${modelName}) does not exist with id ${id}`]));
               return;
             }
-            db[modelName].update(resourceToUpdate, { where: { id } })
-              .then(() => {
-                setRelations(resource, relGroups)
-                  .then(() => {
-                    res.status(204).send();
-                  })
-                  .catch((err) => {
-                    res.status(500).send(genErrorObj([err.message]));
-                  });
-              })
-              .catch((err) => {
-                res.status(500).send(genErrorObj([err.message]));
-              });
+            if (resourceToUpdate) {
+              db[modelName].update(resourceToUpdate, { where: { id } })
+                .then(() => {
+                  setRelations(resource, relGroups)
+                    .then(() => {
+                      res.status(204).send();
+                    })
+                    .catch((err) => {
+                      res.status(500).send(genErrorObj([err.message]));
+                    });
+                })
+                .catch((err) => {
+                  res.status(500).send(genErrorObj([err.message]));
+                });
+            } else {
+              setRelations(resource, relGroups)
+                .then(() => {
+                  res.status(204).send();
+                })
+                .catch((err) => {
+                  res.status(500).send(genErrorObj([err.message]));
+                });
+            }
           })
           .catch((err) => {
             res.status(500).send(genErrorObj([err.message]));
