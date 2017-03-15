@@ -1,5 +1,5 @@
 const pluralize = require('pluralize');
-const { genErrorObj, checkIfModelIsAllowed, checkIfDbHasModel, getRelationshipObjects, setRelations } = require('./utils.js');
+const { genErrorObj, checkIfModelIsAllowed, checkIfDbHasModel, getAssociatedObjects } = require('./utils.js');
 const { getDB } = require('../db/db.js');
 
 const allowedModels = [
@@ -13,7 +13,7 @@ const methodName = 'relation';
 module.exports = (req, res) => {
   try {
     const db = getDB();
-    const { modelNamePlural, id } = req.params;
+    const { modelNamePlural, id, modelNamePluralRel } = req.params;
     const modelName = pluralize.singular(modelNamePlural);
     // check if model exist
     const modellExistRet = checkIfDbHasModel(modelName, db);
@@ -35,10 +35,19 @@ module.exports = (req, res) => {
           res.status(404).send(genErrorObj([`Model(${modelName}) does not exist with id ${id}`]));
           return;
         }
+        const modelNameRel = pluralize.singular(modelNamePluralRel);
+        getAssociatedObjects(db, resource, modelNameRel)
+          .then((objects) => {
+            console.log(objects);
+            res.send('ok');
+          })
+          .catch((err) => {
+            res.status(500).send(genErrorObj([err.message]));
+          });
       })
       .catch((err) => {
         res.status(500).send(genErrorObj([err.message]));
-      })
+      });
   } catch (err) {
     res.status(500).send(genErrorObj([err.message]));
   }

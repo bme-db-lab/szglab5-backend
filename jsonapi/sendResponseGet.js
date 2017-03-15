@@ -45,7 +45,8 @@ module.exports = (req, res) => {
         getAssociatedObjects(db, resource, modelName)
           .then((assoc) => {
             const relationships = assoc;
-            res.send(Object.assign({}, syncPart, relationships));
+            const data = Object.assign({}, syncPart, relationships);
+            res.send({ data });
           })
           .catch((err) => {
             res.status(500).send(genErrorObj([err.message]));
