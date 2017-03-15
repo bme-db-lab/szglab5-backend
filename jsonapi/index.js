@@ -3,6 +3,7 @@ const sendResponseGet = require('./sendResponseGet.js');
 const sendResponseCreate = require('./sendResponseCreate.js');
 const sendResponseDelete = require('./sendResponseDelete.js');
 const sendResponseUpdate = require('./sendResponseUpdate.js');
+const sendResponseRelation = require('./sendResponseRelation');
 
 module.exports = (app) => {
   app.get('/:modelNamePlural', sendResponseList);
@@ -10,4 +11,5 @@ module.exports = (app) => {
   app.post('/:modelNamePlural', sendResponseCreate);
   app.delete('/:modelNamePlural/:id', sendResponseDelete);
   app.patch('/:modelNamePlural/:id', sendResponseUpdate);
+  app.get('/:modelNamePlural/:id/:modelNamePluralRel', sendResponseRelation);
 };
