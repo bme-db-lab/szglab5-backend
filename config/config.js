@@ -1,52 +1,39 @@
 const _ = require('lodash');
+const { readFileSync } = require('fs');
+const path = require('path');
 
 const env = process.env.NODE_ENV;
 if (!env) {
   throw new Error('Please specify the NODE_ENV environment variable!');
 }
 
-// DB
-const envDBHost = process.env.LAB_ADMIN_DB_HOST;
-const envDBPort = process.env.LAB_ADMIN_DB_PORT;
-const envDBName = process.env.LAB_ADMIN_DB_NAME;
-const envDBUsername = process.env.LAB_ADMIN_DB_USER;
-const envDBPassword = process.env.LAB_ADMIN_DB_PASSWORD;
-// API
-const envAPIPort = process.env.LAB_ADMIN_API_PORT;
-// Frontend
-const envFrontendPort = process.env.LAB_ADMIN_FRONTEND_PORT;
-
-// commonly used
-let config = {
+const defaultConfig = {
   db: {
-    dialect: 'postgres'
+    dialect: 'postgres',
+    host: 'localhost',
+    port: '5432',
+    database: 'laboradmin',
+    username: 'postgres',
+    password: 'devpass'
   },
-  env
+  api: {
+    port: 7000
+  },
+  frontend: {
+    port: 4200
+  }
 };
-switch (env) {
-  case 'dev':
-    _.merge(config, {
-      db: {
-        host: envDBHost || 'localhost',
-        port: envDBPort || '5432',
-        database: envDBName || 'laboradmin',
-        username: envDBUsername || 'postgres',
-        password: envDBPassword || 'devpass'
-      },
-      api: {
-        port: envAPIPort || 7000
-      },
-      frontend: {
-        port: envFrontendPort || 4200
-      }
-    });
-    break;
-  case 'test':
-    break;
-  case 'prod':
-    break;
-  default:
-    throw new Error(`Not supported NODE_ENV: "${env}"`);
+let specConfig = {};
+try {
+  const specConfigPath = path.join(__dirname, `./config.${env}.json`);
+  const specConfigFile = readFileSync(specConfigPath);
+  specConfig = JSON.parse(specConfigFile.toString());
+  console.log(`Config file(${path.basename(specConfigPath)}) loaded`);
+} catch (err) {
+  console.log(`Error during specific console file: ${err}`);
+  console.log('Fallback to default config!');
 }
+
+const config = _.merge(defaultConfig, specConfig);
 
 module.exports = config;

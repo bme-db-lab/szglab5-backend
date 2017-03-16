@@ -1,0 +1,15 @@
+{
+  "db": {
+    "host": "localhost",
+    "port": 5432,
+    "database": "laboradmin",
+    "username": "postgres",
+    "password": "devpass"
+  },
+  "api": {
+    "port": 7000
+  },
+  "frontend": {
+    "port": 4200
+  }
+}
