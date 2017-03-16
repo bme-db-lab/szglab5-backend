@@ -28,6 +28,12 @@ npm install nodemon -g
 ```
 
 ## Config
+Available node environments ('dev' | 'prod' | 'test')
+
+Steps to add specific config:
+* Create a new file to config/ with name of config.[env].json 
+* Copy the content of config.example.json to the new file
+*  Modify, or delete rows
 
 ## Commands
 #### CLI (npm run start cli:"ENV" "command")
