@@ -44,7 +44,7 @@ Starts the API server
 npm run start:dev
 ```
 
-## Endpoints
+## Endpoints
 The endpoints format fit JSON API specification.
 
 Model names in plural (-> modelNamePlural):
@@ -53,9 +53,9 @@ Model names in plural (-> modelNamePlural):
 * questions (Question model)
 
 ### Fetching Resources
-#### List (GET /:modelNamePlural)
-Request: GET /questions HTTP/1.1
-Response:
+#### List (GET /:modelNamePlural)
+* Request: GET /questions HTTP/1.1
+* Response:
 ```
 {
   "data": [
@@ -110,8 +110,8 @@ Response:
 }
 ```
 #### Get (GET /:modelNamePlural/:id)
-Request: GET /questions/2 HTTP/1.1
-Response:
+* Request: GET /questions/2 HTTP/1.1
+* Response:
 ```
 {
   "data": {
@@ -134,9 +134,9 @@ Response:
 !Not supported yet!
 
 ### Creating Resources (POST /:modelNamePlural)
-Header: Content-Type: application/vnd.api+json
-Request: POST /questions
-Body:
+* Header: Content-Type: application/vnd.api+json
+* Request: POST /questions
+* Body:
 ```
 {
 	"data": {
@@ -173,9 +173,9 @@ Response:
 ```
 
 ### Updating resources (PATCH /:modelNamePlural/:id)
-Header: Content-Type: application/vnd.api+json
-Request: PATCH /questions/2
-Body:
+* Header: Content-Type: application/vnd.api+json
+* Request: PATCH /questions/2
+* Body:
 ```
 {
   "data": {
@@ -197,8 +197,8 @@ Body:
 Response: 204 (No Content)
 
 ### Deleting Resources (DELETE /:modelNamePlural/:id)
-Request: DELETE /questions/2
-Response: 204 (No Content)
+* Request: DELETE /questions/2
+* Response: 204 (No Content)
 
 
 ## Useful links
