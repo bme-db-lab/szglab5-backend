@@ -35,11 +35,10 @@ module.exports = (req, res) => {
           res.status(404).send(genErrorObj([`Model(${modelName}) does not exist with id ${id}`]));
           return;
         }
-        const modelNameRel = pluralize.singular(modelNamePluralRel);
-        getAssociatedObjects(db, resource, modelNameRel)
+        getAssociatedObjects(db, resource, modelName)
           .then((objects) => {
             console.log(objects);
-            res.send('ok');
+            res.status(400).send('TODO');
           })
           .catch((err) => {
             res.status(500).send(genErrorObj([err.message]));
