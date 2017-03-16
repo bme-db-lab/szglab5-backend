@@ -2,7 +2,7 @@
 
 Backend repository for laboradmin backend
 
-## Table of Contents
+## Table of Contents
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Config](#config)
