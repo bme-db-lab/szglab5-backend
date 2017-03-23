@@ -22,7 +22,7 @@ You will need the following things properly installed on your computer.
 
 ```
 git clone <repository-url> this repository
-cd szglab5-frontend
+cd szglab5-backend
 npm install
 npm install nodemon -g
 ```
