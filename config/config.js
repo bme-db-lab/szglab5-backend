@@ -21,7 +21,14 @@ const defaultConfig = {
   },
   frontend: {
     port: 4200
-  }
+  },
+  jwt: {
+    secret: 'SuperSecret_Tuturu_Pumpuru'
+  },
+  bcrypt: {
+    saltRounds: 10
+  },
+  env
 };
 let specConfig = {};
 try {
@@ -30,7 +37,7 @@ try {
   specConfig = JSON.parse(specConfigFile.toString());
   console.log(`Config file(${path.basename(specConfigPath)}) loaded`);
 } catch (err) {
-  console.log(`Error during specific console file: ${err}`);
+  console.log(`Error during specific config file: ${err}`);
   console.log('Fallback to default config!');
 }
 

@@ -1,6 +1,8 @@
 const async = require('async');
 const fs = require('fs');
 const path = require('path');
+const bcrypt = require('bcrypt');
+const config = require('../config/config.js');
 
 function seedDB(db, modelName, data) {
   return new Promise((resolve, reject) => {
@@ -11,6 +13,10 @@ function seedDB(db, modelName, data) {
         let includeModels = [];
         if (includes !== undefined) {
           includeModels = includes.map(include => db[include]);
+        }
+        if (modelName === 'Users') {
+          const passwordHash = bcrypt.hashSync(obj.password, config.bcrypt.saltRounds);
+          obj.password = passwordHash;
         }
         db[modelName].create(obj, { include: includeModels })
         .then(() => {

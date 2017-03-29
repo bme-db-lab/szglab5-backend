@@ -1,14 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
-  const Semesters = sequelize.define('Semesters', {
-    academicyear: DataTypes.INTEGER,
-    academicterm: DataTypes.INTEGER,
-    description: DataTypes.STRING,
+  const StudentRegistrations = sequelize.define('StudentRegistrations', {
+    neptunSubjectCode: DataTypes.STRING,
+    neptunCourseCode: DataTypes.STRING,
   }, {
     classMethods: {
       associate: (models) => {
-        Semesters.belongsTo(models.Courses);
-        Semesters.hasMany(models.StudentRegistrations);
-        Semesters.hasMany(models.StudentGroups);
+        StudentRegistrations.belongsTo(models.Semesters);
+        StudentRegistrations.belongsTo(models.StudentGroups);
+        StudentRegistrations.hasMany(models.Events);
+        StudentRegistrations.belongsTo(models.Users);
         // Semesters.belongsTo(models.RegisteredStaffs, { foreignKey: 'id', targetKey: 'semester' });
         // Semesters.belongsTo(models.RegisteredStudents, { foreignKey: 'id', targetKey: 'semester' });
         // Semesters.belongsTo(models.StudentGroups, { foreignKey: 'id', targetKey: 'semester' });
@@ -16,5 +16,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  return Semesters;
+  return StudentRegistrations;
 };

@@ -1,13 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define('Users', {
-    id: DataTypes.INTEGER,
-    title: DataTypes.TEXT,
-    displayname: DataTypes.TEXT,
-    loginname: DataTypes.TEXT,
-    eppn: DataTypes.TEXT,
-    email: DataTypes.TEXT,
-    sshpublickey: DataTypes.TEXT,
-    password: DataTypes.TEXT
+    displayName: DataTypes.STRING,
+    loginName: DataTypes.STRING,
+    password: DataTypes.STRING,
+    email: DataTypes.STRING,
+    sshPublicKey: DataTypes.STRING,
+    // Student specific attributes
+    neptun: DataTypes.STRING,
+    university: DataTypes.STRING
+  }, {
+    classMethods: {
+      associate: (models) => {
+        Users.hasMany(models.StudentRegistrations);
+      }
+    }
   });
 
   return Users;

@@ -9,7 +9,7 @@ const postReqSchema = Joi.object().keys({
 });
 
 module.exports = (app) => {
-  app.post('*', (req, res, next) => {
+  app.post('/models/*', (req, res, next) => {
     const data = req.body;
     const { error } = Joi.validate(data, postReqSchema);
     if (error) {

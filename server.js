@@ -8,8 +8,8 @@ const cors = require('cors');
 
 const { port } = config.api;
 const { initDB } = require('./db/db.js');
-// const addEndpoints = require('./endpoints');
-const addEndpoints = require('./jsonapi');
+// const addEndpoints = require('./jsonapi');
+const addEndpoints = require('./endpoints');
 const addMiddlewares = require('./middlewares');
 
 initDB()
@@ -19,6 +19,10 @@ initDB()
     app.use(bodyParser.json({
       limit: '10mb',
       type: 'application/vnd.api+json'
+    }));
+    app.use(bodyParser.json({
+      limit: '10mb',
+      type: 'application/json'
     }));
 
     let whitelist = [];

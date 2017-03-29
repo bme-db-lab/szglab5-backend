@@ -1,6 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
   const Appointments = sequelize.define('Appointments', {
-    id: DataTypes.INTEGER,
     date: DataTypes.DATE,
     location: DataTypes.TEXT,
     eventtype: DataTypes.INTEGER,
