@@ -25,3 +25,56 @@ module.exports = (req, res) => {
     res.status(500).send(genErrorObj(err.message));
   }
 };
+
+/**
+* @api {get} /studentregistrations/:id Get StudentRegistration
+ * @apiName Get
+ * @apiGroup StudentRegistrations
+ * @apiDescription Get student registrations information with id
+ *
+ * @apiParam {Number} [id] StudentRegistration's id
+ *
+ *
+ * @apiSuccessExample Success-Response:
+ * HTTP/1.1 200 OK
+ * {
+ *   "data": {
+ *     "id": 1,
+ *     "neptunSubjectCode": "NEPTUN_SUBJ_CODE_1",
+ *     "neptunCourseCode": "NEPTUN_COURSE_CODE_1",
+ *     "createdAt": "2017-03-30T12:20:00.464Z",
+ *     "updatedAt": "2017-03-30T12:20:00.464Z",
+ *     "SemesterId": null,
+ *     "StudentGroupId": null,
+ *     "UserId": 1
+ *   },
+ *   "relationships": {
+ *     "Semester": null,
+ *     "StudentGroup": null,
+ *     "Events": {
+ *       "data": [
+ *         {
+ *           "id": 1,
+ *           "type": "Events"
+ *         },
+ *         {
+ *           "id": 2,
+ *           "type": "Events"
+ *         },
+ *         {
+ *           "id": 3,
+ *           "type": "Events"
+ *         }
+ *       ]
+ *     },
+ *     "User": {
+ *       "data": {
+ *         "id": 1,
+ *         "type": "Users"
+ *       }
+ *     }
+ *   }
+ * }
+ *
+ *
+ */
