@@ -1,27 +1,19 @@
-const { merge } = require('lodash');
 const { genErrorObj } = require('../../utils/utils.js');
 const { genJSONApiResByRecord } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 
 module.exports = (req, res) => {
   try {
-    const reqUserIdStr = req.params.id;
-    let reqUserIdNum = null;
-    reqUserIdNum = parseInt(reqUserIdStr, 10);
-    if (isNaN(reqUserIdNum)) {
+    const reqId = req.params.id;
+    const reqIdNum = parseInt(reqId, 10);
+    if (isNaN(reqId)) {
       res.status(400).send(genErrorObj('Requested id is not a number'));
       return;
     }
 
-    const { userId } = req.userInfo;
-    if (reqUserIdNum !== userId) {
-      res.status(403).send(genErrorObj('You can access only your own user'));
-      return;
-    }
-
     const db = getDB();
-    db.Users.findById(reqUserIdNum)
-      .then(genJSONApiResByRecord.bind(null, db, 'Users'))
+    db.StudentRegistrations.findById(reqIdNum)
+      .then(genJSONApiResByRecord.bind(null, db, 'StudentRegistrations'))
       .then((response) => {
         res.send(response);
       })

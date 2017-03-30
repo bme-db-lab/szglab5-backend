@@ -6,12 +6,12 @@ function auth(req, res, next) {
   try {
     const authHeader = req.get('Authorization');
     if (!authHeader) {
-      res.status(403).send('No Authorization header present!');
+      res.status(403).send(genErrorObj('No Authorization header present!'));
       return;
     }
     const bearerPattern = /^Bearer /;
     if (!authHeader.match(bearerPattern)) {
-      res.status(403).send('Invalid Authorization header format');
+      res.status(403).send(genErrorObj('Invalid Authorization header format'));
       return;
     }
     const token = authHeader.split(' ')[1];
@@ -30,4 +30,6 @@ function auth(req, res, next) {
 
 module.exports = (app) => {
   app.use('/users/*', auth);
+  app.use('/studentregistrations/*', auth);
+  app.use('/events/*', auth);
 };

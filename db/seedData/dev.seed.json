@@ -8,5 +8,40 @@
         "password": "12345"
       }
     }
+  ],
+  "StudentRegistrations": [
+    {
+      "data": {
+        "neptunSubjectCode": "NEPTUN_SUBJ_CODE_1",
+        "neptunCourseCode": "NEPTUN_COURSE_CODE_1",
+        "UserId": 1
+      }
+    }
+  ],
+  "Events": [
+    {
+      "data": {
+        "date": "2017-03-30T12:11:17.576Z",
+        "location": "IL105",
+        "attempt": 0,
+        "StudentRegistrationId": 1
+      }
+    },
+    {
+      "data": {
+        "date": "2017-04-06T12:11:17.576Z",
+        "location": "KF212",
+        "attempt": 0,
+        "StudentRegistrationId": 1
+      }
+    },
+    {
+      "data": {
+        "date": "2017-04-13T12:11:17.576Z",
+        "location": "QB013",
+        "attempt": 0,
+        "StudentRegistrationId": 1
+      }
+    }
   ]
 }

@@ -48,7 +48,7 @@ function checkIfModelIsAllowed(modelName, allowedModels, methodName) {
   return true;
 }
 
-function getAssociatedObjects(db, resource, modelName) {
+function getAssociatedObjects(db, modelName, resource) {
   return new Promise((resolve, reject) => {
     const associationsGroup = db[modelName].associations;
     async.mapSeries(Object.keys(associationsGroup),
@@ -98,9 +98,7 @@ function getAssociatedObjects(db, resource, modelName) {
               resultObj[objKey] = resultItem[objKey];
             });
           });
-          resolve({
-            relationships: resultObj
-          });
+          resolve(resultObj);
         }
       });
   });
