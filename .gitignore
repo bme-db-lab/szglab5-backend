@@ -1,3 +1,9 @@
+.bash_history
+.config/
+.node-gyp/
+.profile
+.viminfo
+
 # Logs
 logs
 *.log
