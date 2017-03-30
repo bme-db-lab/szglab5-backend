@@ -13,6 +13,7 @@ const loginReqSchema = Joi.object().keys({
 * @api {post} /auth/login User Login
  * @apiName Login
  * @apiGroup Auth
+ * @apiDescription Authenticate user with login name and password. Returns json web token if succeed
  *
  * @apiParam {String} [loginName] User's login name
  * @apiParam {String} [password] User's password
@@ -26,7 +27,7 @@ const loginReqSchema = Joi.object().keys({
  *
  *
  * @apiErrorExample User not exist:
- * HTTP/1.1 403 Forbidden
+ * vHTTP/1.1 403 Forbidden
  * {
  *   "errors": [
  *     {

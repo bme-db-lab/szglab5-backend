@@ -3,6 +3,16 @@ const async = require('async');
 const pluralize = require('pluralize');
 
 function genErrorObj(errors) {
+  if (isString(errors)) {
+    return {
+      errors: [
+        {
+          title: errors
+        }
+      ]
+    };
+  }
+
   if (!isArray(errors) || errors.length === 0) {
     return [];
   }
