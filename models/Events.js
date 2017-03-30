@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: (models) => {
         Events.belongsTo(models.StudentRegistrations);
+        Events.hasMany(models.Deliverables);
         // Events.hasMany(models.Events, {foreignKey: 'id', sourceKey: 'related'});
         // Events.hasMany(models.EventTypes, {foreignKey: 'id', sourceKey: 'eventtype'});
         // Events.hasMany(models.ExerciseTypes, {foreignKey: 'id', sourceKey: 'exercisetype'});

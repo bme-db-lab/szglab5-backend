@@ -12,9 +12,9 @@ module.exports = (req, res) => {
     }
 
     const db = getDB();
-    db.Events.findById(reqIdNum)
+    db.Deliverables.findById(reqIdNum)
       .then(checkIfExist)
-      .then(genJSONApiResByRecord.bind(null, db, 'Events'))
+      .then(genJSONApiResByRecord.bind(null, db, 'Deliverables'))
       .then((response) => {
         res.send(response);
       })
@@ -27,34 +27,12 @@ module.exports = (req, res) => {
 };
 
 /**
-* @api {get} /events/:id Get Event
+* @api {get} /deliverables/:id Get Deliverable
  * @apiName Get
- * @apiGroup Events
- * @apiDescription Get event information with id
+ * @apiGroup Deliverables
+ * @apiDescription Get deliverable information with id
  *
- * @apiParam {Number} [id] Event's id
+ * @apiParam {Number} [id] Deliverable's id
  *
- *
- * @apiSuccessExample Success-Response:
- * HTTP/1.1 200 OK
- * {
- *   "data": {
- *     "id": 1,
- *     "date": "2017-03-30T12:11:17.576Z",
- *     "location": "IL105",
- *     "attempt": 0,
- *     "createdAt": "2017-03-30T12:20:00.471Z",
- *     "updatedAt": "2017-03-30T12:20:00.471Z",
- *     "StudentRegistrationId": 1
- *   },
- *   "relationships": {
- *     "StudentRegistration": {
- *       "data": {
- *         "id": 1,
- *         "type": "StudentRegistrations"
- *       }
- *     }
- *   }
- * }
  *
  */

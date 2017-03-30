@@ -43,5 +43,47 @@
         "StudentRegistrationId": 1
       }
     }
+  ],
+  "DeliverableTemplates": [
+    {
+      "data": {
+        "description": "Beugro"
+      }
+    },
+    {
+      "data": {
+        "description": "GitRepository"
+      }
+    }
+  ],
+  "Deliverables": [
+    {
+      "data": {
+        "deadline": "2017-03-30T12:11:17.576Z",
+        "EventId": 1,
+        "DeliverableTemplateId": 1
+      }
+    },
+    {
+      "data": {
+        "deadline": "2017-03-30T12:11:17.576Z",
+        "EventId": 1,
+        "DeliverableTemplateId": 2
+      }
+    },
+    {
+      "data": {
+        "deadline": "2017-03-30T12:11:17.576Z",
+        "EventId": 2,
+        "DeliverableTemplateId": 1
+      }
+    },
+    {
+      "data": {
+        "deadline": "2017-03-30T12:11:17.576Z",
+        "EventId": 2,
+        "DeliverableTemplateId": 2
+      }
+    }
   ]
 }

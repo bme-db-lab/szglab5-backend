@@ -1,5 +1,5 @@
 const { genErrorObj } = require('../../utils/utils.js');
-const { genJSONApiResByRecord } = require('../../utils/jsonapi.js');
+const { genJSONApiResByRecord, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 
 module.exports = (req, res) => {
@@ -13,14 +13,18 @@ module.exports = (req, res) => {
 
     const db = getDB();
     db.StudentRegistrations.findById(reqIdNum)
+      .then(checkIfExist)
       .then(genJSONApiResByRecord.bind(null, db, 'StudentRegistrations'))
       .then((response) => {
         res.send(response);
       })
       .catch((err) => {
+        if (err.notFound) {
+          res.status(404).send(genErrorObj(err.message));
+          return;
+        }
         res.status(500).send(genErrorObj(err.message));
       });
-    // all check has been passed, get that user
   } catch (err) {
     res.status(500).send(genErrorObj(err.message));
   }

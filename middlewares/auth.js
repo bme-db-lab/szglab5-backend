@@ -28,8 +28,4 @@ function auth(req, res, next) {
   }
 }
 
-module.exports = (app) => {
-  app.use('/users/*', auth);
-  app.use('/studentregistrations/*', auth);
-  app.use('/events/*', auth);
-};
+module.exports = auth;

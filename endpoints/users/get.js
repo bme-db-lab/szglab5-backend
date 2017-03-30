@@ -1,5 +1,5 @@
 const { genErrorObj } = require('../../utils/utils.js');
-const { genJSONApiResByRecord } = require('../../utils/jsonapi.js');
+const { genJSONApiResByRecord, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 
 module.exports = (req, res) => {
@@ -19,6 +19,7 @@ module.exports = (req, res) => {
 
     const db = getDB();
     db.Users.findById(reqUserIdNum)
+      .then(checkIfExist)
       .then(genJSONApiResByRecord.bind(null, db, 'Users'))
       .then((response) => {
         res.send(response);
@@ -26,7 +27,6 @@ module.exports = (req, res) => {
       .catch((err) => {
         res.status(500).send(genErrorObj(err.message));
       });
-    // all check has been passed, get that user
   } catch (err) {
     res.status(500).send(genErrorObj(err.message));
   }
@@ -68,8 +68,8 @@ module.exports = (req, res) => {
  *   }
  *
  *
- * @apiErrorExample User not exist:
- * HTTP/1.1 403 Not own user id
+ * @apiErrorExample Not own user id:
+ * HTTP/1.1 403 Forbidden
  * {
  *   "errors": [
  *     {
