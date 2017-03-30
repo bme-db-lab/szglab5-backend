@@ -55,6 +55,54 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/deliverabletemplates/:id",
+    "title": "Get DeliverableTemplates",
+    "name": "Get",
+    "group": "DeliverableTemplates",
+    "description": "<p>Get deliverable template information with id</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": true,
+            "field": "id",
+            "description": "<p>DeliverableTemplates's id</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "endpoints/deliverableTemplates/get.js",
+    "groupTitle": "DeliverableTemplates"
+  },
+  {
+    "type": "get",
+    "url": "/deliverables/:id",
+    "title": "Get Deliverable",
+    "name": "Get",
+    "group": "Deliverables",
+    "description": "<p>Get deliverable information with id</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": true,
+            "field": "id",
+            "description": "<p>Deliverable's id</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "endpoints/deliverables/get.js",
+    "groupTitle": "Deliverables"
+  },
+  {
+    "type": "get",
     "url": "/events/:id",
     "title": "Get Event",
     "name": "Get",
@@ -151,8 +199,8 @@ define({ "api": [
     "error": {
       "examples": [
         {
-          "title": "User not exist:",
-          "content": "HTTP/1.1 403 Not own user id\n{\n  \"errors\": [\n    {\n      \"title\": \"You can access only your own user\"\n    }\n  ]\n}",
+          "title": "Not own user id:",
+          "content": "HTTP/1.1 403 Forbidden\n{\n  \"errors\": [\n    {\n      \"title\": \"You can access only your own user\"\n    }\n  ]\n}",
           "type": "json"
         }
       ]
