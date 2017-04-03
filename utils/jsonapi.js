@@ -13,9 +13,23 @@ function genJSONApiResByRecord(db, modelName, record) {
   return new Promise((resolve, reject) => {
     getAssociatedObjects(db, modelName, record)
       .then((relationships) => {
-        const attributes = record.dataValues;
+        const data = record.dataValues;
+        const pureAttributes = JSON.parse(JSON.stringify(data));
+        if (pureAttributes.id) {
+          delete pureAttributes.id;
+        }
+        if (pureAttributes.createdAt) {
+          delete pureAttributes.createdAt;
+        }
+        if (pureAttributes.updatedAt) {
+          delete pureAttributes.updatedAt;
+        }
         resolve({
-          data: attributes,
+          data: {
+            id: data.id,
+            type: modelName,
+            attributes: pureAttributes
+          },
           relationships
         });
       })
