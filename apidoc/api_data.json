@@ -102,6 +102,17 @@
     "groupTitle": "Deliverables"
   },
   {
+    "type": "patch",
+    "url": "/deliverables/:id",
+    "title": "Update Deliverable",
+    "name": "Patch",
+    "group": "Deliverables",
+    "description": "<p>Update a deliverable</p>",
+    "version": "0.0.0",
+    "filename": "endpoints/deliverables/update.js",
+    "groupTitle": "Deliverables"
+  },
+  {
     "type": "get",
     "url": "/events/:id",
     "title": "Get Event",

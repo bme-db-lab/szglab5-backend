@@ -18,12 +18,6 @@ function genJSONApiResByRecord(db, modelName, record) {
         if (pureAttributes.id) {
           delete pureAttributes.id;
         }
-        if (pureAttributes.createdAt) {
-          delete pureAttributes.createdAt;
-        }
-        if (pureAttributes.updatedAt) {
-          delete pureAttributes.updatedAt;
-        }
         resolve({
           data: {
             id: data.id,
@@ -39,7 +33,22 @@ function genJSONApiResByRecord(db, modelName, record) {
   });
 }
 
+function updateResource(db, modelName, data) {
+  return new Promise((resolve, reject) => {
+    const id = data.id;
+    const attributes = data.attributes;
+    db[modelName].update(attributes, { where: { id } })
+      .then(() => {
+        resolve();
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
 module.exports = {
   genJSONApiResByRecord,
+  updateResource,
   checkIfExist
 };
