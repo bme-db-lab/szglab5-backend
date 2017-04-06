@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-const async = require('async');
 
 const config = require('../config/config.js');
 
@@ -56,8 +55,8 @@ function initDB(_options) {
       })
       .catch((err) => {
         reject(err);
-        return;
       });
+    return undefined;
   });
 }
 
