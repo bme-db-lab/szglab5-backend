@@ -69,7 +69,8 @@
       "data": {
         "deadline": "2017-03-30T12:11:17.576Z",
         "EventId": 1,
-        "DeliverableTemplateId": 1
+        "DeliverableTemplateId": 1,
+        "correctorId": 2
       }
     },
     {
