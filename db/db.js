@@ -26,7 +26,6 @@ function initDB(_options) {
     const modelsPath = path.join(__dirname, '../models');
     const files = fs.readdirSync(modelsPath);
     const modelFiles = files.filter(file => (file !== 'index.js') && (file.indexOf('.') !== 0) && (file[0] !== '_'));
-
     modelFiles.forEach((file) => {
       const model = sequelize.import(path.join(modelsPath, file));
       db[model.name] = model;

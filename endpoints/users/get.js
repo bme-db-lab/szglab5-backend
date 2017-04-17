@@ -11,11 +11,11 @@ module.exports = (req, res) => {
       return;
     }
 
-    const { userId } = req.userInfo;
-    if (reqUserIdNum !== userId) {
-      res.status(403).send(genErrorObj('You can access only your own user'));
-      return;
-    }
+    // const { userId } = req.userInfo;
+    // if (reqUserIdNum !== userId) {
+    //   res.status(403).send(genErrorObj('You can access only your own user'));
+    //   return;
+    // }
 
     const db = getDB();
     db.Users.findById(reqUserIdNum)
