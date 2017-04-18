@@ -1,6 +1,7 @@
 const pluralize = require('pluralize');
 const { genErrorObj, checkIfModelIsAllowed, checkIfDbHasModel, getRelationshipObjects, setRelations } = require('./utils.js');
 const { getDB } = require('../db/db.js');
+const logger = require('../utils/logger.js');
 
 const allowedModels = [
   'test',
@@ -34,7 +35,7 @@ module.exports = (req, res) => {
     if (!relationships && resourceToUpdate) {
       db[modelName].update(resourceToUpdate, { where: { id } })
         .then((rows) => {
-          console.log(rows);
+          logger.info(rows);
           res.status(204).send();
         })
         .catch((err) => {
@@ -81,7 +82,7 @@ module.exports = (req, res) => {
         });
     }
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     res.status(500).send(genErrorObj([err.message]));
   }
 };

@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const config = require('../config/config.js');
+const logger = require('../utils/logger.js');
 
 function seedDB(db, modelName, data) {
   return new Promise((resolve, reject) => {
@@ -67,7 +68,7 @@ module.exports = (db) => {
       }
     );
     } else {
-      console.log('No seed data provided');
+      logger.warn('No seed data provided');
       resolve();
     }
   });

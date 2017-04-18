@@ -51,5 +51,5 @@ initDB()
     });
   })
   .catch((err) => {
-    logger.info(`Error during server initializing: ${err.message}`);
+    logger.error(`Error during server initializing: ${err.message}`);
   });

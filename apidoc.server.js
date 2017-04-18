@@ -1,6 +1,7 @@
 const http = require('http');
 const path = require('path');
 const express = require('express');
+const logger = require('./utils/logger.js');
 
 const port = process.argv[2] || 7700;
 
@@ -9,5 +10,5 @@ app.use(express.static(path.join(__dirname, 'apidoc')));
 
 const server = http.createServer(app);
 server.listen(port, () => {
-  console.log(`Apidoc server is listening on localhost:${port}`);
+  logger.info(`Apidoc server is listening on localhost:${port}`);
 });

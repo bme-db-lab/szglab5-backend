@@ -2,6 +2,7 @@ const pluralize = require('pluralize');
 const async = require('async');
 const { genErrorObj, checkIfModelIsAllowed, checkIfDbHasModel, getAssociatedObjects } = require('./utils.js');
 const { getDB } = require('../db/db.js');
+const logger = require('../utils/logger.js');
 
 
 const allowedModels = [
@@ -76,7 +77,7 @@ module.exports = (req, res) => {
 // Object.keys(associations).forEach((assoc) => {
 //   const getFunc = `get${capitalizeFirstLetter(assoc)}`;
 //   resource[getFunc]().then((obj) => {
-//     console.log(obj);
+//     logger.info(obj);
 //   });
 //   relationships[assoc] = {
 //

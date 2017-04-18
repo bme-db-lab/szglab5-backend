@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
 module.exports = () => {
-  console.log('Test command running...');
+  const logger = require('../../utils/logger.js');
+  logger.info('Test command running...');
 };

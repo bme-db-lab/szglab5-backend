@@ -9,14 +9,15 @@ if (!method) {
 module.exports = () => {
     const { initDB } = require('../../db/db.js');
     const seed = require('../../db/seed.js');
+    const logger = require('../../utils/logger.js');
     initDB({
       force: true
     })
     .then(seed)
     .then(() => {
-      console.log('Seed succeed!');
+      logger.info('Seed succeed!');
     })
     .catch((err) => {
-      console.log(`Seed failed: ${err.message}`);
+      logger.error(`Seed failed: ${err.message}`);
     });
 }

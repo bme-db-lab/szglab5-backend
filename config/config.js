@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const { readFileSync } = require('fs');
 const path = require('path');
+const logger = require('../utils/logger.js');
 
 const env = process.env.NODE_ENV;
 if (!env) {
@@ -35,10 +36,10 @@ try {
   const specConfigPath = path.join(__dirname, `./config.${env}.json`);
   const specConfigFile = readFileSync(specConfigPath);
   specConfig = JSON.parse(specConfigFile.toString());
-  console.log(`Config file(${path.basename(specConfigPath)}) loaded`);
+  logger.info(`Config file(${path.basename(specConfigPath)}) loaded`);
 } catch (err) {
-  console.log(`Error during specific config file: ${err}`);
-  console.log('Fallback to default config!');
+  logger.error(`Error during specific config file: ${err}`);
+  logger.error('Fallback to default config!');
 }
 
 const config = _.merge(defaultConfig, specConfig);
