@@ -18,6 +18,9 @@ function genJSONApiResByRecord(db, modelName, record) {
         if (pureAttributes.id) {
           delete pureAttributes.id;
         }
+        if (modelName === 'Users') {
+          delete pureAttributes.password;
+        }
         resolve({
           data: {
             id: data.id,

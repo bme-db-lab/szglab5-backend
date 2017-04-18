@@ -7,6 +7,13 @@
         "neptun": "Q87XXZ",
         "password": "12345"
       }
+    },
+    {
+      "data": {
+        "displayName": "Demonstrátor Dénes",
+        "loginName": "demonstratordenes",
+        "password": "12345"
+      }
     }
   ],
   "StudentRegistrations": [
@@ -24,7 +31,8 @@
         "date": "2017-03-30T12:11:17.576Z",
         "location": "IL105",
         "attempt": 0,
-        "StudentRegistrationId": 1
+        "StudentRegistrationId": 1,
+        "demonstratorId": 2
       }
     },
     {
@@ -61,7 +69,8 @@
       "data": {
         "deadline": "2017-03-30T12:11:17.576Z",
         "EventId": 1,
-        "DeliverableTemplateId": 1
+        "DeliverableTemplateId": 1,
+        "correctorId": 2
       }
     },
     {
