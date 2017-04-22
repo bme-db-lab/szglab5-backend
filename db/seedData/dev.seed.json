@@ -94,5 +94,45 @@
         "DeliverableTemplateId": 2
       }
     }
+  ],
+  "ExerciseCategories": [
+    {
+      "data": {
+        "type": "Oracle"
+      }
+    },
+    {
+      "data": {
+        "type": "JDBC"
+      }
+    },
+    {
+      "data": {
+        "type": "SQL"
+      }
+    }
+  ],
+  "ExerciseTypes": [
+    {
+      "data": {
+        "name": "Videótéka",
+        "shortName": "VIDEO",
+        "language": "HU"
+      }
+    },
+    {
+      "data": {
+        "name": "Hajózás",
+        "shortName": "HAJO",
+        "language": "HU"
+      }
+    },
+    {
+      "data": {
+        "name": "Road transportation",
+        "shortName": "ROAD",
+        "language": "EN"
+      }
+    }
   ]
 }
