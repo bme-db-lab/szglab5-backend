@@ -1,4 +1,5 @@
 const winston = require('winston');
+const config = require('../config/config.js');
 
 const logger = new (winston.Logger)({
   levels: {
@@ -10,32 +11,44 @@ const logger = new (winston.Logger)({
   },
   transports: [
     new (winston.transports.File)({
-      name: 'debug-file',
+      name: 'debugFile',
       filename: 'debug.log',
       level: 'debug'
     }),
     new (winston.transports.File)({
-      name: 'info-file',
+      name: 'infoFile',
       filename: 'info.log',
       level: 'info'
     }),
     new (winston.transports.File)({
-      name: 'warn-file',
+      name: 'warnFile',
       filename: 'warn.log',
       level: 'warn'
     }),
     new (winston.transports.File)({
-      name: 'error-file',
+      name: 'errorFile',
       filename: 'error.log',
       level: 'error'
     }),
     new (winston.transports.File)({
-      name: 'fatal-file',
+      name: 'fatalFile',
       filename: 'fatal.log',
       level: 'fatal'
-    }),
-    new (winston.transports.Console)()
+    })
   ]
 });
+
+if (logger.levels[config.logger.fileLevel]) {
+  for (var transport in logger.transports)
+    logger.transports[transport].silent = logger.levels[logger.transports[transport].level] > logger.levels[config.logger.fileLevel];
+} else
+  logger.error('Invalid file logging level.');
+
+if (logger.levels[config.logger.consoleLevel])
+  logger.add(winston.transports.Console, { level: config.logger.consoleLevel });
+else {
+  logger.add(winston.transports.Console, { level: 'info' });
+  logger.error('Invalid console logging level.');
+}
 
 module.exports = logger;
