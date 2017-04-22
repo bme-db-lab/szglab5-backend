@@ -19,6 +19,10 @@ module.exports = (req, res) => {
         res.send(response);
       })
       .catch((err) => {
+        if (err.notFound) {
+          res.status(404).send(genErrorObj(err.message));
+          return;
+        }
         res.status(500).send(genErrorObj(err.message));
       });
   } catch (err) {
@@ -33,7 +37,6 @@ module.exports = (req, res) => {
  * @apiDescription Get event information with id
  *
  * @apiParam {Number} [id] Event's id
- *
  *
  * @apiSuccessExample Success-Response:
  * HTTP/1.1 200 OK

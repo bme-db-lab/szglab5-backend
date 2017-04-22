@@ -1,5 +1,5 @@
 const { genErrorObj } = require('../../utils/utils.js');
-const { genJSONApiResByRecord, checkIfExist } = require('../../utils/jsonapi.js');
+const { updateResource, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 
 module.exports = (req, res) => {
@@ -11,12 +11,14 @@ module.exports = (req, res) => {
       return;
     }
 
+    const { data } = req.body;
+    console.log(data);
     const db = getDB();
-    db.Deliverables.findById(reqIdNum)
+    db.Deliverables.findById(reqId)
       .then(checkIfExist)
-      .then(genJSONApiResByRecord.bind(null, db, 'Deliverables'))
-      .then((response) => {
-        res.send(response);
+      .then(updateResource.bind(null, db, 'Deliverables', data))
+      .then(() => {
+        res.status(204).send();
       })
       .catch((err) => {
         if (err.notFound) {
@@ -31,12 +33,9 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /deliverables/:id Get Deliverable
- * @apiName Get
+* @api {patch} /deliverables/:id Update Deliverable
+ * @apiName Patch
  * @apiGroup Deliverables
- * @apiDescription Get deliverable information with id
- *
- * @apiParam {Number} [id] Deliverable's id
- *
+ * @apiDescription Update a deliverable
  *
  */

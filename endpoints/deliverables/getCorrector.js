@@ -16,7 +16,16 @@ module.exports = (req, res) => {
       .then(checkIfExist)
       .then(genJSONApiResByRecord.bind(null, db, 'Deliverables'))
       .then((response) => {
-        res.send(response);
+        const correctorUser = response.relationships.corrector;
+        if (correctorUser === null) {
+          res.status(404).send();
+          return;
+        }
+        db.Users.findById(correctorUser.data.id)
+          .then(genJSONApiResByRecord.bind(null, db, 'Users'))
+          .then((responseUser) => {
+            res.send(responseUser);
+          });
       })
       .catch((err) => {
         if (err.notFound) {
@@ -31,12 +40,10 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /deliverables/:id Get Deliverable
- * @apiName Get
+ * @api {get} /deliverables/:id/corrector Get deliverable's corrector
+ * @apiName Get Corrector
  * @apiGroup Deliverables
- * @apiDescription Get deliverable information with id
+ * @apiDescription Get deliverable's corrector
  *
- * @apiParam {Number} [id] Deliverable's id
- *
- *
+ * @apiParam {Number} [id] Deliverables's id
  */

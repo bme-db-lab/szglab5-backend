@@ -12,11 +12,20 @@ module.exports = (req, res) => {
     }
 
     const db = getDB();
-    db.Deliverables.findById(reqIdNum)
+    db.Events.findById(reqIdNum)
       .then(checkIfExist)
-      .then(genJSONApiResByRecord.bind(null, db, 'Deliverables'))
+      .then(genJSONApiResByRecord.bind(null, db, 'Events'))
       .then((response) => {
-        res.send(response);
+        const demonstratorUser = response.relationships.demonstrator;
+        if (demonstratorUser === null) {
+          res.status(404).send();
+          return;
+        }
+        db.Users.findById(demonstratorUser.data.id)
+          .then(genJSONApiResByRecord.bind(null, db, 'Users'))
+          .then((responseUser) => {
+            res.send(responseUser);
+          });
       })
       .catch((err) => {
         if (err.notFound) {
@@ -31,12 +40,10 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /deliverables/:id Get Deliverable
- * @apiName Get
- * @apiGroup Deliverables
- * @apiDescription Get deliverable information with id
+ * @api {get} /events/:id/demonstrator Get Event's demonstrator
+ * @apiName Get Demonstrator
+ * @apiGroup Events
+ * @apiDescription Get event's demonstrator
  *
- * @apiParam {Number} [id] Deliverable's id
- *
- *
+ * @apiParam {Number} [id] Event's id
  */

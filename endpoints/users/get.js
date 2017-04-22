@@ -11,11 +11,11 @@ module.exports = (req, res) => {
       return;
     }
 
-    const { userId } = req.userInfo;
-    if (reqUserIdNum !== userId) {
-      res.status(403).send(genErrorObj('You can access only your own user'));
-      return;
-    }
+    // const { userId } = req.userInfo;
+    // if (reqUserIdNum !== userId) {
+    //   res.status(403).send(genErrorObj('You can access only your own user'));
+    //   return;
+    // }
 
     const db = getDB();
     db.Users.findById(reqUserIdNum)
@@ -25,6 +25,10 @@ module.exports = (req, res) => {
         res.send(response);
       })
       .catch((err) => {
+        if (err.notFound) {
+          res.status(404).send(genErrorObj(err.message));
+          return;
+        }
         res.status(500).send(genErrorObj(err.message));
       });
   } catch (err) {

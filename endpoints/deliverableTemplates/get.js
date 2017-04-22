@@ -19,6 +19,10 @@ module.exports = (req, res) => {
         res.send(response);
       })
       .catch((err) => {
+        if (err.notFound) {
+          res.status(404).send(genErrorObj(err.message));
+          return;
+        }
         res.status(500).send(genErrorObj(err.message));
       });
   } catch (err) {
