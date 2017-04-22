@@ -40,8 +40,8 @@ module.exports = (req, res) => {
 };
 
 /**
-* @api {get} /deliverables/:id/corrector Get deliverable's corrector
- * @apiName Get
+ * @api {get} /deliverables/:id/corrector Get deliverable's corrector
+ * @apiName Get Corrector
  * @apiGroup Deliverables
  * @apiDescription Get deliverable's corrector
  *

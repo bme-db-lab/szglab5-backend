@@ -21,10 +21,10 @@ module.exports = (req, res) => {
 };
 
 /**
-* @api {get} /events Get Events
- * @apiName Get
+ * @api {get} /events List Events
+ * @apiName List
  * @apiGroup Events
- * @apiDescription Get events
+ * @apiDescription List events
  *
  * @apiParam {String} [filter] filter the events
  *

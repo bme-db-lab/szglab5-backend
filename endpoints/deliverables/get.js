@@ -31,7 +31,7 @@ module.exports = (req, res) => {
 };
 
 /**
-* @api {get} /deliverables/:id Get Deliverable
+ * @api {get} /deliverables/:id Get Deliverable
  * @apiName Get
  * @apiGroup Deliverables
  * @apiDescription Get deliverable information with id

@@ -40,8 +40,8 @@ module.exports = (req, res) => {
 };
 
 /**
-* @api {get} /events/:id/demonstrator Get Event's demonstrator
- * @apiName Get
+ * @api {get} /events/:id/demonstrator Get Event's demonstrator
+ * @apiName Get Demonstrator
  * @apiGroup Events
  * @apiDescription Get event's demonstrator
  *
