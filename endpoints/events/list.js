@@ -50,7 +50,10 @@ module.exports = (req, res) => {
  *
  * @apiParam {String} [filter] filter the events
  *
- * @apiSampleRequest /events?filter[location]=IL105
- * @apiSampleRequest /events?filter[dlstart]=2017-04-1&filter[dlend]=2018-01-11
+ * @apiExample {js} Example filter to location:
+ * /events?filter[location]=IL105
+ *
+ * @apiExample {js} Example filter to date:
+ * /events?filter[dlstart]=2017-04-1&filter[dlend]=2018-01-11
  *
  */
