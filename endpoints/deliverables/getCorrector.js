@@ -38,3 +38,12 @@ module.exports = (req, res) => {
     res.status(500).send(genErrorObj(err.message));
   }
 };
+
+/**
+* @api {get} /deliverables/:id/corrector Get deliverable's corrector
+ * @apiName Get
+ * @apiGroup Deliverables
+ * @apiDescription Get deliverable's corrector
+ *
+ * @apiParam {Number} [id] Deliverables's id
+ */
