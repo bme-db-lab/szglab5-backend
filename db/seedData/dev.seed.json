@@ -32,7 +32,7 @@
         "location": "IL105",
         "attempt": 0,
         "StudentRegistrationId": 1,
-        "demonstratorId": 2
+        "DemonstratorId": 2
       }
     },
     {
@@ -60,7 +60,7 @@
     },
     {
       "data": {
-        "description": "GitRepository"
+        "description": "Jegyzőkönyv"
       }
     }
   ],
@@ -70,7 +70,7 @@
         "deadline": "2017-03-30T12:11:17.576Z",
         "EventId": 1,
         "DeliverableTemplateId": 1,
-        "correctorId": 2
+        "CorrectorId": 2
       }
     },
     {

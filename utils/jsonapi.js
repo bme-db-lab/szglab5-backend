@@ -1,4 +1,5 @@
 const { getAssociatedObjects } = require('./utils.js');
+const async = require('async');
 
 function checkIfExist(record) {
   if (record === null) {
@@ -25,14 +26,36 @@ function genJSONApiResByRecord(db, modelName, record) {
           data: {
             id: data.id,
             type: modelName,
-            attributes: pureAttributes
-          },
-          relationships
+            attributes: pureAttributes,
+            relationships
+          }
         });
       })
       .catch((err) => {
         reject(err);
       });
+  });
+}
+
+function genJSONApiResByRecords(db, modelName, records) {
+  return new Promise((resolve, reject) => {
+    async.mapSeries(records,
+      (record, callback) => {
+        genJSONApiResByRecord(db, modelName, record)
+          .then((singleResponse) => {
+            callback(null, singleResponse.data);
+          })
+          .catch((err) => {
+            callback(err);
+          });
+      },
+      (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+        return resolve({ data: result });
+      }
+    );
   });
 }
 
@@ -52,6 +75,7 @@ function updateResource(db, modelName, data) {
 
 module.exports = {
   genJSONApiResByRecord,
+  genJSONApiResByRecords,
   updateResource,
   checkIfExist
 };
