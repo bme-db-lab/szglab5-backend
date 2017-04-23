@@ -8,8 +8,7 @@ if (!method) {
 
 module.exports = () => {
   const { initDB } = require('../../db/db.js');
-  const seed = require('../../db/seedJSON.js');
-  console.log('Old command, for testing other modules. Use init instead if its ready.');
+  const seed = require('../../db/seedXLS.js');
   initDB({
     force: true
   })
