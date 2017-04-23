@@ -7,22 +7,6 @@ if (!method) {
 }*/
 
 module.exports = () => {
-<<<<<<< HEAD
-  const { initDB } = require('../../db/db.js');
-  const seed = require('../../db/seedJSON.js');
-  console.log('Old command, for testing other modules. Use init instead if its ready.');
-  initDB({
-    force: true
-  })
-  .then(seed)
-  .then(() => {
-    console.log('Seed succeed!');
-  })
-  .catch((err) => {
-    console.log(`Seed failed: ${err.message}`);
-  });
-};
-=======
     const { initDB } = require('../../db/db.js');
     const seed = require('../../db/seed.js');
     const logger = require('../../utils/logger.js');
@@ -37,4 +21,3 @@ module.exports = () => {
       logger.error(`Seed failed: ${err.message}`);
     });
 }
->>>>>>> master

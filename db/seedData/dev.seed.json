@@ -25,6 +25,60 @@
       }
     }
   ],
+    "ExerciseCategories": [
+    {
+      "data": {
+        "type": "Oracle"
+      }
+    },
+    {
+      "data": {
+        "type": "JDBC"
+      }
+    },
+    {
+      "data": {
+        "type": "SQL"
+      }
+    }
+  ],
+  "ExerciseTypes": [
+    {
+      "data": {
+        "name": "Videótéka",
+        "shortName": "VIDEO",
+        "language": "HU"
+      }
+    },
+    {
+      "data": {
+        "name": "Hajózás",
+        "shortName": "HAJO",
+        "language": "HU"
+      }
+    },
+    {
+      "data": {
+        "name": "Road transportation",
+        "shortName": "ROAD",
+        "language": "EN"
+      }
+    }
+  ],
+  "ExerciseSheets": [
+    {
+      "data": {
+        "ExerciseTypeId": 1,
+        "ExerciseCategoryId": 1
+      }
+    },
+    {
+      "data": {
+        "ExerciseTypeId": 2,
+        "ExerciseCategoryId": 1
+      }
+    }
+  ],
   "Events": [
     {
       "data": {
@@ -32,7 +86,8 @@
         "location": "IL105",
         "attempt": 0,
         "StudentRegistrationId": 1,
-        "DemonstratorId": 2
+        "DemonstratorId": 2,
+        "ExerciseSheetId": 1
       }
     },
     {

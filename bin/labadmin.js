@@ -3,11 +3,15 @@
 const cli = require('cli');
 const seed = require('./commands/seedCmd.js');
 const test = require('./commands/testCmd.js');
+<<<<<<< HEAD
 const init = require('./commands/initCmd.js');
+=======
+const logger = require('../utils/logger.js');
+>>>>>>> master
 
 cli.parse(null, ['test', 'seed', 'init']);
 
-console.log(`Command is: ${cli.command}`);
+logger.info(`Command is: ${cli.command}`);
 
 switch (cli.command) {
   case 'seed':

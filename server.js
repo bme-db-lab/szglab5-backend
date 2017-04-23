@@ -11,10 +11,11 @@ const { initDB } = require('./db/db.js');
 // const addEndpoints = require('./jsonapi');
 const addEndpoints = require('./endpoints');
 const addMiddlewares = require('./middlewares');
+const logger = require('./utils/logger.js');
 
 initDB()
   .then(() => {
-    console.log('Db initializing succeed!');
+    logger.info('Db initializing succeed!');
     const app = express();
     app.use(bodyParser.json({
       limit: '10mb',
@@ -46,9 +47,9 @@ initDB()
 
     const server = http.createServer(app);
     server.listen(port, () => {
-      console.log(`API Server is listenning on localhost:${port}`);
+      logger.info(`API Server is listenning on localhost:${port}`);
     });
   })
   .catch((err) => {
-    console.log(`Error during server initializing: ${err.message}`);
+    logger.error(`Error during server initializing: ${err.message}`);
   });

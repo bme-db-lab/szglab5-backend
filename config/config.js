@@ -28,6 +28,10 @@ const defaultConfig = {
   bcrypt: {
     saltRounds: 10
   },
+  logger: {
+    consoleLevel: 'info',
+    fileLevel: 'info'
+  },
   env
 };
 let specConfig = {};

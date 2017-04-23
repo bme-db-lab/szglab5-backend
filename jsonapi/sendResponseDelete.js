@@ -1,6 +1,7 @@
 const pluralize = require('pluralize');
 const { genErrorObj, checkIfModelIsAllowed, checkIfDbHasModel } = require('./utils.js');
 const { getDB } = require('../db/db.js');
+const logger = require('../utils/logger.js');
 
 
 const allowedModels = [
@@ -31,7 +32,7 @@ module.exports = (req, res) => {
     // all check passed
     db[modelName].destroy({ where: { id } })
       .then((rows) => {
-        console.log(rows);
+        logger.info(rows);
         if (rows !== 0) {
           res.status(204).send();
         } else {
@@ -42,7 +43,7 @@ module.exports = (req, res) => {
         res.status(500).send(err);
       });
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     res.status(500).send(genErrorObj([err.message]));
   }
 };
