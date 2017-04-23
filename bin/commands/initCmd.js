@@ -1,22 +1,16 @@
 #!/usr/bin/env node
 
-/* const method = process.argv[2];
-if (!method) {
-  console.log('Please specify the method, with process arguments!');
-  process.exit();
-}*/
-
 module.exports = () => {
   const { initDB } = require('../../db/db.js');
-  const seed = require('../../db/seedXLS.js');
+  const init = require('../../db/seedXLS.js');
   initDB({
     force: true
   })
-  .then(seed)
+  .then(init)
   .then(() => {
-    console.log('Seed succeed!');
+    logger.info('Init succeed!');
   })
   .catch((err) => {
-    console.log(`Seed failed: ${err.message}`);
+    logger.error(`Init failed: ${err.message}`);
   });
 };
