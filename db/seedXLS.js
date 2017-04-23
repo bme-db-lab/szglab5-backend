@@ -1,9 +1,8 @@
 const async = require('async');
-const fs = require('fs');
-const path = require('path');
 const bcrypt = require('bcrypt');
 const config = require('../config/config.js');
 const logger = require('../utils/logger.js');
+const XLSX = require('xlsx');
 
 function seedDB(db, modelName, data) {
   return new Promise((resolve, reject) => {
@@ -38,25 +37,43 @@ function seedDB(db, modelName, data) {
 
 module.exports = (db) => {
   return new Promise((resolve, reject) => {
-    const seedDataPath = process.argv[3] ? process.argv[3] : './dev.seed.json';
     let seed = null;
     try {
-      const seedFile = fs.readFileSync(path.join(__dirname, './seedData', seedDataPath));
-      seed = JSON.parse(seedFile.toString());
+      const seedFile = 'db/seedData/hallgatok-minta.xlsx';
+      const sheetName = 'Hallgatoi csoportbeosztas másol';
+      const opts = {};
+      opts.sheetRows = 5;
+      const workbook = XLSX.readFile(seedFile, opts);
+      seed = workbook.Sheets[sheetName];
     } catch (err) {
       reject(err);
       return;
     }
 
     if (seed !== null) {
+      const users = [];
+      let user = { data: {} };
       async.eachSeries(Object.keys(seed),
-      (modelName, callback) => {
-        if (!(modelName in db)) {
-          callback(new Error(`DB has no model with name: "${modelName}"`));
-          return;
+      (key, callback) => {
+        if (key[1] !== '1') {
+          switch (key[0]) {
+            case 'A':
+              user = { data: {} };
+              break;
+            case 'B':
+              user.data.displayName = seed[key].w;
+              break;
+            case 'C':
+              user.data.neptun = seed[key].w;
+              if (Object.keys(user).length !== 0) {
+                user.data.password = 'defaultpass';
+                users.push(user);
+              }
+              break;
+            default:
+          }
         }
-        const model = seed[modelName];
-        seedDB(db, modelName, model)
+        seedDB(db, 'Users', users)
           .then(() => { callback(null); })
           .catch((err) => { callback(err); });
       },

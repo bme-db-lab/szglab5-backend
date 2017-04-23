@@ -3,6 +3,7 @@
 module.exports = () => {
   const { initDB } = require('../../db/db.js');
   const init = require('../../db/seedXLS.js');
+  const logger = require('../../utils/logger.js');
   initDB({
     force: true
   })
