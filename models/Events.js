@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         Events.belongsTo(models.Users, { as: 'Demonstrator' });
         Events.hasMany(models.Deliverables);
         Events.belongsTo(models.EventTemplates);
+        Events.belongsTo(models.ExerciseSheets);
       }
     }
   });

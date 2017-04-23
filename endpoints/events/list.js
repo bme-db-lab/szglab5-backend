@@ -1,26 +1,44 @@
+const { isDate } = require('lodash');
+const async = require('async');
 const { genErrorObj } = require('../../utils/utils.js');
 const { genJSONApiResByRecords } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
-const { isDate } = require('lodash');
 
 function getQuery(filter) {
   const query = {};
+
   if ('location' in filter) {
     query.location = filter.location;
   }
-  if ('dlstart' in filter && 'dlend' in filter) {
-    const startDate = new Date(filter.dlstart);
-    const endDate = new Date(filter.dlend);
-    console.log(startDate);
-    console.log(endDate);
+
+  if ('datestart' in filter && 'dateend' in filter) {
+    const startDate = new Date(filter.datestart);
+    const endDate = new Date(filter.dateend);
     if (isDate(startDate) && isDate(endDate)) {
       query.date = {
         $between: [startDate, endDate]
       };
     }
   }
-
   return query;
+}
+
+function getIncludes(filter, db) {
+  const includes = [];
+  if ('exercisecat' in filter) {
+    includes.push({
+      model: db.ExerciseSheets,
+      where: {},
+      include: {
+        model: db.ExerciseCategories,
+        where: {
+          type: filter.exercisecat
+        }
+      }
+    });
+  }
+
+  return includes;
 }
 
 module.exports = (req, res) => {
@@ -29,7 +47,10 @@ module.exports = (req, res) => {
     console.log('filter', filter);
 
     const db = getDB();
-    db.Events.findAll({ where: getQuery(filter) })
+    db.Events.findAll({
+      where: getQuery(filter),
+      include: getIncludes(filter, db)
+    })
       .then(genJSONApiResByRecords.bind(null, db, 'Events'))
       .then((response) => {
         res.send(response);
@@ -54,6 +75,9 @@ module.exports = (req, res) => {
  * /events?filter[location]=IL105
  *
  * @apiExample {js} Example filter to date:
- * /events?filter[dlstart]=2017-04-1&filter[dlend]=2018-01-11
+ * /events?filter[datestart]=2017-04-1&filter[dateend]=2018-01-11
+ *
+ * @apiExample {js} Example filter to exercise category:
+ * /events?filter[exercisecat]=SQL
  *
  */
