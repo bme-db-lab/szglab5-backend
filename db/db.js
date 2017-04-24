@@ -10,7 +10,6 @@ function initDB(_options) {
     const defaultOptions = {
       force: false
     };
-
     const options = Object.assign({}, defaultOptions, _options);
 
     const { host, port, database, username, password, dialect } = config.db;
@@ -21,7 +20,6 @@ function initDB(_options) {
       port,
       dialect,
     });
-
     const modelsPath = path.join(__dirname, '../models');
     const files = fs.readdirSync(modelsPath);
     const modelFiles = files.filter(file => (file !== 'index.js') && (file.indexOf('.') !== 0) && (file[0] !== '_'));
