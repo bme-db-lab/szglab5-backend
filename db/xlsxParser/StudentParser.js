@@ -41,11 +41,23 @@ module.exports = () => {
               } else {
                 user.data.neptun = null;
               }
-
+              break;
+            case 'D':
+              if (seed[key].w !== undefined) {
+                user.data.loginName = seed[key].w;
+              } else {
+                user.data.loginName = null;
+              }
+              break;
+            case 'E':
+              if (seed[key].w !== undefined) {
+                user.data.password = seed[key].w;
+              } else {
+                user.data.password = 'defaultpass';
+              }
               break;
             case 'G':
               if (Object.keys(user).length !== 0) {
-                user.data.password = 'defaultpass';
                 users.push(user);
               }
               break;
