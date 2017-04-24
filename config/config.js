@@ -30,7 +30,9 @@ const defaultConfig = {
   },
   logger: {
     consoleLevel: 'info',
-    fileLevel: 'info'
+    fileLevel: 'info',
+    rotatePattern: '.yyyy-MM-dd.bak',
+    rotateSize: 1000000,
   },
   env
 };
