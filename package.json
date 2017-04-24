@@ -71,7 +71,8 @@
     "pluralize": "^4.0.0",
     "sequelize": "^3.30.2",
     "winston": "^2.3.1",
-    "winston-daily-rotate-file": "^1.4.6"
+    "winston-daily-rotate-file": "^1.4.6",
+    "xlsx": "^0.9.12"
   },
   "devDependencies": {
     "eslint": "^3.17.1",
