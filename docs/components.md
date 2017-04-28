@@ -23,6 +23,8 @@
 * **fatal**: Fatal error that crashes the application.
 
 ### Configuration
+#### path
+Path to the logging directory. Default: './'.
 #### consoleLevel
 Logging level on the console. Default: 'info'.
 #### fileLevel

@@ -13,27 +13,27 @@ const logger = new (winston.Logger)({
   transports: [
     new winston.transports.DailyRotateFile({
       name: 'debugFile',
-      filename: 'debug.log',
+      filename: config.logger.path + 'debug.log',
       level: 'debug'
     }),
     new winston.transports.DailyRotateFile({
       name: 'infoFile',
-      filename: 'info.log',
+      filename: config.logger.path + 'info.log',
       level: 'info',
     }),
     new winston.transports.DailyRotateFile({
       name: 'warnFile',
-      filename: 'warn.log',
+      filename: config.logger.path + 'warn.log',
       level: 'warn'
     }),
     new winston.transports.DailyRotateFile({
       name: 'errorFile',
-      filename: 'error.log',
+      filename: config.logger.path + 'error.log',
       level: 'error'
     }),
     new winston.transports.DailyRotateFile({
       name: 'fatalFile',
-      filename: 'fatal.log',
+      filename: config.logger.path + 'fatal.log',
       level: 'fatal'
     })
   ]

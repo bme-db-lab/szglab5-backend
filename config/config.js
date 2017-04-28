@@ -29,6 +29,7 @@ const defaultConfig = {
     saltRounds: 10
   },
   logger: {
+    path: './',
     consoleLevel: 'info',
     fileLevel: 'info',
     rotatePattern: '.yyyy-MM-dd.bak',
