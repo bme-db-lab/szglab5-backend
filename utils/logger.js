@@ -1,5 +1,6 @@
 const winston = require('winston');
 const config = require('../config/config.js');
+require('winston-daily-rotate-file');
 
 const logger = new (winston.Logger)({
   levels: {
@@ -10,37 +11,40 @@ const logger = new (winston.Logger)({
     fatal: 2,
   },
   transports: [
-    new (winston.transports.File)({
+    new winston.transports.DailyRotateFile({
       name: 'debugFile',
-      filename: 'debug.log',
+      filename: config.logger.path + 'debug.log',
       level: 'debug'
     }),
-    new (winston.transports.File)({
+    new winston.transports.DailyRotateFile({
       name: 'infoFile',
-      filename: 'info.log',
-      level: 'info'
+      filename: config.logger.path + 'info.log',
+      level: 'info',
     }),
-    new (winston.transports.File)({
+    new winston.transports.DailyRotateFile({
       name: 'warnFile',
-      filename: 'warn.log',
+      filename: config.logger.path + 'warn.log',
       level: 'warn'
     }),
-    new (winston.transports.File)({
+    new winston.transports.DailyRotateFile({
       name: 'errorFile',
-      filename: 'error.log',
+      filename: config.logger.path + 'error.log',
       level: 'error'
     }),
-    new (winston.transports.File)({
+    new winston.transports.DailyRotateFile({
       name: 'fatalFile',
-      filename: 'fatal.log',
+      filename: config.logger.path + 'fatal.log',
       level: 'fatal'
     })
   ]
 });
 
 if (logger.levels[config.logger.fileLevel]) {
-  for (var transport in logger.transports)
+  for (var transport in logger.transports) {
     logger.transports[transport].silent = logger.levels[logger.transports[transport].level] > logger.levels[config.logger.fileLevel];
+    logger.transports[transport].datePattern = config.logger.rotatePattern;
+    logger.transports[transport].maxsize = config.logger.rotateSize;
+  }
 } else
   logger.error('Invalid file logging level.');
 
