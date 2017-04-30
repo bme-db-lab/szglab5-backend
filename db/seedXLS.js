@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const config = require('../config/config.js');
 const parseStudents = require('./xlsxParser/StudentParser.js');
 const parseStaff = require('./xlsxParser/StaffParser.js');
+const parseExercises = require('./xlsxParser/ExerciseParser.js');
 
 function seedDB(db, modelName, data) {
   return new Promise((resolve, reject) => {
@@ -41,6 +42,8 @@ module.exports = (db) => {
       .then(students => seedDB(db, 'Users', students))
       .then(() => parseStaff())
       .then(staff => seedDB(db, 'Users', staff))
+      .then(() => parseExercises())
+      .then(exercises => seedDB(db, 'ExerciseTypes', exercises))
       .then(() => { resolve(null); })
       .catch((err) => { reject(err); });
   });

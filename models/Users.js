@@ -11,7 +11,14 @@ module.exports = (sequelize, DataTypes) => {
 	// Staff specific attributes
 	email_official: DataTypes.STRING,
 	mobile: DataTypes.STRING,
-	title: DataTypes.STRING
+	title: DataTypes.STRING,
+	printSupport: DataTypes.STRING,
+	// temporary attributes
+	studentgroup_id: DataTypes.STRING,
+	classroom: DataTypes.STRING,
+	spec: DataTypes.STRING,
+	exercises: DataTypes.STRING,
+	ownedExerciseID: DataTypes.STRING
   }, {
     classMethods: {
       associate: (models) => {

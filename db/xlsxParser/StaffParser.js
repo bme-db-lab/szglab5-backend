@@ -19,7 +19,7 @@ module.exports = () => {
     }
 
     if (seed !== null) {
-      const users = [];
+      const users = {};
       let user = { data: {} };
       async.eachSeries(Object.keys(seed),
       (key, callback) => {
@@ -62,7 +62,7 @@ module.exports = () => {
               }
               if (Object.keys(user).length !== 0) {
                 user.data.password = 'defaultpass';
-                users.splice(user.data.displayName, 0, user);
+                users[user.data.displayName] = user;
               }
               break;
             default:
@@ -96,32 +96,119 @@ module.exports = () => {
           switch (key[0]) {
             case 'A':
               user = { data: {} };
-              if (seed[key].w !== undefined && users[seed[key].w] === seed[key].w) {
+              if (seed[key].w !== undefined) {
                 user.data.displayName = seed[key].w;
               } else {
                 user.data.displayName = null;
               }
               break;
             case 'B':
-            //csoportkód hogy kerüljön be?
-              /*if (seed[key].w !== undefined && user.data.displayName != null) {
-                user.data.email = seed[key].w;
-              } else {
-                user.data.email = null;
-              }*/
+              if (user.data.displayName != null) {
+                if (seed[key].w !== undefined) {
+                  users[user.data.displayName].data.studentgroup_id = seed[key].w;
+                } else {
+                  users[user.data.displayName].data.studentgroup_id = null;
+                }
+              }
               break;
             case 'C':
-            //terem hogy kerüljön be?
-              /*if (seed[key].w !== undefined && user.data.displayName != null) {
-                user.data.email_official = seed[key].w;
-              } else {
-                user.data.email_official = null;
-              }*/
+              if (user.data.displayName != null) {
+                if (seed[key].w !== undefined) {
+                  users[user.data.displayName].data.classroom = seed[key].w;
+                } else {
+                  users[user.data.displayName].data.classroom = null;
+                }
+              }
+              break;
+            case 'D':
+              if (user.data.displayName != null) {
+                if (seed[key].w !== undefined) {
+                  users[user.data.displayName].data.spec = seed[key].w;
+                } else {
+                  users[user.data.displayName].data.spec = null;
+                }
+              }
+              break;
+            case 'E':
+              if (user.data.displayName != null) {
+                if (seed[key].w !== undefined) {
+                  users[user.data.displayName].data.printSupport = seed[key].w;
+                } else {
+                  users[user.data.displayName].data.printSupport = null;
+                }
+              }
               break;
             case 'I':
-              if (Object.keys(user).length !== 0 && user.data.displayName != null) {
-                users.splice(user.data.displayName, 0, user);
+              break;
+            default:
+          }
+        }
+        callback(null);
+      },
+      (err) => {
+        if (err) {
+          return reject(err);
+        }
+        return null;
+      }
+  );
+      seed = null;
+      try {
+        const seedFile = 'db/seedData/beosztas-minta.xlsx';
+        const sheetName = 'Guruk, javitok';
+        const opts = {};
+        opts.sheetRows = 6;
+        opts.sheetStubs = true;
+        const workbook = XLSX.readFile(seedFile, opts);
+        seed = workbook.Sheets[sheetName];
+      } catch (err) {
+        reject(err);
+        return;
+      }
+      async.eachSeries(Object.keys(seed),
+      (key, callback) => {
+        if (key[1] !== '1' && key[1] !== '2') {
+          switch (key[0]) {
+            case 'A':
+              user = { data: {} };
+              if (seed[key].w !== undefined) {
+                user.data.displayName = seed[key].w;
+              } else {
+                user.data.displayName = null;
               }
+              break;
+            case 'B':
+              if (user.data.displayName != null) {
+                if (seed[key].w !== undefined) {
+                  users[user.data.displayName].data.ownedExerciseID = seed[key].w;
+                } else {
+                  users[user.data.displayName].data.ownedExerciseID = null;
+                }
+              }
+              break;
+            case 'D':
+              user = { data: {} };
+              if (seed[key].w !== undefined) {
+                user.data.displayName = seed[key].w;
+              } else {
+                user.data.displayName = null;
+              }
+              break;
+            case 'E':
+              if (user.data.displayName != null) {
+                if (seed[key].w !== undefined) {
+                  users[user.data.displayName].data.exercises = seed[key].w;
+                } else {
+                  users[user.data.displayName].data.exercises = null;
+                }
+              }
+              break;
+            case 'F':
+              if (seed[key].w !== undefined && user.data.displayName != null) {
+                users[user.data.displayName].data.exercises += seed[key].w;
+              }
+              break;
+            case 'J':
               break;
             default:
           }
@@ -134,7 +221,7 @@ module.exports = () => {
         }
         return resolve(users);
       }
-  );
+    );
     } else {
       logger.warn('No seed data provided');
       resolve();
