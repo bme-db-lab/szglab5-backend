@@ -14,6 +14,13 @@
         "loginName": "demonstratordenes",
         "password": "12345"
       }
+    },
+    {
+      "data": {
+        "displayName": "adsasd",
+        "loginName": "admin",
+        "password": "admin"
+      }
     }
   ],
   "StudentRegistrations": [

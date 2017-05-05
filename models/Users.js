@@ -7,7 +7,18 @@ module.exports = (sequelize, DataTypes) => {
     sshPublicKey: DataTypes.STRING,
     // Student specific attributes
     neptun: DataTypes.STRING,
-    university: DataTypes.STRING
+    university: DataTypes.STRING,
+    // Staff specific attributes
+    email_official: DataTypes.STRING,
+    mobile: DataTypes.STRING,
+    title: DataTypes.STRING,
+    printSupport: DataTypes.STRING,
+    // temporary attributes
+    studentgroup_id: DataTypes.STRING,
+    classroom: DataTypes.STRING,
+    spec: DataTypes.STRING,
+    exercises: DataTypes.STRING,
+    ownedExerciseID: DataTypes.STRING
   }, {
     classMethods: {
       associate: (models) => {
