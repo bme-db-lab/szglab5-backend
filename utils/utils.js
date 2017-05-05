@@ -59,11 +59,11 @@ function getAssociatedObjects(db, modelName, resource) {
           return;
         }
         // TODO: refactor
-        let links = {};
+        let links = null;
         if (modelName === 'Events' && assocGroup === 'Demonstrator') {
           links = {
             links: {
-              related: `${modelName.toLowerCase()}/${resource.dataValues.id}/${assocGroup.toLowerCase()}`
+              related: `/${modelName.toLowerCase()}/${resource.dataValues.id}/${assocGroup.toLowerCase()}`
             }
           };
         }
@@ -75,19 +75,21 @@ function getAssociatedObjects(db, modelName, resource) {
               type: item.Model.getTableName()
             }));
             callback(null, {
-              [assocGroup]: Object.assign({}, {
+              [assocGroup]: (links === null) ? {
                 data: resultForm,
-              }, links)
+              } : links
             });
           } else if (isObject(result)) {
-            const resultForm = Object.assign({}, {
+            const resultForm = {
               data: {
                 id: result.id,
                 type: result.Model.getTableName()
-              },
-            }, links);
+              }
+            };
             callback(null, {
-              [assocGroup]: resultForm
+              [assocGroup]: (links === null) ? {
+                data: resultForm,
+              } : links
             });
           } else {
             callback(null, {
