@@ -47,10 +47,15 @@ module.exports = (req, res) => {
     console.log('filter', filter);
 
     const db = getDB();
-    db.Events.findAll({
-      where: getQuery(filter),
-      include: getIncludes(filter, db)
-    })
+    let queryObj = {};
+    if (filter) {
+      queryObj = {
+        where: getQuery(filter),
+        include: getIncludes(filter, db)
+      };
+    }
+
+    db.Events.findAll(queryObj)
       .then(genJSONApiResByRecords.bind(null, db, 'Events'))
       .then((response) => {
         res.send(response);
