@@ -1,39 +1,48 @@
-const async = require('async');
 const logger = require('../../utils/logger.js');
 const XLSX = require('xlsx');
 
 module.exports = () => {
-  return new Promise((resolve, reject) => {
-    let seed = null;
-    try {
-      const seedFile = 'db/seedData/beosztas-minta.xlsx';
-      const sheetName = 'Idopontok';
-      const opts = {};
-      opts.sheetRows = 5;
-      opts.sheetStubs = true;
-      const workbook = XLSX.readFile(seedFile, opts);
-      seed = workbook.Sheets[sheetName];
-    } catch (err) {
-      reject(err);
-      return;
-    }
+  let seed = null;
+  try {
+    const seedFile = 'db/seedData/beosztas-minta.xlsx';
+    const sheetName = 'Idopontok';
+    const opts = {
+      sheetStubs: true,
+    };
+    const workbook = XLSX.readFile(seedFile, opts);
+    seed = workbook.Sheets[sheetName];
+  } catch (err) {
+    return err;
+  }
 
-    if (seed !== null) {
-      async.eachSeries(Object.keys(seed),
-      (key, callback) => {
-        console.log(key);
-        callback(null);
-      },
-      (err) => {
-        if (err) {
-          return reject(err);
+  const apps = [];
+  let app = { data: {} };
+  if (seed !== null) {
+    Object.keys(seed).some(
+    (key) => {
+      const reg = /([A-Z]+)([0-9]+)/;
+      const rKey = reg.exec(key);
+      if (seed[key].w !== undefined) {
+        const types = ['OR', 'SQ', 'JD', 'SO', 'XS'];
+        const year = '2017';
+        if (types.indexOf(seed[key].w) !== -1) {
+          app = { data: {} };
+          if (seed[(`A${rKey[2]}`)] !== undefined) {
+            app.data.location = seed[(`A${rKey[2]}`)].w;
+            app.data.type = seed[key].w;
+            const date = seed[(`${rKey[1]}2`)].w;
+            const hour = seed[(`${rKey[1]}1`)].w;
+            app.data.date = new Date(`${date} ${year}`);
+            app.data.date.setHours(hour);
+            app.data.StudentGroupId = seed[(`D${rKey[2]}`)].w;
+            apps.push(app);
+          }
         }
-        return resolve(null);
       }
-    );
-    } else {
-      logger.warn('No seed data provided');
-      resolve();
-    }
-  });
+      return null;
+    });
+    return apps;
+  }
+  logger.warn('No seed data provided');
+  return null;
 };

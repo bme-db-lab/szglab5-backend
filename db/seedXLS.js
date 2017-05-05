@@ -5,6 +5,7 @@ const parseStudents = require('./xlsxParser/StudentParser.js');
 const parseStaff = require('./xlsxParser/StaffParser.js');
 const parseExercises = require('./xlsxParser/ExerciseParser.js');
 const parseTimetable = require('./xlsxParser/TimetableParser.js');
+const parseGroups = require('./xlsxParser/StudentGroupParser.js');
 
 function seedDB(db, modelName, data) {
   return new Promise((resolve, reject) => {
@@ -39,13 +40,17 @@ function seedDB(db, modelName, data) {
 
 module.exports = (db) => {
   return new Promise((resolve, reject) => {
-    parseStudents()
-      .then(students => seedDB(db, 'Users', students))
-      .then(() => parseStaff())
-      .then(staff => seedDB(db, 'Users', staff))
-      .then(() => parseExercises())
-      .then(exercises => seedDB(db, 'ExerciseTypes', exercises))
-      .then(() => parseTimetable())
+    const students = parseStudents();
+    const staff = parseStaff();
+    const exercises = parseExercises();
+    const timetable = parseTimetable();
+    const groups = parseGroups();
+
+    seedDB(db, 'Users', students)
+      .then(() => { seedDB(db, 'StudentGroups', groups); })
+      //.then(() => { seedDB(db, 'Users', staff); })
+      //.then(() => { seedDB(db, 'ExerciseTypes', exercises); })
+      //.then(() => { seedDB(db, 'Appointments', timetable); })
       .then(() => { resolve(null); })
       .catch((err) => { reject(err); });
   });

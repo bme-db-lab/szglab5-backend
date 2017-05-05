@@ -1,28 +1,26 @@
-const async = require('async');
 const logger = require('../../utils/logger.js');
 const XLSX = require('xlsx');
 
 module.exports = () => {
-  return new Promise((resolve, reject) => {
-    let seed = null;
-    try {
-      const seedFile = 'db/seedData/hallgatok-minta.xlsx';
-      const sheetName = 'Hallgatoi csoportbeosztas másol';
-      const opts = {};
-      opts.sheetRows = 5;
-      opts.sheetStubs = true;
-      const workbook = XLSX.readFile(seedFile, opts);
-      seed = workbook.Sheets[sheetName];
-    } catch (err) {
-      reject(err);
-      return;
-    }
+  let seed = null;
+  try {
+    const seedFilePath = 'db/seedData/hallgatok-minta.xlsx';
+    const sheetName = 'Hallgatoi csoportbeosztas másol';
+    const opts = {
+      sheetRows: 10,
+      sheetStubs: true,
+    };
+    const workbook = XLSX.readFile(seedFilePath, opts);
+    seed = workbook.Sheets[sheetName];
+  } catch (err) {
+    throw err;
+  }
 
-    if (seed !== null) {
-      const users = [];
-      let user = { data: {} };
-      async.eachSeries(Object.keys(seed),
-      (key, callback) => {
+  if (seed !== null) {
+    const users = [];
+    let user = { data: {} };
+    Object.keys(seed).some(
+      (key) => {
         if (key[1] !== '1') {
           switch (key[0]) {
             case 'A':
@@ -57,25 +55,20 @@ module.exports = () => {
               }
               break;
             case 'G':
-              if (Object.keys(user).length !== 0) {
+              if (user.data.neptun != null) {
                 users.push(user);
+              } else {
+                return true;
               }
               break;
             default:
           }
         }
-        callback(null);
-      },
-      (err) => {
-        if (err) {
-          return reject(err);
-        }
-        return resolve(users);
+        return false;
       }
-    );
-    } else {
-      logger.warn('No seed data provided');
-      resolve();
-    }
-  });
+  );
+    return users;
+  }
+  logger.warn('No seed data provided');
+  return null;
 };
