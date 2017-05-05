@@ -75,21 +75,29 @@ function getAssociatedObjects(db, modelName, resource) {
               type: item.Model.getTableName()
             }));
             callback(null, {
-              [assocGroup]: (links === null) ? {
-                data: resultForm,
-              } : links
+              [assocGroup]: Object.assign({}, {
+                data: resultForm
+              },
+              links)
+              // [assocGroup]: (links === null) ? {
+              //   data: resultForm,
+              // } : links
             });
           } else if (isObject(result)) {
             const resultForm = {
-              data: {
-                id: result.id,
-                type: result.Model.getTableName()
-              }
+              id: result.id,
+              type: result.Model.getTableName()
             };
             callback(null, {
-              [assocGroup]: (links === null) ? {
-                data: resultForm,
-              } : links
+              [assocGroup]: Object.assign({},
+                {
+                  data: resultForm
+                },
+                links
+              )
+              // [assocGroup]: (links === null) ? {
+              //   data: resultForm,
+              // } : links
             });
           } else {
             callback(null, {

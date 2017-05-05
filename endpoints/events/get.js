@@ -16,6 +16,9 @@ module.exports = (req, res) => {
       .then(checkIfExist)
       .then(genJSONApiResByRecord.bind(null, db, 'Events'))
       .then((response) => {
+        if (response.data.relationships.Demonstrator !== null) {
+          delete response.data.relationships.Demonstrator.data;
+        }
         res.send(response);
       })
       .catch((err) => {
