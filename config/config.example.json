@@ -9,9 +9,6 @@
   "api": {
     "port": 7000
   },
-  "frontend": {
-    "port": 4200
-  },
   "logger": {
     "consoleLevel": "info",
     "fileLevel": "info"
