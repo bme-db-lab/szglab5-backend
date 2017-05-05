@@ -15,5 +15,8 @@
   "logger": {
     "consoleLevel": "info",
     "fileLevel": "info"
+  },
+  "cors": {
+    "whitelist": ["http://localhost:4200"]
   }
 }
