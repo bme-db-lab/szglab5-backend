@@ -16,7 +16,7 @@ module.exports = (req, res) => {
       .then(checkIfExist)
       .then(genJSONApiResByRecord.bind(null, db, 'Events'))
       .then((response) => {
-        const demonstratorUser = response.relationships.demonstrator;
+        const demonstratorUser = response.data.relationships.Demonstrator;
         if (demonstratorUser === null) {
           res.status(404).send();
           return;
