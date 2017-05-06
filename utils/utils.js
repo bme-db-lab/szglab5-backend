@@ -101,7 +101,9 @@ function getAssociatedObjects(db, modelName, resource) {
             });
           } else {
             callback(null, {
-              [assocGroup]: null
+              [assocGroup]: {
+                data: null
+              }
             });
           }
         }).catch((err) => {
