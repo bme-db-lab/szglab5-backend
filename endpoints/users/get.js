@@ -37,7 +37,7 @@ module.exports = (req, res) => {
 };
 
 /**
-* @api {get} /users/:id Get User
+ * @api {get} /users/:id Get User
  * @apiName Get
  * @apiGroup Users
  * @apiDescription Get user information with id
@@ -50,26 +50,41 @@ module.exports = (req, res) => {
  * {
  *   "data": {
  *     "id": 1,
- *     "displayName": "Jósska Pista",
- *     "loginName": "joskapista",
- *     "password": "$2a$10$OW5JlOQM0x5Wdce48WbjZestlTG6XdOHXE0PjB6F8aima.NsgiZiO",
- *     "email": null,
- *     "sshPublicKey": null,
- *     "neptun": "Q87XXZ",
- *     "university": null,
- *     "createdAt": "2017-03-30T12:20:00.435Z",
- *     "updatedAt": "2017-03-30T12:20:00.435Z"
- *   },
- *   "relationships": {
- *     "StudentRegistrations": {
- *       "data": [
- *         {
- *           "id": 1,
- *           "type": "StudentRegistrations"
- *         }
- *       ]
+ *     "type": "Users",
+ *     "attributes": {
+ *       "displayName": "Jósska Pista",
+ *       "loginName": "joskapista",
+ *       "email": null,
+ *       "sshPublicKey": null,
+ *       "neptun": "Q87XXZ",
+ *       "university": null,
+ *       "email_official": null,
+ *       "mobile": null,
+ *       "title": null,
+ *       "printSupport": null,
+ *       "studentgroup_id": null,
+ *       "classroom": null,
+ *       "spec": null,
+ *       "exercises": null,
+ *       "ownedExerciseID": null,
+ *       "createdAt": "2017-05-06T17:42:31.428Z",
+ *       "updatedAt": "2017-05-06T17:42:31.428Z"
+ *     },
+ *     "relationships": {
+ *       "StudentRegistrations": {
+ *         "data": [
+ *           {
+ *             "id": 1,
+ *             "type": "StudentRegistrations"
+ *           }
+ *         ]
+ *       },
+ *       "Deliverables": {
+ *         "data": []
+ *       }
  *     }
  *   }
+ * }
  *
  *
  * @apiErrorExample Not own user id:
