@@ -56,12 +56,12 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /events/:id/exercisesheet Get Event's exercise sheet
- * @apiName Get Exercise Sheet
+ * @api {get} /events/:id/exercisesheet Get Event's exercise type
+ * @apiName Get Exercise Type
  * @apiGroup Events
- * @apiDescription Get event's exercise sheet
+ * @apiDescription Get event's exercise type
  *
- * @apiParam {Number} [id] ExerciseSheet's id
+ * @apiParam {Number} [id] Event's id
  *
  * @apiSuccessExample Success-Response:
  * {

@@ -45,7 +45,7 @@ module.exports = (req, res) => {
  * @apiGroup Events
  * @apiDescription Get event's exercise sheet
  *
- * @apiParam {Number} [id] ExerciseSheet's id
+ * @apiParam {Number} [id] Event's id
  *
  * @apiSuccessExample Success-Response:
  * {
