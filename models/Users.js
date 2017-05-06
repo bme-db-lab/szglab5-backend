@@ -5,6 +5,10 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     email: DataTypes.STRING,
     sshPublicKey: DataTypes.STRING,
+    colorTheme: {
+      type: DataTypes.STRING,
+      defaultValue: 'blue-gray'
+    },
     // TODO temporary role management
     role: DataTypes.STRING,
     // Student specific attributes

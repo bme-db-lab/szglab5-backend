@@ -4,12 +4,13 @@ const config = require('../config/config.js');
 function signToken(user) {
   return new Promise((resolve, reject) => {
     try {
-      const { displayName, neptun, id, role } = user;
+      const { displayName, neptun, id, role, colorTheme } = user;
       jwt.sign({
         displayName,
         neptun,
         userId: id,
-        role
+        role,
+        colorTheme,
       }, config.jwt.secret, { expiresIn: 60 * 60 * 8 }, (err, token) => {
         if (err) {
           reject(err);
