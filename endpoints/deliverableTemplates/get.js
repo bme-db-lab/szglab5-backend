@@ -31,11 +31,37 @@ module.exports = (req, res) => {
 };
 
 /**
-* @api {get} /deliverabletemplates/:id Get DeliverableTemplates
+* @api {get} /deliverable-templates/:id Get DeliverableTemplates
  * @apiName Get
  * @apiGroup DeliverableTemplates
  * @apiDescription Get deliverable template information with id
  *
  * @apiParam {Number} [id] DeliverableTemplates's id
- *
+ * 
+ * @apiSuccessExample Success-Response:
+ * {
+ *   "data": {
+ *     "id": 1,
+ *     "type": "DeliverableTemplates",
+ *     "attributes": {
+ *       "description": "Beugro",
+ *       "createdAt": "2017-05-05T14:59:31.891Z",
+ *       "updatedAt": "2017-05-05T14:59:31.891Z"
+ *     },
+ *     "relationships": {
+ *       "Deliverables": {
+ *         "data": [
+ *           {
+ *             "id": 1,
+ *             "type": "Deliverables"
+ *           },
+ *           {
+ *             "id": 3,
+ *             "type": "Deliverables"
+ *           }
+ *         ]
+ *       }
+ *     }
+ *   }
+ * }
  */
