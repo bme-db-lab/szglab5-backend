@@ -2,24 +2,36 @@
   "Users": [
     {
       "data": {
-        "displayName": "Jósska Pista",
-        "loginName": "joskapista",
+        "displayName": "Student Sarolta",
+        "loginName": "student",
+        "email": "student.email@cool-emailprovider.com",
         "neptun": "Q87XXZ",
-        "password": "12345"
+        "password": "12345",
+        "role": "STUDENT"
       }
     },
     {
       "data": {
         "displayName": "Demonstrátor Dénes",
-        "loginName": "demonstratordenes",
-        "password": "12345"
+        "loginName": "demonstrator",
+        "password": "12345",
+        "role": "DEMONSTRATOR"
       }
     },
     {
       "data": {
-        "displayName": "adsasd",
+        "displayName": "Admin András",
         "loginName": "admin",
-        "password": "admin"
+        "password": "12345",
+        "role": "ADMIN"
+      }
+    },
+    {
+      "data": {
+        "displayName": "Corrector Cecil",
+        "loginName": "corrector",
+        "password": "12345",
+        "role": "CORRECTOR"
       }
     }
   ],
