@@ -1,5 +1,5 @@
 const { genErrorObj } = require('../../utils/utils.js');
-const { genJSONApiResByRecord, checkIfExist } = require('../../utils/jsonapi.js');
+const { updateResource, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 const logger = require('../../utils/logger.js');
 
@@ -11,12 +11,15 @@ module.exports = (req, res) => {
       res.status(400).send(genErrorObj('Requested id is not a number'));
       return;
     }
-    logger.info("Deleting TestQuestion " + reqIdNum);
 
+    const { data } = req.body;
+    logger.info(data);
     const db = getDB();
-    db.TestQuestions.destroy({ where: { id: reqIdNum }})
+    db.Tests.findById(reqId)
+      .then(checkIfExist)
+      .then(updateResource.bind(null, db, 'Tests', data))
       .then(() => {
-        res.status(200).send();
+        res.status(204).send();
       })
       .catch((err) => {
         if (err.notFound) {
@@ -31,10 +34,9 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /deliverables/:id Delete TestQuestion
- * @apiName Delete
- * @apiGroup TestQuestions
- * @apiDescription Delete test question entry by id
+ * @api {patch} /deliverables/:id Update Test
+ * @apiName Patch
+ * @apiGroup Tests
+ * @apiDescription Update a test
  *
- * @apiParam {Number} [id] Test question's id
  */

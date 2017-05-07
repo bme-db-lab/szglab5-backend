@@ -11,10 +11,10 @@ module.exports = (req, res) => {
       res.status(400).send(genErrorObj('Requested id is not a number'));
       return;
     }
-    logger.info("Deleting TestQuestion " + reqIdNum);
+    logger.info("Deleting Test " + reqIdNum);
 
     const db = getDB();
-    db.TestQuestions.destroy({ where: { id: reqIdNum }})
+    db.Tests.destroy({ where: { id: reqIdNum }})
       .then(() => {
         res.status(200).send();
       })
@@ -31,10 +31,10 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /deliverables/:id Delete TestQuestion
+ * @api {get} /deliverables/:id Delete Test
  * @apiName Delete
- * @apiGroup TestQuestions
- * @apiDescription Delete test question entry by id
+ * @apiGroup Tests
+ * @apiDescription Delete test entry by id
  *
- * @apiParam {Number} [id] Test question's id
+ * @apiParam {Number} [id] Test's id
  */

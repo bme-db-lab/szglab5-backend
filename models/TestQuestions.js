@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: (models) => {
         //TestQuestions.belongsTo(models.QuestionTypes);
-        //TestQuestions.belongsTo(models.Tests);
+        TestQuestions.belongsTo(models.Tests);
       }
     }
   });

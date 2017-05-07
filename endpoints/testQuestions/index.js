@@ -1,13 +1,13 @@
 const addTestQuestion = require('./add.js');
-const deleteTestQuestions = require('./delete.js');
-const getTestQuestions = require('./get.js');
+const deleteTestQuestion = require('./delete.js');
+const getTestQuestion = require('./get.js');
 const listTestQuestions = require('./list.js');
-const updateTestQuestions = require('./update.js');
+const updateTestQuestion = require('./update.js');
 
 module.exports = (app) => {
-  app.delete('/testQuestions/:id', deleteTestQuestions);
+  app.delete('/testQuestions/:id', deleteTestQuestion);
   app.get('/testQuestions', listTestQuestions);
-  app.get('/testQuestions/:id', getTestQuestions);
-  app.patch('/testQuestions/:id', updateTestQuestions);
+  app.get('/testQuestions/:id', getTestQuestion);
+  app.patch('/testQuestions/:id', updateTestQuestion);
   app.post('/testQuestions', addTestQuestion);
 };

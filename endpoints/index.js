@@ -7,6 +7,7 @@ const exercisecategories = require('./exerciseCategories');
 const exercisetypes = require('./exerciseTypes');
 const studentregistrations = require('./studentRegistrations');
 const testquestions = require('./testQuestions');
+const tests = require('./tests');
 
 module.exports = (app) => {
   authEndpoints(app);
@@ -18,4 +19,5 @@ module.exports = (app) => {
   exercisetypes(app);
   studentregistrations(app);
   testquestions(app);
+  tests(app);
 };
