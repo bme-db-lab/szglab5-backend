@@ -1,6 +1,7 @@
 const { genErrorObj } = require('../../utils/utils.js');
 const { genJSONApiResByRecord, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
+const logger = require('../../utils/logger.js');
 
 module.exports = (req, res) => {
   try {
@@ -10,6 +11,7 @@ module.exports = (req, res) => {
       res.status(400).send(genErrorObj('Requested id is not a number'));
       return;
     }
+    logger.info("Deleting TestQuestion " + reqIdNum);
 
     const db = getDB();
     db.TestQuestions.destroy({ where: { id: reqIdNum }})
