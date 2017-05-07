@@ -7,5 +7,5 @@ module.exports = (app) => {
   app.get('/testQuestions', listTestQuestions);
   app.get('/testQuestions/:id', getTestQuestions);
   app.patch('/testQuestions/:id', updateTestQuestions);
-  app.put('/testQuestions', addTestQuestion);
+  app.post('/testQuestions', addTestQuestion);
 };
