@@ -49,7 +49,7 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /events/:id/exercisesheet Get Event's student
+ * @api {get} /events/:id/student Get Event's student
  * @apiName Get Student
  * @apiGroup Events
  * @apiDescription Get event's student
