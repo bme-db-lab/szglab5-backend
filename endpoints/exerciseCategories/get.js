@@ -12,9 +12,9 @@ module.exports = (req, res) => {
     }
 
     const db = getDB();
-    db.ExerciseTypes.findById(reqIdNum)
+    db.ExerciseCategories.findById(reqIdNum)
       .then(checkIfExist)
-      .then(genJSONApiResByRecord.bind(null, db, 'ExerciseTypes'))
+      .then(genJSONApiResByRecord.bind(null, db, 'ExerciseCategories'))
       .then((response) => {
         res.send(response);
       })
@@ -31,30 +31,32 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /deliverables/:id Get ExerciseType
+ * @api {get} /deliverables/:id Get exercise category
  * @apiName Get
- * @apiGroup ExerciseTypes
- * @apiDescription Get exercise type information by id
+ * @apiGroup ExerciseCategories
+ * @apiDescription Get exercise category information by id
  *
- * @apiParam {Number} [id] Exercise type's id
+ * @apiParam {Number} [id] Exercise category's id
  *
  * @apiSuccessExample Success-Response:
  * {
  *   "data": {
  *     "id": 1,
- *     "type": "ExerciseTypes",
+ *     "type": "ExerciseCategories",
  *     "attributes": {
- *       "name": "Videótéka",
- *       "shortName": "VIDEO",
- *       "language": "HU",
- *       "createdAt": "2017-05-06T20:47:29.773Z",
- *       "updatedAt": "2017-05-06T20:47:29.773Z"
+ *       "type": "Oracle",
+ *       "createdAt": "2017-05-06T20:47:29.761Z",
+ *       "updatedAt": "2017-05-06T20:47:29.761Z"
  *     },
  *     "relationships": {
  *       "ExerciseSheets": {
  *         "data": [
  *           {
  *             "id": 1,
+ *             "type": "ExerciseSheets"
+ *           },
+ *           {
+ *             "id": 2,
  *             "type": "ExerciseSheets"
  *           }
  *         ]
