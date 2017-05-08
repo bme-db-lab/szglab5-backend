@@ -26,7 +26,7 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {post} /testQuestions Add Test Question
+ * @api {post} /test-questions Add Test Question
  * @apiName Post
  * @apiGroup TestQuestions
  * @apiDescription Add a test question

@@ -31,7 +31,7 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /deliverables/:id Get exercise category
+ * @api {get} /exercise-categories/:id Get exercise category
  * @apiName Get
  * @apiGroup ExerciseCategories
  * @apiDescription Get exercise category information by id

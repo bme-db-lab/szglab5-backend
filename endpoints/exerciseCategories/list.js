@@ -40,7 +40,7 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /events List ExerciseCategories
+ * @api {get} /exercise-categories List ExerciseCategories
  * @apiName List
  * @apiGroup ExerciseCategories
  * @apiDescription List exercise categories

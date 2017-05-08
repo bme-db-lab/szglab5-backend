@@ -34,7 +34,7 @@ module.exports = (req, res) => {
 };
 
 /**
-* @api {patch} /deliverables/:id Update Exercise Type
+* @api {patch} /exercise-types/:id Update Exercise Type
  * @apiName Patch
  * @apiGroup ExerciseTypes
  * @apiDescription Update an exercise type

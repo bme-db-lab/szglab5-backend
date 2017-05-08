@@ -3,7 +3,7 @@ const listExerciseTypes = require('./list.js');
 const updateExerciseTypes = require('./update.js');
 
 module.exports = (app) => {
-  app.get('/exerciseTypes', listExerciseTypes);
-  app.get('/exerciseTypes/:id', getExerciseTypes);
-  app.patch('/exerciseTypes/:id', updateExerciseTypes);
+  app.get('/exercise-types', listExerciseTypes);
+  app.get('/exercise-types/:id', getExerciseTypes);
+  app.patch('/exercise-types/:id', updateExerciseTypes);
 };

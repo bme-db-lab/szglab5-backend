@@ -21,7 +21,7 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /testQuestions List TestQuestions
+ * @api {get} /test-questions List TestQuestions
  * @apiName List
  * @apiGroup TestQuestions
  * @apiDescription List test questions
