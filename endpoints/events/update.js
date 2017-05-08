@@ -15,8 +15,8 @@ module.exports = (req, res) => {
     const { data } = req.body;
     logger.info(data);
     const db = getDB();
-    db.Users.findById(reqId)
-      .then(updateResource.bind(null, db, 'Users', data))
+    db.Events.findById(reqId)
+      .then(updateResource.bind(null, db, 'Events', data))
       .then(checkIfExist)
       .then(() => {
         res.status(204).send();
@@ -34,9 +34,9 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {patch} /deliverables/:id. Update Deliverable
+ * @api {patch} /events/:id. Update Event
  * @apiName Patch
- * @apiGroup Deliverables
- * @apiDescription Update a deliverable
+ * @apiGroup Events
+ * @apiDescription Update an event
  *
  */
