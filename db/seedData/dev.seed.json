@@ -98,6 +98,16 @@
       }
     }
   ],
+  "EventTemplates": [
+    {
+      "data": {
+        "title": "SQL",
+        "number": 5,
+        "createdAt": "2017-05-06T12:00:00.000Z",
+        "updatedAt": "2017-05-08T21:12:17.123Z"
+      }
+    }
+  ],
   "Events": [
     {
       "data": {

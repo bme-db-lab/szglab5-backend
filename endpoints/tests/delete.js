@@ -31,7 +31,7 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /deliverables/:id Delete Test
+ * @api {delete} /tests/:id Delete Test
  * @apiName Delete
  * @apiGroup Tests
  * @apiDescription Delete test entry by id

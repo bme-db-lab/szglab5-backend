@@ -26,7 +26,7 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {patch} /deliverables/:id Add Test Question
+ * @api {post} /testQuestions Add Test Question
  * @apiName Post
  * @apiGroup TestQuestions
  * @apiDescription Add a test question

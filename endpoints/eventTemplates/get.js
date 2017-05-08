@@ -12,9 +12,9 @@ module.exports = (req, res) => {
     }
 
     const db = getDB();
-    db.TestQuestions.findById(reqIdNum)
+    db.EventTemplates.findById(reqIdNum)
       .then(checkIfExist)
-      .then(genJSONApiResByRecord.bind(null, db, 'TestQuestions'))
+      .then(genJSONApiResByRecord.bind(null, db, 'EventTemplates'))
       .then((response) => {
         res.send(response);
       })
@@ -31,24 +31,29 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /testQuestions/:id Get TestQuestion
+ * @api {get} /event-templates/:id Get Event Template
  * @apiName Get
- * @apiGroup TestQuestions
- * @apiDescription Get test question information by id
+ * @apiGroup EventTemplates
+ * @apiDescription Get event template information by id
  *
- * @apiParam {Number} [id] Test question's id
+ * @apiParam {Number} [id] Event Template's id
  *
  * @apiSuccessExample Success-Response:
  * {
  *   "data": {
  *     "id": 1,
- *     "type": "TestQuestions",
+ *     "type": "EventTemplates",
  *     "attributes": {
- *       "text": "Question 1",
- *       "createdAt": "2017-03-08T17:40:23.839Z",
- *       "updatedAt": "2017-03-08T17:40:23.839Z"
+ *       "title": "SQL",
+ *       "number": 5,
+ *       "createdAt": "2017-05-06T12:00:00.000Z",
+ *       "updatedAt": "2017-05-08T19:12:56.725Z"
  *     },
- *     "relationships": {}
+ *     "relationships": {
+ *       "Events": {
+ *         "data": []
+ *       }
+ *     }
  *   }
  * }
  */

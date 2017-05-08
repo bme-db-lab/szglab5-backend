@@ -11,10 +11,10 @@ module.exports = (req, res) => {
       res.status(400).send(genErrorObj('Requested id is not a number'));
       return;
     }
-    logger.info("Deleting TestQuestion " + reqIdNum);
+    logger.info("Deleting Event Template " + reqIdNum);
 
     const db = getDB();
-    db.TestQuestions.destroy({ where: { id: reqIdNum }})
+    db.EventTemplates.destroy({ where: { id: reqIdNum }})
       .then(() => {
         res.status(200).send();
       })
@@ -31,10 +31,10 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {delete} /testQuestions/:id Delete TestQuestion
+ * @api {delete} /event-templates/:id Delete Event Template
  * @apiName Delete
- * @apiGroup TestQuestions
- * @apiDescription Delete test question entry by id
+ * @apiGroup EventTemplates
+ * @apiDescription Delete event template entry by id
  *
- * @apiParam {Number} [id] Test question's id
+ * @apiParam {Number} [id] Event Template's id
  */

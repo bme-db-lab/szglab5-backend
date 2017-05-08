@@ -34,7 +34,7 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {patch} /deliverables/:id Update Test Question
+ * @api {patch} /testQuestions/:id Update Test Question
  * @apiName Patch
  * @apiGroup TestQuestions
  * @apiDescription Update a test question

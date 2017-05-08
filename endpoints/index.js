@@ -3,6 +3,7 @@ const usersEndpoints = require('./users');
 const deliverables = require('./deliverables');
 const deliverabletemplates = require('./deliverableTemplates');
 const events = require('./events');
+const eventtemplates = require('./eventTemplates');
 const exercisecategories = require('./exerciseCategories');
 const exercisetypes = require('./exerciseTypes');
 const studentregistrations = require('./studentRegistrations');
@@ -15,6 +16,7 @@ module.exports = (app) => {
   deliverables(app);
   deliverabletemplates(app);
   events(app);
+  eventtemplates(app);
   exercisecategories(app);
   exercisetypes(app);
   studentregistrations(app);
