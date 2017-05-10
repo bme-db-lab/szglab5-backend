@@ -44,7 +44,6 @@ function getIncludes(filter, db) {
 module.exports = (req, res) => {
   try {
     const filter = req.query.filter;
-    console.log('filter', filter);
 
     const db = getDB();
     let queryObj = {};
