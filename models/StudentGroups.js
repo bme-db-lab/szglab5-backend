@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         StudentGroups.belongsTo(models.Semesters);
         StudentGroups.hasMany(models.StudentRegistrations);
         StudentGroups.hasMany(models.Appointments);
+        StudentGroups.belongsTo(models.Users, { foreignKey: 'Demonstrator', targetKey: 'email_official' });
       }
     }
   });

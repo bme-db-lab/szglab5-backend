@@ -1,0 +1,81 @@
+{
+  "Courses": [
+    {
+      "data": {
+        "name": "DBLab",
+        "codeName": "DUMMY_CODE"
+      }
+    }
+  ],
+  "Semesters": [
+    {
+      "data": {
+        "id": "1",
+        "academicyear": "2",
+        "academicterm": "2",
+        "description": "DUMMY_DESC",
+        "CourseCodeName": "DUMMY_CODE"
+      }
+    }
+  ],
+  "ExerciseCategories": [
+    {
+      "data": {
+        "id": "1",
+        "type": "OR",
+        "CourseCodeName": "DUMMY_CODE"
+      }
+    },
+    {
+      "data": {
+        "id": "2",
+        "type": "SQ",
+        "CourseCodeName": "DUMMY_CODE"
+      }
+    },
+    {
+      "data": {
+        "id": "3",
+        "type": "JD",
+        "CourseCodeName": "DUMMY_CODE"
+      }
+    },
+    {
+      "data": {
+        "id": "4",
+        "type": "SO",
+        "CourseCodeName": "DUMMY_CODE"
+      }
+    },
+    {
+      "data": {
+        "id": "5",
+        "type": "XS",
+        "CourseCodeName": "DUMMY_CODE"
+      }
+    }
+  ],
+  "EventTemplates": [
+    {
+      "data": {
+        "id": "1",
+        "title": "Labor",
+        "number": "5"
+      }
+    }
+  ],
+  "DeliverableTemplates": [
+    {
+      "data": {
+        "id": "1",
+        "description": "Beugró"
+      }
+    },
+    {
+      "data": {
+        "id": "2",
+        "description": "Git repo"
+      }
+    }
+  ]
+}

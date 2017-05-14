@@ -17,13 +17,26 @@ module.exports = () => {
 
   if (seed !== null) {
     const groups = [];
+    const names = [];
     let group = { data: {} };
     Object.keys(seed).some(
       (key) => {
-        if (key[1] !== '1') {
+        const reg = /([A-Z]+)([0-9]+)/;
+        const rKey = reg.exec(key);
+        if (rKey === null) {
+          return false;
+        }
+        if (rKey[2] !== '1') {
           switch (key[0]) {
-            case 'B':
+            case 'A':
               group = { data: {} };
+              if (seed[key].w !== undefined) {
+                group.data.Demonstrator = seed[key].w;
+              } else {
+                group.data.Demonstrator = null;
+              }
+              break;
+            case 'B':
               if (seed[key].w !== undefined) {
                 group.data.name = seed[key].w;
               } else {
@@ -37,8 +50,10 @@ module.exports = () => {
                 group.data.language = seed[key].w;
               }
               if (group.data.name !== null) {
-                if (groups.indexOf(group.data) === -1) {
+                if (names.includes(group.data.name) === false) {
+                  group.data.SemesterId = 1;
                   groups.push(group);
+                  names.push(group.data.name);
                 }
               } else {
                 return true;

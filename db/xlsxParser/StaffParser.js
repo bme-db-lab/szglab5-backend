@@ -18,7 +18,12 @@ module.exports = () => {
   let user = { data: {} };
   Object.keys(seed).some(
     (key) => {
-      if (key[1] !== '1') {
+      const reg = /([A-Z]+)([0-9]+)/;
+      const rKey = reg.exec(key);
+      if (rKey === null) {
+        return false;
+      }
+      if (rKey[2] !== '1') {
         switch (key[0]) {
           case 'A':
             user = { data: {} };
@@ -55,9 +60,10 @@ module.exports = () => {
             } else {
               user.data.title = null;
             }
-            if (user.data.displayName != null) {
+            if (user.data.email_official != null) {
+              user.data.university = 'BME';
               user.data.password = 'defaultpass';
-              users[user.data.displayName] = user;
+              users[user.data.email_official] = user;
             } else {
               return true;
             }
@@ -81,49 +87,54 @@ module.exports = () => {
   }
   Object.keys(seed).some(
   (key) => {
-    if (key[1] !== '1') {
+    const reg = /([A-Z]+)([0-9]+)/;
+    const rKey = reg.exec(key);
+    if (rKey === null) {
+      return false;
+    }
+    if (rKey[2] !== '1') {
       switch (key[0]) {
         case 'A':
           user = { data: {} };
           if (seed[key].w !== undefined) {
-            user.data.displayName = seed[key].w;
+            user.data.email_official = seed[key].w;
           } else {
-            user.data.displayName = null;
+            user.data.email_official = null;
           }
           break;
         case 'B':
-          if (user.data.displayName != null) {
+          if (user.data.email_official != null) {
             if (seed[key].w !== undefined) {
-              users[user.data.displayName].data.studentgroup_id = seed[key].w;
+              users[user.data.email_official].data.studentgroup_id = seed[key].w;
             } else {
-              users[user.data.displayName].data.studentgroup_id = null;
+              users[user.data.email_official].data.studentgroup_id = null;
             }
           }
           break;
         case 'C':
-          if (user.data.displayName != null) {
+          if (user.data.email_official != null) {
             if (seed[key].w !== undefined) {
-              users[user.data.displayName].data.classroom = seed[key].w;
+              users[user.data.email_official].data.classroom = seed[key].w;
             } else {
-              users[user.data.displayName].data.classroom = null;
+              users[user.data.email_official].data.classroom = null;
             }
           }
           break;
         case 'D':
-          if (user.data.displayName != null) {
+          if (user.data.email_official != null) {
             if (seed[key].w !== undefined) {
-              users[user.data.displayName].data.spec = seed[key].w;
+              users[user.data.email_official].data.spec = seed[key].w;
             } else {
-              users[user.data.displayName].data.spec = null;
+              users[user.data.email_official].data.spec = null;
             }
           }
           break;
         case 'E':
-          if (user.data.displayName != null) {
+          if (user.data.email_official != null) {
             if (seed[key].w !== undefined) {
-              users[user.data.displayName].data.printSupport = seed[key].w;
+              users[user.data.email_official].data.printSupport = seed[key].w;
             } else {
-              users[user.data.displayName].data.printSupport = null;
+              users[user.data.email_official].data.printSupport = null;
             }
           } else {
             return true;
@@ -150,47 +161,52 @@ module.exports = () => {
   }
   Object.keys(seed).some(
   (key) => {
-    if (key[1] !== '1' && key[1] !== '2') {
+    const reg = /([A-Z]+)([0-9]+)/;
+    const rKey = reg.exec(key);
+    if (rKey === null) {
+      return false;
+    }
+    if (rKey[2] !== '1' && rKey[2] !== '2') {
       switch (key[0]) {
         case 'A':
           user = { data: {} };
           if (seed[key].w !== undefined) {
-            user.data.displayName = seed[key].w;
+            user.data.email_official = seed[key].w;
           } else {
-            user.data.displayName = null;
+            user.data.email_official = null;
           }
           break;
         case 'B':
-          if (user.data.displayName != null) {
+          if (user.data.email_official != null) {
             if (seed[key].w !== undefined) {
-              users[user.data.displayName].data.ownedExerciseID = seed[key].w;
+              users[user.data.email_official].data.OwnedExerciseId = seed[key].w;
             } else {
-              users[user.data.displayName].data.ownedExerciseID = null;
+              users[user.data.email_official].data.OwnedExerciseId = null;
             }
           }
           break;
         case 'D':
           user = { data: {} };
           if (seed[key].w !== undefined) {
-            user.data.displayName = seed[key].w;
+            user.data.email_official = seed[key].w;
           } else {
-            user.data.displayName = null;
+            user.data.email_official = null;
           }
           break;
         case 'E':
-          if (user.data.displayName != null) {
+          if (user.data.email_official != null) {
             if (seed[key].w !== undefined) {
-              users[user.data.displayName].data.exercises = seed[key].w;
+              users[user.data.email_official].data.exercises = seed[key].w;
             } else {
-              users[user.data.displayName].data.exercises = '';
+              users[user.data.email_official].data.exercises = '';
             }
           }
           break;
         case 'F':
-          if (seed[key].w !== undefined && user.data.displayName != null) {
-            users[user.data.displayName].data.exercises += seed[key].w;
+          if (seed[key].w !== undefined && user.data.email_official != null) {
+            users[user.data.email_official].data.exercises += seed[key].w;
           }
-          if (user.data.displayName == null) {
+          if (user.data.email_official == null) {
             return true;
           }
           break;

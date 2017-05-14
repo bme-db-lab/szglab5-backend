@@ -35,13 +35,13 @@ module.exports = () => {
             app.data.date = new Date(`${date} ${year}`);
             app.data.date.setHours(hour);
             app.data.StudentGroupName = seed[(`D${rKey[2]}`)].w;
+            app.data.EventTemplateId = 1;
             apps.push(app);
           }
         }
       }
       return null;
     });
-    console.log(apps);
     return apps;
   }
   logger.warn('No seed data provided');

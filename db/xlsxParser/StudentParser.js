@@ -18,13 +18,29 @@ module.exports = () => {
 
   if (seed !== null) {
     const users = [];
+    const regs = [];
     let user = { data: {} };
+    let sreg = { data: {} };
     Object.keys(seed).some(
       (key) => {
-        if (key[1] !== '1') {
+        const reg = /([A-Z]+)([0-9]+)/;
+        const rKey = reg.exec(key);
+        if (rKey === null) {
+          return false;
+        }
+        if (rKey[2] !== '1') {
           switch (key[0]) {
             case 'A':
               user = { data: {} };
+              sreg = { data: {} };
+              if (seed[key].w !== undefined) {
+                sreg.data.neptunCourseCode = seed[key].w;
+                sreg.data.StudentGroupName = seed[key].w;
+              } else {
+                sreg.data.neptunCourseCode = null;
+              }
+              sreg.data.neptunSubjectCode = 'DUMMY';
+              sreg.data.SemesterId = 1;
               break;
             case 'B':
               if (seed[key].w !== undefined) {
@@ -36,6 +52,7 @@ module.exports = () => {
             case 'C':
               if (seed[key].w !== undefined) {
                 user.data.neptun = seed[key].w;
+                sreg.data.UserId = seed[key].w;
               } else {
                 user.data.neptun = null;
               }
@@ -56,7 +73,9 @@ module.exports = () => {
               break;
             case 'G':
               if (user.data.neptun != null) {
+                user.data.university = 'BME';
                 users.push(user);
+                regs.push(sreg);
               } else {
                 return true;
               }
@@ -67,7 +86,7 @@ module.exports = () => {
         return false;
       }
   );
-    return users;
+    return { users, regs };
   }
   logger.warn('No seed data provided');
   return null;

@@ -1,4 +1,6 @@
 const async = require('async');
+const fs = require('fs');
+const path = require('path');
 const bcrypt = require('bcrypt');
 const config = require('../config/config.js');
 const parseStudents = require('./xlsxParser/StudentParser.js');
@@ -6,6 +8,7 @@ const parseStaff = require('./xlsxParser/StaffParser.js');
 const parseExercises = require('./xlsxParser/ExerciseParser.js');
 const parseTimetable = require('./xlsxParser/TimetableParser.js');
 const parseGroups = require('./xlsxParser/StudentGroupParser.js');
+const logger = require('../utils/logger.js');
 
 function seedDB(db, modelName, data) {
   return new Promise((resolve, reject) => {
@@ -38,6 +41,44 @@ function seedDB(db, modelName, data) {
   });
 }
 
+function initBase(db) {
+  return new Promise((resolve, reject) => {
+    const seedDataPath = process.argv[3] ? process.argv[3] : './dev.initbase.json';
+    let seed = null;
+    try {
+      const seedFile = fs.readFileSync(path.join(__dirname, './seedData', seedDataPath));
+      seed = JSON.parse(seedFile.toString());
+    } catch (err) {
+      reject(err);
+      return;
+    }
+
+    if (seed !== null) {
+      async.eachSeries(Object.keys(seed),
+      (modelName, callback) => {
+        if (!(modelName in db)) {
+          callback(new Error(`DB has no model with name: "${modelName}"`));
+          return;
+        }
+        const model = seed[modelName];
+        seedDB(db, modelName, model)
+          .then(() => { callback(null); })
+          .catch((err) => { callback(err); });
+      },
+      (err) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(err);
+      }
+    );
+    } else {
+      logger.warn('No seed data provided');
+      resolve();
+    }
+  });
+}
+
 module.exports = (db) => {
   return new Promise((resolve, reject) => {
     const students = parseStudents();
@@ -46,11 +87,13 @@ module.exports = (db) => {
     const timetable = parseTimetable();
     const groups = parseGroups();
 
-    seedDB(db, 'Users', students)
-      .then(() => { seedDB(db, 'StudentGroups', groups); })
-      .then(() => { seedDB(db, 'Users', staff); })
-      .then(() => { seedDB(db, 'ExerciseTypes', exercises); })
-      .then(() => { seedDB(db, 'Appointments', timetable); })
+    initBase(db)
+      .then(() => seedDB(db, 'Users', students.users))
+      .then(() => seedDB(db, 'ExerciseTypes', exercises))
+      .then(() => seedDB(db, 'Users', staff))
+      .then(() => seedDB(db, 'StudentGroups', groups))
+      .then(() => seedDB(db, 'StudentRegistrations', students.regs))
+      .then(() => seedDB(db, 'Appointments', timetable))
       .then(() => { resolve(null); })
       .catch((err) => { reject(err); });
   });

@@ -20,14 +20,19 @@ module.exports = () => {
     let exercise = { data: {} };
     Object.keys(seed).some(
     (key) => {
-      if (key[1] !== '1') {
+      const reg = /([A-Z]+)([0-9]+)/;
+      const rKey = reg.exec(key);
+      if (rKey === null) {
+        return false;
+      }
+      if (rKey[2] !== '1') {
         switch (key[0]) {
           case 'A':
             exercise = { data: {} };
             if (seed[key].w !== undefined) {
-              exercise.data.exId = seed[key].w;
+              exercise.data.id = seed[key].w;
             } else {
-              exercise.data.exId = null;
+              exercise.data.id = null;
             }
             break;
           case 'B':
@@ -43,7 +48,10 @@ module.exports = () => {
             } else {
               exercise.data.shortName = null;
             }
-            if (exercise.data.exId != null) {
+            if (exercise.data.id != null) {
+              if (exercise.data.language === undefined) {
+                exercise.data.language = 'magyar';
+              }
               exercises.push(exercise);
             } else {
               return true;

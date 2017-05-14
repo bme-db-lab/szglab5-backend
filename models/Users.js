@@ -6,23 +6,24 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     sshPublicKey: DataTypes.STRING,
     // Student specific attributes
-    neptun: DataTypes.STRING,
+    neptun: { type: DataTypes.STRING, unique: true },
     university: DataTypes.STRING,
     // Staff specific attributes
-    email_official: DataTypes.STRING,
+    email_official: { type: DataTypes.STRING, unique: true },
     mobile: DataTypes.STRING,
     title: DataTypes.STRING,
     printSupport: DataTypes.STRING,
-    // temporary attributes
     classroom: DataTypes.STRING,
     spec: DataTypes.STRING,
-    exercises: DataTypes.STRING,
-    ownedExerciseID: DataTypes.STRING
+    exercises: DataTypes.STRING
   }, {
     classMethods: {
       associate: (models) => {
         Users.hasMany(models.StudentRegistrations);
         Users.hasMany(models.Deliverables);
+        Users.hasMany(models.Events);
+        Users.hasMany(models.StudentGroups, { foreignKey: 'Demonstrator', sourceKey: 'email_official' });
+        Users.belongsTo(models.ExerciseTypes, { foreignKey: 'OwnedExerciseId' });
       }
     }
   });
