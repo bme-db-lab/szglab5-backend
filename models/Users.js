@@ -5,6 +5,12 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     email: DataTypes.STRING,
     sshPublicKey: DataTypes.STRING,
+    colorTheme: {
+      type: DataTypes.STRING,
+      defaultValue: 'blue-gray'
+    },
+    // TODO temporary role management
+    role: DataTypes.STRING,
     // Student specific attributes
     neptun: { type: DataTypes.STRING, unique: true },
     university: DataTypes.STRING,
@@ -16,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     classroom: DataTypes.STRING,
     spec: DataTypes.STRING,
     exercises: DataTypes.STRING
+
   }, {
     classMethods: {
       associate: (models) => {

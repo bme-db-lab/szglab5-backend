@@ -35,7 +35,10 @@ const defaultConfig = {
     rotatePattern: '.yyyy-MM-dd.bak',
     rotateSize: 1000000,
   },
-  env
+  env,
+  cors: {
+    whitelist: ['http://localhost:4200']
+  }
 };
 let specConfig = {};
 try {

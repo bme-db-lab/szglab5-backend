@@ -4,25 +4,37 @@ const { getDB } = require('../../db/db.js');
 
 module.exports = (req, res) => {
   try {
-    const reqUserIdStr = req.params.id;
-    const reqUserIdNum = parseInt(reqUserIdStr, 10);
-    if (isNaN(reqUserIdNum)) {
+    const reqId = req.params.id;
+    const reqIdNum = parseInt(reqId, 10);
+    if (isNaN(reqId)) {
       res.status(400).send(genErrorObj('Requested id is not a number'));
       return;
     }
 
-    // const { userId } = req.userInfo;
-    // if (reqUserIdNum !== userId) {
-    //   res.status(403).send(genErrorObj('You can access only your own user'));
-    //   return;
-    // }
-
     const db = getDB();
-    db.Users.findById(reqUserIdNum)
+    db.Events.findById(reqIdNum)
       .then(checkIfExist)
-      .then(genJSONApiResByRecord.bind(null, db, 'Users'))
+      .then(genJSONApiResByRecord.bind(null, db, 'Events'))
       .then((response) => {
-        res.send(response);
+        const studentRegistration = response.data.relationships.StudentRegistration;
+        if (studentRegistration === null) {
+          res.status(404).send();
+          return;
+        }
+        db.StudentRegistrations.findById(studentRegistration.data.id)
+          .then(genJSONApiResByRecord.bind(null, db, 'StudentRegistrations'))
+          .then((responseStudent) => {
+            const user = responseStudent.data.relationships.User;
+            if (user === null) {
+              res.status(404).send();
+              return;
+            }
+            db.Users.findById(user.data.id)
+              .then(genJSONApiResByRecord.bind(null, db, 'Users'))
+              .then((responseUser) => {
+                res.send(responseUser);
+              });
+          });
       })
       .catch((err) => {
         if (err.notFound) {
@@ -37,25 +49,25 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /users/:id Get User
- * @apiName Get
- * @apiGroup Users
- * @apiDescription Get user information with id
+ * @api {get} /events/:id/student Get Event's student
+ * @apiName Get Student
+ * @apiGroup Events
+ * @apiDescription Get event's student
  *
- * @apiParam {Number} [id] User's id
- *
+ * @apiParam {Number} [id] Event's id
  *
  * @apiSuccessExample Success-Response:
- * HTTP/1.1 200 OK
  * {
  *   "data": {
  *     "id": 1,
  *     "type": "Users",
  *     "attributes": {
- *       "displayName": "Jósska Pista",
- *       "loginName": "joskapista",
- *       "email": null,
+ *       "displayName": "Student Sarolta",
+ *       "loginName": "student",
+ *       "email": "student.email@cool-emailprovider.com",
  *       "sshPublicKey": null,
+ *       "colorTheme": "blue-gray",
+ *       "role": "STUDENT",
  *       "neptun": "Q87XXZ",
  *       "university": null,
  *       "email_official": null,
@@ -67,8 +79,8 @@ module.exports = (req, res) => {
  *       "spec": null,
  *       "exercises": null,
  *       "ownedExerciseID": null,
- *       "createdAt": "2017-05-06T17:42:31.428Z",
- *       "updatedAt": "2017-05-06T17:42:31.428Z"
+ *       "createdAt": "2017-05-06T20:47:29.416Z",
+ *       "updatedAt": "2017-05-06T20:47:29.416Z"
  *     },
  *     "relationships": {
  *       "StudentRegistrations": {
@@ -84,16 +96,5 @@ module.exports = (req, res) => {
  *       }
  *     }
  *   }
- * }
- *
- *
- * @apiErrorExample Not own user id:
- * HTTP/1.1 403 Forbidden
- * {
- *   "errors": [
- *     {
- *       "title": "You can access only your own user"
- *     }
- *   ]
  * }
  */

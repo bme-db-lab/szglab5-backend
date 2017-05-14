@@ -12,9 +12,9 @@ module.exports = (req, res) => {
     }
 
     const db = getDB();
-    db.DeliverableTemplates.findById(reqIdNum)
+    db.Tests.findById(reqIdNum)
       .then(checkIfExist)
-      .then(genJSONApiResByRecord.bind(null, db, 'DeliverableTemplates'))
+      .then(genJSONApiResByRecord.bind(null, db, 'Tests'))
       .then((response) => {
         res.send(response);
       })
@@ -31,33 +31,33 @@ module.exports = (req, res) => {
 };
 
 /**
-* @api {get} /deliverable-templates/:id Get DeliverableTemplates
+ * @api {get} /tests/:id Get Test
  * @apiName Get
- * @apiGroup DeliverableTemplates
- * @apiDescription Get deliverable template information with id
+ * @apiGroup Tests
+ * @apiDescription Get test information by id
  *
- * @apiParam {Number} [id] DeliverableTemplates's id
- * 
+ * @apiParam {Number} [id] Test's id
+ *
  * @apiSuccessExample Success-Response:
  * {
  *   "data": {
  *     "id": 1,
- *     "type": "DeliverableTemplates",
+ *     "type": "Tests",
  *     "attributes": {
- *       "description": "Beugro",
- *       "createdAt": "2017-05-05T14:59:31.891Z",
- *       "updatedAt": "2017-05-05T14:59:31.891Z"
+ *       "title": null,
+ *       "createdAt": "2017-03-08T17:40:23.824Z",
+ *       "updatedAt": "2017-03-08T17:40:23.824Z"
  *     },
  *     "relationships": {
- *       "Deliverables": {
+ *       "TestQuestions": {
  *         "data": [
  *           {
  *             "id": 1,
- *             "type": "Deliverables"
+ *             "type": "TestQuestions"
  *           },
  *           {
- *             "id": 3,
- *             "type": "Deliverables"
+ *             "id": 2,
+ *             "type": "TestQuestions"
  *           }
  *         ]
  *       }

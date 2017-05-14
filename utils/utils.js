@@ -58,30 +58,52 @@ function getAssociatedObjects(db, modelName, resource) {
           callback(new Error(`${getFunc} is not a function on ${resource}`));
           return;
         }
+        // TODO: refactor
+        let links = null;
+        if (modelName === 'Events' && assocGroup === 'Demonstrator') {
+          links = {
+            links: {
+              related: `/${modelName.toLowerCase()}/${resource.dataValues.id}/${assocGroup.toLowerCase()}`
+            }
+          };
+        }
         resource[getFunc]().then((result) => {
           if (isArray(result)) {
+            // single objet
             const resultForm = result.map(item => ({
               id: item.id,
               type: item.Model.getTableName()
             }));
             callback(null, {
-              [assocGroup]: {
+              [assocGroup]: Object.assign({}, {
                 data: resultForm
-              }
+              },
+              links)
+              // [assocGroup]: (links === null) ? {
+              //   data: resultForm,
+              // } : links
             });
           } else if (isObject(result)) {
             const resultForm = {
-              data: {
-                id: result.id,
-                type: result.Model.getTableName()
-              }
+              id: result.id,
+              type: result.Model.getTableName()
             };
             callback(null, {
-              [assocGroup]: resultForm
+              [assocGroup]: Object.assign({},
+                {
+                  data: resultForm
+                },
+                links
+              )
+              // [assocGroup]: (links === null) ? {
+              //   data: resultForm,
+              // } : links
             });
           } else {
             callback(null, {
-              [assocGroup]: null
+              [assocGroup]: {
+                data: null
+              }
             });
           }
         }).catch((err) => {

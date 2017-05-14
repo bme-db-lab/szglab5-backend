@@ -12,20 +12,11 @@ module.exports = (req, res) => {
     }
 
     const db = getDB();
-    db.Events.findById(reqIdNum)
+    db.TestQuestions.findById(reqIdNum)
       .then(checkIfExist)
-      .then(genJSONApiResByRecord.bind(null, db, 'Events'))
+      .then(genJSONApiResByRecord.bind(null, db, 'TestQuestions'))
       .then((response) => {
-        const demonstratorUser = response.data.relationships.Demonstrator;
-        if (demonstratorUser === null) {
-          res.status(404).send();
-          return;
-        }
-        db.Users.findById(demonstratorUser.data.id)
-          .then(genJSONApiResByRecord.bind(null, db, 'Users'))
-          .then((responseUser) => {
-            res.send(responseUser);
-          });
+        res.send(response);
       })
       .catch((err) => {
         if (err.notFound) {
@@ -40,10 +31,24 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /events/:id/demonstrator Get Event's demonstrator
- * @apiName Get Demonstrator
- * @apiGroup Events
- * @apiDescription Get event's demonstrator
+ * @api {get} /test-questions/:id Get TestQuestion
+ * @apiName Get
+ * @apiGroup TestQuestions
+ * @apiDescription Get test question information by id
  *
- * @apiParam {Number} [id] Event's id
+ * @apiParam {Number} [id] Test question's id
+ *
+ * @apiSuccessExample Success-Response:
+ * {
+ *   "data": {
+ *     "id": 1,
+ *     "type": "TestQuestions",
+ *     "attributes": {
+ *       "text": "Question 1",
+ *       "createdAt": "2017-03-08T17:40:23.839Z",
+ *       "updatedAt": "2017-03-08T17:40:23.839Z"
+ *     },
+ *     "relationships": {}
+ *   }
+ * }
  */

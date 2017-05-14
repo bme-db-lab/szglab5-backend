@@ -12,9 +12,9 @@ module.exports = (req, res) => {
     }
 
     const db = getDB();
-    db.DeliverableTemplates.findById(reqIdNum)
+    db.ExerciseTypes.findById(reqIdNum)
       .then(checkIfExist)
-      .then(genJSONApiResByRecord.bind(null, db, 'DeliverableTemplates'))
+      .then(genJSONApiResByRecord.bind(null, db, 'ExerciseTypes'))
       .then((response) => {
         res.send(response);
       })
@@ -31,33 +31,31 @@ module.exports = (req, res) => {
 };
 
 /**
-* @api {get} /deliverable-templates/:id Get DeliverableTemplates
+ * @api {get} /exercise-types/:id Get ExerciseType
  * @apiName Get
- * @apiGroup DeliverableTemplates
- * @apiDescription Get deliverable template information with id
+ * @apiGroup ExerciseTypes
+ * @apiDescription Get exercise type information by id
  *
- * @apiParam {Number} [id] DeliverableTemplates's id
- * 
+ * @apiParam {Number} [id] Exercise type's id
+ *
  * @apiSuccessExample Success-Response:
  * {
  *   "data": {
  *     "id": 1,
- *     "type": "DeliverableTemplates",
+ *     "type": "ExerciseTypes",
  *     "attributes": {
- *       "description": "Beugro",
- *       "createdAt": "2017-05-05T14:59:31.891Z",
- *       "updatedAt": "2017-05-05T14:59:31.891Z"
+ *       "name": "Videótéka",
+ *       "shortName": "VIDEO",
+ *       "language": "HU",
+ *       "createdAt": "2017-05-06T20:47:29.773Z",
+ *       "updatedAt": "2017-05-06T20:47:29.773Z"
  *     },
  *     "relationships": {
- *       "Deliverables": {
+ *       "ExerciseSheets": {
  *         "data": [
  *           {
  *             "id": 1,
- *             "type": "Deliverables"
- *           },
- *           {
- *             "id": 3,
- *             "type": "Deliverables"
+ *             "type": "ExerciseSheets"
  *           }
  *         ]
  *       }

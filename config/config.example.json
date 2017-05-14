@@ -9,11 +9,11 @@
   "api": {
     "port": 7000
   },
-  "frontend": {
-    "port": 4200
-  },
   "logger": {
     "consoleLevel": "info",
     "fileLevel": "info"
+  },
+  "cors": {
+    "whitelist": ["http://localhost:4200"]
   }
 }

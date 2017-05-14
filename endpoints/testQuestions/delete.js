@@ -1,6 +1,7 @@
 const { genErrorObj } = require('../../utils/utils.js');
 const { genJSONApiResByRecord, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
+const logger = require('../../utils/logger.js');
 
 module.exports = (req, res) => {
   try {
@@ -10,22 +11,12 @@ module.exports = (req, res) => {
       res.status(400).send(genErrorObj('Requested id is not a number'));
       return;
     }
+    logger.info("Deleting TestQuestion " + reqIdNum);
 
     const db = getDB();
-    db.Events.findById(reqIdNum)
-      .then(checkIfExist)
-      .then(genJSONApiResByRecord.bind(null, db, 'Events'))
-      .then((response) => {
-        const demonstratorUser = response.data.relationships.Demonstrator;
-        if (demonstratorUser === null) {
-          res.status(404).send();
-          return;
-        }
-        db.Users.findById(demonstratorUser.data.id)
-          .then(genJSONApiResByRecord.bind(null, db, 'Users'))
-          .then((responseUser) => {
-            res.send(responseUser);
-          });
+    db.TestQuestions.destroy({ where: { id: reqIdNum }})
+      .then(() => {
+        res.status(200).send();
       })
       .catch((err) => {
         if (err.notFound) {
@@ -40,10 +31,10 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /events/:id/demonstrator Get Event's demonstrator
- * @apiName Get Demonstrator
- * @apiGroup Events
- * @apiDescription Get event's demonstrator
+ * @api {delete} /test-questions/:id Delete TestQuestion
+ * @apiName Delete
+ * @apiGroup TestQuestions
+ * @apiDescription Delete test question entry by id
  *
- * @apiParam {Number} [id] Event's id
+ * @apiParam {Number} [id] Test question's id
  */

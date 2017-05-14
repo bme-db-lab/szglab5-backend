@@ -12,9 +12,9 @@ module.exports = (req, res) => {
     }
 
     const db = getDB();
-    db.DeliverableTemplates.findById(reqIdNum)
+    db.ExerciseCategories.findById(reqIdNum)
       .then(checkIfExist)
-      .then(genJSONApiResByRecord.bind(null, db, 'DeliverableTemplates'))
+      .then(genJSONApiResByRecord.bind(null, db, 'ExerciseCategories'))
       .then((response) => {
         res.send(response);
       })
@@ -31,33 +31,33 @@ module.exports = (req, res) => {
 };
 
 /**
-* @api {get} /deliverable-templates/:id Get DeliverableTemplates
+ * @api {get} /exercise-categories/:id Get exercise category
  * @apiName Get
- * @apiGroup DeliverableTemplates
- * @apiDescription Get deliverable template information with id
+ * @apiGroup ExerciseCategories
+ * @apiDescription Get exercise category information by id
  *
- * @apiParam {Number} [id] DeliverableTemplates's id
- * 
+ * @apiParam {Number} [id] Exercise category's id
+ *
  * @apiSuccessExample Success-Response:
  * {
  *   "data": {
  *     "id": 1,
- *     "type": "DeliverableTemplates",
+ *     "type": "ExerciseCategories",
  *     "attributes": {
- *       "description": "Beugro",
- *       "createdAt": "2017-05-05T14:59:31.891Z",
- *       "updatedAt": "2017-05-05T14:59:31.891Z"
+ *       "type": "Oracle",
+ *       "createdAt": "2017-05-06T20:47:29.761Z",
+ *       "updatedAt": "2017-05-06T20:47:29.761Z"
  *     },
  *     "relationships": {
- *       "Deliverables": {
+ *       "ExerciseSheets": {
  *         "data": [
  *           {
  *             "id": 1,
- *             "type": "Deliverables"
+ *             "type": "ExerciseSheets"
  *           },
  *           {
- *             "id": 3,
- *             "type": "Deliverables"
+ *             "id": 2,
+ *             "type": "ExerciseSheets"
  *           }
  *         ]
  *       }

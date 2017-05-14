@@ -44,17 +44,13 @@ function getIncludes(filter, db) {
 module.exports = (req, res) => {
   try {
     const filter = req.query.filter;
+    console.log('filter', filter);
 
     const db = getDB();
-    let queryObj = {};
-    if (filter) {
-      queryObj = {
-        where: getQuery(filter),
-        include: getIncludes(filter, db)
-      };
-    }
-
-    db.Events.findAll(queryObj)
+    db.Events.findAll({
+      where: getQuery(filter),
+      include: getIncludes(filter, db)
+    })
       .then(genJSONApiResByRecords.bind(null, db, 'Events'))
       .then((response) => {
         res.send(response);
@@ -68,10 +64,10 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /events List Events
+ * @api {get} /deliverables List Deliverables
  * @apiName List
- * @apiGroup Events
- * @apiDescription List events
+ * @apiGroup Deliverables
+ * @apiDescription List del
  *
  * @apiParam {String} [filter] filter the events
  *

@@ -27,8 +27,8 @@ initDB()
     }));
 
     let whitelist = [];
+    whitelist = config.cors.whitelist;
     if (config.env === 'dev') {
-      whitelist = [`http://localhost:${config.frontend.port}`];
       const morgan = require('morgan');
       app.use(morgan('dev'));
     }

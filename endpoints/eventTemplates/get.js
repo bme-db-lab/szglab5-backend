@@ -12,20 +12,11 @@ module.exports = (req, res) => {
     }
 
     const db = getDB();
-    db.Events.findById(reqIdNum)
+    db.EventTemplates.findById(reqIdNum)
       .then(checkIfExist)
-      .then(genJSONApiResByRecord.bind(null, db, 'Events'))
+      .then(genJSONApiResByRecord.bind(null, db, 'EventTemplates'))
       .then((response) => {
-        const demonstratorUser = response.data.relationships.Demonstrator;
-        if (demonstratorUser === null) {
-          res.status(404).send();
-          return;
-        }
-        db.Users.findById(demonstratorUser.data.id)
-          .then(genJSONApiResByRecord.bind(null, db, 'Users'))
-          .then((responseUser) => {
-            res.send(responseUser);
-          });
+        res.send(response);
       })
       .catch((err) => {
         if (err.notFound) {
@@ -40,10 +31,29 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /events/:id/demonstrator Get Event's demonstrator
- * @apiName Get Demonstrator
- * @apiGroup Events
- * @apiDescription Get event's demonstrator
+ * @api {get} /event-templates/:id Get Event Template
+ * @apiName Get
+ * @apiGroup EventTemplates
+ * @apiDescription Get event template information by id
  *
- * @apiParam {Number} [id] Event's id
+ * @apiParam {Number} [id] Event Template's id
+ *
+ * @apiSuccessExample Success-Response:
+ * {
+ *   "data": {
+ *     "id": 1,
+ *     "type": "EventTemplates",
+ *     "attributes": {
+ *       "title": "SQL",
+ *       "number": 5,
+ *       "createdAt": "2017-05-06T12:00:00.000Z",
+ *       "updatedAt": "2017-05-08T19:12:56.725Z"
+ *     },
+ *     "relationships": {
+ *       "Events": {
+ *         "data": []
+ *       }
+ *     }
+ *   }
+ * }
  */

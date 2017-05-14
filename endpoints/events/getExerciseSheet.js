@@ -16,10 +16,16 @@ module.exports = (req, res) => {
       .then(checkIfExist)
       .then(genJSONApiResByRecord.bind(null, db, 'Events'))
       .then((response) => {
-        if (response.data.relationships.Demonstrator !== null) {
-          delete response.data.relationships.Demonstrator.data;
+        const exerciseSheet = response.data.relationships.ExerciseSheet;
+        if (exerciseSheet === null) {
+          res.status(404).send();
+          return;
         }
-        res.send(response);
+        db.ExerciseSheets.findById(exerciseSheet.data.id)
+          .then(genJSONApiResByRecord.bind(null, db, 'ExerciseSheets'))
+          .then((responseSheet) => {
+            res.send(responseSheet);
+          });
       })
       .catch((err) => {
         if (err.notFound) {
@@ -34,66 +40,46 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /events/:id Get Event
- * @apiName Get
+ * @api {get} /events/:id/exercisesheet Get Event's exercise sheet
+ * @apiName Get Exercise Sheet
  * @apiGroup Events
- * @apiDescription Get event information with id
+ * @apiDescription Get event's exercise sheet
  *
  * @apiParam {Number} [id] Event's id
  *
  * @apiSuccessExample Success-Response:
- * HTTP/1.1 200 OK
  * {
  *   "data": {
  *     "id": 1,
- *     "type": "Events",
+ *     "type": "ExerciseSheets",
  *     "attributes": {
- *       "date": "2017-03-30T12:11:17.576Z",
- *       "location": "IL105",
- *       "attempt": 0,
- *       "comment": null,
- *       "createdAt": "2017-05-06T17:42:31.663Z",
- *       "updatedAt": "2017-05-06T17:42:31.663Z",
- *       "StudentRegistrationId": 1,
- *       "DemonstratorId": 2,
- *       "EventTemplateId": null,
- *       "ExerciseSheetId": 1
+ *       "createdAt": "2017-05-06T17:42:31.647Z",
+ *       "updatedAt": "2017-05-06T17:42:31.647Z",
+ *       "ExerciseCategoryId": 1,
+ *       "ExerciseTypeId": 1
  *     },
  *     "relationships": {
- *       "StudentRegistration": {
+ *       "ExerciseCategory": {
  *         "data": {
  *           "id": 1,
- *           "type": "StudentRegistrations"
+ *           "type": "ExerciseCategories"
  *         }
  *       },
- *       "Demonstrator": {
- *         "links": {
- *           "related": "/events/1/demonstrator"
+ *       "ExerciseType": {
+ *         "data": {
+ *           "id": 1,
+ *           "type": "ExerciseTypes"
  *         }
  *       },
- *       "Deliverables": {
+ *       "Events": {
  *         "data": [
  *           {
  *             "id": 1,
- *             "type": "Deliverables"
- *           },
- *           {
- *             "id": 2,
- *             "type": "Deliverables"
+ *             "type": "Events"
  *           }
  *         ]
- *       },
- *       "EventTemplate": {
- *         "data": null
- *       },
- *       "ExerciseSheet": {
- *         "data": {
- *           "id": 1,
- *           "type": "ExerciseSheets"
- *         }
  *       }
  *     }
  *   }
  * }
- *
  */

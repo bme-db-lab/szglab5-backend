@@ -1,7 +1,9 @@
 const auth = require('../../middlewares/auth.js');
 const getDeliverableTemplates = require('./get.js');
+const updateDeliverableTemplates = require('./update.js');
 
 module.exports = (app) => {
-  app.use('/deliverabletemplates/*', auth);
-  app.get('/deliverabletemplates/:id', getDeliverableTemplates);
+  app.use('/deliverable-templates/*', auth);
+  app.get('/deliverable-templates/:id', getDeliverableTemplates);
+  app.patch('/deliverable-templates/:id', updateDeliverableTemplates);
 };

@@ -2,17 +2,36 @@
   "Users": [
     {
       "data": {
-        "displayName": "Jósska Pista",
-        "loginName": "joskapista",
+        "displayName": "Student Sarolta",
+        "loginName": "student",
+        "email": "student.email@cool-emailprovider.com",
         "neptun": "Q87XXZ",
-        "password": "12345"
+        "password": "12345",
+        "role": "STUDENT"
       }
     },
     {
       "data": {
         "displayName": "Demonstrátor Dénes",
-        "loginName": "demonstratordenes",
-        "password": "12345"
+        "loginName": "demonstrator",
+        "password": "12345",
+        "role": "DEMONSTRATOR"
+      }
+    },
+    {
+      "data": {
+        "displayName": "Admin András",
+        "loginName": "admin",
+        "password": "12345",
+        "role": "ADMIN"
+      }
+    },
+    {
+      "data": {
+        "displayName": "Corrector Cecil",
+        "loginName": "corrector",
+        "password": "12345",
+        "role": "CORRECTOR"
       }
     }
   ],
@@ -76,6 +95,16 @@
       "data": {
         "ExerciseTypeId": 2,
         "ExerciseCategoryId": 1
+      }
+    }
+  ],
+  "EventTemplates": [
+    {
+      "data": {
+        "title": "SQL",
+        "number": 5,
+        "createdAt": "2017-05-06T12:00:00.000Z",
+        "updatedAt": "2017-05-08T21:12:17.123Z"
       }
     }
   ],

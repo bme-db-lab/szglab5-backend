@@ -31,7 +31,7 @@ module.exports = (req, res) => {
 };
 
 /**
-* @api {get} /studentregistrations/:id Get StudentRegistration
+* @api {get} /student-registrations/:id Get StudentRegistration
  * @apiName Get
  * @apiGroup StudentRegistrations
  * @apiDescription Get student registrations information with id
