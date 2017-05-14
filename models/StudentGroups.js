@@ -1,16 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
   const StudentGroups = sequelize.define('StudentGroups', {
-    name: DataTypes.STRING,
+    name: { type: DataTypes.STRING, unique: true, primaryKey: true },
     language: DataTypes.STRING,
   }, {
     classMethods: {
       associate: (models) => {
         StudentGroups.belongsTo(models.Semesters);
         StudentGroups.hasMany(models.StudentRegistrations);
-        // StudentGroups.hasMany(models.Staffs, {foreignKey: 'id', sourceKey: 'demonstrator'});
-        // StudentGroups.hasMany(models.Semesters, {foreignKey: 'id', sourceKey: 'semester'});
-        // StudentGroups.belongsTo(models.Appointments, {foreignKey: 'id', targetKey: 'studentgroup'});
-        // StudentGroups.belongsTo(models.Events, {foreignKey: 'id', targetKey: 'studentgroup'});
+        StudentGroups.hasMany(models.Appointments);
       }
     }
   });

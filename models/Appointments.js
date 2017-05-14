@@ -8,10 +8,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        Appointments.belongsTo(models.EventTemplates);
+        //Appointments.hasMany(models.EventTemplates, { foreignKey: 'id', sourceKey: 'eventtype' });
         Appointments.belongsTo(models.StudentGroups);
-        // Appointments.hasMany(models.EventTypes, {foreignKey: 'id', sourceKey: 'eventtype'});
-        // Appointments.hasMany(models.StudentGroups, {foreignKey: 'id', sourceKey: 'studentgroup'});
       }
     }
   });

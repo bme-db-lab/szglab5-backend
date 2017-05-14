@@ -31,7 +31,7 @@ module.exports = () => {
               }
               break;
             case 'D':
-              if (seed[key].w === null) {
+              if (seed[key].w === undefined) {
                 group.data.language = 'magyar';
               } else {
                 group.data.language = seed[key].w;
@@ -50,7 +50,6 @@ module.exports = () => {
         return false;
       }
   );
-    console.log(groups);
     return groups;
   }
   logger.warn('No seed data provided');

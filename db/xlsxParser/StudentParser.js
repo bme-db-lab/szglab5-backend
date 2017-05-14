@@ -7,8 +7,8 @@ module.exports = () => {
     const seedFilePath = 'db/seedData/hallgatok-minta.xlsx';
     const sheetName = 'Hallgatoi csoportbeosztas másol';
     const opts = {
-      sheetRows: 10,
       sheetStubs: true,
+      sheetRows: 10,
     };
     const workbook = XLSX.readFile(seedFilePath, opts);
     seed = workbook.Sheets[sheetName];

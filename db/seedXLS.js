@@ -48,9 +48,9 @@ module.exports = (db) => {
 
     seedDB(db, 'Users', students)
       .then(() => { seedDB(db, 'StudentGroups', groups); })
-      //.then(() => { seedDB(db, 'Users', staff); })
-      //.then(() => { seedDB(db, 'ExerciseTypes', exercises); })
-      //.then(() => { seedDB(db, 'Appointments', timetable); })
+      .then(() => { seedDB(db, 'Users', staff); })
+      .then(() => { seedDB(db, 'ExerciseTypes', exercises); })
+      .then(() => { seedDB(db, 'Appointments', timetable); })
       .then(() => { resolve(null); })
       .catch((err) => { reject(err); });
   });

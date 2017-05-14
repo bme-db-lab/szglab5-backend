@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     printSupport: DataTypes.STRING,
     // temporary attributes
-    studentgroup_id: DataTypes.STRING,
     classroom: DataTypes.STRING,
     spec: DataTypes.STRING,
     exercises: DataTypes.STRING,

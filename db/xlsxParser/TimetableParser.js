@@ -34,13 +34,14 @@ module.exports = () => {
             const hour = seed[(`${rKey[1]}1`)].w;
             app.data.date = new Date(`${date} ${year}`);
             app.data.date.setHours(hour);
-            app.data.StudentGroupId = seed[(`D${rKey[2]}`)].w;
+            app.data.StudentGroupName = seed[(`D${rKey[2]}`)].w;
             apps.push(app);
           }
         }
       }
       return null;
     });
+    console.log(apps);
     return apps;
   }
   logger.warn('No seed data provided');
