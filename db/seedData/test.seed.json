@@ -38,9 +38,9 @@
   "StudentRegistrations": [
     {
       "data": {
-        "neptunSubjectCode": "NEPTUN_SUBJ_CODE_1",
+        "neptunSubjectCode": "Q87XXZ",
         "neptunCourseCode": "NEPTUN_COURSE_CODE_1",
-        "UserId": 1
+        "UserId": "Q87XXZ"
       }
     }
   ],
@@ -66,21 +66,24 @@
       "data": {
         "name": "Videótéka",
         "shortName": "VIDEO",
-        "language": "HU"
+        "language": "HU",
+        "id": 1
       }
     },
     {
       "data": {
         "name": "Hajózás",
         "shortName": "HAJO",
-        "language": "HU"
+        "language": "HU",
+        "id": 2
       }
     },
     {
       "data": {
         "name": "Road transportation",
         "shortName": "ROAD",
-        "language": "EN"
+        "language": "EN",
+        "id": 3
       }
     }
   ],
@@ -101,6 +104,7 @@
   "EventTemplates": [
     {
       "data": {
+        "id": 1,
         "title": "SQL",
         "number": 5,
         "createdAt": "2017-05-06T12:00:00.000Z",
@@ -139,11 +143,13 @@
   "DeliverableTemplates": [
     {
       "data": {
+        "id": 1,
         "description": "Beugro"
       }
     },
     {
       "data": {
+        "id": 2,
         "description": "Jegyzőkönyv"
       }
     }
