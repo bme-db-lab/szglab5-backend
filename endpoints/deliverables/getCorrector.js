@@ -52,4 +52,49 @@ module.exports = (req, res) => {
  * @apiDescription Get deliverable's corrector
  *
  * @apiParam {Number} [id] Deliverables's id
+ *
+ * @apiSuccessExample Success-Response:
+ * {
+ *   "data": {
+ *     "id": 2,
+ *     "type": "Users",
+ *     "attributes": {
+ *       "displayName": "Demonstrátor Dénes",
+ *       "loginName": "demonstrator",
+ *       "email": null,
+ *       "sshPublicKey": null,
+ *       "colorTheme": "blue-gray",
+ *       "role": "DEMONSTRATOR",
+ *       "neptun": null,
+ *       "university": null,
+ *       "email_official": null,
+ *       "mobile": null,
+ *       "title": null,
+ *       "printSupport": null,
+ *       "classroom": null,
+ *       "spec": null,
+ *       "exercises": null,
+ *       "createdAt": "2017-05-17T23:46:06.751Z",
+ *       "updatedAt": "2017-05-17T23:46:06.751Z",
+ *       "OwnedExerciseId": null
+ *     },
+ *     "relationships": {
+ *       "StudentRegistrations": {
+ *         "data": []
+ *       },
+ *       "Deliverables": {
+ *         "data": []
+ *       },
+ *       "Events": {
+ *         "data": []
+ *       },
+ *       "StudentGroups": {
+ *         "data": []
+ *       },
+ *       "ExerciseType": {
+ *         "data": null
+ *       }
+ *     }
+ *   }
+ * }
  */

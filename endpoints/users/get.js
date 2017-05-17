@@ -52,23 +52,24 @@ module.exports = (req, res) => {
  *     "id": 1,
  *     "type": "Users",
  *     "attributes": {
- *       "displayName": "Jósska Pista",
- *       "loginName": "joskapista",
- *       "email": null,
+ *       "displayName": "Student Sarolta",
+ *       "loginName": "student",
+ *       "email": "student.email@cool-emailprovider.com",
  *       "sshPublicKey": null,
+ *       "colorTheme": "blue-gray",
+ *       "role": "STUDENT",
  *       "neptun": "Q87XXZ",
  *       "university": null,
  *       "email_official": null,
  *       "mobile": null,
  *       "title": null,
  *       "printSupport": null,
- *       "studentgroup_id": null,
  *       "classroom": null,
  *       "spec": null,
  *       "exercises": null,
- *       "ownedExerciseID": null,
- *       "createdAt": "2017-05-06T17:42:31.428Z",
- *       "updatedAt": "2017-05-06T17:42:31.428Z"
+ *       "createdAt": "2017-05-17T23:46:06.642Z",
+ *       "updatedAt": "2017-05-17T23:46:06.642Z",
+ *       "OwnedExerciseId": null
  *     },
  *     "relationships": {
  *       "StudentRegistrations": {
@@ -81,6 +82,15 @@ module.exports = (req, res) => {
  *       },
  *       "Deliverables": {
  *         "data": []
+ *       },
+ *       "Events": {
+ *         "data": []
+ *       },
+ *       "StudentGroups": {
+ *         "data": []
+ *       },
+ *       "ExerciseType": {
+ *         "data": null
  *       }
  *     }
  *   }
