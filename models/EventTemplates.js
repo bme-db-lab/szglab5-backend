@@ -1,6 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
   const EventTemplates = sequelize.define('EventTemplates', {
-    id: { type: DataTypes.INTEGER, primaryKey: true },
     title: DataTypes.STRING,
     number: DataTypes.INTEGER
   }, {

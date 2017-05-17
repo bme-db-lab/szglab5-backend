@@ -1,6 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
   const ExerciseTypes = sequelize.define('ExerciseTypes', {
-    id: { type: DataTypes.INTEGER, primaryKey: true },
     name: DataTypes.STRING,
     shortName: DataTypes.STRING,
     language: DataTypes.STRING,

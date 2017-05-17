@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const StudentGroups = sequelize.define('StudentGroups', {
-    name: { type: DataTypes.STRING, unique: true, primaryKey: true },
+    name: { type: DataTypes.STRING, unique: true, pryimaryKey: true },
     language: DataTypes.STRING,
   }, {
     classMethods: {
