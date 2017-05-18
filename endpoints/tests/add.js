@@ -6,7 +6,7 @@ const logger = require('../../utils/logger.js');
 module.exports = (req, res) => {
   try {
     const { data } = req.body;
-    logger.info(data);
+    logger.info("Test added", data);
     const db = getDB();
     db.Tests.create(data.attributes)
       .then(checkIfExist)
