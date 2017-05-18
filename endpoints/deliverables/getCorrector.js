@@ -16,7 +16,7 @@ module.exports = (req, res) => {
       .then(checkIfExist)
       .then(genJSONApiResByRecord.bind(null, db, 'Deliverables'))
       .then((response) => {
-        const correctorUser = response.data.relationships.User;
+        const correctorUser = response.data.relationships.Corrector;
         if (correctorUser == null) {
           res.status(404).send();
           return;
