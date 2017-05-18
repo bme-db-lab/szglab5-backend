@@ -1,0 +1,226 @@
+{
+  "Courses": [
+    {
+      "data": {
+        "name": "DBLab",
+        "codeName": "DUMMY_CODE"
+      }
+    }
+  ],
+  "Semesters": [
+    {
+      "data": {
+        "id": "1",
+        "academicyear": "2",
+        "academicterm": "2",
+        "description": "DUMMY_DESC",
+        "CourseCodeName": "DUMMY_CODE"
+      }
+    }
+  ],
+  "ExerciseCategories": [
+    {
+      "data": {
+        "id": "1",
+        "type": "OR",
+        "CourseCodeName": "DUMMY_CODE"
+      }
+    },
+    {
+      "data": {
+        "id": "2",
+        "type": "SQ",
+        "CourseCodeName": "DUMMY_CODE"
+      }
+    },
+    {
+      "data": {
+        "id": "3",
+        "type": "JD",
+        "CourseCodeName": "DUMMY_CODE"
+      }
+    },
+    {
+      "data": {
+        "id": "4",
+        "type": "SO",
+        "CourseCodeName": "DUMMY_CODE"
+      }
+    },
+    {
+      "data": {
+        "id": "5",
+        "type": "XS",
+        "CourseCodeName": "DUMMY_CODE"
+      }
+    }
+  ],
+  "EventTemplates": [
+    {
+      "data": {
+        "id": "1",
+        "title": "Labor",
+        "number": "5"
+      }
+    }
+  ],
+  "DeliverableTemplates": [
+    {
+      "data": {
+        "id": "1",
+        "description": "Beugró"
+      }
+    },
+    {
+      "data": {
+        "id": "2",
+        "description": "Git repo"
+      }
+    }
+  ],
+  "ExerciseTypes": [
+    {
+      "data": {
+        "id": 1,
+        "name": "Hajózás",
+        "shortName": "Hajó",
+        "language": "magyar"
+      }
+    }
+  ],
+  "Users": [
+    {
+      "data": {
+        "displayName": "student",
+        "neptun": "STDNT0",
+        "email": "student@db.bme.hu",
+        "loginName": "student",
+        "password": "12345",
+        "university": "BME"
+      }
+    },
+    {
+      "data": {
+        "displayName": "eng_student",
+        "neptun": "STDNT1",
+        "email": "eng_student@db.bme.hu",
+        "loginName": "eng_student",
+        "password": "12345",
+        "university": "BME"
+      }
+    },
+    {
+      "data": {
+        "displayName": "demonstrator",
+        "loginName": "demonstrator",
+        "email": "demonstrator@db.bme.hu",
+        "email_official": "demonstrator@db.bme.hu",
+        "title": "demonstrator",
+        "mobile": "06201234567",
+        "password": "12345",
+        "university": "BME",
+        "classroom": "IL105",
+        "printSupport": "igen"
+      }
+    },
+    {
+      "data": {
+        "displayName": "eng_demonstrator",
+        "loginName": "eng_demonstrator",
+        "email": "eng_demonstrator@db.bme.hu",
+        "email_official": "eng_demonstrator@db.bme.hu",
+        "title": "demonstrator",
+        "mobile": "06201234567",
+        "password": "12345",
+        "university": "BME",
+        "classroom": "IL106",
+        "spec": "angol",
+        "printSupport": "nem"
+      }
+    },
+    {
+      "data": {
+        "displayName": "admin",
+        "loginName": "admin",
+        "email": "admin@db.bme.hu",
+        "email_official": "admin@db.bme.hu",
+        "title": "admin",
+        "mobile": "06201234567",
+        "password": "12345",
+        "university": "BME"
+      }
+    },
+    {
+      "data": {
+        "displayName": "corrector",
+        "loginName": "corrector",
+        "email": "corrector@db.bme.hu",
+        "email_official": "corrector@db.bme.hu",
+        "title": "corrector",
+        "mobile": "06201234567",
+        "password": "12345",
+        "university": "BME",
+        "exercises": "1",
+        "OwnedExerciseId": "1"
+      }
+    }
+  ],
+  "StudentGroups": [
+    {
+      "data": {
+        "name": "m-1",
+        "language": "magyar",
+        "SemesterId": 1,
+        "Demonstrator": "demonstrator@db.bme.hu"
+      }
+    },
+    {
+      "data": {
+        "name": "a-1",
+        "language": "angol",
+        "SemesterId": 1,
+        "Demonstrator": "eng_demonstrator@db.bme.hu"
+      }
+    }
+  ],
+  "StudentRegistrations": [
+    {
+      "data": {
+        "neptunCourseCode": "m-1",
+        "neptunSubjectCode": "magyar",
+        "SemesterId": 1,
+        "StudentGroupName": "m-1",
+        "UserId": "STDNT0"
+      }
+    },
+    {
+      "data": {
+        "neptunCourseCode": "a-1",
+        "neptunSubjectCode": "angol",
+        "SemesterId": 1,
+        "StudentGroupName": "m-1",
+        "UserId": "STDNT1"
+      }
+    }
+  ],
+  "Appointments": [
+    {
+      "data": {
+        "location": "IL105",
+        "type": "SQ",
+        "date": "2017-09-12",
+        "StudentGroupName": "m-1",
+        "EventTemplateId": 1
+      }
+    },
+    {
+      "data": {
+        "location": "IL106",
+        "type": "SQ",
+        "date": "2017-09-13",
+        "StudentGroupName": "a-1",
+        "EventTemplateId": 1
+      }
+    }
+  ]
+}
