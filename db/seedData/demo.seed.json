@@ -136,7 +136,9 @@
         "loginName": "student",
         "password": "12345",
         "university": "BME",
-        "role": "STUDENT"
+        "role": "STUDENT",
+        "subscribedToMailList": false,
+        "subscribedToEmailNotify": true
       }
     },
     {
@@ -147,7 +149,9 @@
         "loginName": "eng_student",
         "password": "12345",
         "university": "BME",
-        "role": "STUDENT"
+        "role": "STUDENT",
+        "subscribedToMailList": true,
+        "subscribedToEmailNotify": false
       }
     },
     {
@@ -162,7 +166,9 @@
         "university": "BME",
         "classroom": "IL105",
         "printSupport": "igen",
-        "role": "DEMONSTRATOR"
+        "role": "DEMONSTRATOR",
+        "subscribedToMailList": false,
+        "subscribedToEmailNotify": false
       }
     },
     {
@@ -178,7 +184,9 @@
         "classroom": "IL106",
         "spec": "angol",
         "printSupport": "nem",
-        "role": "DEMONSTRATOR"
+        "role": "DEMONSTRATOR",
+        "subscribedToMailList": false,
+        "subscribedToEmailNotify": false
       }
     },
     {
@@ -191,7 +199,9 @@
         "mobile": "06201234567",
         "password": "12345",
         "university": "BME",
-        "role": "ADMIN"
+        "role": "ADMIN",
+        "subscribedToMailList": false,
+        "subscribedToEmailNotify": false
       }
     },
     {
@@ -206,7 +216,9 @@
         "university": "BME",
         "exercises": "1",
         "OwnedExerciseId": "1",
-        "role": "CORRECTOR"
+        "role": "CORRECTOR",
+        "subscribedToMailList": false,
+        "subscribedToEmailNotify": false
       }
     }
   ],

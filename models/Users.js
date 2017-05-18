@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: 'blue-gray'
     },
+    subscribedToMailList: DataTypes.BOOLEAN,
+    subscribedToEmailNotify: DataTypes.BOOLEAN,
     // TODO temporary role management
     role: DataTypes.STRING,
     // Student specific attributes
