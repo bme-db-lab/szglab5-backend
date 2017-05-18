@@ -68,13 +68,22 @@
     {
       "data": {
         "id": "1",
-        "description": "Beugró"
+        "description": "Beugró",
+        "type": "BEUGRO"
       }
     },
     {
       "data": {
         "id": "2",
-        "description": "Git repo"
+        "description": "Git repo",
+        "type": "GIT_REPO"
+      }
+    },
+    {
+      "data": {
+        "id": "3",
+        "description": "Labor",
+        "type": "Labor"
       }
     }
   ],
@@ -126,7 +135,8 @@
         "email": "student@db.bme.hu",
         "loginName": "student",
         "password": "12345",
-        "university": "BME"
+        "university": "BME",
+        "role": "STUDENT"
       }
     },
     {
@@ -136,7 +146,8 @@
         "email": "eng_student@db.bme.hu",
         "loginName": "eng_student",
         "password": "12345",
-        "university": "BME"
+        "university": "BME",
+        "role": "STUDENT"
       }
     },
     {
@@ -150,7 +161,8 @@
         "password": "12345",
         "university": "BME",
         "classroom": "IL105",
-        "printSupport": "igen"
+        "printSupport": "igen",
+        "role": "DEMONSTRATOR"
       }
     },
     {
@@ -165,7 +177,8 @@
         "university": "BME",
         "classroom": "IL106",
         "spec": "angol",
-        "printSupport": "nem"
+        "printSupport": "nem",
+        "role": "DEMONSTRATOR"
       }
     },
     {
@@ -177,7 +190,8 @@
         "title": "admin",
         "mobile": "06201234567",
         "password": "12345",
-        "university": "BME"
+        "university": "BME",
+        "role": "ADMIN"
       }
     },
     {
@@ -191,7 +205,8 @@
         "password": "12345",
         "university": "BME",
         "exercises": "1",
-        "OwnedExerciseId": "1"
+        "OwnedExerciseId": "1",
+        "role": "CORRECTOR"
       }
     }
   ],
@@ -324,6 +339,15 @@
         "Corrector": "corrector@db.bme.hu",
         "EventId": 1,
         "DeliverableTemplateId": 2
+      }
+    },
+    {
+      "data": {
+        "deadline": "2017-09-15",
+        "submitteddate": "2017-09-13",
+        "Corrector": "corrector@db.bme.hu",
+        "EventId": 1,
+        "DeliverableTemplateId": 3
       }
     },
     {
