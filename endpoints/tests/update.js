@@ -1,7 +1,6 @@
 const { genErrorObj } = require('../../utils/utils.js');
 const { updateResource, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
-const logger = require('../../utils/logger.js');
 
 module.exports = (req, res) => {
   try {
@@ -13,7 +12,6 @@ module.exports = (req, res) => {
     }
 
     const { data } = req.body;
-    logger.info(data);
     const db = getDB();
     db.Tests.findById(reqId)
       .then(checkIfExist)

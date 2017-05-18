@@ -1,9 +1,11 @@
 const { isString, isObject, isArray, isFunction } = require('lodash');
 const async = require('async');
+const logger = require('./logger.js');
 const pluralize = require('pluralize');
 
 function genErrorObj(errors) {
   if (isString(errors)) {
+    logger.error(errors);
     return {
       errors: [
         {
@@ -17,6 +19,7 @@ function genErrorObj(errors) {
     return [];
   }
 
+  logger.error(errors);
   if (isString(errors[0])) {
     return {
       errors: errors.map(error => ({ title: error }))

@@ -1,5 +1,6 @@
 const { getAssociatedObjects } = require('./utils.js');
 const async = require('async');
+const logger = require('./logger.js');
 
 function checkIfExist(record) {
   if (record === null) {
@@ -12,6 +13,8 @@ function checkIfExist(record) {
 
 function genJSONApiResByRecord(db, modelName, record) {
   return new Promise((resolve, reject) => {
+    logger.debug("GET: " + modelName, record.dataValues);
+    logger.info("GET: " + modelName + "/" + record.dataValues.id);
     getAssociatedObjects(db, modelName, record)
       .then((relationships) => {
         const data = record.dataValues;
@@ -60,6 +63,8 @@ function genJSONApiResByRecords(db, modelName, records) {
 }
 
 function updateResource(db, modelName, data) {
+  logger.debug("PATCH: " + modelName, data);
+  logger.info("PATCH: " + modelName + "/" + data.id);
   return new Promise((resolve, reject) => {
     const id = data.id;
     const attributes = data.attributes;
