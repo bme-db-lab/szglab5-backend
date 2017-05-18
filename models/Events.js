@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: (models) => {
         Events.belongsTo(models.StudentRegistrations);
-        Events.belongsTo(models.Users, { foreignKey: 'Demonstrator', targetKey: 'email_official' });
+        Events.belongsTo(models.Users, { as: 'Demonstrator', foreignKey: 'DemonstratorEmail', targetKey: 'email_official' });
         Events.hasMany(models.Deliverables);
         Events.belongsTo(models.EventTemplates);
         Events.belongsTo(models.ExerciseSheets);
