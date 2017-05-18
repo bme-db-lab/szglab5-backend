@@ -88,6 +88,36 @@
       }
     }
   ],
+  "ExerciseSheets": [
+    {
+      "data": {
+        "id": 1,
+        "ExerciseCategoryId": "1",
+        "ExerciseTypeId": "1"
+      }
+    },
+    {
+      "data": {
+        "id": 2,
+        "ExerciseCategoryId": "2",
+        "ExerciseTypeId": "1"
+      }
+    },
+    {
+      "data": {
+        "id": 3,
+        "ExerciseCategoryId": "3",
+        "ExerciseTypeId": "1"
+      }
+    },
+    {
+      "data": {
+        "id": 4,
+        "ExerciseCategoryId": "4",
+        "ExerciseTypeId": "1"
+      }
+    }
+  ],
   "Users": [
     {
       "data": {
@@ -186,6 +216,7 @@
   "StudentRegistrations": [
     {
       "data": {
+        "id": 1,
         "neptunCourseCode": "m-1",
         "neptunSubjectCode": "magyar",
         "SemesterId": 1,
@@ -195,6 +226,7 @@
     },
     {
       "data": {
+        "id": 2,
         "neptunCourseCode": "a-1",
         "neptunSubjectCode": "angol",
         "SemesterId": 1,
@@ -215,11 +247,92 @@
     },
     {
       "data": {
+        "location": "IL105",
+        "type": "OR",
+        "date": "2017-09-22",
+        "StudentGroupName": "m-1",
+        "EventTemplateId": 1
+      }
+    },
+    {
+      "data": {
         "location": "IL106",
         "type": "SQ",
         "date": "2017-09-13",
         "StudentGroupName": "a-1",
         "EventTemplateId": 1
+      }
+    }
+  ],
+  "Events": [
+    {
+      "data": {
+        "id": 1,
+        "location": "IL105",
+        "attempt": "1",
+        "date": "2017-09-12",
+        "comment": "No comment.",
+        "StudentRegistrationId": 1,
+        "Demonstrator": "demonstrator@db.bme.hu",
+        "EventTemplateId": 1,
+        "ExerciseSheetId": 1
+      }
+    },
+    {
+      "data": {
+        "id": 2,
+        "location": "IL105",
+        "attempt": "1",
+        "date": "2017-09-22",
+        "comment": "No comment.",
+        "StudentRegistrationId": 1,
+        "Demonstrator": "demonstrator@db.bme.hu",
+        "EventTemplateId": 1,
+        "ExerciseSheetId": 1
+      }
+    },
+    {
+      "data": {
+        "id": 3,
+        "location": "IL106",
+        "attempt": "1",
+        "date": "2017-09-13",
+        "comment": "No comment.",
+        "StudentRegistrationId": 2,
+        "Demonstrator": "eng_demonstrator@db.bme.hu",
+        "EventTemplateId": 1,
+        "ExerciseSheetId": 3
+      }
+    }
+  ],
+  "Deliverables": [
+    {
+      "data": {
+        "deadline": "2017-09-12",
+        "submitteddate": "2017-09-12",
+        "grade": "2",
+        "comment": "Lol pont átment.",
+        "Corrector": "corrector@db.bme.hu",
+        "EventId": 1,
+        "DeliverableTemplateId": 1
+      }
+    },
+    {
+      "data": {
+        "deadline": "2017-09-15",
+        "submitteddate": "2017-09-13",
+        "Corrector": "corrector@db.bme.hu",
+        "EventId": 1,
+        "DeliverableTemplateId": 2
+      }
+    },
+    {
+      "data": {
+        "deadline": "2017-09-27",
+        "submitteddate": "2017-09-30",
+        "Corrector": "corrector@db.bme.hu",
+        "EventId": 2,
+        "DeliverableTemplateId": 2
       }
     }
   ]

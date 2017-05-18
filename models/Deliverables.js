@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       associate: (models) => {
         Deliverables.belongsTo(models.Events);
         Deliverables.belongsTo(models.DeliverableTemplates);
-        Deliverables.belongsTo(models.Users, { as: 'Corrector' });
+        Deliverables.belongsTo(models.Users, { foreignKey: 'Corrector', targetKey: 'email_official' });
       }
     }
   });

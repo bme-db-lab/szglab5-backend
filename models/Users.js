@@ -27,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: (models) => {
         Users.hasMany(models.StudentRegistrations, { sourceKey: 'neptun' });
-        Users.hasMany(models.Deliverables);
-        Users.hasMany(models.Events);
+        Users.hasMany(models.Deliverables, { foreignKey: 'Corrector', sourceKey: 'email_official' });
+        Users.hasMany(models.Events, { foreignKey: 'Demonstrator', sourceKey: 'email_official' });
         Users.hasMany(models.StudentGroups, { foreignKey: 'Demonstrator', sourceKey: 'email_official' });
         Users.belongsTo(models.ExerciseTypes, { foreignKey: 'OwnedExerciseId' });
       }
