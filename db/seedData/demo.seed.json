@@ -346,9 +346,10 @@
     },
     {
       "data": {
-        "deadline": "2017-09-15",
+        "deadline": "2016-09-15",
         "submitteddate": "2017-09-13",
         "Corrector": "corrector@db.bme.hu",
+        "url": "http://gitlab.com/bad_repo/",
         "EventId": 1,
         "DeliverableTemplateId": 2
       }
@@ -366,9 +367,28 @@
       "data": {
         "deadline": "2017-09-27",
         "submitteddate": "2017-09-30",
+        "Corrector": null,
+        "EventId": 2,
+        "DeliverableTemplateId": 1
+      }
+    },
+    {
+      "data": {
+        "deadline": "2016-09-27",
+        "submitteddate": "2016-01-30",
         "Corrector": "corrector@db.bme.hu",
+        "url": "http://gitlab.com/super_repo/",
         "EventId": 2,
         "DeliverableTemplateId": 2
+      }
+    },
+    {
+      "data": {
+        "deadline": "2017-09-27",
+        "submitteddate": "2017-09-30",
+        "Corrector": null,
+        "EventId": 2,
+        "DeliverableTemplateId": 3
       }
     }
   ]
