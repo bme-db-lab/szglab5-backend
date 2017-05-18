@@ -6,7 +6,7 @@ const logger = require('../../utils/logger.js');
 module.exports = (req, res) => {
   try {
     const { data } = req.body;
-    logger.info(data);
+    logger.info("Event template added", data);
     const db = getDB();
     db.EventTemplates.create(data.attributes)
       .then(checkIfExist)
