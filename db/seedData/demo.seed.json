@@ -273,7 +273,7 @@
         "date": "2017-09-12",
         "comment": "No comment.",
         "StudentRegistrationId": 1,
-        "Demonstrator": "demonstrator@db.bme.hu",
+        "DemonstratorEmail": "demonstrator@db.bme.hu",
         "EventTemplateId": 1,
         "ExerciseSheetId": 1
       }
@@ -286,7 +286,7 @@
         "date": "2017-09-22",
         "comment": "No comment.",
         "StudentRegistrationId": 1,
-        "Demonstrator": "demonstrator@db.bme.hu",
+        "DemonstratorEmail": "demonstrator@db.bme.hu",
         "EventTemplateId": 1,
         "ExerciseSheetId": 1
       }
@@ -299,7 +299,7 @@
         "date": "2017-09-13",
         "comment": "No comment.",
         "StudentRegistrationId": 2,
-        "Demonstrator": "eng_demonstrator@db.bme.hu",
+        "DemonstratorEmail": "eng_demonstrator@db.bme.hu",
         "EventTemplateId": 1,
         "ExerciseSheetId": 3
       }
