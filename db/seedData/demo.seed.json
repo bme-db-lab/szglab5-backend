@@ -75,7 +75,7 @@
     {
       "data": {
         "id": "2",
-        "description": "Git repo",
+        "description": "Jegyzőkönyv",
         "type": "GIT_REPO"
       }
     },
