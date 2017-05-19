@@ -42,7 +42,9 @@ initDB()
     addEndpoints(app);
     // handle every other request
     app.use('/', (req, res) => {
-      res.status(404).send(`Endpoint not found: ${req.method} ${req.originalUrl}`);
+      var warnmsg = `Endpoint not found: ${req.method} ${req.originalUrl}`;
+      logger.warn(warnmsg);
+      res.status(404).send(warnmsg);
     });
 
     const server = http.createServer(app);
