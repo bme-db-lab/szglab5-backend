@@ -3,6 +3,16 @@ module.exports = (sequelize, DataTypes) => {
     deadline: DataTypes.DATE,
     submitteddate: DataTypes.DATE,
     grade: DataTypes.INTEGER,
+    imsc: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    finalized: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
     comment: DataTypes.STRING,
     //
     url: DataTypes.STRING,
