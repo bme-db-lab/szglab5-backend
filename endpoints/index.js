@@ -9,6 +9,7 @@ const exercisetypes = require('./exerciseTypes');
 const studentregistrations = require('./studentRegistrations');
 const testquestions = require('./testQuestions');
 const tests = require('./tests');
+const sqlEndpoints = require('./sql');
 
 module.exports = (app) => {
   authEndpoints(app);
@@ -22,4 +23,5 @@ module.exports = (app) => {
   studentregistrations(app);
   testquestions(app);
   tests(app);
+  sqlEndpoints(app);
 };
