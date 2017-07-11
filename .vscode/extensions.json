@@ -3,6 +3,13 @@
 	// for the documentation about the extensions.json format
 	"recommendations": [
 		// Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
-		"dbaeumer.vscode-eslint"
+		"dbaeumer.vscode-eslint",
+		"DryWolf.dark-plus-plus-theme",
+		"PeterJausovec.vscode-docker",
+		"samverschueren.final-newline",
+		"akamud.vscode-javascript-snippet-pack",
+		"eg2.vscode-npm-script",
+		"jakob101.relativepath",
+		"robertohuertasm.vscode-icons"
 	]
 }
