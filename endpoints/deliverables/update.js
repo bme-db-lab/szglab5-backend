@@ -32,7 +32,7 @@ module.exports = (req, res) => {
 };
 
 /**
-* @api {patch} /deliverables/:id Update Deliverable
+ * @api {patch} /deliverables/:id Update Deliverable
  * @apiName Patch
  * @apiGroup Deliverables
  * @apiDescription Update a deliverable

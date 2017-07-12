@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         Deliverables.belongsTo(models.Events);
         Deliverables.belongsTo(models.DeliverableTemplates);
         Deliverables.belongsTo(models.Users, { as: 'Corrector', foreignKey: 'CorrectorName', targetKey: 'email_official' });
+        Deliverables.belongsTo(models.Users, { as: 'Deputy', foreignKey: 'DeputyEmail', targetKey: 'email_official' });
       }
     }
   });

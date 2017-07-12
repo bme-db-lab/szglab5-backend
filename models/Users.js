@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       associate: (models) => {
         Users.hasMany(models.StudentRegistrations, { sourceKey: 'neptun' });
         Users.hasMany(models.Deliverables, { foreignKey: 'CorrectorEmail', sourceKey: 'email_official' });
+        Users.hasMany(models.Deliverables, { foreignKey: 'DeputyEmail', sourceKey: 'email_official' });
         Users.hasMany(models.Events, { foreignKey: 'DemonstratorEmail', sourceKey: 'email_official' });
         Users.hasMany(models.StudentGroups, { foreignKey: 'Demonstrator', sourceKey: 'email_official' });
         Users.belongsTo(models.ExerciseTypes, { foreignKey: 'OwnedExerciseId' });

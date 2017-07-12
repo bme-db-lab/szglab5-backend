@@ -32,7 +32,7 @@ module.exports = (req, res) => {
 };
 
 /**
-* @api {patch} /exercise-categories/:id Update Exercise Category
+ * @api {patch} /exercise-categories/:id Update Exercise Category
  * @apiName Patch
  * @apiGroup ExerciseCategories
  * @apiDescription Update an exercise category
