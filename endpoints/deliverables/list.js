@@ -7,38 +7,26 @@ const { getDB } = require('../../db/db.js');
 function getQuery(filter) {
   const query = {};
 
-  if ('location' in filter) {
-    query.location = filter.location;
-  }
+  if ('template' in filter)
+    query.DeliverableTemplateId = filter.template;
 
-  if ('datestart' in filter && 'dateend' in filter) {
-    const startDate = new Date(filter.datestart);
-    const endDate = new Date(filter.dateend);
+  if ('grade' in filter)
+    query.grade = filter.grade;
+
+  if ('git' in filter)
+    query.url = filter.git;
+
+  if ('deadlinestart' in filter && 'deadlineend' in filter) {
+    const startDate = new Date(filter.deadlinestart);
+    const endDate = new Date(filter.deadlineend);
     if (isDate(startDate) && isDate(endDate)) {
-      query.date = {
+      query.deadline = {
         $between: [startDate, endDate]
       };
     }
   }
+
   return query;
-}
-
-function getIncludes(filter, db) {
-  const includes = [];
-  if ('exercisecat' in filter) {
-    includes.push({
-      model: db.ExerciseSheets,
-      where: {},
-      include: {
-        model: db.ExerciseCategories,
-        where: {
-          type: filter.exercisecat
-        }
-      }
-    });
-  }
-
-  return includes;
 }
 
 module.exports = (req, res) => {
@@ -47,11 +35,15 @@ module.exports = (req, res) => {
     console.log('filter', filter);
 
     const db = getDB();
-    db.Events.findAll({
-      where: getQuery(filter),
-      include: getIncludes(filter, db)
-    })
-      .then(genJSONApiResByRecords.bind(null, db, 'Events'))
+    let queryObj = {};
+    if (filter) {
+      queryObj = {
+        where: getQuery(filter)
+      };
+    }
+
+    db.Deliverables.findAll(queryObj)
+      .then(genJSONApiResByRecords.bind(null, db, 'Deliverables'))
       .then((response) => {
         res.send(response);
       })
@@ -67,17 +59,166 @@ module.exports = (req, res) => {
  * @api {get} /deliverables List Deliverables
  * @apiName List
  * @apiGroup Deliverables
- * @apiDescription List del
+ * @apiDescription List deliverables
  *
- * @apiParam {String} [filter] filter the events
+ * @apiParam {String} [filter] filter the deliverables
  *
- * @apiExample {js} Example filter to location:
- * /events?filter[location]=IL105
+ * @apiExample {js} Example filter for template:
+ * /deliverables?filter[template]=1
  *
- * @apiExample {js} Example filter to date:
- * /events?filter[datestart]=2017-04-1&filter[dateend]=2018-01-11
+ * @apiExample {js} Example filter for grade:
+ * /deliverables?filter[grade]=5
  *
- * @apiExample {js} Example filter to exercise category:
- * /events?filter[exercisecat]=SQL
+ * @apiExample {js} Example filter for git repository:
+ * /deliverables?filter[git]=http://gitlab.com/super_repo/
  *
+ * @apiExample {js} Example filter for deadline:
+ * /deliverables?filter[deadlinestart]=2016-09-20&filter[deadlineend]=2016-09-30
+ *
+ * @apiSuccessExample Success-Response:
+ * {
+ *     "data": [
+ *         {
+ *             "id": 4,
+ *             "type": "Deliverables",
+ *             "attributes": {
+ *                 "deadline": "2017-09-27T00:00:00.000Z",
+ *                 "submitteddate": "2017-09-30T00:00:00.000Z",
+ *                 "grade": null,
+ *                 "imsc": 0,
+ *                 "finalized": false,
+ *                 "comment": null,
+ *                 "url": null,
+ *                 "commit": null,
+ *                 "createdAt": "2017-07-12T15:29:44.063Z",
+ *                 "updatedAt": "2017-07-12T15:29:44.063Z",
+ *                 "EventId": 2,
+ *                 "DeliverableTemplateId": 1,
+ *                 "CorrectorName": null,
+ *                 "DeputyEmail": null,
+ *                 "CorrectorEmail": null
+ *             },
+ *             "relationships": {
+ *                 "Event": {
+ *                     "data": {
+ *                         "id": 2,
+ *                         "type": "Events"
+ *                     }
+ *                 },
+ *                 "DeliverableTemplate": {
+ *                     "data": {
+ *                         "id": 1,
+ *                         "type": "DeliverableTemplates"
+ *                     }
+ *                 },
+ *                 "Corrector": {
+ *                     "data": {
+ *                         "id": 2,
+ *                         "type": "Users"
+ *                     }
+ *                 },
+ *                 "Deputy": {
+ *                     "data": {
+ *                         "id": 2,
+ *                         "type": "Users"
+ *                     }
+ *                 }
+ *             }
+ *         },
+ *         {
+ *             "id": 7,
+ *             "type": "Deliverables",
+ *             "attributes": {
+ *                 "deadline": "2016-02-27T00:00:00.000Z",
+ *                 "submitteddate": "2016-02-22T00:00:00.000Z",
+ *                 "grade": 3,
+ *                 "imsc": 0,
+ *                 "finalized": false,
+ *                 "comment": null,
+ *                 "url": null,
+ *                 "commit": null,
+ *                 "createdAt": "2017-07-12T15:29:44.079Z",
+ *                 "updatedAt": "2017-07-12T15:29:44.079Z",
+ *                 "EventId": 3,
+ *                 "DeliverableTemplateId": 1,
+ *                 "CorrectorName": null,
+ *                 "DeputyEmail": null,
+ *                 "CorrectorEmail": null
+ *             },
+ *             "relationships": {
+ *                 "Event": {
+ *                     "data": {
+ *                         "id": 3,
+ *                         "type": "Events"
+ *                     }
+ *                 },
+ *                 "DeliverableTemplate": {
+ *                     "data": {
+ *                         "id": 1,
+ *                         "type": "DeliverableTemplates"
+ *                     }
+ *                 },
+ *                 "Corrector": {
+ *                     "data": {
+ *                         "id": 2,
+ *                         "type": "Users"
+ *                     }
+ *                 },
+ *                 "Deputy": {
+ *                     "data": {
+ *                         "id": 2,
+ *                         "type": "Users"
+ *                     }
+ *                 }
+ *             }
+ *         },
+ *         {
+ *             "id": 1,
+ *             "type": "Deliverables",
+ *             "attributes": {
+ *                 "deadline": "2017-09-12T00:00:00.000Z",
+ *                 "submitteddate": "2017-09-12T00:00:00.000Z",
+ *                 "grade": 2,
+ *                 "imsc": 0,
+ *                 "finalized": false,
+ *                 "comment": "Lol pont átment.",
+ *                 "url": null,
+ *                 "commit": null,
+ *                 "createdAt": "2017-07-12T15:18:14.273Z",
+ *                 "updatedAt": "2017-07-12T15:30:13.247Z",
+ *                 "EventId": 1,
+ *                 "DeliverableTemplateId": 1,
+ *                 "CorrectorName": null,
+ *                 "DeputyEmail": "demonstrator@db.bme.hu",
+ *                 "CorrectorEmail": null
+ *             },
+ *             "relationships": {
+ *                 "Event": {
+ *                     "data": {
+ *                         "id": 1,
+ *                         "type": "Events"
+ *                     }
+ *                 },
+ *                 "DeliverableTemplate": {
+ *                     "data": {
+ *                         "id": 1,
+ *                         "type": "DeliverableTemplates"
+ *                     }
+ *                 },
+ *                 "Corrector": {
+ *                     "data": {
+ *                         "id": 2,
+ *                         "type": "Users"
+ *                     }
+ *                 },
+ *                 "Deputy": {
+ *                     "data": {
+ *                         "id": 3,
+ *                         "type": "Users"
+ *                     }
+ *                 }
+ *             }
+ *         }
+ *     ]
+ * }
  */

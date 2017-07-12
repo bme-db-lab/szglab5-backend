@@ -48,7 +48,7 @@ module.exports = (req, res) => {
  * @apiParam {String} [filter] filter the exercise categories
  *
  * @apiExample {js} Example filter for type:
- * /events?filter[type]=SQL
+ * /exercise-categories?filter[type]=SQL
  *
  * @apiSuccessExample Success-Response:
  * {
