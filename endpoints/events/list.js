@@ -7,9 +7,14 @@ const { getDB } = require('../../db/db.js');
 function getQuery(filter) {
   const query = {};
 
-  if ('location' in filter) {
+  if ('location' in filter)
     query.location = filter.location;
-  }
+
+  if ('student' in filter)
+    query.StudentRegistrationId = filter.student;
+
+  if ('demonstrator' in filter)
+    query.DemonstratorEmail = filter.demonstrator;
 
   if ('datestart' in filter && 'dateend' in filter) {
     const startDate = new Date(filter.datestart);
