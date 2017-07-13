@@ -21,7 +21,7 @@ module.exports = (req, res) => {
           res.status(404).send();
           return;
         }
-        db.Users.findById(template.data.id)
+        db.DeliverableTemplates.findById(template.data.id)
           .then(genJSONApiResByRecord.bind(null, db, 'DeliverableTemplates'))
           .then((responseTemplate) => {
             res.send(responseTemplate);
@@ -59,37 +59,16 @@ module.exports = (req, res) => {
  *         "id": 1,
  *         "type": "DeliverableTemplates",
  *         "attributes": {
- *             "displayName": "student",
- *             "loginName": "student",
- *             "password": "$2a$10$Rra6ML3pUC1Cio5sxcM7Be6QcZk5c1BA86ILpibzfXbSIcKV3wWc.",
- *             "email": "student@db.bme.hu",
- *             "sshPublicKey": null,
- *             "colorTheme": "blue-gray",
- *             "subscribedToMailList": false,
- *             "subscribedToEmailNotify": true,
- *             "role": "STUDENT",
- *             "neptun": "STDNT0",
- *             "university": "BME",
- *             "email_official": null,
- *             "mobile": null,
- *             "title": null,
- *             "printSupport": null,
- *             "classroom": null,
- *             "spec": null,
- *             "exercises": null,
- *             "createdAt": "2017-07-12T15:29:43.501Z",
- *             "updatedAt": "2017-07-12T15:29:43.501Z",
- *             "OwnedExerciseId": null
+ *             "description": "Beugró",
+ *             "type": "BEUGRO",
+ *             "createdAt": "2017-07-13T00:02:46.841Z",
+ *             "updatedAt": "2017-07-13T00:02:46.841Z"
  *         },
  *         "relationships": {
  *             "Deliverables": {
  *                 "data": [
  *                     {
- *                         "id": 2,
- *                         "type": "Deliverables"
- *                     },
- *                     {
- *                         "id": 3,
+ *                         "id": 1,
  *                         "type": "Deliverables"
  *                     },
  *                     {
@@ -97,23 +76,7 @@ module.exports = (req, res) => {
  *                         "type": "Deliverables"
  *                     },
  *                     {
- *                         "id": 5,
- *                         "type": "Deliverables"
- *                     },
- *                     {
- *                         "id": 6,
- *                         "type": "Deliverables"
- *                     },
- *                     {
  *                         "id": 7,
- *                         "type": "Deliverables"
- *                     },
- *                     {
- *                         "id": 8,
- *                         "type": "Deliverables"
- *                     },
- *                     {
- *                         "id": 9,
  *                         "type": "Deliverables"
  *                     }
  *                 ]
