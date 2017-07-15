@@ -1,23 +1,23 @@
 "use strict";
 const nodemailer = require('nodemailer');
+const config = require('../config/config.js');
 
 
 function sendMail(to, content) {
-	// TODO: get hardcoded values out to the config, make this async
 	let transporter = nodemailer.createTransport({
-		host: 'szaszm.tk',
-		port: 25,
-		secure: false,
+		host: config.mailer.host,
+		port: config.mailer.port,
+		secure: config.mailer.forcetls,
 		auth: {
-			user: 'szglab5',
-			pass: 'szglab5pass'
+			user: config.mailer.user,
+			pass: config.mailer.pass
 		}
 	});
 
 	let mailOptions = {
-		from: 'Adatbazisok labor adminisztracios rendszer <marci@szaszm.tk>',
+		from: config.mailer.defaultFromDisplayName + ' <' + config.mailer.user +'@'+config.mailer.host+'>',
 		to: to,
-		subject: 'Adatbazisok labor rendszeruzenet',
+		subject: config.mailer.defaultSubject,
 		text: content,
 		html: content
 	};

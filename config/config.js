@@ -38,7 +38,16 @@ const defaultConfig = {
   env,
   cors: {
     whitelist: ['http://localhost:4200']
-  }
+  },
+  mailer: {
+    host: 'fecske-prod.db.bme.hu',
+    port: 25,
+    user: 'szglab5',
+    pass: 'szglab5pass',
+    forcetls: false,
+    defaultSubject: 'Adatbazisok labor rendszeruzenet',
+    defaultFromDisplayName: 'Adatbazisok labor adminisztracios rendszer'
+  },
 };
 let specConfig = {};
 try {
