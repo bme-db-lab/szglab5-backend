@@ -23,6 +23,7 @@ module.exports = {
         ],
         "comma-dangle": 0,
         "global-require": 0,
-        "linebreak-style": 0
+        "linebreak-style": 0,
+        "max-len": 0
     }
 };

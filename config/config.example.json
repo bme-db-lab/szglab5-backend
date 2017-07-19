@@ -10,9 +10,11 @@
     "port": 7000
   },
   "logger": {
-    "path": "./",
     "consoleLevel": "info",
+    "consoleLogEnabled": true,
     "fileLevel": "info",
+    "fileLogEnabled": false,
+    "filePath": "./",
     "rotatePattern": ".yyyy-MM-dd.bak",
     "rotateSize": 1000000
   },
