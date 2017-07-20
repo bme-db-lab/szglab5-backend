@@ -10,7 +10,8 @@ yargs // eslint-disable-line no-unused-expressions
     command: 'seed',
     desc: 'Seed the database with models described in json',
     handler: () => {
-      console.log('seed');
+      const logger = require('../utils/logger.js');
+      logger.info('seeed');
     }
   })
   .command({
@@ -19,7 +20,6 @@ yargs // eslint-disable-line no-unused-expressions
     handler: () => {
       const logger = require('../utils/logger.js');
       logger.info('init');
-      console.log('init');
     }
   })
   .option('env', {
