@@ -48,7 +48,7 @@ module.exports = (req, res) => {
  * @apiParam {String} [filter] filter the exercise types
  *
  * @apiExample {js} Example filter for language:
- * /events?filter[language]=HU
+ * /exercise-types?filter[language]=HU
  *
  * @apiSuccessExample Success-Response:
  * {

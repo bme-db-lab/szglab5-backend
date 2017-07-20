@@ -51,7 +51,7 @@ module.exports = (req, res) => {
  * @apiGroup Deliverables
  * @apiDescription Get deliverable's corrector
  *
- * @apiParam {Number} [id] Deliverables's id
+ * @apiParam {Number} [id] Deliverable's id
  *
  * @apiSuccessExample Success-Response:
  * {
