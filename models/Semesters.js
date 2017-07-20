@@ -1,7 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Semesters = sequelize.define('Semesters', {
-    id: { type: DataTypes.INTEGER, primaryKey: true },
-    academicyear: DataTypes.INTEGER,
+    academicyear: DataTypes.STRING,
     academicterm: DataTypes.INTEGER,
     description: DataTypes.STRING,
   }, {
