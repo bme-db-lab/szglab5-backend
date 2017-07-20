@@ -8,6 +8,7 @@ const parseStaff = require('./xlsxParser/StaffParser.js');
 const parseExercises = require('./xlsxParser/ExerciseParser.js');
 const parseTimetable = require('./xlsxParser/TimetableParser.js');
 const parseGroups = require('./xlsxParser/StudentGroupParser.js');
+const parseMeta = require('./xlsxParser/MetaParser.js');
 const logger = require('../utils/logger.js');
 
 function seedDB(db, modelName, data) {
@@ -86,14 +87,21 @@ module.exports = (db) => {
     const exercises = parseExercises();
     const timetable = parseTimetable();
     const groups = parseGroups();
-
-    initBase(db)
-      .then(() => seedDB(db, 'Users', students.users))
+    const meta = parseMeta();
+    console.log(meta.courses);
+    /*initBase(db)
+      .then(() =>*/
+    seedDB(db, 'Courses', meta.courses)
+      .then(() => seedDB(db, 'Semesters', meta.semesters))
+      .then(() => seedDB(db, 'ExerciseCategories', meta.exercisecategories))
+      .then(() => seedDB(db, 'EventTemplates', meta.eventtemplates))
+      .then(() => seedDB(db, 'DeliverableTemplates', meta.deliverabletemplates))
+      /*.then(() => seedDB(db, 'Users', students.users))
       .then(() => seedDB(db, 'ExerciseTypes', exercises))
       .then(() => seedDB(db, 'Users', staff))
       .then(() => seedDB(db, 'StudentGroups', groups))
       .then(() => seedDB(db, 'StudentRegistrations', students.regs))
-      .then(() => seedDB(db, 'Appointments', timetable))
+      .then(() => seedDB(db, 'Appointments', timetable))*/
       .then(() => { resolve(null); })
       .catch((err) => { reject(err); });
   });
