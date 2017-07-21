@@ -1,3 +1,4 @@
+const addEvent = require('./add.js');
 const getEvent = require('./get.js');
 const getEventDemonstrator = require('./getDemonstrator.js');
 const getExerciseSheet = require('./getExerciseSheet.js');
@@ -18,4 +19,5 @@ module.exports = (app) => {
   app.get('/events', listEvents);
   app.get('/event-students', listStudents);
   app.patch('/events/:id', updateEvent);
+  app.post('/events', addEvent);
 };
