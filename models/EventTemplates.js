@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: (models) => {
         EventTemplates.hasMany(models.Events);
-        EventTemplates.hasOne(models.Appointments);
+        EventTemplates.belongsTo(models.Appointments);
       }
     }
   });

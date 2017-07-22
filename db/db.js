@@ -15,6 +15,7 @@ let db = null;
  */
 async function initDB(_options) {
   try {
+    logger.debug('Initializing DB');
     const defaultOptions = {
       force: false
     };
@@ -28,6 +29,9 @@ async function initDB(_options) {
       host,
       port,
       dialect,
+      logging: (msg) => {
+        logger.debug(msg);
+      }
     });
     const modelsPath = path.join(__dirname, '../models');
     const files = fs.readdirSync(modelsPath);
@@ -66,7 +70,14 @@ function getDB() {
   return db;
 }
 
+async function closeDB() {
+  if (db !== null && db.sequelize) {
+    await db.sequelize.close();
+  }
+}
+
 module.exports = {
   initDB,
-  getDB
+  getDB,
+  closeDB
 };

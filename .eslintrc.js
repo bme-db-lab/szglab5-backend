@@ -24,6 +24,8 @@ module.exports = {
         "comma-dangle": 0,
         "global-require": 0,
         "linebreak-style": 0,
-        "max-len": 0
+        "max-len": 0,
+        "no-restricted-syntax": 0,
+        "no-await-in-loop": 0
     }
 };

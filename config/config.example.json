@@ -10,7 +10,7 @@
     "port": 7000
   },
   "logger": {
-    "consoleLevel": "info",
+    "consoleLevel": "debug",
     "consoleLogEnabled": true,
     "fileLevel": "info",
     "fileLogEnabled": false,

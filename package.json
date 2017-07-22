@@ -63,6 +63,7 @@
     "commands": "0.0.7",
     "cors": "^2.8.1",
     "express": "^4.15.1",
+    "inquirer": "^3.2.0",
     "joi": "^10.2.2",
     "jsonwebtoken": "^7.3.0",
     "lodash": "^4.17.4",

@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         Semesters.belongsTo(models.Courses);
         Semesters.hasMany(models.StudentRegistrations);
         Semesters.hasMany(models.StudentGroups);
+        Semesters.hasMany(models.News);
       }
     }
   });
