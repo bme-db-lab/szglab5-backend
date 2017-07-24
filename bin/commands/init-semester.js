@@ -7,7 +7,7 @@ module.exports = async () => {
 
   // TODO prompt the user in which course to initialize a semester
 
-  // TODO switch-case to selected course type, handle it
+  // TODO switch-case to selected course type
   switch (courseType) {
     case 'adatlabor':
       // TODO prompt the user for USER xls path
