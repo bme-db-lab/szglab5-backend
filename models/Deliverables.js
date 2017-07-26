@@ -22,16 +22,13 @@ module.exports = (sequelize, DataTypes) => {
     //
     url: DataTypes.STRING,
     commit: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Deliverables.belongsTo(models.Events);
-        Deliverables.belongsTo(models.DeliverableTemplates);
-        Deliverables.belongsTo(models.Users, { as: 'Corrector', foreignKey: 'CorrectorName', targetKey: 'email_official' });
-        Deliverables.belongsTo(models.Users, { as: 'Deputy', foreignKey: 'DeputyEmail', targetKey: 'email_official' });
-      }
-    }
   });
+  Deliverables.associate = (models) => {
+    Deliverables.belongsTo(models.Events);
+    Deliverables.belongsTo(models.DeliverableTemplates);
+    Deliverables.belongsTo(models.Users, { as: 'Corrector', foreignKey: 'CorrectorName', targetKey: 'email_official' });
+    Deliverables.belongsTo(models.Users, { as: 'Deputy', foreignKey: 'DeputyEmail', targetKey: 'email_official' });
+  };
 
   return Deliverables;
 };
