@@ -2,8 +2,265 @@
   "Courses": [
     {
       "data": {
-        "name": "Adatbázisok",
-        "codeName": "VITMAB04"
+        "name": "Adatbázisok labor",
+        "codeName": "VIVALAMI123"
+      },
+      "data": {
+        "name": "Random labortárgy",
+        "codeName": "VIRAND123"
+      }
+    }
+  ],
+  "Semesters": [
+    {
+      "data": {
+        "academicyear": "2017/2018",
+        "academicterm": 1,
+        "description": "DUMMY_DESC",
+        "CourseId": 1
+      },
+      "data": {
+        "academicyear": "2017/2018",
+        "academicterm": 2,
+        "description": "DUMMY_DESC",
+        "CourseId": 1
+      },
+      "data": {
+        "academicyear": "2017/2018",
+        "academicterm": 1,
+        "description": "DUMMY_DESC",
+        "CourseId": 2
+      }
+    }
+  ],
+  "StudentGroups": [
+    {
+      "data": {
+        "name": "DUMMY_GROUP_1",
+        "language": "magyar",
+        "SemesterId": 1,
+        "Demonstrator": "demonstrator@labadmin.hu"
+      }
+    },
+    {
+      "data": {
+        "name": "DUMMY_GROUP_2",
+        "language": "magyar",
+        "SemesterId": 2,
+        "Demonstrator": "demonstrator@labadmin.hu"
+      }
+    }
+  ],
+  "EventTemplates": [
+    {
+      "data": {
+        "title": "Labor",
+        "number": 6
+      }
+    },
+    {
+      "data": {
+        "title": "Gyakorlat",
+        "number": 6
+      }
+    }
+  ],
+  "Appointments": [
+    {
+      "data": {
+        "date": "2017.09.26",
+        "location": "IL105",
+        "type": "SQ",
+        "EventTemplateId": 1,
+        "StudenrGroupId": "DUMMY_GROUP_1" 
+      },
+      "data": {
+        "date": "2018.02.28",
+        "location": "IL105",
+        "type": "SQ",
+        "EventTemplateId": 1,
+        "StudenrGroupId": "DUMMY_GROUP_2" 
+      },
+      "data": {
+        "date": "2017.11.26",
+        "location": "IL105",
+        "type": "SOA",
+        "EventTemplateId": 1,
+        "StudenrGroupId": "DUMMY_GROUP_1" 
+      }
+    }
+  ],
+  "Users": [
+    {
+      "data": {
+        "displayName": "Student Sarolta",
+        "loginName": "student",
+        "email": "student.email@cool-emailprovider.com",
+        "neptun": "Q87XXZ",
+        "password": "12345",
+        "role": "STUDENT",
+        "university": "BME"
+      }
+    },
+    {
+      "data": {
+        "displayName": "Demonstrátor Dénes",
+        "loginName": "demonstrator",
+        "password": "12345",
+        "role": "DEMONSTRATOR",
+        "email_official": "demonstrator@labadmin.hu"
+      }
+    },
+    {
+      "data": {
+        "displayName": "Admin András",
+        "loginName": "admin",
+        "password": "12345",
+        "role": "ADMIN"
+      }
+    },
+    {
+      "data": {
+        "displayName": "Corrector Cecil",
+        "loginName": "corrector",
+        "password": "12345",
+        "role": "CORRECTOR"
+      }
+    }
+  ],
+  "StudentRegistrations": [
+    {
+      "data": {
+        "neptunSubjectCode": "NEPTUN_SUBJ_CODE_1",
+        "neptunCourseCode": "NEPTUN_COURSE_CODE_1",
+        "SemesterId": 1,
+        "UserNeptun": "Q87XXZ",
+        "StudentGroupId": "DUMMY_GROUP_1"
+      }
+    }
+  ],
+    "ExerciseCategories": [
+    {
+      "data": {
+        "type": "Oracle"
+      }
+    },
+    {
+      "data": {
+        "type": "JDBC"
+      }
+    },
+    {
+      "data": {
+        "type": "SQL"
+      }
+    }
+  ],
+  "ExerciseTypes": [
+    {
+      "data": {
+        "name": "Videótéka",
+        "shortName": "VIDEO",
+        "language": "HU"
+      }
+    },
+    {
+      "data": {
+        "name": "Hajózás",
+        "shortName": "HAJO",
+        "language": "HU"
+      }
+    },
+    {
+      "data": {
+        "name": "Road transportation",
+        "shortName": "ROAD",
+        "language": "EN"
+      }
+    }
+  ],
+  "ExerciseSheets": [
+    {
+      "data": {
+        "ExerciseTypeId": 1,
+        "ExerciseCategoryId": 1
+      }
+    },
+    {
+      "data": {
+        "ExerciseTypeId": 2,
+        "ExerciseCategoryId": 1
+      }
+    }
+  ],
+  "Events": [
+    {
+      "data": {
+        "date": "2017-03-30T12:11:17.576Z",
+        "location": "IL105",
+        "attempt": 0,
+        "StudentRegistrationId": 1,
+        "DemonstratorId": 2,
+        "ExerciseSheetId": 1
+      }
+    },
+    {
+      "data": {
+        "date": "2017-04-06T12:11:17.576Z",
+        "location": "KF212",
+        "attempt": 0,
+        "StudentRegistrationId": 1
+      }
+    },
+    {
+      "data": {
+        "date": "2017-04-13T12:11:17.576Z",
+        "location": "QB013",
+        "attempt": 0,
+        "StudentRegistrationId": 1
+      }
+    }
+  ],
+  "DeliverableTemplates": [
+    {
+      "data": {
+        "description": "Beugro"
+      }
+    },
+    {
+      "data": {
+        "description": "Jegyzőkönyv"
+      }
+    }
+  ],
+  "Deliverables": [
+    {
+      "data": {
+        "deadline": "2017-03-30T12:11:17.576Z",
+        "EventId": 1,
+        "DeliverableTemplateId": 1,
+        "CorrectorId": 2
+      }
+    },
+    {
+      "data": {
+        "deadline": "2017-03-30T12:11:17.576Z",
+        "EventId": 1,
+        "DeliverableTemplateId": 2
+      }
+    },
+    {
+      "data": {
+        "deadline": "2017-03-30T12:11:17.576Z",
+        "EventId": 2,
+        "DeliverableTemplateId": 1
+      }
+    },
+    {
+      "data": {
+        "deadline": "2017-03-30T12:11:17.576Z",
+        "EventId": 2,
+        "DeliverableTemplateId": 2
       }
     }
   ]
