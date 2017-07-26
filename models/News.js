@@ -6,13 +6,11 @@ module.exports = (sequelize, DataTypes) => {
     until: DataTypes.DATE,
     // TODO
     flags: DataTypes.INTEGER
-  }, {
-    classMethods: {
-      associate: (models) => {
-        News.belongsTo(models.Semesters);
-      }
-    }
   });
+
+  News.associate = (models) => {
+    News.belongsTo(models.Semesters);
+  };
 
   return News;
 };

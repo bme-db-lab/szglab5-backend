@@ -3,14 +3,12 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.DATE,
     location: DataTypes.TEXT,
     type: DataTypes.STRING,
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Appointments.belongsTo(models.EventTemplates);
-        Appointments.belongsTo(models.StudentGroups);
-      }
-    }
   });
+
+  Appointments.associate = (models) => {
+    Appointments.hasMany(models.EventTemplates);
+    Appointments.belongsTo(models.StudentGroups);
+  };
 
   return Appointments;
 };

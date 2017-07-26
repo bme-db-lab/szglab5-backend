@@ -4,17 +4,14 @@ module.exports = (sequelize, DataTypes) => {
     location: DataTypes.STRING,
     attempt: DataTypes.INTEGER,
     comment: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Events.belongsTo(models.StudentRegistrations);
-        Events.belongsTo(models.Users, { as: 'Demonstrator', foreignKey: 'DemonstratorEmail', targetKey: 'email_official' });
-        Events.hasMany(models.Deliverables);
-        Events.belongsTo(models.EventTemplates);
-        Events.belongsTo(models.ExerciseSheets);
-      }
-    }
   });
 
+  Events.associate = (models) => {
+    Events.belongsTo(models.StudentRegistrations);
+    Events.belongsTo(models.Users, { as: 'Demonstrator', foreignKey: 'DemonstratorEmail', targetKey: 'email_official' });
+    Events.hasMany(models.Deliverables);
+    Events.belongsTo(models.EventTemplates);
+    Events.belongsTo(models.ExerciseSheets);
+  };
   return Events;
 };

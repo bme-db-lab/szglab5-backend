@@ -60,8 +60,8 @@ async function initDB(_options) {
     db.sequelize = sequelize;
     return db;
   } catch (err) {
-    logger.err('Error occured during intializing the database');
-    logger.err(err);
+    logger.error('Error occured during intializing the database');
+    logger.error(err);
     return null;
   }
 }

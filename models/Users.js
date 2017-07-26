@@ -24,19 +24,16 @@ module.exports = (sequelize, DataTypes) => {
     classroom: DataTypes.STRING,
     spec: DataTypes.STRING,
     exercises: DataTypes.STRING
-
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Users.hasMany(models.StudentRegistrations, { sourceKey: 'neptun' });
-        Users.hasMany(models.Deliverables, { foreignKey: 'CorrectorEmail', sourceKey: 'email_official' });
-        Users.hasMany(models.Deliverables, { foreignKey: 'DeputyEmail', sourceKey: 'email_official' });
-        Users.hasMany(models.Events, { foreignKey: 'DemonstratorEmail', sourceKey: 'email_official' });
-        Users.hasMany(models.StudentGroups, { foreignKey: 'Demonstrator', sourceKey: 'email_official' });
-        Users.belongsTo(models.ExerciseTypes, { foreignKey: 'OwnedExerciseId' });
-      }
-    }
   });
+
+  Users.associate = (models) => {
+    Users.hasMany(models.StudentRegistrations, { sourceKey: 'neptun' });
+    Users.hasMany(models.Deliverables, { foreignKey: 'CorrectorEmail', sourceKey: 'email_official' });
+    Users.hasMany(models.Deliverables, { foreignKey: 'DeputyEmail', sourceKey: 'email_official' });
+    Users.hasMany(models.Events, { foreignKey: 'DemonstratorEmail', sourceKey: 'email_official' });
+    Users.hasMany(models.StudentGroups, { foreignKey: 'Demonstrator', sourceKey: 'email_official' });
+    Users.belongsTo(models.ExerciseTypes, { foreignKey: 'OwnedExerciseId' });
+  };
 
   return Users;
 };

@@ -3,16 +3,14 @@ module.exports = (sequelize, DataTypes) => {
     academicyear: DataTypes.STRING,
     academicterm: DataTypes.INTEGER,
     description: DataTypes.STRING,
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Semesters.belongsTo(models.Courses);
-        Semesters.hasMany(models.StudentRegistrations);
-        Semesters.hasMany(models.StudentGroups);
-        Semesters.hasMany(models.News);
-      }
-    }
   });
+
+  Semesters.associate = (models) => {
+    Semesters.belongsTo(models.Courses);
+    Semesters.hasMany(models.StudentRegistrations);
+    Semesters.hasMany(models.StudentGroups);
+    Semesters.hasMany(models.News);
+  };
 
   return Semesters;
 };
