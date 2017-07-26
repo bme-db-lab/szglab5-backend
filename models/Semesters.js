@@ -1,7 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Semesters = sequelize.define('Semesters', {
-    id: { type: DataTypes.INTEGER, primaryKey: true },
-    academicyear: DataTypes.INTEGER,
+    academicyear: DataTypes.STRING,
     academicterm: DataTypes.INTEGER,
     description: DataTypes.STRING,
   }, {
@@ -10,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         Semesters.belongsTo(models.Courses);
         Semesters.hasMany(models.StudentRegistrations);
         Semesters.hasMany(models.StudentGroups);
+        Semesters.hasMany(models.News);
       }
     }
   });

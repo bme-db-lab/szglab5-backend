@@ -1,9 +1,10 @@
 const _ = require('lodash');
 const { readFileSync } = require('fs');
 const path = require('path');
+const argv = require('yargs').argv;
 
-const env = process.env.NODE_ENV;
-if (!env) {
+const env = process.env.NODE_ENV || argv.env;
+if (!env ) {
   throw new Error('Please specify the NODE_ENV environment variable!');
 }
 
@@ -23,15 +24,18 @@ const defaultConfig = {
     port: 4200
   },
   jwt: {
+    // MUST override in production environment!!
     secret: 'SuperSecret_Tuturu_Pumpuru'
   },
   bcrypt: {
     saltRounds: 10
   },
   logger: {
-    path: './',
     consoleLevel: 'info',
+    consoleLogEnabled: true,
     fileLevel: 'info',
+    fileLogEnabled: true,
+    filePath: './',
     rotatePattern: '.yyyy-MM-dd.bak',
     rotateSize: 1000000,
   },
@@ -56,7 +60,7 @@ try {
   specConfig = JSON.parse(specConfigFile.toString());
   console.log(`Config file(${path.basename(specConfigPath)}) loaded`);
 } catch (err) {
-  console.log(`Error during specific config file: ${err}`);
+  console.log(`Can not read specific config file: ${err}`);
   console.log('Fallback to default config!');
 }
 
