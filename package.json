@@ -7,6 +7,7 @@
     "start:dev": "better-npm-run start:dev",
     "start:prod": "better-npm-run start:prod",
     "start:test": "better-npm-run start:test",
+    "debug": "better-npm-run debug",
     "cli:dev": "better-npm-run cli:dev",
     "cli:prod": "better-npm-run cli:prod",
     "cli:test": "better-npm-run cli:test",
@@ -15,6 +16,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "betterScripts": {
+    "debug": {
+      "command": "node --nolazy --inspect-brk=5858 server.js",
+      "env": {
+        "NODE_ENV": "dev"
+      }
+    },
     "start:dev": {
       "command": "nodemon server.js",
       "env": {
