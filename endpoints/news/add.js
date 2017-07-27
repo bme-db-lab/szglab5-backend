@@ -8,6 +8,7 @@ module.exports = (req, res) => {
     const { data } = req.body;
 
     data.attributes.publisherId = req.userInfo.userId;
+    data.attributes.published = new Date();
     const db = getDB();
     db.News.create(data.attributes)
       .then(checkIfExist)

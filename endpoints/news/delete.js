@@ -14,7 +14,7 @@ module.exports = (req, res) => {
     const db = getDB();
     db.News.destroy({ where: { id: reqIdNum } })
       .then(() => {
-        res.status(200).send();
+        res.status(204).send();
       })
       .catch((err) => {
         if (err.notFound) {

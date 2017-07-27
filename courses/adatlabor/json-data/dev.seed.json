@@ -301,5 +301,35 @@
         "publisherId": 3
       }
     }
+  ],
+  "Questions": [
+    {
+      "data": {
+        "text": "This is an example Oracle question 11",
+        "ExerciseCategoryId": 1,
+        "LanguageId": 2
+      }
+    },
+    {
+      "data": {
+        "text": "This is an example Oracle question 22",
+        "ExerciseCategoryId": 1,
+        "LanguageId": 2
+      }
+    },
+    {
+      "data": {
+        "text": "This is an example JDBC question 1",
+        "ExerciseCategoryId": 2,
+        "LanguageId": 2
+      }
+    },
+    {
+      "data": {
+        "text": "This is an example SQL question",
+        "ExerciseCategoryId": 3,
+        "LanguageId": 2
+      }
+    }
   ]
 }

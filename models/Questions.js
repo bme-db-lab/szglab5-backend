@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Questions = sequelize.define('Questions', {
-    text: DataTypes.STRING,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
+    text: DataTypes.STRING
   });
 
   Questions.associate = (models) => {
+    Questions.belongsTo(models.ExerciseCategories);
+    Questions.belongsTo(models.Languages);
   };
 
   return Questions;
