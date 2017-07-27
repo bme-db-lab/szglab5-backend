@@ -6,19 +6,8 @@ const { getDB } = require('../../db/db.js');
 
 module.exports = (req, res) => {
   try {
-    const filter = req.query.filter;
-
     const db = getDB();
-    let queryObj = {};
-    if (filter) {
-      queryObj = {
-        where: getQuery(filter),
-        include: getIncludes(filter, db)
-      };
-    }
-
-
-    db.Questions.findAll(queryObj)
+    db.Questions.findAll()
       .then(genJSONApiResByRecords.bind(null, db, 'Questions'))
       .then((response) => {
         res.send(response);
