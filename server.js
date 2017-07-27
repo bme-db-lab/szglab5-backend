@@ -2,11 +2,13 @@
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
+const Prometheus = require("prometheus-client");
+const client = new Prometheus();
 //
 const config = require('./config/config.js');
 const cors = require('cors');
 
-const { port } = config.api;
+const { port, monitoringPort } = config.api;
 const { initDB } = require('./db/db.js');
 // const addEndpoints = require('./jsonapi');
 const addEndpoints = require('./endpoints');
@@ -50,6 +52,12 @@ initDB()
     const server = http.createServer(app);
     server.listen(port, () => {
       logger.info(`API Server is listenning on localhost:${port}`);
+    });
+
+    promEndpoint = express();
+    promEndpoint.get('/metrics',client.metricsFunc());
+    promEndpoint.listen(monitoringPort, () => {
+      logger.info(`Monitoring endpoint is on localhost:${monitoringPort}/metrics`)
     });
   })
   .catch((err) => {

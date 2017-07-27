@@ -18,7 +18,8 @@ const defaultConfig = {
     password: 'devpass'
   },
   api: {
-    port: 7000
+    port: 7000,
+    monitoringPort: 9090
   },
   frontend: {
     port: 4200
