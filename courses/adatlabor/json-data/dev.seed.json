@@ -4,7 +4,9 @@
       "data": {
         "name": "Adatbázisok labor",
         "codeName": "VIVALAMI123"
-      },
+      }
+    },
+    {
       "data": {
         "name": "Random labortárgy",
         "codeName": "VIRAND123"
@@ -18,18 +20,60 @@
         "academicterm": 1,
         "description": "DUMMY_DESC",
         "CourseId": 1
-      },
+      }
+    },
+    {
       "data": {
         "academicyear": "2017/2018",
         "academicterm": 2,
         "description": "DUMMY_DESC",
         "CourseId": 1
-      },
+      }
+    },
+    {
       "data": {
         "academicyear": "2017/2018",
         "academicterm": 1,
         "description": "DUMMY_DESC",
         "CourseId": 2
+      }
+    }
+  ],
+    "Users": [
+    {
+      "data": {
+        "displayName": "Student Sarolta",
+        "loginName": "student",
+        "email": "student.email@cool-emailprovider.com",
+        "neptun": "Q87XXZ",
+        "password": "12345",
+        "role": "STUDENT",
+        "university": "BME"
+      }
+    },
+    {
+      "data": {
+        "displayName": "Demonstrátor Dénes",
+        "loginName": "demonstrator",
+        "password": "12345",
+        "role": "DEMONSTRATOR",
+        "email_official": "demonstrator@labadmin.hu"
+      }
+    },
+    {
+      "data": {
+        "displayName": "Admin András",
+        "loginName": "admin",
+        "password": "12345",
+        "role": "ADMIN"
+      }
+    },
+    {
+      "data": {
+        "displayName": "Corrector Cecil",
+        "loginName": "corrector",
+        "password": "12345",
+        "role": "CORRECTOR"
       }
     }
   ],
@@ -72,59 +116,25 @@
         "location": "IL105",
         "type": "SQ",
         "EventTemplateId": 1,
-        "StudenrGroupId": "DUMMY_GROUP_1" 
-      },
+        "StudenrGroupId": "DUMMY_GROUP_1"
+      }
+    },
+    {
       "data": {
         "date": "2018.02.28",
         "location": "IL105",
         "type": "SQ",
         "EventTemplateId": 1,
-        "StudenrGroupId": "DUMMY_GROUP_2" 
-      },
+        "StudenrGroupId": "DUMMY_GROUP_2"
+      }
+    },
+    {
       "data": {
         "date": "2017.11.26",
         "location": "IL105",
         "type": "SOA",
         "EventTemplateId": 1,
-        "StudenrGroupId": "DUMMY_GROUP_1" 
-      }
-    }
-  ],
-  "Users": [
-    {
-      "data": {
-        "displayName": "Student Sarolta",
-        "loginName": "student",
-        "email": "student.email@cool-emailprovider.com",
-        "neptun": "Q87XXZ",
-        "password": "12345",
-        "role": "STUDENT",
-        "university": "BME"
-      }
-    },
-    {
-      "data": {
-        "displayName": "Demonstrátor Dénes",
-        "loginName": "demonstrator",
-        "password": "12345",
-        "role": "DEMONSTRATOR",
-        "email_official": "demonstrator@labadmin.hu"
-      }
-    },
-    {
-      "data": {
-        "displayName": "Admin András",
-        "loginName": "admin",
-        "password": "12345",
-        "role": "ADMIN"
-      }
-    },
-    {
-      "data": {
-        "displayName": "Corrector Cecil",
-        "loginName": "corrector",
-        "password": "12345",
-        "role": "CORRECTOR"
+        "StudenrGroupId": "DUMMY_GROUP_1"
       }
     }
   ],
