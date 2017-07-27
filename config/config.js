@@ -19,7 +19,7 @@ const defaultConfig = {
   },
   api: {
     port: 7000,
-    monitoringPort: 9090
+    monitoringPort: 9000
   },
   frontend: {
     port: 4200

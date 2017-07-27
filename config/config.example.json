@@ -8,7 +8,7 @@
   },
   "api": {
     "port": 7000,
-    "monitoringPort":  9090
+    "monitoringPort":  9000
   },
   "logger": {
     "consoleLevel": "debug",
