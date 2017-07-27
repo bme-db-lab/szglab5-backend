@@ -21,9 +21,10 @@ module.exports = (req, res) => {
           res.status(404).send();
           return;
         }
-        var ids = [];
-        for (var i = 0, len = deliverables.data.length; i < len; i++)
+        const ids = [];
+        for (let i = 0, len = deliverables.data.length; i < len; i++) {
           ids.push(deliverables.data[i].id);
+        }
         db.Deliverables.findAll({ where: { id: ids } })
           .then((responseUser) => {
             res.send(responseUser);
