@@ -5,8 +5,11 @@ module.exports = (sequelize, DataTypes) => {
     published: DataTypes.DATE,
     from: DataTypes.DATE,
     until: DataTypes.DATE,
-    // TODO
-    flags: DataTypes.INTEGER
+    admins: DataTypes.BOOLEAN,
+    students: DataTypes.BOOLEAN,
+    demonstators: DataTypes.BOOLEAN,
+    evaluators: DataTypes.BOOLEAN,
+    onLogin: DataTypes.BOOLEAN
   });
 
   News.associate = (models) => {
