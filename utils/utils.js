@@ -54,9 +54,11 @@ function checkIfModelIsAllowed(modelName, allowedModels, methodName) {
 function getAssociatedObjects(db, modelName, resource) {
   return new Promise((resolve, reject) => {
     const associationsGroup = db[modelName].associations;
+    console.log(associationsGroup);
     async.mapSeries(Object.keys(associationsGroup),
       (assocGroup, callback) => {
         const getFunc = `get${capitalizeFirstLetter(assocGroup)}`;
+        console.log('getFunc', getFunc);
         if (!isFunction(resource[getFunc])) {
           callback(new Error(`${getFunc} is not a function on ${resource}`));
           return;
@@ -72,10 +74,12 @@ function getAssociatedObjects(db, modelName, resource) {
         }
         resource[getFunc]().then((result) => {
           if (isArray(result)) {
-            // single objet
+            if (result.length > 0) {
+              console.log(result[0].constructor);
+            }
             const resultForm = result.map(item => ({
               id: item.id,
-              type: item.Model.getTableName()
+              type: item.constructor.getTableName()
             }));
             callback(null, {
               [assocGroup]: Object.assign({}, {
@@ -89,7 +93,7 @@ function getAssociatedObjects(db, modelName, resource) {
           } else if (isObject(result)) {
             const resultForm = {
               id: result.id,
-              type: result.Model.getTableName()
+              type: result.constructor.getTableName()
             };
             callback(null, {
               [assocGroup]: Object.assign({},

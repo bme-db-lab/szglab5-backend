@@ -2,7 +2,7 @@ const { genErrorObj } = require('../../utils/utils.js');
 const { genJSONApiResByRecord, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   try {
     const reqUserIdStr = req.params.id;
     const reqUserIdNum = parseInt(reqUserIdStr, 10);
@@ -18,6 +18,12 @@ module.exports = (req, res) => {
     // }
 
     const db = getDB();
+
+    // const users = await db.Users.findById(reqUserIdNum);
+    // checkIfExist(users);
+    // console.log(users);
+    // res.send('ok');
+
     db.Users.findById(reqUserIdNum)
       .then(checkIfExist)
       .then(genJSONApiResByRecord.bind(null, db, 'Users'))

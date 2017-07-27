@@ -13,8 +13,8 @@ const logger = new (winston.Logger)({
   },
   colors: {
     debug: 'blue',
-    info: 'white',
-    warning: 'yellow',
+    info: 'yellow',
+    warning: 'orange',
     error: 'red',
     fatal: 'red'
   }
