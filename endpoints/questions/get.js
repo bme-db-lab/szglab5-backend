@@ -12,9 +12,9 @@ module.exports = (req, res) => {
     }
 
     const db = getDB();
-    db.Tests.findById(reqIdNum)
+    db.Questions.findById(reqIdNum)
       .then(checkIfExist)
-      .then(genJSONApiResByRecord.bind(null, db, 'Tests'))
+      .then(genJSONApiResByRecord.bind(null, db, 'Questions'))
       .then((response) => {
         res.send(response);
       })
@@ -31,37 +31,24 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {get} /tests/:id Get Test
+ * @api {get} /test-questions/:id Get TestQuestion
  * @apiName Get
- * @apiGroup Tests
- * @apiDescription Get test information by id
+ * @apiGroup TestQuestions
+ * @apiDescription Get test question information by id
  *
- * @apiParam {Number} [id] Test's id
+ * @apiParam {Number} [id] Test question's id
  *
  * @apiSuccessExample Success-Response:
  * {
  *   "data": {
  *     "id": 1,
- *     "type": "Tests",
+ *     "type": "TestQuestions",
  *     "attributes": {
- *       "title": null,
- *       "createdAt": "2017-03-08T17:40:23.824Z",
- *       "updatedAt": "2017-03-08T17:40:23.824Z"
+ *       "text": "Question 1",
+ *       "createdAt": "2017-03-08T17:40:23.839Z",
+ *       "updatedAt": "2017-03-08T17:40:23.839Z"
  *     },
- *     "relationships": {
- *       "TestQuestions": {
- *         "data": [
- *           {
- *             "id": 1,
- *             "type": "TestQuestions"
- *           },
- *           {
- *             "id": 2,
- *             "type": "TestQuestions"
- *           }
- *         ]
- *       }
- *     }
+ *     "relationships": {}
  *   }
  * }
  */

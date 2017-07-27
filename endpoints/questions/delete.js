@@ -1,17 +1,21 @@
 const { genErrorObj } = require('../../utils/utils.js');
-const { checkIfExist } = require('../../utils/jsonapi.js');
+const { genJSONApiResByRecord, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 const logger = require('../../utils/logger.js');
 
 module.exports = (req, res) => {
   try {
-    const { data } = req.body;
-    logger.info("Test question added", data);
+    const reqId = req.params.id;
+    const reqIdNum = parseInt(reqId, 10);
+    if (isNaN(reqId)) {
+      res.status(400).send(genErrorObj('Requested id is not a number'));
+      return;
+    }
+
     const db = getDB();
-    db.TestQuestions.create(data.attributes)
-      .then(checkIfExist)
+    db.Questions.destroy({ where: { id: reqIdNum } })
       .then(() => {
-        res.status(201).send();
+        res.status(200).send();
       })
       .catch((err) => {
         if (err.notFound) {
@@ -26,9 +30,10 @@ module.exports = (req, res) => {
 };
 
 /**
- * @api {post} /test-questions Add Test Question
- * @apiName Post
+ * @api {delete} /test-questions/:id Delete TestQuestion
+ * @apiName Delete
  * @apiGroup TestQuestions
- * @apiDescription Add a test question
+ * @apiDescription Delete test question entry by id
  *
+ * @apiParam {Number} [id] Test question's id
  */
