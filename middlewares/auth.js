@@ -2,7 +2,7 @@ const { verifyToken } = require('../utils/jwt.js');
 const { genErrorObj } = require('../utils/utils.js');
 
 function auth(req, res, next) {
-  if (process.env.NODE_ENV !== 'dev') {
+  if (process.env.NODE_ENV !== 'dev' || req.get('Authorization') !== undefined) {
     try {
       const authHeader = req.get('Authorization');
       if (!authHeader) {
