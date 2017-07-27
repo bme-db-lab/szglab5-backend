@@ -10,6 +10,7 @@ const studentregistrations = require('./studentRegistrations');
 const testquestions = require('./testQuestions');
 const tests = require('./tests');
 const sqlEndpoints = require('./sql');
+const newsEndpoints = require('./news');
 
 module.exports = (app) => {
   authEndpoints(app);
@@ -24,4 +25,5 @@ module.exports = (app) => {
   testquestions(app);
   tests(app);
   sqlEndpoints(app);
+  newsEndpoints(app);
 };

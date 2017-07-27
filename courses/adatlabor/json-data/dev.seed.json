@@ -273,5 +273,33 @@
         "DeliverableTemplateId": 2
       }
     }
+  ],
+  "Languages": [
+    {
+      "data": {
+        "name": "Magyar",
+        "shortName": "HU"
+      }
+    },
+    {
+      "data": {
+        "name": "English",
+        "shortName": "EN"
+      }
+    }
+  ],
+  "News": [
+    {
+      "data": {
+        "title": "Commodo officia adipisicing mollit irure.",
+        "text": "Esse eiusmod non consequat deserunt consectetur incididunt duis anim labore. Consectetur fugiat exercitation sit magna. Sit sint cupidatat nulla consequat. Exercitation dolor nisi magna nisi pariatur in ad mollit eiusmod.",
+        "published": "2017-07-27T09:39:16.913Z",
+        "from": "2014-07-27T09:39:16.913Z",
+        "until": "2019-07-27T09:39:16.913Z",
+        "flag": 0,
+        "LanguageId": 1,
+        "publisherId": 3
+      }
+    }
   ]
 }

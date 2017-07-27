@@ -1,5 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Languages = sequelize.define('Languages', {
+    name: DataTypes.STRING,
+    shortName: DataTypes.STRING
   });
 
   Languages.associate = (models) => {
@@ -8,6 +10,5 @@ module.exports = (sequelize, DataTypes) => {
     Languages.hasMany(models.StudentRegistrations);
     Languages.hasMany(models.News);
   };
-
   return Languages;
 };
