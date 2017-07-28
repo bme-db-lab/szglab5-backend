@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = async (_filePath) => {
   const filePath = path.isAbsolute(_filePath) ? _filePath : path.join(__dirname, '../..', _filePath);
-  const db = await initDB({ force: true });
+  const db = await initDB();
   try {
     await seedDBwithJSON(db, filePath);
   } catch (err) {

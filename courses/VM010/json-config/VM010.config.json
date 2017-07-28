@@ -1,0 +1,118 @@
+{
+  "Courses": [
+    {
+      "data": {
+        "name": "adatlabor",
+        "codeName": "VM010"
+      }
+    }
+  ],
+  "EventTemplates": [
+    {
+      "data": {
+        "title": "Gyakorlat"
+      }
+    },
+    {
+      "data": {
+        "title": "Labor"
+      }
+    }
+  ],
+  "ExerciseCategories": [
+    {
+      "data": {
+        "type": "DBMS",
+        "CourseCodeName": "VM010"
+      }
+    },
+    {
+      "data": {
+        "type": "SQL1",
+        "CourseCodeName": "VM010"        
+      }
+    },
+    {
+      "data": {
+        "type": "SQL2",
+        "CourseCodeName": "VM010"        
+      }
+    },
+    {
+      "data": {
+        "type": "SQL3",
+        "CourseCodeName": "VM010"        
+      }
+    },
+    {
+      "data": {
+        "type": "XML",
+        "CourseCodeName": "VM010"        
+      }
+    },
+    {
+      "data": {
+        "type": "OPTI",
+        "CourseCodeName": "VM010"        
+      }
+    },
+    {
+      "data": {
+        "type": "ER",
+        "CourseCodeName": "VM010"        
+      }
+    },
+    {
+      "data": {
+        "type": "Lekérdezések",
+        "CourseCodeName": "VM010"        
+      }
+    },
+    {
+      "data": {
+        "type": "Normalizálás",
+        "CourseCodeName": "VM010"        
+      }
+    },
+    {
+      "data": {
+        "type": "Fizikai",
+        "CourseCodeName": "VM010"        
+      }
+    },
+    {
+      "data": {
+        "type": "Opti",
+        "CourseCodeName": "VM010"        
+      }
+    },
+    {
+      "data": {
+        "type": "Tr.kezelés",
+        "CourseCodeName": "VM010"        
+      }
+    }
+  ],
+  "DeliverableTemplates": [
+    {
+      "data": {
+        "description": "beugró"
+      }
+    },
+    {
+      "data": {
+        "description": "jkv"
+      }
+    },
+    {
+      "data": {
+        "description": "Git repo"
+      }
+    },
+    {
+      "data": {
+        "description": "kZH"
+      }
+    }
+  ]
+}
