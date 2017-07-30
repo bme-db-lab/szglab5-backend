@@ -1,4 +1,5 @@
 const { genErrorObj } = require('../../utils/utils.js');
+const { checkIfHasRole } = require('../../utils/roles');
 const { updateResource, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 const bcrypt = require('bcrypt');
@@ -13,16 +14,19 @@ module.exports = async (req, res) => {
 
     // if client
     if (data.attributes.newpwd !== null && data.attributes.newpwd !== undefined) {
-      console.log('-----------------');
-      console.log('Change password!');
-      console.log('-----------------');
       const user = await db.Users.findById(reqId);
       checkIfExist(user);
-      const passwordHash = user.dataValues.password;
-      const bcryptResult = await bcrypt.compare(data.attributes.oldpwd, passwordHash);
-      if (!bcryptResult) {
-        res.status(403).send(genErrorObj(['Incorrect password']));
-        return;
+      // IF the user has ADMIN roles check old password checking
+      if (!checkIfHasRole(req.userInfo.roles, 'ADMIN')) {
+        const passwordHash = user.dataValues.password;
+        if (!data.attributes.oldpwd) {
+          res.status(400).send(genErrorObj('Old password required to password change!'));
+        }
+        const bcryptResult = await bcrypt.compare(data.attributes.oldpwd, passwordHash);
+        if (!bcryptResult) {
+          res.status(403).send(genErrorObj(['Incorrect password']));
+          return;
+        }
       }
       // password ok, lets change the password
       const newPasswordHash = await bcrypt.hash(data.attributes.newpwd, config.bcrypt.saltRounds);

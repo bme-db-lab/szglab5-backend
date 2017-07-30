@@ -43,6 +43,11 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaXNwbGF5TmFtZSI6IlN0dWRlbnQgU2Fyb2x0YSIsIm5lcHR1biI6IlE4N1hYWiIsInVzZXJJZCI6MSwicm9sZXMiOlsiU1RVREVOVCJdLCJjb2xvclRoZW1lIjoiYmx1ZS1ncmF5IiwiaWF0IjoxNTAxNDMyNTQ1LCJleHAiOjE1MDE0NjEzNDV9.nTuyeE1hvHPo5wC0LGai17JKgOXcPcLrDiqb_KFDxi0",
+								"description": ""
 							}
 						],
 						"body": {
