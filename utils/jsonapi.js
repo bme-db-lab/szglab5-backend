@@ -62,20 +62,10 @@ function genJSONApiResByRecords(db, modelName, records) {
   });
 }
 
-function updateResource(db, modelName, data) {
-  logger.debug("PATCH: " + modelName, data);
-  logger.info("PATCH: " + modelName + "/" + data.id);
-  return new Promise((resolve, reject) => {
-    const id = data.id;
-    const attributes = data.attributes;
-    db[modelName].update(attributes, { where: { id } })
-      .then(() => {
-        resolve();
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  });
+async function updateResource(db, modelName, data) {
+  const id = data.id;
+  const attributes = data.attributes;
+  await db[modelName].update(attributes, { where: { id } });
 }
 
 module.exports = {

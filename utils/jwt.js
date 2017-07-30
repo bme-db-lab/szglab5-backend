@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config.js');
 
-function signToken(user) {
+function signToken(user, roles) {
   return new Promise((resolve, reject) => {
     try {
       const { displayName, neptun, id, role, colorTheme } = user;
@@ -9,7 +9,7 @@ function signToken(user) {
         displayName,
         neptun,
         userId: id,
-        role,
+        roles,
         colorTheme,
       }, config.jwt.secret, { expiresIn: 60 * 60 * 8 }, (err, token) => {
         if (err) {

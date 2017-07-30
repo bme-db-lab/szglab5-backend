@@ -39,7 +39,29 @@
       }
     }
   ],
-    "Users": [
+  "Roles": [
+    {
+      "data": {
+        "roleName": "ADMIN"
+      }
+    },
+    {
+      "data": {
+        "roleName": "STUDENT"
+      }
+    },
+    {
+      "data": {
+        "roleName": "DEMONSTRATOR"
+      }
+    },
+    {
+      "data": {
+        "roleName": "CORRECTOR"
+      }
+    }
+  ],
+  "Users": [
     {
       "data": {
         "displayName": "Student Sarolta",
@@ -47,7 +69,6 @@
         "email": "student.email@cool-emailprovider.com",
         "neptun": "Q87XXZ",
         "password": "12345",
-        "role": "STUDENT",
         "university": "BME"
       }
     },
@@ -56,7 +77,6 @@
         "displayName": "Demonstrátor Dénes",
         "loginName": "demonstrator",
         "password": "12345",
-        "role": "DEMONSTRATOR",
         "email_official": "demonstrator@labadmin.hu"
       }
     },
@@ -64,16 +84,40 @@
       "data": {
         "displayName": "Admin András",
         "loginName": "admin",
-        "password": "12345",
-        "role": "ADMIN"
+        "password": "12345"
       }
     },
     {
       "data": {
         "displayName": "Corrector Cecil",
         "loginName": "corrector",
-        "password": "12345",
-        "role": "CORRECTOR"
+        "password": "12345"
+      }
+    }
+  ],
+  "UserRoles": [
+    {
+      "data": {
+        "UserId": 1,
+        "RoleId": 2
+      }
+    },
+    {
+      "data": {
+        "UserId": 2,
+        "RoleId": 3
+      }
+    },
+    {
+      "data": {
+        "UserId": 3,
+        "RoleId": 1
+      }
+    },
+    {
+      "data": {
+        "UserId": 4,
+        "RoleId": 4
       }
     }
   ],

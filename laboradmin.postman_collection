@@ -1,0 +1,85 @@
+{
+	"variables": [],
+	"info": {
+		"name": "laboradmin",
+		"_postman_id": "2fdb3612-9fe9-7ee0-093d-581319a1810b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"description": "",
+			"item": [
+				{
+					"name": "localhost:7000/users/2",
+					"request": {
+						"url": "localhost:7000/users/2",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "GET User"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:7000/users",
+					"request": {
+						"url": "localhost:7000/users",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "List Users"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:7000/users/2",
+					"request": {
+						"url": "localhost:7000/users/2",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"data\": {\n\t\t\"attributes\": {\n\t\t\t\"newpwd\": \"12345\",\n\t\t\t\"oldpwd\": \"12345\"\n\t\t}\n\t}\n}"
+						},
+						"description": "Change user password"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"description": "",
+			"item": [
+				{
+					"name": "localhost:7000/auth/login",
+					"request": {
+						"url": "localhost:7000/auth/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"loginName\": \"admin\",\n\t\"password\": \"12345\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

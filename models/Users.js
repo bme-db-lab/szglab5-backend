@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     Users.hasMany(models.Events, { foreignKey: 'DemonstratorEmail', sourceKey: 'email_official' });
     Users.hasMany(models.StudentGroups, { foreignKey: 'Demonstrator', sourceKey: 'email_official' });
     Users.belongsTo(models.ExerciseTypes, { foreignKey: 'OwnedExerciseId' });
+    Users.belongsToMany(models.Roles, { through: 'UserRoles' });
   };
 
   return Users;
