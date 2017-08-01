@@ -77,6 +77,48 @@
 						"description": "Create User"
 					},
 					"response": []
+				},
+				{
+					"name": "http://localhost:7000/users?filter%5Bsearch%5D=laci&limit=10&offset=0",
+					"request": {
+						"url": {
+							"raw": "http://localhost:7000/users?filter%5Bsearch%5D=laci&limit=10&offset=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "filter%5Bsearch%5D",
+									"value": "laci",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "list users with filter"
+					},
+					"response": []
 				}
 			]
 		},
