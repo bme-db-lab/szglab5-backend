@@ -119,6 +119,26 @@
 						"description": "list users with filter"
 					},
 					"response": []
+				},
+				{
+					"name": "localhost:7000/users/2",
+					"request": {
+						"url": "localhost:7000/users/2",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"data\": {\n\t\t\"attributes\": {\n\t\t\t\n\t\t},\n\t\t\"relationships\": {\n\t\t\t\"Roles\": {\n\t\t\t\t\"data\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": 1,\n\t\t\t\t\t\t\"type\": \"Roles\"\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": 2,\n\t\t\t\t\t\t\"type\": \"Roles\"\n\t\t\t\t\t}\n\t\t\t\t]\t\n\t\t\t}\n\t\t}\n\t}\n}"
+						},
+						"description": "set role"
+					},
+					"response": []
 				}
 			]
 		},

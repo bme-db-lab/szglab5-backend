@@ -261,7 +261,7 @@ async function setRelations(db, resource, relationGroups) {
       await resource[setFunc](objectsToSet);
     } else {
       const setFunc = _getSetFunc(relGroupKey);
-      const objectToSet = await db[relGroupKey].findAll({ where: { id: relGroupObj.data.id } });
+      const objectToSet = await db[relGroupKey].findById({ where: { id: relGroupObj.data.id } });
       await resource[setFunc](objectToSet);
     }
   }

@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
 
   ExerciseTypes.associate = (models) => {
     ExerciseTypes.hasMany(models.ExerciseSheets);
-    ExerciseTypes.hasOne(models.Users, { foreignKey: 'OwnedExerciseId' });
+    ExerciseTypes.belongsToMany(models.Users, { through: 'UserExerciseTypes' });
   };
 
   return ExerciseTypes;
