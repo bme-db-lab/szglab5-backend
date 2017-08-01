@@ -1,5 +1,5 @@
 const { genErrorObj } = require('../../utils/utils.js');
-const { checkIfExist } = require('../../utils/jsonapi.js');
+const { checkIfExist, genJSONApiResByRecord } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 const logger = require('../../utils/logger.js');
 
@@ -7,13 +7,16 @@ module.exports = (req, res) => {
   try {
     const { data } = req.body;
 
-    data.attributes.publisherId = req.userInfo.userId;
+    if (req.userInfo) {
+      data.attributes.publisherId = req.userInfo.userId;
+    }
     data.attributes.published = new Date();
     const db = getDB();
     db.News.create(data.attributes)
       .then(checkIfExist)
-      .then(() => {
-        res.status(201).send();
+      .then(genJSONApiResByRecord.bind(null, db, 'News'))
+      .then((response) => {
+        res.status(201).send(response);
       })
       .catch((err) => {
         if (err.notFound) {

@@ -133,6 +133,32 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "news",
+			"description": "",
+			"item": [
+				{
+					"name": "localhost:7000/news",
+					"request": {
+						"url": "localhost:7000/news",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"data\":{\"attributes\":{\"title\":\"asdasd\",\"text\":\"ooooo\",\"published\":null,\"from\":null,\"until\":null,\"admins\":false,\"students\":false,\"demonstators\":false,\"evaluators\":false,\"onLogin\":false},\"relationships\":{\"publisher\":{\"data\":null},\"Languages\":{\"data\":null}},\"type\":\"news\"}}"
+						},
+						"description": "Create news"
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

@@ -1,5 +1,5 @@
 const { genErrorObj } = require('../../utils/utils.js');
-const { checkIfExist } = require('../../utils/jsonapi.js');
+const { checkIfExist, genJSONApiResByRecord } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 
 module.exports = (req, res) => {
@@ -9,8 +9,9 @@ module.exports = (req, res) => {
 
     db.Questions.create(data.attributes)
       .then(checkIfExist)
-      .then(() => {
-        res.status(201).send();
+      .then(genJSONApiResByRecord.bind(null, db, 'Questions'))
+      .then((response) => {
+        res.status(201).send(response);
       })
       .catch((err) => {
         if (err.notFound) {
