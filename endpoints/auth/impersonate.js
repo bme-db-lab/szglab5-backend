@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     const user = await db.Users.findById(userId);
     checkIfExist(user);
     const roles = await user.getRoles();
-    const roleNames = roles.map(role => role.dataValues.roleName);
+    const roleNames = roles.map(role => role.dataValues.name);
     const token = await signToken(user.dataValues, roleNames);
 
     res.send({ token });

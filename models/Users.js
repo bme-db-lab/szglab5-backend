@@ -11,8 +11,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     subscribedToMailList: DataTypes.BOOLEAN,
     subscribedToEmailNotify: DataTypes.BOOLEAN,
-    // TODO temporary role management
-    role: DataTypes.STRING,
     // Student specific attributes
     neptun: { type: DataTypes.STRING, unique: true },
     university: DataTypes.STRING,

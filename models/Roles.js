@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Roles = sequelize.define('Roles', {
-    roleName: DataTypes.TEXT,
+    name: DataTypes.TEXT,
   });
 
   Roles.associate = (models) => {

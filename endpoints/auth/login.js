@@ -68,7 +68,7 @@ module.exports = async (req, res) => {
       return;
     }
     const roles = await user.getRoles();
-    const roleNames = roles.map(role => role.dataValues.roleName);
+    const roleNames = roles.map(role => role.dataValues.name);
     const token = await signToken(user.dataValues, roleNames);
     res.send({ token });
   } catch (err) {

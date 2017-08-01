@@ -42,22 +42,22 @@
   "Roles": [
     {
       "data": {
-        "roleName": "ADMIN"
+        "name": "ADMIN"
       }
     },
     {
       "data": {
-        "roleName": "STUDENT"
+        "name": "STUDENT"
       }
     },
     {
       "data": {
-        "roleName": "DEMONSTRATOR"
+        "name": "DEMONSTRATOR"
       }
     },
     {
       "data": {
-        "roleName": "CORRECTOR"
+        "name": "CORRECTOR"
       }
     }
   ],

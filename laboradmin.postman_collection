@@ -145,6 +145,26 @@
 						"description": ""
 					},
 					"response": []
+				},
+				{
+					"name": "localhost:7000/auth/impersonate",
+					"request": {
+						"url": "localhost:7000/auth/impersonate",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userId\": 1\n}"
+						},
+						"description": "impersonate"
+					},
+					"response": []
 				}
 			]
 		},
