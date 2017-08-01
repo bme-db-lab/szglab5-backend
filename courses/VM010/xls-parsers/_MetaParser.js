@@ -1,4 +1,4 @@
-const logger = require('../../utils/logger.js');
+const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
 
 function onlyUnique(value, index, self) {

@@ -3,7 +3,7 @@ const XLSX = require('xlsx');
 module.exports = () => {
   let seed = null;
   try {
-    const seedFile = 'db/seedData/beosztas-minta.xlsx';
+    const seedFile = 'courses/VM010/xls-data/beosztas-minta.xlsx';
     const sheetName = 'Nevek, elerhetosegek';
     const opts = {
       sheetStubs: true,
@@ -76,7 +76,7 @@ module.exports = () => {
 
   seed = null;
   try {
-    const seedFile = 'db/seedData/beosztas-minta.xlsx';
+    const seedFile = 'courses/VM010/xls-data/beosztas-minta.xlsx';
     const sheetName = 'Laborvezetok';
     const opts = {};
     opts.sheetStubs = true;
@@ -150,7 +150,7 @@ module.exports = () => {
 
   seed = null;
   try {
-    const seedFile = 'db/seedData/beosztas-minta.xlsx';
+    const seedFile = 'courses/VM010/xls-data/beosztas-minta.xlsx';
     const sheetName = 'Guruk, javitok';
     const opts = {};
     opts.sheetStubs = true;
@@ -217,5 +217,11 @@ module.exports = () => {
     }
     return false;
   });
-  return users;
+  const simpleUsers = [];
+  Object.keys(users).some(
+    (key) => {
+      simpleUsers.push(users[key]);
+      return false;
+    });
+  return simpleUsers;
 };

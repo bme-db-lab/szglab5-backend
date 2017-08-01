@@ -1,3 +1,4 @@
+const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
 
 module.exports = () => {

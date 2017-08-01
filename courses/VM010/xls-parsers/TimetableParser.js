@@ -1,10 +1,10 @@
-const logger = require('../../utils/logger.js');
+const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
 
 module.exports = () => {
   let seed = null;
   try {
-    const seedFile = 'db/seedData/beosztas-minta.xlsx';
+    const seedFile = 'courses/VM010/xls-data/beosztas-minta.xlsx';
     const sheetName = 'Idopontok';
     const opts = {
       sheetStubs: true,

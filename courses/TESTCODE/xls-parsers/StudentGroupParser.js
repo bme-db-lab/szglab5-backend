@@ -1,7 +1,7 @@
 const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
 
-module.exports = () => {
+module.exports = (semesterId) => {
   let seed = null;
   try {
     const seedFile = '../xls-data/seedData/beosztas-minta.xlsx';
@@ -51,7 +51,7 @@ module.exports = () => {
               }
               if (group.data.name !== null) {
                 if (names.includes(group.data.name) === false) {
-                  group.data.SemesterId = 1;
+                  group.data.SemesterId = semesterId;
                   groups.push(group);
                   names.push(group.data.name);
                 }

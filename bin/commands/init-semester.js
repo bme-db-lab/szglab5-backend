@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const { initDB, closeDB } = require('../../db/db.js');
 const logger = require('../../utils/logger.js');
+const { seedDBwithObjects } = require('./../../db/seed');
 
 module.exports = async () => {
   // get initialized courses from db
@@ -20,37 +21,45 @@ module.exports = async () => {
 
   const courseData = answers.course.split(' ');
   const code = courseData[2];
-
-  // TODO switch-case to selected course type
-  switch (answers.course) {
-    case 'adatlabor': {
-      // prompt the user for USER xls path
-      const userPath = await inquirer.prompt([
-        {
-          type: 'input',
-          name: 'path',
-          default: `/courses/${code}/xls-data/hallgatok-minta.xlsx`,
-          message: 'Please choose an xls path for user data (relative to project root)'
-        }
-      ]);
-      // prompt the user for BEOSZTAS xls path
-      const staffPath = await inquirer.prompt([
-        {
-          type: 'input',
-          name: 'path',
-          default: `/courses/${code}/xls-data/hallgatok-minta.xlsx`,
-          message: 'Please choose an xls path for staff data (relative to project root)'
-        }
-      ]);
-      
-      // TODO seed the db models
-      break;
-    }
-    default: {
-      logger.warn(`Unknown course type: ${answers.course}`);
-      break;
-    }
+  try {
+    const year = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'res',
+        message: 'Please type in the starting year of the semester.',
+      }
+    ]);
+    const terms = ['Autumn (1)', 'Spring (2)'];
+    const half = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'res',
+        message: 'Please select the term of the semester.',
+        choices: terms
+      }
+    ]);
+    const yearInfo = `${year.res}/${parseInt(year.res, 10) + 1}`;
+    logger.info(`The selected semester is ${yearInfo} - ${half.res}`);
+    const term = half.res == 'Autumn (1)' ? 1 : 2;
+    const semesterData = [{ data: {
+      academicyear: yearInfo,
+      academicterm: term,
+      CourseCodeName: code
+    } }];
+    await seedDBwithObjects(db, 'Semesters', semesterData);
+    const qResult = await db.Semesters.findOne({
+      attributes: ['id'],
+      where: {
+        academicyear: yearInfo,
+        academicterm: term,
+        CourseCodeName: code
+      }
+    });
+    const courseMethod = require(`../../courses/${code}/${code}.js`);
+    await courseMethod(qResult.dataValues.id);
+  } catch (err) {
+    throw err;
+  } finally {
+    await closeDB();
   }
-
-  await closeDB();
 };
