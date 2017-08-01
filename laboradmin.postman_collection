@@ -57,6 +57,26 @@
 						"description": "Change user password"
 					},
 					"response": []
+				},
+				{
+					"name": "localhost:7000/users",
+					"request": {
+						"url": "localhost:7000/users",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"data\": {\n\t\t\"attributes\": {\n\t\t\t\"displayName\": \"New User\",\n\t\t\t\"loginName\": \"newuser\",\n\t\t\t\"password\": \"12345\"\n\t\t}\n\t}\n}"
+						},
+						"description": "Create User"
+					},
+					"response": []
 				}
 			]
 		},
@@ -81,6 +101,34 @@
 							"raw": "{\n\t\"loginName\": \"admin\",\n\t\"password\": \"12345\"\n}"
 						},
 						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "roles",
+			"description": "",
+			"item": [
+				{
+					"name": "http://localhost:7000/roles",
+					"request": {
+						"url": "http://localhost:7000/roles/2",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "list roles"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:7000/roles/1",
+					"request": {
+						"url": "http://localhost:7000/roles/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "get role"
 					},
 					"response": []
 				}

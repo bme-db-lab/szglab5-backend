@@ -11,6 +11,7 @@ const questionEndpoints = require('./questions');
 const sqlEndpoints = require('./sql');
 const newsEndpoints = require('./news');
 const languageEndpoints = require('./languages');
+const roleEndpoints = require('./roles');
 
 module.exports = (app) => {
   authEndpoints(app);
@@ -26,4 +27,5 @@ module.exports = (app) => {
   sqlEndpoints(app);
   newsEndpoints(app);
   languageEndpoints(app);
+  roleEndpoints(app);
 };
