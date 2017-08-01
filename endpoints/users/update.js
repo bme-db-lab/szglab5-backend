@@ -1,4 +1,4 @@
-const { genErrorObj } = require('../../utils/utils.js');
+const { genErrorObj, setRelations } = require('../../utils/utils.js');
 const { checkIfHasRole } = require('../../utils/roles');
 const { updateResource, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
@@ -10,9 +10,8 @@ module.exports = async (req, res) => {
     const reqId = req.params.id;
     const { data } = req.body;
     const db = getDB();
-    console.log(req.userInfo);
 
-    // if client
+    // check if password changing
     if (data.attributes.newpwd !== null && data.attributes.newpwd !== undefined) {
       const user = await db.Users.findById(reqId);
       checkIfExist(user);
@@ -36,6 +35,7 @@ module.exports = async (req, res) => {
       const user = await db.Users.findById(reqId);
       checkIfExist(user);
       await updateResource(db, 'Users', data);
+      await setRelations(db, user, data.relationships);
       res.status(204).send();
     }
   } catch (err) {
