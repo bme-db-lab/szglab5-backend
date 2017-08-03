@@ -12,7 +12,6 @@ const logger = require('../utils/logger.js');
 async function seedDBwithObjects(db, modelName, data) {
   for (const modelInstance of data) {
     const obj = modelInstance.data;
-    console.log(obj);
     const includes = modelInstance.include;
     let includeModels = [];
     if (includes !== undefined) {

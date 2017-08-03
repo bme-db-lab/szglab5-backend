@@ -60,7 +60,6 @@ module.exports = async () => {
   } catch (err) {
     throw err;
   } finally {
-    console.log('hello!');
     await closeDB();
   }
 };
