@@ -1,5 +1,5 @@
 const { seedDBwithObjects } = require('./../../db/seed');
-const { initDB, closeDB } = require('../../db/db.js');
+const { getDB, closeDB } = require('../../db/db.js');
 const parseStudents = require('./xls-parsers/StudentParser.js');
 const parseStaff = require('./xls-parsers/StaffParser.js');
 const parseExercises = require('./xls-parsers/ExerciseParser.js');
@@ -7,9 +7,8 @@ const parseTimetable = require('./xls-parsers/TimetableParser.js');
 const parseGroups = require('./xls-parsers/StudentGroupParser.js');
 
 module.exports = async (semesterId) => {
+  const db = getDB();
   // get initialized courses from db
-  const db = await initDB();
-
   try {
     const students = parseStudents(semesterId);
     const staff = parseStaff();
@@ -24,7 +23,5 @@ module.exports = async (semesterId) => {
     await seedDBwithObjects(db, 'Appointments', timetable);
   } catch (error) {
     throw error;
-  } finally {
-    await closeDB();
   }
 };

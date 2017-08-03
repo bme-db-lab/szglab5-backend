@@ -40,7 +40,7 @@ module.exports = async () => {
     ]);
     const yearInfo = `${year.res}/${parseInt(year.res, 10) + 1}`;
     logger.info(`The selected semester is ${yearInfo} - ${half.res}`);
-    const term = half.res == 'Autumn (1)' ? 1 : 2;
+    const term = half.res === 'Autumn (1)' ? 1 : 2;
     const semesterData = [{ data: {
       academicyear: yearInfo,
       academicterm: term,
@@ -60,6 +60,7 @@ module.exports = async () => {
   } catch (err) {
     throw err;
   } finally {
+    console.log('hello!');
     await closeDB();
   }
 };
