@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   EventTemplates.associate = (models) => {
-    EventTemplates.hasMany(models.Events);
-    EventTemplates.hasMany(models.Appointments);
+    EventTemplates.hasMany(models.ExerciseCategories);
+    EventTemplates.hasMany(models.DeliverableTemplates);
   };
 
   return EventTemplates;

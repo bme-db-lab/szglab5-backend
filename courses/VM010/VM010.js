@@ -1,5 +1,5 @@
 const { seedDBwithObjects } = require('./../../db/seed');
-const { getDB, closeDB } = require('../../db/db.js');
+const { getDB } = require('../../db/db.js');
 const parseStudents = require('./xls-parsers/StudentParser.js');
 const parseStaff = require('./xls-parsers/StaffParser.js');
 const parseExercises = require('./xls-parsers/ExerciseParser.js');
@@ -13,7 +13,7 @@ module.exports = async (semesterId) => {
     const students = parseStudents(semesterId);
     const staff = parseStaff();
     const exercises = parseExercises();
-    const timetable = parseTimetable();
+    const timetable = await parseTimetable();
     const groups = parseGroups(semesterId);
     await seedDBwithObjects(db, 'Users', students.users);
     await seedDBwithObjects(db, 'ExerciseTypes', exercises);

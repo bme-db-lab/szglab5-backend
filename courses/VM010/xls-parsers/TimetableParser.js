@@ -1,7 +1,8 @@
 const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
+const { getDB } = require('../../../db/db.js');
 
-module.exports = () => {
+module.exports = async () => {
   let seed = null;
   try {
     const seedFile = 'courses/VM010/xls-data/beosztas-minta.xlsx';
@@ -14,6 +15,9 @@ module.exports = () => {
   } catch (err) {
     return err;
   }
+  const db = getDB();
+  const typeQuery = await db.ExerciseCategories.findAll();
+  const types = typeQuery.map(qResult => qResult.dataValues.type);
 
   const apps = [];
   let app = { data: {} };
@@ -23,20 +27,24 @@ module.exports = () => {
       const reg = /([A-Z]+)([0-9]+)/;
       const rKey = reg.exec(key);
       if (seed[key].w !== undefined) {
-        const types = ['OR', 'SQ', 'JD', 'SO', 'XS'];
-        const year = '2017';
         if (types.indexOf(seed[key].w) !== -1) {
           app = { data: {} };
           if (seed[(`A${rKey[2]}`)] !== undefined) {
             app.data.location = seed[(`A${rKey[2]}`)].w;
-            app.data.type = seed[key].w;
             const date = seed[(`${rKey[1]}2`)].w;
             const hour = seed[(`${rKey[1]}1`)].w;
-            app.data.date = new Date(`${date} ${year}`);
+            app.data.date = new Date(`${date}`);
             app.data.date.setHours(hour);
             app.data.StudentGroupName = seed[(`D${rKey[2]}`)].w;
-            app.data.EventTemplateId = 1;
             apps.push(app);
+            typeQuery.some(
+              (q) => {
+                if (q.dataValues.type === seed[key].w) {
+                  app.data.ExerciseCategoryId = q.dataValues.id;
+                }
+                return null;
+              }
+            );
           }
         }
       }

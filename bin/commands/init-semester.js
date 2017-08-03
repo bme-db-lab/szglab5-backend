@@ -55,6 +55,7 @@ module.exports = async () => {
         CourseCodeName: code
       }
     });
+    logger.info('Initializing semester, please wait...');
     const courseMethod = require(`../../courses/${code}/${code}.js`);
     await courseMethod(qResult.dataValues.id);
   } catch (err) {

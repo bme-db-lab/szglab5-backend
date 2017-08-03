@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 
   DeliverableTemplates.associate = (models) => {
     DeliverableTemplates.hasMany(models.Deliverables);
+    DeliverableTemplates.belongsTo(models.EventTemplates);
   };
 
 

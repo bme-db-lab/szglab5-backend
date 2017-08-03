@@ -50,7 +50,7 @@ module.exports = () => {
             }
             if (exercise.data.id != null) {
               if (exercise.data.language === undefined) {
-                exercise.data.language = 'magyar';
+                exercise.data.LanguageId = 1;
               }
               exercises.push(exercise);
             } else {

@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     Events.belongsTo(models.StudentRegistrations);
     Events.belongsTo(models.Users, { as: 'Demonstrator', foreignKey: 'DemonstratorEmail', targetKey: 'email_official' });
     Events.hasMany(models.Deliverables);
-    Events.belongsTo(models.EventTemplates);
     Events.belongsTo(models.ExerciseSheets);
   };
   return Events;

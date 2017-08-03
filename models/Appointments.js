@@ -1,13 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
   const Appointments = sequelize.define('Appointments', {
     date: DataTypes.DATE,
-    location: DataTypes.TEXT,
-    type: DataTypes.STRING,
+    location: DataTypes.TEXT
   });
 
   Appointments.associate = (models) => {
-    Appointments.belongsTo(models.EventTemplates);
     Appointments.belongsTo(models.StudentGroups);
+    Appointments.belongsTo(models.ExerciseCategories);
   };
 
   return Appointments;

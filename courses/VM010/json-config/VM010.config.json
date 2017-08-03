@@ -1,4 +1,12 @@
 {
+  "Languages": [
+    {
+      "data": {
+        "name": "Magyar",
+        "shortName": "HU"
+      }
+    }
+  ],
   "Courses": [
     {
       "data": {
@@ -23,95 +31,111 @@
     {
       "data": {
         "type": "DBMS",
-        "CourseCodeName": "VM010"
+        "CourseCodeName": "VM010",
+        "EventTemplateId": 1
       }
     },
     {
       "data": {
         "type": "SQL1",
-        "CourseCodeName": "VM010"        
+        "CourseCodeName": "VM010",
+        "EventTemplateId": 1
       }
     },
     {
       "data": {
         "type": "SQL2",
-        "CourseCodeName": "VM010"        
+        "CourseCodeName": "VM010",
+        "EventTemplateId": 1
       }
     },
     {
       "data": {
         "type": "SQL3",
-        "CourseCodeName": "VM010"        
+        "CourseCodeName": "VM010",
+        "EventTemplateId": 1
       }
     },
     {
       "data": {
         "type": "XML",
-        "CourseCodeName": "VM010"        
+        "CourseCodeName": "VM010",
+        "EventTemplateId": 1
       }
     },
     {
       "data": {
         "type": "OPTI",
-        "CourseCodeName": "VM010"        
+        "CourseCodeName": "VM010",
+        "EventTemplateId": 1
       }
     },
     {
       "data": {
         "type": "ER",
-        "CourseCodeName": "VM010"        
+        "CourseCodeName": "VM010",
+        "EventTemplateId": 2
       }
     },
     {
       "data": {
         "type": "Lekérdezések",
-        "CourseCodeName": "VM010"        
+        "CourseCodeName": "VM010",
+        "EventTemplateId": 2
       }
     },
     {
       "data": {
         "type": "Normalizálás",
-        "CourseCodeName": "VM010"        
+        "CourseCodeName": "VM010",
+        "EventTemplateId": 2
       }
     },
     {
       "data": {
         "type": "Fizikai",
-        "CourseCodeName": "VM010"        
+        "CourseCodeName": "VM010",
+        "EventTemplateId": 2
       }
     },
     {
       "data": {
         "type": "Opti",
-        "CourseCodeName": "VM010"        
+        "CourseCodeName": "VM010",
+        "EventTemplateId": 2
       }
     },
     {
       "data": {
         "type": "Tr.kezelés",
-        "CourseCodeName": "VM010"        
+        "CourseCodeName": "VM010",
+        "EventTemplateId": 2
       }
     }
   ],
   "DeliverableTemplates": [
     {
       "data": {
-        "description": "beugró"
+        "description": "beugró",
+        "EventTemplateId": 1
       }
     },
     {
       "data": {
-        "description": "jkv"
+        "description": "jkv",
+        "EventTemplateId": 1
       }
     },
     {
       "data": {
-        "description": "Git repo"
+        "description": "Git repo",
+        "EventTemplateId": 1
       }
     },
     {
       "data": {
-        "description": "kZH"
+        "description": "kZH",
+        "EventTemplateId": 2
       }
     }
   ]

@@ -74,6 +74,8 @@ module.exports = (semesterId) => {
             case 'G':
               if (user.data.neptun != null) {
                 user.data.university = 'BME';
+                // TODO random exercise type distribution
+                user.data.ExerciseTypeId = 1;
                 users.push(user);
                 regs.push(sreg);
               } else {
