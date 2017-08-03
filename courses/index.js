@@ -1,5 +1,10 @@
 module.exports = [
   {
-    name: 'adatlabor'
+    name: 'adatlabor',
+    code: 'VM010'
+  },
+  {
+    name: 'testcourse',
+    code: 'TESTCODE'
   }
 ];

@@ -74,6 +74,21 @@ yargs // eslint-disable-line no-unused-expressions
       }
     }
   })
+   .command({
+    command: 'reset-database',
+    aliases: ['rd'],
+    desc: 'Drops all tables from the database.',
+    handler: async () => {
+      const logger = require('../utils/logger.js');
+      try {
+        const resetDatabase = require('./commands/reset-database');
+        await resetDatabase();
+      } catch (err) {
+        logger.error('Error while resetting database');
+        logger.error(err);
+      }
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'

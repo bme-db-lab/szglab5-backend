@@ -1,0 +1,10 @@
+{
+  "Courses": [
+    {
+      "data": {
+        "name": "testcourse",
+        "codeName": "TESTCODE"
+      }
+    }
+  ]
+}

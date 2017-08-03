@@ -1,10 +1,10 @@
-const logger = require('../../utils/logger.js');
+const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
 
-module.exports = () => {
+module.exports = (semesterId) => {
   let seed = null;
   try {
-    const seedFilePath = 'db/seedData/hallgatok-minta.xlsx';
+    const seedFilePath = 'courses/VM010/xls-data/hallgatok-minta.xlsx';
     const sheetName = 'Hallgatoi csoportbeosztas másol';
     const opts = {
       sheetStubs: true,
@@ -40,7 +40,7 @@ module.exports = () => {
                 sreg.data.neptunCourseCode = null;
               }
               sreg.data.neptunSubjectCode = 'DUMMY';
-              sreg.data.SemesterId = 1;
+              sreg.data.SemesterId = semesterId;
               break;
             case 'B':
               if (seed[key].w !== undefined) {
