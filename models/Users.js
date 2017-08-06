@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     subscribedToMailList: DataTypes.BOOLEAN,
     subscribedToEmailNotify: DataTypes.BOOLEAN,
+    gitlabUserid: DataTypes.NUMBER,
     // Student specific attributes
     neptun: { type: DataTypes.STRING, unique: true },
     university: DataTypes.STRING,
