@@ -11,7 +11,7 @@ yargs // eslint-disable-line no-unused-expressions
       return yargs
           .option('path', {
             alias: 'p',
-            default: 'courses/adatlabor/json-data/dev.seed.json'
+            default: 'courses/VM010/json-data/dev.seed.json'
           });
     },
     handler: async (argv) => {
