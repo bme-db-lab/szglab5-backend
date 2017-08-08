@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
 
   StudentGroups.associate = (models) => {
     StudentGroups.belongsTo(models.Semesters);
-    StudentGroups.belongsTo(models.ExerciseTypes);
     StudentGroups.hasMany(models.StudentRegistrations);
     StudentGroups.hasMany(models.Appointments);
     StudentGroups.belongsTo(models.Users);

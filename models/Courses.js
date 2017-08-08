@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Courses = sequelize.define('Courses', {
     name: DataTypes.STRING,
-    codeName: { type: DataTypes.STRING, primaryKey: true }
+    codeName: { type: DataTypes.STRING }
   });
 
   Courses.associate = (models) => {

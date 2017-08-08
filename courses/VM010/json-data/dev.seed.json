@@ -136,14 +136,78 @@
   "EventTemplates": [
     {
       "data": {
-        "title": "Labor",
-        "number": 6
+        "title": "Labor"
       }
     },
     {
       "data": {
-        "title": "Gyakorlat",
-        "number": 6
+        "title": "Gyakorlat"
+      }
+    }
+  ],
+  "ExerciseCategories": [
+    {
+      "data": {
+        "type": "Oracle",
+        "EventTemplateId": 1
+      }
+    },
+    {
+      "data": {
+        "type": "SQL",
+        "EventTemplateId": 1
+      }
+    },
+    {
+      "data": {
+        "type": "JDBC",
+        "EventTemplateId": 1
+      }
+    },
+    {
+      "data": {
+        "type": "SOA",
+        "EventTemplateId": 1
+      }
+    },
+    {
+      "type": "XML",
+      "EventTemplateId": 1
+    },
+    {
+      "data": {
+        "type": "ER Modellezés",
+        "EventTemplateId": 2
+      }
+    },
+    {
+      "data": {
+        "type": "Relációs lekérdezések",
+        "EventTemplateId": 2
+      }
+    },
+    {
+      "data": {
+        "type": "Sématervezés normalizálássa",
+        "EventTemplateId": 2
+      }
+    },
+    {
+      "data": {
+        "type": "Fizikai adatszervezés",
+        "EventTemplateId": 2
+      }
+    },
+    {
+      "data": {
+        "type": "Lekérdezés optimalizálás",
+        "EventTemplateId": 2
+      }
+    },
+    {
+      "data": {
+        "type": "Tranzakciókezelés",
+        "EventTemplateId": 2
       }
     }
   ],
@@ -152,8 +216,7 @@
       "data": {
         "date": "2017.09.26",
         "location": "IL105",
-        "type": "SQ",
-        "EventTemplateId": 1,
+        "ExerciseCategoryId": 1,
         "StudenrGroupId": 1
       }
     },
@@ -161,8 +224,7 @@
       "data": {
         "date": "2018.02.28",
         "location": "IL105",
-        "type": "SQ",
-        "EventTemplateId": 1,
+        "ExerciseCategoryId": 2,
         "StudenrGroupId": 1
       }
     },
@@ -170,9 +232,32 @@
       "data": {
         "date": "2017.11.26",
         "location": "IL105",
-        "type": "SOA",
-        "EventTemplateId": 1,
+        "ExerciseCategoryId": 3,
         "StudenrGroupId": 1
+      }
+    },
+    {
+      "data": {
+        "date": "2017.09.26",
+        "location": "IL105",
+        "ExerciseCategoryId": 1,
+        "StudenrGroupId": 2
+      }
+    },
+    {
+      "data": {
+        "date": "2018.02.28",
+        "location": "IL105",
+        "ExerciseCategoryId": 2,
+        "StudenrGroupId": 2
+      }
+    },
+    {
+      "data": {
+        "date": "2017.11.26",
+        "location": "IL105",
+        "ExerciseCategoryId": 3,
+        "StudenrGroupId": 2
       }
     }
   ],
@@ -184,61 +269,6 @@
         "SemesterId": 1,
         "UserId": 1,
         "StudentGroupId": 1
-      }
-    }
-  ],
-    "ExerciseCategories": [
-    {
-      "data": {
-        "type": "Oracle"
-      }
-    },
-    {
-      "data": {
-        "type": "SQL"
-      }
-    },
-    {
-      "data": {
-        "type": "JDBC"
-      }
-    },
-    {
-      "data": {
-        "type": "SOA"
-      }
-    },
-    {
-      "type": "XML"
-    },
-    {
-      "data": {
-        "type": "ER Modellezés"
-      }
-    },
-    {
-      "data": {
-        "type": "Relációs lekérdezések"
-      }
-    },
-    {
-      "data": {
-        "type": "Sématervezés normalizálássa"
-      }
-    },
-    {
-      "data": {
-        "type": "Fizikai adatszervezés"
-      }
-    },
-    {
-      "data": {
-        "type": "Lekérdezés optimalizálás"
-      }
-    },
-    {
-      "data": {
-        "type": "Tranzakciókezelés"
       }
     }
   ],
