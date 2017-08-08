@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
     checkIfExist(event);
     const response = await genJSONApiResByRecord(db, 'Events', event);
     response.includes = [];
-    if (response.data.relationships.Demonstrator !== null) {
+    if (response.data.relationships.Demonstrator.data !== null) {
       const demonstrator = await db.Users.findById(response.data.relationships.Demonstrator.data.id);
       response.includes.push({
         id: response.data.relationships.Demonstrator.data.id,
