@@ -5,8 +5,8 @@ const { getDB } = require('../../db/db.js');
 module.exports = (req, res) => {
   try {
     const db = getDB();
-    db.Semesters.findAll()
-      .then(genJSONApiResByRecords.bind(null, db, 'Semesters'))
+    db.StudentGroups.findAll()
+      .then(genJSONApiResByRecords.bind(null, db, 'StudentGroups'))
       .then((response) => {
         res.send(response);
       })

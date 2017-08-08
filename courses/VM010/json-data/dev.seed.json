@@ -154,7 +154,7 @@
         "location": "IL105",
         "type": "SQ",
         "EventTemplateId": 1,
-        "StudenrGroupId": "DUMMY_GROUP_1"
+        "StudenrGroupId": 1
       }
     },
     {
@@ -163,7 +163,7 @@
         "location": "IL105",
         "type": "SQ",
         "EventTemplateId": 1,
-        "StudenrGroupId": "DUMMY_GROUP_2"
+        "StudenrGroupId": 1
       }
     },
     {
@@ -172,7 +172,7 @@
         "location": "IL105",
         "type": "SOA",
         "EventTemplateId": 1,
-        "StudenrGroupId": "DUMMY_GROUP_1"
+        "StudenrGroupId": 1
       }
     }
   ],
@@ -182,8 +182,8 @@
         "neptunSubjectCode": "NEPTUN_SUBJ_CODE_1",
         "neptunCourseCode": "NEPTUN_COURSE_CODE_1",
         "SemesterId": 1,
-        "UserNeptun": "Q87XXZ",
-        "StudentGroupId": "DUMMY_GROUP_1"
+        "UserId": 1,
+        "StudentGroupId": 1
       }
     }
   ],
@@ -195,12 +195,50 @@
     },
     {
       "data": {
+        "type": "SQL"
+      }
+    },
+    {
+      "data": {
         "type": "JDBC"
       }
     },
     {
       "data": {
-        "type": "SQL"
+        "type": "SOA"
+      }
+    },
+    {
+      "type": "XML"
+    },
+    {
+      "data": {
+        "type": "ER Modellezés"
+      }
+    },
+    {
+      "data": {
+        "type": "Relációs lekérdezések"
+      }
+    },
+    {
+      "data": {
+        "type": "Sématervezés normalizálássa"
+      }
+    },
+    {
+      "data": {
+        "type": "Fizikai adatszervezés"
+      }
+    },
+    {
+      "data": {
+        "type": "Lekérdezés optimalizálás"
+      }
+    },
+    {
+      "data": {
+        "type": "Tranzakciókezelés"
       }
     }
   ],
@@ -265,7 +303,7 @@
         "date": "2017-04-13T12:11:17.576Z",
         "location": "QB013",
         "attempt": 0,
-        "StudentRegistrationId": 1
+        "RegistrationId": 1
       }
     }
   ],
