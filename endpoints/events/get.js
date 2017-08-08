@@ -15,10 +15,10 @@ module.exports = async (req, res) => {
     const event = await db.Events.findById(reqIdNum);
     checkIfExist(event);
     const response = await genJSONApiResByRecord(db, 'Events', event);
-    response.includes = [];
+    response.included = [];
     if (response.data.relationships.Demonstrator.data !== null) {
       const demonstrator = await db.Users.findById(response.data.relationships.Demonstrator.data.id);
-      response.includes.push({
+      response.included.push({
         id: response.data.relationships.Demonstrator.data.id,
         type: 'Users',
         attributes: demonstrator.dataValues
@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
     }
     if (response.data.relationships.ExerciseSheet.data !== null) {
       const exerciseSheet = await db.ExerciseSheets.findById(response.data.relationships.ExerciseSheet.data.id);
-      response.includes.push({
+      response.included.push({
         id: response.data.relationships.ExerciseSheet.data.id,
         type: 'ExerciseSheets',
         attributes: exerciseSheet.dataValues
