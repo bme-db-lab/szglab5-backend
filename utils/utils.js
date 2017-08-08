@@ -65,13 +65,13 @@ function getAssociatedObjects(db, modelName, resource) {
         }
         // TODO: refactor
         let links = null;
-        if (modelName === 'Events' && assocGroup === 'Demonstrator') {
-          links = {
-            links: {
-              related: `/${modelName.toLowerCase()}/${resource.dataValues.id}/${assocGroup.toLowerCase()}`
-            }
-          };
-        }
+        // if (modelName === 'Events' && assocGroup === 'Demonstrator') {
+        //   links = {
+        //     links: {
+        //       related: `/${modelName.toLowerCase()}/${resource.dataValues.id}/${assocGroup.toLowerCase()}`
+        //     }
+        //   };
+        // }
         resource[getFunc]().then((result) => {
           if (isArray(result)) {
             if (result.length > 0) {

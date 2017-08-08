@@ -2,7 +2,7 @@ const { genErrorObj } = require('../../utils/utils.js');
 const { genJSONApiResByRecord, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   try {
     const reqId = req.params.id;
     const reqIdNum = parseInt(reqId, 10);
@@ -12,23 +12,32 @@ module.exports = (req, res) => {
     }
 
     const db = getDB();
-    db.Events.findById(reqIdNum)
-      .then(checkIfExist)
-      .then(genJSONApiResByRecord.bind(null, db, 'Events'))
-      .then((response) => {
-        if (response.data.relationships.Demonstrator !== null) {
-          delete response.data.relationships.Demonstrator.data;
-        }
-        res.send(response);
-      })
-      .catch((err) => {
-        if (err.notFound) {
-          res.status(404).send(genErrorObj(err.message));
-          return;
-        }
-        res.status(500).send(genErrorObj(err.message));
+    const event = await db.Events.findById(reqIdNum);
+    checkIfExist(event);
+    const response = await genJSONApiResByRecord(db, 'Events', event);
+    response.includes = [];
+    if (response.data.relationships.Demonstrator !== null) {
+      const demonstrator = await db.Users.findById(response.data.relationships.Demonstrator.data.id);
+      response.includes.push({
+        id: response.data.relationships.Demonstrator.data.id,
+        type: 'Users',
+        attributes: demonstrator.dataValues
       });
+    }
+    if (response.data.relationships.ExerciseSheet.data !== null) {
+      const exerciseSheet = await db.ExerciseSheets.findById(response.data.relationships.ExerciseSheet.data.id);
+      response.includes.push({
+        id: response.data.relationships.ExerciseSheet.data.id,
+        type: 'ExerciseSheets',
+        attributes: exerciseSheet.dataValues
+      });
+    }
+    res.send(response);
   } catch (err) {
+    if (err.notFound) {
+      res.status(404).send(genErrorObj(err.message));
+      return;
+    }
     res.status(500).send(genErrorObj(err.message));
   }
 };
