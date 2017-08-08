@@ -25,11 +25,10 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Users.associate = (models) => {
-    Users.hasMany(models.StudentRegistrations, { sourceKey: 'neptun' });
-    Users.hasMany(models.Deliverables, { foreignKey: 'CorrectorEmail', sourceKey: 'email_official' });
-    Users.hasMany(models.Deliverables, { foreignKey: 'DeputyEmail', sourceKey: 'email_official' });
-    Users.hasMany(models.Events, { foreignKey: 'DemonstratorEmail', sourceKey: 'email_official' });
-    Users.hasMany(models.StudentGroups, { foreignKey: 'Demonstrator', sourceKey: 'email_official' });
+    Users.hasMany(models.StudentRegistrations);
+    Users.hasMany(models.Deliverables);
+    Users.hasMany(models.Events);
+    Users.hasMany(models.StudentGroups);
     Users.belongsToMany(models.Roles, { through: 'UserRoles' });
     Users.belongsToMany(models.ExerciseTypes, { through: 'UserExerciseTypes' });
   };

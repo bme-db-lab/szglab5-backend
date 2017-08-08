@@ -19,7 +19,8 @@
         "academicyear": "2017/2018",
         "academicterm": 1,
         "description": "DUMMY_DESC",
-        "CourseId": 1
+        "CourseId": 1,
+        "active": true
       }
     },
     {
@@ -27,15 +28,8 @@
         "academicyear": "2017/2018",
         "academicterm": 2,
         "description": "DUMMY_DESC",
-        "CourseId": 1
-      }
-    },
-    {
-      "data": {
-        "academicyear": "2017/2018",
-        "academicterm": 1,
-        "description": "DUMMY_DESC",
-        "CourseId": 2
+        "CourseId": 1,
+        "active": false
       }
     }
   ],

@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     academicyear: DataTypes.STRING,
     academicterm: DataTypes.INTEGER,
     description: DataTypes.STRING,
+    active: DataTypes.BOOLEAN
   });
 
   Semesters.associate = (models) => {

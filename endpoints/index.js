@@ -12,6 +12,7 @@ const sqlEndpoints = require('./sql');
 const newsEndpoints = require('./news');
 const languageEndpoints = require('./languages');
 const roleEndpoints = require('./roles');
+const semesterEndpoints = require('./semester');
 
 module.exports = (app) => {
   authEndpoints(app);
@@ -28,4 +29,5 @@ module.exports = (app) => {
   newsEndpoints(app);
   languageEndpoints(app);
   roleEndpoints(app);
+  semesterEndpoints(app);
 };

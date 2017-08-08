@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   StudentRegistrations.associate = (models) => {
     StudentRegistrations.belongsTo(models.Semesters);
     StudentRegistrations.hasMany(models.Events);
-    StudentRegistrations.belongsTo(models.Users, { targetKey: 'neptun' });
+    StudentRegistrations.belongsTo(models.Users);
     StudentRegistrations.belongsTo(models.StudentGroups);
   };
 
