@@ -12,9 +12,9 @@ module.exports = (req, res) => {
     }
 
     const db = getDB();
-    db.StudentGroups.findById(reqIdNum)
+    db.Appointments.findById(reqIdNum)
       .then(checkIfExist)
-      .then(genJSONApiResByRecord.bind(null, db, 'StudentGroups'))
+      .then(genJSONApiResByRecord.bind(null, db, 'Appointments'))
       .then((response) => {
         res.send(response);
       })

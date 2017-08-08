@@ -14,6 +14,7 @@ const languageEndpoints = require('./languages');
 const roleEndpoints = require('./roles');
 const semesterEndpoints = require('./semesters');
 const studentGroupEndpoints = require('./studentGroups');
+const appointmentEndpoints = require('./appointments');
 
 module.exports = (app) => {
   authEndpoints(app);
@@ -32,4 +33,5 @@ module.exports = (app) => {
   roleEndpoints(app);
   semesterEndpoints(app);
   studentGroupEndpoints(app);
+  appointmentEndpoints(app);
 };

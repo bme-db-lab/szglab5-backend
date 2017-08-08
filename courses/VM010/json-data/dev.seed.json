@@ -217,7 +217,7 @@
         "date": "2017.09.26",
         "location": "IL105",
         "ExerciseCategoryId": 1,
-        "StudenrGroupId": 1
+        "StudentGroupId": 1
       }
     },
     {
@@ -225,7 +225,7 @@
         "date": "2018.02.28",
         "location": "IL105",
         "ExerciseCategoryId": 2,
-        "StudenrGroupId": 1
+        "StudentGroupId": 1
       }
     },
     {
@@ -233,7 +233,7 @@
         "date": "2017.11.26",
         "location": "IL105",
         "ExerciseCategoryId": 3,
-        "StudenrGroupId": 1
+        "StudentGroupId": 1
       }
     },
     {
@@ -241,7 +241,7 @@
         "date": "2017.09.26",
         "location": "IL105",
         "ExerciseCategoryId": 1,
-        "StudenrGroupId": 2
+        "StudentGroupId": 2
       }
     },
     {
@@ -249,7 +249,7 @@
         "date": "2018.02.28",
         "location": "IL105",
         "ExerciseCategoryId": 2,
-        "StudenrGroupId": 2
+        "StudentGroupId": 2
       }
     },
     {
@@ -257,7 +257,7 @@
         "date": "2017.11.26",
         "location": "IL105",
         "ExerciseCategoryId": 3,
-        "StudenrGroupId": 2
+        "StudentGroupId": 2
       }
     }
   ],
