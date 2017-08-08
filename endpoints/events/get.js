@@ -26,11 +26,42 @@ module.exports = async (req, res) => {
     }
     if (response.data.relationships.ExerciseSheet.data !== null) {
       const exerciseSheet = await db.ExerciseSheets.findById(response.data.relationships.ExerciseSheet.data.id);
+      const exerciseCategory = await exerciseSheet.getExerciseCategory();
+
+      let exerciseCategoryRel = null;
+      if (exerciseCategory !== null) {
+        exerciseCategoryRel = {
+          data: {
+            id: exerciseCategory.id,
+            type: 'ExerciseCategories'
+          }
+        };
+        response.included.push({
+          id: exerciseCategory.id,
+          type: 'ExerciseCategories',
+          attributes: exerciseCategory.dataValues,
+        });
+      }
+
       response.included.push({
         id: response.data.relationships.ExerciseSheet.data.id,
         type: 'ExerciseSheets',
-        attributes: exerciseSheet.dataValues
+        attributes: exerciseSheet.dataValues,
+        relationships: {
+          ExerciseCategory: exerciseCategoryRel
+        }
       });
+    }
+
+    if (response.data.relationships.Deliverables.data.length !== 0) {
+      for (const delItem of response.data.relationships.Deliverables.data) {
+        const deliverables = await db.Deliverables.findById(delItem.id);
+        response.included.push({
+          id: deliverables.dataValues.id,
+          type: 'Deliverables',
+          attributes: deliverables.dataValues
+        });
+      }
     }
     res.send(response);
   } catch (err) {
