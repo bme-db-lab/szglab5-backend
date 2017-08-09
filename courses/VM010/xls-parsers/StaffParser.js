@@ -1,6 +1,8 @@
 const XLSX = require('xlsx');
+const { getDB } = require('../../../db/db.js');
 
-module.exports = () => {
+module.exports = async () => {
+  const db = getDB();
   let seed = null;
   try {
     const seedFile = 'courses/VM010/xls-data/beosztas-minta.xlsx';
@@ -60,7 +62,7 @@ module.exports = () => {
             } else {
               user.data.title = null;
             }
-            if (user.data.email_official != null) {
+            if (user.data.email_official !== null) {
               user.data.university = 'BME';
               user.data.password = 'defaultpass';
               users[user.data.email_official] = user;

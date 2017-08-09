@@ -19,8 +19,8 @@ module.exports = async (semesterId) => {
   }
 
   if (seed !== null) {
-    const users = [];
-    let user = { data: {} };
+    const regs = [];
+    let sreg = { data: {} };
     for (const key of Object.keys(seed)) {
       const reg = /([A-Z]+)([0-9]+)/;
       const rKey = reg.exec(key);
@@ -28,40 +28,41 @@ module.exports = async (semesterId) => {
         if (rKey[2] !== '1') {
           switch (key[0]) {
             case 'A':
-              user = { data: {} };
-              break;
-            case 'B':
+              sreg = { data: {} };
               if (seed[key].w !== undefined) {
-                user.data.displayName = seed[key].w;
+                sreg.data.neptunCourseCode = seed[key].w;
+                const gQueryResult = await db.StudentGroups.findOne({
+                  attributes: ['id'],
+                  where: {
+                    name: seed[key].w
+                  }
+                });
+                sreg.data.StudentGroupId = gQueryResult.dataValues.id;
               } else {
-                user.data.displayName = null;
+                sreg.data.neptunCourseCode = null;
               }
+              sreg.data.neptunSubjectCode = 'DUMMY';
+              sreg.data.SemesterId = semesterId;
               break;
             case 'C':
               if (seed[key].w !== undefined) {
-                user.data.neptun = seed[key].w;
+                const nQueryResult = await db.Users.findOne({
+                  attributes: ['id'],
+                  where: {
+                    neptun: seed[key].w
+                  }
+                });
+                sreg.data.UserId = nQueryResult.dataValues.id;
               } else {
-                user.data.neptun = null;
-              }
-              break;
-            case 'D':
-              if (seed[key].w !== undefined) {
-                user.data.loginName = seed[key].w;
-              } else {
-                user.data.loginName = null;
-              }
-              break;
-            case 'E':
-              if (seed[key].w !== undefined) {
-                user.data.password = seed[key].w;
-              } else {
-                user.data.password = 'defaultpass';
+                sreg.data.userId = null;
               }
               break;
             case 'G':
-              if (user.data.neptun !== null) {
-                user.data.university = 'BME';
-                users.push(user);
+              if (sreg.data.UserId !== null) {
+                sreg.data.LanguageId = 1;
+                // TODO random exercise type distribution
+                sreg.data.ExerciseTypeId = 1;
+                regs.push(sreg);
               } else {
                 return true;
               }
@@ -71,7 +72,7 @@ module.exports = async (semesterId) => {
         }
       }
     }
-    return users;
+    return regs;
   }
   logger.warn('No seed data provided');
   return null;

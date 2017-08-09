@@ -1,7 +1,9 @@
 const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
+const { getDB } = require('../../../db/db.js');
 
-module.exports = () => {
+module.exports = async () => {
+  const db = getDB();
   let seed = null;
   try {
     const seedFile = 'courses/VM010/xls-data/beosztas-minta.xlsx';
@@ -19,21 +21,24 @@ module.exports = () => {
     const groups = [];
     const names = [];
     let group = { data: {} };
-    Object.keys(seed).some(
-      (key) => {
-        const reg = /([A-Z]+)([0-9]+)/;
-        const rKey = reg.exec(key);
-        if (rKey === null) {
-          return false;
-        }
+    for (const key of Object.keys(seed)) {
+      const reg = /([A-Z]+)([0-9]+)/;
+      const rKey = reg.exec(key);
+      if (rKey !== null) {
         if (rKey[2] !== '1') {
           switch (key[0]) {
             case 'A':
               group = { data: {} };
               if (seed[key].w !== undefined) {
-                group.data.Demonstrator = seed[key].w;
+                const uQueryResult = await db.Users.findOne({
+                  attributes: ['id'],
+                  where: {
+                    email_official: seed[key].w
+                  }
+                });
+                group.data.UserId = uQueryResult.dataValues.id;
               } else {
-                group.data.Demonstrator = null;
+                group.data.UserId = null;
               }
               break;
             case 'B':
@@ -55,16 +60,13 @@ module.exports = () => {
                   groups.push(group);
                   names.push(group.data.name);
                 }
-              } else {
-                return true;
               }
               break;
             default:
           }
         }
-        return false;
       }
-  );
+    }
     return groups;
   }
   logger.warn('No seed data provided');

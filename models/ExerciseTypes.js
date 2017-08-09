@@ -1,8 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const ExerciseTypes = sequelize.define('ExerciseTypes', {
     name: DataTypes.STRING,
-    shortName: DataTypes.STRING,
-    language: DataTypes.STRING,
+    shortName: DataTypes.STRING
   });
 
   ExerciseTypes.associate = (models) => {

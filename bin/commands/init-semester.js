@@ -41,10 +41,16 @@ module.exports = async () => {
     const yearInfo = `${year.res}/${parseInt(year.res, 10) + 1}`;
     logger.info(`The selected semester is ${yearInfo} - ${half.res}`);
     const term = half.res === 'Autumn (1)' ? 1 : 2;
+    const cQueryResult = await db.Courses.findOne({
+      attributes: ['id'],
+      where: {
+        codeName: code
+      }
+    });
     const semesterData = [{ data: {
       academicyear: yearInfo,
       academicterm: term,
-      CourseCodeName: code
+      CourseId: cQueryResult.dataValues.id
     } }];
     await seedDBwithObjects(db, 'Semesters', semesterData);
     const qResult = await db.Semesters.findOne({
@@ -52,7 +58,7 @@ module.exports = async () => {
       where: {
         academicyear: yearInfo,
         academicterm: term,
-        CourseCodeName: code
+        CourseId: cQueryResult.dataValues.id
       }
     });
     logger.info('Initializing semester, please wait...');
