@@ -39,6 +39,7 @@ async function initDB(_options) {
     const modelFiles = files.filter(file => (file !== 'index.js') && (file.indexOf('.') !== 0) && (file[0] !== '_'));
     // import the model files to sequelize
     modelFiles.forEach((file) => {
+      logger.debug(`Importing model: ${file}`);
       const model = sequelize.import(path.join(modelsPath, file));
       db[model.name] = model;
     });

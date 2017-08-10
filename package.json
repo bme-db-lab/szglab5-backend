@@ -74,6 +74,7 @@
     "joi": "^10.2.2",
     "jsonwebtoken": "^7.3.0",
     "lodash": "^4.17.4",
+    "node-fetch": "^1.7.1",
     "nodemailer": "^4.0.1",
     "pdfjs": "^2.0.0-alpha.3",
     "pg": "^6.4.1",

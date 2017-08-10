@@ -89,6 +89,21 @@ yargs // eslint-disable-line no-unused-expressions
       }
     }
   })
+  .command({
+    command: 'init-gitlab-users',
+    aliases: ['igu'],
+    desc: 'Initialize gitlab users',
+    handler: async () => {
+      const logger = require('../utils/logger.js');
+      try {
+        const initGitlabUsers = require('./commands/init-gitlab-users.js');
+        await initGitlabUsers();
+      } catch (err) {
+        logger.error('Error while initializing gitlab users');
+        logger.error(err);
+      }
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
