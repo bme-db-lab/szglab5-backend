@@ -31,21 +31,21 @@
     {
       "data": {
         "type": "DBMS",
-        "CourseCodeName": "VM010",
+        "CourseId": 1,
         "EventTemplateId": 1
       }
     },
     {
       "data": {
         "type": "SQL1",
-        "CourseCodeName": "VM010",
+        "CourseId": 1,
         "EventTemplateId": 1
       }
     },
     {
       "data": {
         "type": "SQL2",
-        "CourseCodeName": "VM010",
+        "CourseId": 1,
         "EventTemplateId": 1
       }
     },
@@ -136,6 +136,28 @@
       "data": {
         "description": "kZH",
         "EventTemplateId": 2
+      }
+    }
+  ],
+  "Roles": [
+    {
+      "data": {
+        "name": "ADMIN"
+      }
+    },
+    {
+      "data": {
+        "name": "STUDENT"
+      }
+    },
+    {
+      "data": {
+        "name": "DEMONSTRATOR"
+      }
+    },
+    {
+      "data": {
+        "name": "CORRECTOR"
       }
     }
   ]
