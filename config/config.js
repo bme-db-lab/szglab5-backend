@@ -53,7 +53,8 @@ const defaultConfig = {
     defaultSubject: 'Adatbazisok labor rendszeruzenet',
     defaultFromDisplayName: 'Adatbazisok labor adminisztracios rendszer'
   },
-  gitlab: {
+  git: {
+    provider: 'gitlab',
     baseUrl: 'http://localhost:8020/api/v4',
     privateToken: 'XT5zTBwtW3NzNbQwrpyp'
   }
