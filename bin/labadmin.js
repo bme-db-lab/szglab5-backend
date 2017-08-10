@@ -7,13 +7,11 @@ yargs // eslint-disable-line no-unused-expressions
     command: 'seed-json',
     aliases: ['sj'],
     desc: 'Seed the database with models described in json',
-    builder: () => {
-      return yargs
+    builder: () => yargs
           .option('path', {
             alias: 'p',
             default: 'courses/VM010/json-data/dev.seed.json'
-          });
-    },
+          }),
     handler: async (argv) => {
       const logger = require('../utils/logger.js');
       const seedJSON = require('./commands/seed-json');
@@ -75,31 +73,31 @@ yargs // eslint-disable-line no-unused-expressions
     }
   })
    .command({
-    command: 'reset-database',
-    aliases: ['rd'],
-    desc: 'Drops all tables from the database.',
-    handler: async () => {
-      const logger = require('../utils/logger.js');
-      try {
-        const resetDatabase = require('./commands/reset-database');
-        await resetDatabase();
-      } catch (err) {
-        logger.error('Error while resetting database');
-        logger.error(err);
-      }
-    }
-  })
+     command: 'reset-database',
+     aliases: ['rd'],
+     desc: 'Drops all tables from the database.',
+     handler: async () => {
+       const logger = require('../utils/logger.js');
+       try {
+         const resetDatabase = require('./commands/reset-database');
+         await resetDatabase();
+       } catch (err) {
+         logger.error('Error while resetting database');
+         logger.error(err);
+       }
+     }
+   })
   .command({
-    command: 'init-gitlab-users',
-    aliases: ['igu'],
-    desc: 'Initialize gitlab users',
+    command: 'create-git-users',
+    aliases: ['cgu'],
+    desc: 'Initialize git users',
     handler: async () => {
       const logger = require('../utils/logger.js');
       try {
-        const initGitlabUsers = require('./commands/init-gitlab-users.js');
-        await initGitlabUsers();
+        const createGitUsers = require('./commands/create-gitlab-users.js');
+        await createGitUsers();
       } catch (err) {
-        logger.error('Error while initializing gitlab users');
+        logger.error('Error while creating gitlab users');
         logger.error(err);
       }
     }
