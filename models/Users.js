@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   Users.associate = (models) => {
     Users.hasMany(models.StudentRegistrations);
     Users.hasMany(models.Deliverables);
-    Users.hasMany(models.Events);
+    Users.hasMany(models.Events, { foreignKey: 'DemonstratorId' });
     Users.hasMany(models.StudentGroups);
     Users.belongsToMany(models.Roles, { through: 'UserRoles' });
     Users.belongsToMany(models.ExerciseTypes, { through: 'UserExerciseTypes' });
