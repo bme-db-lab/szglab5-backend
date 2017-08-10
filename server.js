@@ -8,7 +8,7 @@ const client = new Prometheus();
 const config = require('./config/config.js');
 const cors = require('cors');
 
-const { port, monitoringPort } = config.api;
+const { port } = config.api;
 const { initDB } = require('./db/db.js');
 // const addEndpoints = require('./jsonapi');
 const addEndpoints = require('./endpoints');
@@ -54,10 +54,14 @@ initDB()
       logger.info(`API Server is listenning on localhost:${port}`);
     });
 
+    // Monitoring
     promEndpoint = express();
     promEndpoint.get('/metrics',client.metricsFunc());
-    promEndpoint.listen(monitoringPort, () => {
-      logger.info(`Monitoring endpoint is on localhost:${monitoringPort}/metrics`)
+    const memUsed = client.newGauge({ namespace: "performance", name: "memUsed", help: "Backend memory usage." });
+    const monitoring = config.monitoring;
+    setInterval(function() { memUsed.set({ period: monitoring.updateSec + "sec" }, process.memoryUsage().heapUsed); }, monitoring.updateSec * 1000);
+    promEndpoint.listen(monitoring.port, () => {
+      logger.info(`Monitoring endpoint is on localhost:${monitoring.port}/metrics`);
     });
   })
   .catch((err) => {
