@@ -26,8 +26,15 @@ module.exports = async (semesterId) => {
       if (rKey !== null) {
         if (rKey[2] !== '1') {
           switch (key[0]) {
-            case 'B':
+            case 'A':
               exercise = { data: {} };
+              if (seed[key].w !== undefined) {
+                exercise.data.id = seed[key].w;
+              } else {
+                exercise.data.id = null;
+              }
+              break;
+            case 'B':
               if (seed[key].w !== undefined) {
                 exercise.data.name = seed[key].w;
               } else {

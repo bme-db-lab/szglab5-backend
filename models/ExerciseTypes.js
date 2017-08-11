@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     ExerciseTypes.hasMany(models.ExerciseSheets);
     ExerciseTypes.hasMany(models.StudentRegistrations);
     ExerciseTypes.belongsToMany(models.Users, { through: 'UserExerciseTypes' });
+    ExerciseTypes.belongsTo(models.Users, { as: 'Guru' });
   };
 
   return ExerciseTypes;

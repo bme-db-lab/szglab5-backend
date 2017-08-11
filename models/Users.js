@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define('Users', {
     displayName: DataTypes.STRING,
-    loginName: DataTypes.STRING,
+    loginName: { type: DataTypes.STRING, unique: true },
     password: DataTypes.STRING,
     email: DataTypes.STRING,
     sshPublicKey: DataTypes.STRING,
@@ -21,14 +21,14 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     printSupport: DataTypes.STRING,
     classroom: DataTypes.STRING,
-    spec: DataTypes.STRING,
-    exercises: DataTypes.STRING
+    spec: DataTypes.STRING
   });
 
   Users.associate = (models) => {
     Users.hasMany(models.StudentRegistrations);
     Users.hasMany(models.Deliverables);
     Users.hasMany(models.Events, { foreignKey: 'DemonstratorId' });
+    Users.hasMany(models.ExerciseTypes, { foreignKey: 'GuruId' });
     Users.hasMany(models.StudentGroups);
     Users.belongsToMany(models.Roles, { through: 'UserRoles' });
     Users.belongsToMany(models.ExerciseTypes, { through: 'UserExerciseTypes' });

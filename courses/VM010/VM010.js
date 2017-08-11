@@ -6,6 +6,7 @@ const parseStaff = require('./xls-parsers/StaffParser.js');
 const parseExercises = require('./xls-parsers/ExerciseParser.js');
 const parseTimetable = require('./xls-parsers/TimetableParser.js');
 const parseGroups = require('./xls-parsers/StudentGroupParser.js');
+const { updateResource, checkIfExist } = require('../../utils/jsonapi.js');
 
 module.exports = async (semesterId) => {
   const db = getDB();
@@ -27,19 +28,56 @@ module.exports = async (semesterId) => {
     }
     const exercises = await parseExercises(semesterId);
     await seedDBwithObjects(db, 'ExerciseTypes', exercises);
-    const staff = await parseStaff();
+    const parsedStaff = await parseStaff();
+    const staff = parsedStaff.simpleUsers;
+    const exList = parsedStaff.exList;
     await seedDBwithObjects(db, 'Users', staff);
     const demonRole = await db.Roles.findOne({ where: { name: 'DEMONSTRATOR' } });
-    for (const staffMember of staff) {
-      const staffMemberRecord = await db.Users.findOne({ where: { email_official: staffMember.data.email_official } });
-      const userRole = [{
-        data: {
-          UserId: staffMemberRecord.dataValues.id,
-          RoleId: demonRole.dataValues.id
-        }
-      }];
-      await seedDBwithObjects(db, 'UserRoles', userRole);
+    const correctRole = await db.Roles.findOne({ where: { name: 'CORRECTOR' } });
+    for (const member of staff) {
+      const memberRecord = await db.Users.findOne({ where: { email_official: member.data.email_official } });
+      if (memberRecord.dataValues.classroom !== undefined && memberRecord.dataValues.classroom !== null && memberRecord.dataValues.classroom !== '') {
+        const userRole = [{
+          data: {
+            UserId: memberRecord.dataValues.id,
+            RoleId: demonRole.dataValues.id
+          }
+        }];
+        await seedDBwithObjects(db, 'UserRoles', userRole);
+      }
+      if (memberRecord.dataValues.exercises !== undefined && memberRecord.dataValues.exercises !== null && memberRecord.dataValues.exercises !== '') {
+        const userRole = [{
+          data: {
+            UserId: memberRecord.dataValues.id,
+            RoleId: correctRole.dataValues.id
+          }
+        }];
+        await seedDBwithObjects(db, 'UserRoles', userRole);
+      }
     }
+
+    for (const record of exList) {
+      const qGuru = await db.Users.findOne({ where: { email_official: record.data.guru } });
+      if (record.data.ex !== undefined && record.data.ex !== null) {
+        const qEx = await db.ExerciseTypes.findOne({ where: { id: record.data.ex } });
+        await db.ExerciseTypes.update({ GuruId: qGuru.dataValues.id }, { where: { id: qEx.dataValues.id } });
+      }
+
+      if (record.data.exercises !== undefined && record.data.exercises !== null) {
+        const aEx = record.data.exercises.split(',');
+        for (const ex of aEx) {
+          const data = [{
+            data: {
+              ExerciseTypeId: ex,
+              UserId: qGuru.dataValues.id
+            }
+          }];
+          console.log(data);
+          await seedDBwithObjects(db, 'UserExerciseTypes', data);
+        }
+      }
+    }
+
     const groups = await parseGroups(semesterId);
     await seedDBwithObjects(db, 'StudentGroups', groups);
     const regs = await parseStudentRegs(semesterId);

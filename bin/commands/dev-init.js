@@ -81,24 +81,27 @@ module.exports = async () => {
     logger.info('Generating Deliverables!');
     const eQuery = await db.Events.findAll();
     for (const event of eQuery) {
-      const qSheet = await db.ExerciseSheets.findOne({ where: { id: event.dataValues.ExerciseSheetId } });
-      const qCat = await db.ExerciseCategories.findOne({ where: { id: qSheet.dataValues.ExerciseCategoryId } });
-      const qDelTemp = await db.DeliverableTemplates.findAll({ where: { EventTemplateId: qCat.dataValues.EventTemplateId } });
-      for (const item of qDelTemp) {
-        const date = event.dataValues.date;
-        date.setDate(date.getDate() + 10);
-        const del = [{ data: {
-          deadline: date,
-          EventId: event.dataValues.id,
-          DeliverableTemplateId: item.dataValues.id
-        } }];
-        try {
-          await seedDBwithObjects(db, 'Deliverables', del);
-        } catch (err) {
-          throw err;
+      const qSr = await db.StudentRegistrations.findOne({ where: { id: event.dataValues.StudentRegistrationId }});
+      if (qSr.dataValues.SemesterId === 1) {
+        const qSheet = await db.ExerciseSheets.findOne({ where: { id: event.dataValues.ExerciseSheetId } });
+        const qCat = await db.ExerciseCategories.findOne({ where: { id: qSheet.dataValues.ExerciseCategoryId } });
+        const qDelTemp = await db.DeliverableTemplates.findAll({ where: { EventTemplateId: qCat.dataValues.EventTemplateId } });
+        for (const item of qDelTemp) {
+          const date = event.dataValues.date;
+          date.setDate(date.getDate() + 10);
+          const del = [{ data: {
+            deadline: date,
+            EventId: event.dataValues.id,
+            DeliverableTemplateId: item.dataValues.id
+          } }];
+          try {
+            await seedDBwithObjects(db, 'Deliverables', del);
+          } catch (err) {
+            throw err;
+          }
         }
-      }
     }
+  }
     logger.info('Deliverable generation succeed!');
   } catch (err) {
     throw err;

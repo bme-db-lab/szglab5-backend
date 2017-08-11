@@ -117,6 +117,21 @@ yargs // eslint-disable-line no-unused-expressions
       }
     }
   })
+  .command({
+    command: 'create-admin',
+    aliases: ['ca'],
+    desc: 'Create admin user',
+    handler: async () => {
+      const logger = require('../utils/logger.js');
+      try {
+        const createAdmin = require('./commands/create-admin.js');
+        await createAdmin();
+      } catch (err) {
+        logger.error('Error while executing init');
+        logger.error(err);
+      }
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
