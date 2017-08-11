@@ -72,7 +72,6 @@ module.exports = async (semesterId) => {
               UserId: qGuru.dataValues.id
             }
           }];
-          console.log(data);
           await seedDBwithObjects(db, 'UserExerciseTypes', data);
         }
       }

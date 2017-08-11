@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   Courses.associate = (models) => {
     Courses.hasMany(models.ExerciseCategories);
     Courses.hasMany(models.Semesters);
+    Courses.hasMany(models.ExerciseTypes);
   };
 
   return Courses;

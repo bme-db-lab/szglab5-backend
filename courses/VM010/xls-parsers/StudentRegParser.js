@@ -60,8 +60,11 @@ module.exports = async (semesterId) => {
             case 'G':
               if (sreg.data.UserId !== null) {
                 sreg.data.LanguageId = 1;
-                // TODO random exercise type distribution
-                sreg.data.ExerciseTypeId = 1;
+                // random exercise type distribution
+                const qCourse = await db.Semesters.findOne({ where: { id: semesterId } });
+                const qEx = await db.ExerciseTypes.findAll({ where: { CourseId: qCourse.dataValues.id } });
+                const record = qEx[Math.floor(Math.random() * qEx.length)];
+                sreg.data.ExerciseTypeId = record.dataValues.id;
                 regs.push(sreg);
               } else {
                 return true;
