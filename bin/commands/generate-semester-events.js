@@ -29,11 +29,13 @@ module.exports = async () => {
   const semAnswers = await inquirer.prompt([
     {
       type: 'list',
-      name: 'course',
+      name: 'sem',
       message: 'Please select a semester',
       choices: semNames
     }
   ]);
+  let semester = semAnswers.sem.split(':');
+  semester = semester[0];
 
   // generate exercise sheets
   logger.info('Generating Exercise Sheets!');
@@ -53,7 +55,7 @@ module.exports = async () => {
 
   // generate events
   logger.info('Generating Events!');
-  const srQuery = await db.StudentRegistrations.findAll();
+  const srQuery = await db.StudentRegistrations.findAll({ where: { SemesterId: semester } });
   for (const sr of srQuery) {
     const appQuery = await db.Appointments.findAll({ where: { StudentGroupId: sr.dataValues.StudentGroupId } });
     for (const app of appQuery) {

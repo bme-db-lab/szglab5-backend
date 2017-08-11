@@ -32,6 +32,7 @@ module.exports = async () => {
             app.data.location = seed[(`A${rKey[2]}`)].w;
             const date = seed[(`${rKey[1]}2`)].w;
             const hour = seed[(`${rKey[1]}1`)].w;
+            console.log(date);
             app.data.date = new Date(`${date}`);
             app.data.date.setHours(hour);
             const gQueryResult = await db.StudentGroups.findOne({

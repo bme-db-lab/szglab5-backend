@@ -102,6 +102,21 @@ yargs // eslint-disable-line no-unused-expressions
       }
     }
   })
+  .command({
+    command: 'dev-init',
+    aliases: ['di'],
+    desc: 'Shortcut for rd -> ic -> is -> gse',
+    handler: async () => {
+      const logger = require('../utils/logger.js');
+      try {
+        const init = require('./commands/dev-init.js');
+        await init();
+      } catch (err) {
+        logger.error('Error while executing init');
+        logger.error(err);
+      }
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
