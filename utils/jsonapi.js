@@ -13,8 +13,8 @@ function checkIfExist(record) {
 
 function genJSONApiResByRecord(db, modelName, record) {
   return new Promise((resolve, reject) => {
-    logger.debug("GET: " + modelName, record.dataValues);
-    logger.info("GET: " + modelName + "/" + record.dataValues.id);
+    logger.debug(`GET: ${modelName}`, record.dataValues);
+    logger.info(`GET: ${modelName}/${record.dataValues.id}`);
     getAssociatedObjects(db, modelName, record)
       .then((relationships) => {
         const data = record.dataValues;
