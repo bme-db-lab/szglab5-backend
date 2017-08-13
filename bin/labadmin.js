@@ -132,6 +132,21 @@ yargs // eslint-disable-line no-unused-expressions
       }
     }
   })
+  .command({
+    command: 'create-file-deliverables-folder-structure',
+    aliases: ['create-folder-structure', 'cfs'],
+    desc: 'Create folder structure for file deriables',
+    handler: async () => {
+      const logger = require('../utils/logger.js');
+      try {
+        const createStructure = require('./commands/create-file-deliverables-folder-structure.js');
+        await createStructure();
+      } catch (err) {
+        logger.error('Error while executing init');
+        logger.error(err);
+      }
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'

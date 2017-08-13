@@ -30,7 +30,7 @@ async function initDB(_options) {
       port,
       dialect,
       logging: (msg) => {
-        logger.debug(msg);
+        logger.verbose(msg);
       }
     });
     const modelsPath = path.join(__dirname, '../models');

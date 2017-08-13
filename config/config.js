@@ -4,7 +4,7 @@ const path = require('path');
 const argv = require('yargs').argv;
 
 const env = process.env.NODE_ENV || argv.env;
-if (!env ) {
+if (!env) {
   throw new Error('Please specify the NODE_ENV environment variable!');
 }
 
@@ -60,6 +60,20 @@ const defaultConfig = {
     provider: 'gitlab',
     baseUrl: 'http://localhost:8020/api/v4',
     privateToken: 'XT5zTBwtW3NzNbQwrpyp'
+  },
+  uploadFile: {
+    currentTargetStorageId: 1,
+    // absolute, or relative to /bin/labadmin.js
+    storages: [
+      {
+        id: 0,
+        rootPath: '../files'
+      },
+      {
+        id: 1,
+        rootPath: '../files'
+      }
+    ]
   }
 };
 let specConfig = {};

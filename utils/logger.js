@@ -5,6 +5,7 @@ require('winston-daily-rotate-file');
 
 const logger = new (winston.Logger)({
   levels: {
+    verbose: 8,
     debug: 7,
     info: 6,
     warn: 4,
@@ -12,6 +13,7 @@ const logger = new (winston.Logger)({
     fatal: 2,
   },
   colors: {
+    verbose: 'green',
     debug: 'blue',
     info: 'yellow',
     warning: 'orange',

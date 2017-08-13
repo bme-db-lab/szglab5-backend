@@ -11,6 +11,7 @@ module.exports = async () => {
   try {
     const db = await initDB({ force: true });
     const result = await db.Courses.findAll({ where: { codeName: code } });
+    // Initialize Course
     if (result !== null && result.length > 0) {
       logger.info('Course was already initialized.');
     } else {
@@ -18,6 +19,7 @@ module.exports = async () => {
       const filePath = path.join(__dirname, '../..', relPath);
       await seedDBwithJSON(db, filePath);
     }
+    // Initialize Semester
     const semesterData = [{ data: {
       academicyear: '2017/2018',
       academicterm: 1,
@@ -32,8 +34,9 @@ module.exports = async () => {
         CourseId: 1
       }
     });
+    // Generate records for semester - xls parsers
     logger.info('Initializing semester, please wait...');
-    const courseMethod = require(`../../courses/${code}/${code}.js`);
+    const courseMethod = require(`../../courses/${code}/${code}.js`); // eslint-disable-line
     await courseMethod(qResult.dataValues.id);
 
     // generate exercise sheets
@@ -81,7 +84,7 @@ module.exports = async () => {
     logger.info('Generating Deliverables!');
     const eQuery = await db.Events.findAll();
     for (const event of eQuery) {
-      const qSr = await db.StudentRegistrations.findOne({ where: { id: event.dataValues.StudentRegistrationId }});
+      const qSr = await db.StudentRegistrations.findOne({ where: { id: event.dataValues.StudentRegistrationId } });
       if (qSr.dataValues.SemesterId === 1) {
         const qSheet = await db.ExerciseSheets.findOne({ where: { id: event.dataValues.ExerciseSheetId } });
         const qCat = await db.ExerciseCategories.findOne({ where: { id: qSheet.dataValues.ExerciseCategoryId } });
@@ -100,8 +103,8 @@ module.exports = async () => {
             throw err;
           }
         }
+      }
     }
-  }
     logger.info('Deliverable generation succeed!');
   } catch (err) {
     throw err;
