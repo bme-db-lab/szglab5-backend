@@ -32,30 +32,6 @@ module.exports = async (semesterId) => {
     const staff = parsedStaff.simpleUsers;
     const exList = parsedStaff.exList;
     await seedDBwithObjects(db, 'Users', staff);
-    const demonRole = await db.Roles.findOne({ where: { name: 'DEMONSTRATOR' } });
-    const correctRole = await db.Roles.findOne({ where: { name: 'CORRECTOR' } });
-    for (const member of staff) {
-      const memberRecord = await db.Users.findOne({ where: { email_official: member.data.email_official } });
-      if (memberRecord.dataValues.classroom !== undefined && memberRecord.dataValues.classroom !== null && memberRecord.dataValues.classroom !== '') {
-        const userRole = [{
-          data: {
-            UserId: memberRecord.dataValues.id,
-            RoleId: demonRole.dataValues.id
-          }
-        }];
-        await seedDBwithObjects(db, 'UserRoles', userRole);
-      }
-      if (memberRecord.dataValues.exercises !== undefined && memberRecord.dataValues.exercises !== null && memberRecord.dataValues.exercises !== '') {
-        const userRole = [{
-          data: {
-            UserId: memberRecord.dataValues.id,
-            RoleId: correctRole.dataValues.id
-          }
-        }];
-        await seedDBwithObjects(db, 'UserRoles', userRole);
-      }
-    }
-
     for (const record of exList) {
       const qGuru = await db.Users.findOne({ where: { email_official: record.data.guru } });
       if (record.data.ex !== undefined && record.data.ex !== null) {
@@ -76,6 +52,31 @@ module.exports = async (semesterId) => {
         }
       }
     }
+    const demonRole = await db.Roles.findOne({ where: { name: 'DEMONSTRATOR' } });
+    const correctRole = await db.Roles.findOne({ where: { name: 'CORRECTOR' } });
+    for (const member of staff) {
+      const memberRecord = await db.Users.findOne({ where: { email_official: member.data.email_official } });
+      if (memberRecord.dataValues.classroom !== undefined && memberRecord.dataValues.classroom !== null && memberRecord.dataValues.classroom !== '') {
+        const userRole = [{
+          data: {
+            UserId: memberRecord.dataValues.id,
+            RoleId: demonRole.dataValues.id
+          }
+        }];
+        await seedDBwithObjects(db, 'UserRoles', userRole);
+      }
+      const exercisesQuery = await db.UserExerciseTypes.findAll({ where: { UserId: memberRecord.dataValues.id } });
+      if (exercisesQuery.length > 0) {
+        const userRole = [{
+          data: {
+            UserId: memberRecord.dataValues.id,
+            RoleId: correctRole.dataValues.id
+          }
+        }];
+        await seedDBwithObjects(db, 'UserRoles', userRole);
+      }
+    }
+
 
     const groups = await parseGroups(semesterId);
     await seedDBwithObjects(db, 'StudentGroups', groups);
