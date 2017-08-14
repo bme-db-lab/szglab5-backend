@@ -16,8 +16,19 @@ module.exports = async () => {
   } catch (err) {
     return err;
   }
-  const typeQuery = await db.ExerciseCategories.findAll();
-  const types = typeQuery.map(qResult => qResult.dataValues.type);
+
+  // const typeQuery = await db.ExerciseCategories.findAll();
+  // const types = typeQuery.map(qResult => qResult.dataValues.type);
+
+  const eventTemplates = await db.EventTemplates.findAll();
+  const exerciseCategories = [];
+  for (const eventTemplate of eventTemplates) {
+    const exCat = await eventTemplate.getExerciseCategory();
+    if (exCat !== null) {
+      exerciseCategories.push(exCat);
+    }
+  }
+  const types = exerciseCategories.map(qResult => qResult.dataValues.type);
 
   const apps = [];
   let app = { data: {} };
@@ -42,14 +53,12 @@ module.exports = async () => {
             });
             app.data.StudentGroupId = gQueryResult.dataValues.id;
             apps.push(app);
-            typeQuery.some(
-              (q) => {
-                if (q.dataValues.type === seed[key].w) {
-                  app.data.ExerciseCategoryId = q.dataValues.id;
-                }
-                return null;
-              }
-            );
+
+            const exCat = exerciseCategories.find(category => (category.dataValues.type === seed[key].w));
+            const eventTemplate = await db.EventTemplates.find({
+              where: { ExerciseCategoryId: exCat.id }
+            });
+            app.data.EventTemplateId = eventTemplate.id;
           }
         }
       }

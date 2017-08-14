@@ -147,6 +147,21 @@ yargs // eslint-disable-line no-unused-expressions
       }
     }
   })
+  .command({
+    command: 'generate-deliverables',
+    aliases: ['gd'],
+    desc: 'Generate deliverables for event-template',
+    handler: async () => {
+      const logger = require('../utils/logger.js');
+      try {
+        const generateDeliverables = require('./commands/generate-deliverables.js');
+        await generateDeliverables();
+      } catch (err) {
+        logger.error('Error while generating deliverables');
+        logger.error(err);
+      }
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'

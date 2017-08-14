@@ -14,7 +14,6 @@ module.exports = async () => {
       name: `${course.dataValues.name} - ${course.dataValues.codeName}`,
       value: course.dataValues.id
     }));
-    console.log(__dirname);
 
     const courseChoice = await inquirer.prompt([
       {

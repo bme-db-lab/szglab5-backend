@@ -9,6 +9,5 @@ module.exports = (sequelize, DataTypes) => {
     DeliverableTemplates.belongsTo(models.EventTemplates);
   };
 
-
   return DeliverableTemplates;
 };

@@ -1,11 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
   const EventTemplates = sequelize.define('EventTemplates', {
-    title: DataTypes.STRING
+    type: DataTypes.STRING,
+    seqNumber: DataTypes.INTEGER
   });
 
   EventTemplates.associate = (models) => {
-    EventTemplates.hasMany(models.ExerciseCategories);
+    EventTemplates.belongsTo(models.ExerciseCategories);
     EventTemplates.hasMany(models.DeliverableTemplates);
+    EventTemplates.hasMany(models.Events);
   };
 
   return EventTemplates;

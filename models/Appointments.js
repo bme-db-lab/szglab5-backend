@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Appointments.associate = (models) => {
     Appointments.belongsTo(models.StudentGroups);
-    Appointments.belongsTo(models.ExerciseCategories);
+    Appointments.belongsTo(models.EventTemplates);
   };
 
   return Appointments;

@@ -15,101 +15,149 @@
       }
     }
   ],
-  "EventTemplates": [
-    {
-      "data": {
-        "title": "Gyakorlat"
-      }
-    },
-    {
-      "data": {
-        "title": "Labor"
-      }
-    }
-  ],
   "ExerciseCategories": [
     {
       "data": {
         "type": "DBMS",
-        "CourseId": 1,
-        "EventTemplateId": 1
+        "CourseId": 1
       }
     },
     {
       "data": {
         "type": "SQL1",
-        "CourseId": 1,
-        "EventTemplateId": 1
+        "CourseId": 1
       }
     },
     {
       "data": {
         "type": "SQL2",
-        "CourseId": 1,
-        "EventTemplateId": 1
+        "CourseId": 1
       }
     },
     {
       "data": {
         "type": "SQL3",
-        "CourseCodeName": "VM010",
-        "EventTemplateId": 1
+        "CourseCodeName": "VM010"
       }
     },
     {
       "data": {
         "type": "XML",
-        "CourseCodeName": "VM010",
-        "EventTemplateId": 1
+        "CourseCodeName": "VM010"
       }
     },
     {
       "data": {
         "type": "OPTI",
-        "CourseCodeName": "VM010",
-        "EventTemplateId": 1
+        "CourseCodeName": "VM010"
       }
     },
     {
       "data": {
         "type": "ER",
-        "CourseCodeName": "VM010",
-        "EventTemplateId": 2
+        "CourseCodeName": "VM010"
       }
     },
     {
       "data": {
         "type": "Lekérdezések",
-        "CourseCodeName": "VM010",
-        "EventTemplateId": 2
+        "CourseCodeName": "VM010"
       }
     },
     {
       "data": {
         "type": "Normalizálás",
-        "CourseCodeName": "VM010",
-        "EventTemplateId": 2
+        "CourseCodeName": "VM010"
       }
     },
     {
       "data": {
         "type": "Fizikai",
-        "CourseCodeName": "VM010",
-        "EventTemplateId": 2
+        "CourseCodeName": "VM010"
       }
     },
     {
       "data": {
         "type": "Opti",
-        "CourseCodeName": "VM010",
-        "EventTemplateId": 2
+        "CourseCodeName": "VM010"
       }
     },
     {
       "data": {
         "type": "Tr.kezelés",
-        "CourseCodeName": "VM010",
-        "EventTemplateId": 2
+        "CourseCodeName": "VM010"
+      }
+    }
+  ],
+  "EventTemplates": [
+    {
+      "data": {
+        "type": "Labor",
+        "ExerciseCategoryId": 1,
+        "seqNumber": 1
+      }
+    },
+    {
+      "data": {
+        "type": "Labor",
+        "ExerciseCategoryId": 2,
+        "seqNumber": 2
+      }
+    },
+    {
+      "data": {
+        "type": "Labor",
+        "ExerciseCategoryId": 3,
+        "seqNumber": 3
+      }
+    },
+    {
+      "data": {
+        "type": "Labor",
+        "ExerciseCategoryId": 4,
+        "seqNumber": 4
+      }
+    },
+    {
+      "data": {
+        "type": "Labor",
+        "ExerciseCategoryId": 5,
+        "seqNumber": 5
+      }
+    },
+    {
+      "data": {
+        "type": "Gyakorlat",
+        "ExerciseCategoryId": 6,
+        "seqNumber": 1
+      }
+    },
+    {
+      "data": {
+        "type": "Gyakorlat",
+        "ExerciseCategoryId": 7,
+        "seqNumber": 2
+      }
+    },
+    {
+      "data": {
+        "type": "Gyakorlat",
+        "ExerciseCategoryId": 8,
+        "seqNumber": 3
+      }
+    },
+    {
+      "data": {
+        "type": "Gyakorlat",
+        "ExerciseCategoryId": 9,
+        "seqNumber": 4
+      }
+    },
+    {
+      "data": {
+        "type": "Gyakorlat",
+        "ExerciseCategoryId": 10,
+        "seqNumber": 5
       }
     }
   ],
@@ -122,19 +170,7 @@
     },
     {
       "data": {
-        "description": "jkv",
-        "EventTemplateId": 1
-      }
-    },
-    {
-      "data": {
         "description": "File",
-        "EventTemplateId": 1
-      }
-    },
-    {
-      "data": {
-        "description": "Git repo",
         "EventTemplateId": 1
       }
     },

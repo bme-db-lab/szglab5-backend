@@ -1,0 +1,42 @@
+const inquirer = require('inquirer');
+const { initDB, closeDB } = require('../../db/db.js');
+const logger = require('../../utils/logger.js');
+
+module.exports = async () => {
+  try {
+    const db = await initDB();
+    // prompt for user eventTemplate
+    const eventTemplates = await db.EventTemplates.findAll();
+    const eventTemplateChoices = [];
+    for (const eventTemplate of eventTemplates) {
+      const exCat = await eventTemplate.getExerciseCategory();
+      eventTemplateChoices.push({
+        name: `${eventTemplate.dataValues.type} - ${eventTemplate.dataValues.seqNumber} - ${exCat.dataValues.type}`,
+        value: eventTemplate.id
+      });
+    }
+    const eventTemplateChoice = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'id',
+        message: 'Please select a course',
+        choices: eventTemplateChoices
+      }
+    ]);
+    // iterate through event-template's events
+    const eventTemplate = await db.EventTemplates.findById(eventTemplateChoice.id);
+    const events = await eventTemplate.getEvents();
+    const deliverableTemplates = await eventTemplate.getDeliverableTemplates();
+    for (const event of events) {
+      for (const deliverableTemplate of deliverableTemplates) {
+        console.log(event);
+        console.log(deliverableTemplate);
+      }
+    }
+
+  } catch (err) {
+    throw err;
+  } finally {
+    await closeDB();
+  }
+};
