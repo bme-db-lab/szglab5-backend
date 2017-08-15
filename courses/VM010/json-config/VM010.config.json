@@ -164,19 +164,39 @@
   "DeliverableTemplates": [
     {
       "data": {
-        "description": "beugró",
+        "name": "Beugro",
+        "type": "Beugro",
         "EventTemplateId": 1
       }
     },
     {
       "data": {
-        "description": "File",
+        "type": "File",
+        "name": "sql",
+        "description": "SQL script az 1. laborhoz",
         "EventTemplateId": 1
       }
     },
     {
       "data": {
-        "description": "kZH",
+        "name": "Beugro",
+        "type": "Beugro",
+        "EventTemplateId": 2
+      }
+    },
+    {
+      "data": {
+        "type": "File",
+        "name": "sql_file_1",
+        "description": "SQL script az 2. laborhoz",
+        "EventTemplateId": 2
+      }
+    },
+    {
+      "data": {
+        "type": "File",
+        "name": "sql_file_2",
+        "description": "SQL script az 2. laborhoz",
         "EventTemplateId": 2
       }
     }

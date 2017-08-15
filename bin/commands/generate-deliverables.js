@@ -27,13 +27,14 @@ module.exports = async () => {
     const eventTemplate = await db.EventTemplates.findById(eventTemplateChoice.id);
     const events = await eventTemplate.getEvents();
     const deliverableTemplates = await eventTemplate.getDeliverableTemplates();
+    logger.debug('Generating Deliverables!');
     for (const event of events) {
+      logger.debug(`Event: loc - "${event.dataValues.location}" date - "${event.dataValues.date}"`);
       for (const deliverableTemplate of deliverableTemplates) {
-        console.log(event);
-        console.log(deliverableTemplate);
+        logger.debug(` DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`);
       }
     }
-
+    logger.debug('Generating Deliverables succeed!');
   } catch (err) {
     throw err;
   } finally {
