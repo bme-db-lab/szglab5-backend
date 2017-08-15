@@ -4,7 +4,7 @@ const { genErrorObj } = require('../../utils/utils.js');
 // http://expressjs.com/en/api.html#req.query
 // localhost:7000/statistics/student?studentId=1
 module.exports = async (req, res) => {
-  try {;
+  try {
     const db = getDB();
     const correctors = [];
     const roleQuery = await db.Roles.findOne({ where: { name: 'CORRECTOR' } });
@@ -13,22 +13,22 @@ module.exports = async (req, res) => {
       const correctorQuery = await db.Users.findById(role.dataValues.UserId);
       const resCorrector = {
         id: correctorQuery.dataValues.id,
-        email: correctorQuery.dataValues.email_official,
-        unfinalizedNum: 0
+        name: correctorQuery.dataValues.displayName,
+        num: 0
       };
       const deliverableQuery = await db.Deliverables.findAll({ where: { CorrectorId: correctorQuery.dataValues.id } });
       for (const deliverable of deliverableQuery) {
         if (deliverable.dataValues.finalized === undefined ||
             deliverable.dataValues.finalized === null ||
             deliverable.dataValues.finalized === false) {
-          resCorrector.unfinalizedNum += 1;
+          resCorrector.num += 1;
         }
       }
       correctors.push(resCorrector);
     }
 
 
-    res.send({ correctors });
+    res.send({ headers: ['id', 'name', 'num'], data: correctors });
   } catch (error) {
     res.status(500).send(genErrorObj(error.message));
   }
