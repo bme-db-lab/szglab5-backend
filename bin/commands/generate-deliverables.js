@@ -32,6 +32,13 @@ module.exports = async () => {
       logger.debug(`Event: loc - "${event.dataValues.location}" date - "${event.dataValues.date}"`);
       for (const deliverableTemplate of deliverableTemplates) {
         logger.debug(` DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`);
+        const eventDate = event.dataValues.date;
+        eventDate.setDate(eventDate.getDate() + 10);
+        await db.Deliverables.create({
+          deadline: eventDate,
+          EventId: event.dataValues.id,
+          DeliverableTemplateId: deliverableTemplate.dataValues.id
+        });
       }
     }
     logger.info('Generating Deliverables succeed!');

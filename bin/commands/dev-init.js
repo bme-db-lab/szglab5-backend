@@ -103,14 +103,22 @@ module.exports = async () => {
     await seedDBwithObjects(db, 'UserRoles', adminRole);
     logger.info('Succesfully added new admin user!');
 
+    // iterate through event-template's events
+    logger.info('Generating Deliverables for id=1 EventTemplate!');
     const eventTemplate = await db.EventTemplates.findById(1);
     const events = await eventTemplate.getEvents();
     const deliverableTemplates = await eventTemplate.getDeliverableTemplates();
-    logger.info('Generating Deliverables!');
     for (const event of events) {
       logger.debug(`Event: loc - "${event.dataValues.location}" date - "${event.dataValues.date}"`);
       for (const deliverableTemplate of deliverableTemplates) {
         logger.debug(` DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`);
+        const eventDate = event.dataValues.date;
+        eventDate.setDate(eventDate.getDate() + 10);
+        await db.Deliverables.create({
+          deadline: eventDate,
+          EventId: event.dataValues.id,
+          DeliverableTemplateId: deliverableTemplate.dataValues.id
+        });
       }
     }
     logger.info('Generating Deliverables succeed!');
