@@ -16,6 +16,7 @@ module.exports = async (req, res) => {
     checkIfExist(event);
     const response = await genJSONApiResByRecord(db, 'Events', event);
     response.included = [];
+    // Included: Demonstrator
     if (response.data.relationships.Demonstrator.data !== null) {
       const demonstrator = await db.Users.findById(response.data.relationships.Demonstrator.data.id);
       response.included.push({
@@ -24,9 +25,11 @@ module.exports = async (req, res) => {
         attributes: demonstrator.dataValues
       });
     }
+    // Included: ExerciseSheet
     if (response.data.relationships.ExerciseSheet.data !== null) {
       const exerciseSheet = await db.ExerciseSheets.findById(response.data.relationships.ExerciseSheet.data.id);
       const exerciseCategory = await exerciseSheet.getExerciseCategory();
+      const exerciseType = await exerciseSheet.getExerciseType();
 
       let exerciseCategoryRel = null;
       if (exerciseCategory !== null) {
@@ -43,16 +46,32 @@ module.exports = async (req, res) => {
         });
       }
 
+      let exerciseTypeRel = null;
+      if (exerciseCategory !== null) {
+        exerciseTypeRel = {
+          data: {
+            id: exerciseType.id,
+            type: 'ExerciseTypes'
+          }
+        };
+        response.included.push({
+          id: exerciseType.id,
+          type: 'ExerciseTypes',
+          attributes: exerciseType.dataValues,
+        });
+      }
+
       response.included.push({
         id: response.data.relationships.ExerciseSheet.data.id,
         type: 'ExerciseSheets',
         attributes: exerciseSheet.dataValues,
         relationships: {
-          ExerciseCategory: exerciseCategoryRel
+          ExerciseCategory: exerciseCategoryRel,
+          ExerciseType: exerciseTypeRel
         }
       });
     }
-
+    // Included: Deliverables
     if (response.data.relationships.Deliverables.data.length !== 0) {
       for (const delItem of response.data.relationships.Deliverables.data) {
         const deliverables = await db.Deliverables.findById(delItem.id);
@@ -62,6 +81,15 @@ module.exports = async (req, res) => {
           attributes: deliverables.dataValues
         });
       }
+    }
+    // Included: EventTemplate
+    if (response.data.relationships.EventTemplate.data !== null) {
+      const eventTemplate = await db.EventTemplates.findById(response.data.relationships.EventTemplate.data.id);
+      response.included.push({
+        id: response.data.relationships.EventTemplate.data.id,
+        type: 'EventTemplates',
+        attributes: eventTemplate.dataValues
+      });
     }
     res.send(response);
   } catch (err) {
