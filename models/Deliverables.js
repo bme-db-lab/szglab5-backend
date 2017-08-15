@@ -19,9 +19,12 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false
     },
     comment: DataTypes.STRING,
-    //
+    // git
     url: DataTypes.STRING,
-    commit: DataTypes.STRING
+    commit: DataTypes.STRING,
+    // file
+    uploaded: DataTypes.BOOLEAN,
+    filePath: DataTypes.STRING
   });
   Deliverables.associate = (models) => {
     Deliverables.belongsTo(models.Events);

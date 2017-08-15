@@ -8,6 +8,11 @@ const getDeliverableStudent = require('./getStudent.js');
 const listDeliverables = require('./list.js');
 const updateDeliverables = require('./update.js');
 const updateDeliverableEvent = require('./updateEvent.js');
+const uploadDeliverable = require('./upload');
+
+const multer = require('multer');
+
+const upload = multer();
 
 module.exports = (app) => {
   app.use('/deliverables/*', auth);
@@ -20,4 +25,5 @@ module.exports = (app) => {
   app.patch('/deliverables/:id', updateDeliverables);
   app.patch('/deliverables/:id/event', updateDeliverableEvent);
   app.post('/deliverables', addDeliverable);
+  app.post('/deliverables/:id/upload', upload.single('file'), uploadDeliverable);
 };

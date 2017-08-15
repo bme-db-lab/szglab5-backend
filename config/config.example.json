@@ -27,6 +27,16 @@
     "privateToken": "XT5zTBwtW3NzNbQwrpyp"
   },
   "uploadFile": {
-    "rootPath": "../files"
+    "currentTargetStorageId": 1,
+    "storages": [
+      {
+        "id": 0,
+        "rootPath": "../files"
+      },
+      {
+        "id": 1,
+        "rootPath": "../files"
+      }
+    ]
   }
 }

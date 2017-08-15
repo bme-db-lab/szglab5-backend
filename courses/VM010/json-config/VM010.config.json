@@ -165,13 +165,13 @@
     {
       "data": {
         "name": "Beugro",
-        "type": "Beugro",
+        "type": "BEUGRO",
         "EventTemplateId": 1
       }
     },
     {
       "data": {
-        "type": "File",
+        "type": "FILE",
         "name": "sql",
         "description": "SQL script az 1. laborhoz",
         "EventTemplateId": 1
@@ -180,7 +180,7 @@
     {
       "data": {
         "name": "Beugro",
-        "type": "Beugro",
+        "type": "BEUGRO",
         "EventTemplateId": 2
       }
     },

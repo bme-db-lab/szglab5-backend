@@ -62,8 +62,8 @@ const defaultConfig = {
     privateToken: 'XT5zTBwtW3NzNbQwrpyp'
   },
   uploadFile: {
-    currentTargetStorageId: 1,
-    // absolute, or relative to /bin/labadmin.js
+    currentTargetStorageId: 0,
+    // absolute, or relative to config
     storages: [
       {
         id: 0,
@@ -88,5 +88,14 @@ try {
 }
 
 const config = _.merge(defaultConfig, specConfig);
+// set uploadFile paths
+config.uploadFile.storages.forEach((storage) => {
+  storage.resolvedRootPath = path.isAbsolute(storage.rootPath) ? storage.rootPath : path.join(__dirname, storage.rootPath);
+});
+const currentStorage = config.uploadFile.storages.find(storage => storage.id === config.uploadFile.currentTargetStorageId);
+if (!currentStorage) {
+  throw new Error(`No storage found for currentTargetStorageId: ${config.uploadFile.currentTargetStorageId}`);
+}
+config.uploadFile.currentStorage = currentStorage;
 
 module.exports = config;
