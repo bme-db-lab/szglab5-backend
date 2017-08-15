@@ -241,6 +241,54 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "deliverables",
+			"description": "",
+			"item": [
+				{
+					"name": "localhost:7000/deliverables/1/upload",
+					"request": {
+						"url": "localhost:7000/deliverables/1/upload",
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"description": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"value": "",
+									"description": "",
+									"type": "file"
+								},
+								{
+									"key": "file2",
+									"value": "",
+									"description": "",
+									"type": "file",
+									"disabled": true
+								},
+								{
+									"key": "event",
+									"value": "",
+									"description": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Upload deliverable"
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
