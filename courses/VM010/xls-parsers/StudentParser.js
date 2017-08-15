@@ -47,6 +47,8 @@ module.exports = async (semesterId) => {
             case 'D':
               if (seed[key].w !== undefined) {
                 user.data.loginName = seed[key].w;
+              } else if (user.data.neptun) {
+                user.data.loginName = user.data.neptun;
               } else {
                 user.data.loginName = null;
               }
@@ -55,7 +57,7 @@ module.exports = async (semesterId) => {
               if (seed[key].w !== undefined) {
                 user.data.password = seed[key].w;
               } else {
-                user.data.password = 'defaultpass';
+                user.data.password = '12345';
               }
               break;
             case 'G':

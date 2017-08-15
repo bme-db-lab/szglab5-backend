@@ -61,12 +61,14 @@ module.exports = async () => {
       for (const appointment of appointments) {
         // const exerciseSheet = await db.ExerciseSheets.findOne({ where: { ExerciseCategoryId: appointment.dataValues.ExerciseCategoryId, ExerciseTypeId: sr.dataValues.ExerciseTypeId } });
         const eventTemplate = await appointment.getEventTemplate();
+        const shQuery = await db.ExerciseSheets.findOne({ where: { ExerciseCategoryId: eventTemplate.dataValues.ExerciseCategoryId, ExerciseTypeId: studentReg.dataValues.ExerciseTypeId } });
         const studentGroup = await db.StudentGroups.findOne({ where: { id: studentReg.dataValues.StudentGroupId } });
         const event = [{ data: {
           date: appointment.dataValues.date,
           location: appointment.dataValues.location,
           StudentRegistrationId: studentReg.dataValues.id,
           EventTemplateId: eventTemplate.id,
+          ExerciseSheetId: shQuery.dataValues.id,
           DemonstratorId: studentGroup.UserId
         } }];
         try {

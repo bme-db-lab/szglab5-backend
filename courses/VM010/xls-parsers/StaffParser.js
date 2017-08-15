@@ -47,6 +47,7 @@ module.exports = async () => {
           case 'C':
             if (seed[key].w !== undefined) {
               user.data.email_official = seed[key].w;
+              user.data.loginName = seed[key].w;
             } else {
               user.data.email_official = null;
             }
@@ -66,7 +67,7 @@ module.exports = async () => {
             }
             if (user.data.email_official !== null) {
               user.data.university = 'BME';
-              user.data.password = 'defaultpass';
+              user.data.password = '12345';
               users[user.data.email_official] = user;
             } else {
               return true;

@@ -57,18 +57,22 @@ module.exports = async () => {
 
     // generate events
     logger.info('Generating Events!');
-    const srQuery = await db.StudentRegistrations.findAll({ where: { SemesterId: 1 } });
-    for (const sr of srQuery) {
-      const appQuery = await db.Appointments.findAll({ where: { StudentGroupId: sr.dataValues.StudentGroupId } });
-      for (const app of appQuery) {
-        const shQuery = await db.ExerciseSheets.findOne({ where: { ExerciseCategoryId: app.dataValues.ExerciseCategoryId, ExerciseTypeId: sr.dataValues.ExerciseTypeId } });
-        const sgQuery = await db.StudentGroups.findOne({ where: { id: sr.dataValues.StudentGroupId } });
+    const studentRegs = await db.StudentRegistrations.findAll({ where: { SemesterId: qResult.dataValues.id } });
+    for (const studentReg of studentRegs) {
+      const appointments = await db.Appointments.findAll({ where: { StudentGroupId: studentReg.dataValues.StudentGroupId } });
+      for (const appointment of appointments) {
+        // const exerciseSheet = await db.ExerciseSheets.findOne({ where: { ExerciseCategoryId: appointment.dataValues.ExerciseCategoryId, ExerciseTypeId: sr.dataValues.ExerciseTypeId } });
+        const eventTemplate = await appointment.getEventTemplate();
+        const studentGroup = await db.StudentGroups.findOne({ where: { id: studentReg.dataValues.StudentGroupId } });
+        const exerciseSheet = await db.ExerciseSheets.findOne({ where: { ExerciseCategoryId: eventTemplate.dataValues.ExerciseCategoryId, ExerciseTypeId: studentReg.dataValues.ExerciseTypeId } });
+
         const event = [{ data: {
-          date: app.dataValues.date,
-          location: app.dataValues.location,
-          StudentRegistrationId: sr.dataValues.id,
-          ExerciseSheetId: shQuery.dataValues.id,
-          DemonstratorId: sgQuery.UserId
+          date: appointment.dataValues.date,
+          location: appointment.dataValues.location,
+          StudentRegistrationId: studentReg.dataValues.id,
+          EventTemplateId: eventTemplate.id,
+          ExerciseSheetId: exerciseSheet.dataValues.id,
+          DemonstratorId: studentGroup.UserId
         } }];
         try {
           await seedDBwithObjects(db, 'Events', event);
@@ -77,35 +81,54 @@ module.exports = async () => {
         }
       }
     }
-
     logger.info('Event generation succeed!');
-
-    // TODO generate deliverables
-    logger.info('Generating Deliverables!');
-    const eQuery = await db.Events.findAll();
-    for (const event of eQuery) {
-      const qSr = await db.StudentRegistrations.findOne({ where: { id: event.dataValues.StudentRegistrationId } });
-      if (qSr.dataValues.SemesterId === 1) {
-        const qSheet = await db.ExerciseSheets.findOne({ where: { id: event.dataValues.ExerciseSheetId } });
-        const qCat = await db.ExerciseCategories.findOne({ where: { id: qSheet.dataValues.ExerciseCategoryId } });
-        const qDelTemp = await db.DeliverableTemplates.findAll({ where: { EventTemplateId: qCat.dataValues.EventTemplateId } });
-        for (const item of qDelTemp) {
-          const date = event.dataValues.date;
-          date.setDate(date.getDate() + 10);
-          const del = [{ data: {
-            deadline: date,
-            EventId: event.dataValues.id,
-            DeliverableTemplateId: item.dataValues.id
-          } }];
-          try {
-            await seedDBwithObjects(db, 'Deliverables', del);
-          } catch (err) {
-            throw err;
-          }
-        }
+    logger.info('Adding admin user');
+    const adminLoginName = 'admin';
+    const admin = [{
+      data: {
+        loginName: adminLoginName,
+        password: '12345'
       }
-    }
-    logger.info('Deliverable generation succeed!');
+    }];
+    await seedDBwithObjects(db, 'Users', admin);
+
+    const adminId = await db.Users.findOne({ where: { loginName: adminLoginName } });
+    const roleId = await db.Roles.findOne({ where: { name: 'ADMIN' } });
+    const adminRole = [{
+      data: {
+        RoleId: roleId.dataValues.id,
+        UserId: adminId.dataValues.id
+      }
+    }];
+    await seedDBwithObjects(db, 'UserRoles', adminRole);
+    logger.info('Succesfully added new admin user!');
+
+    // // TODO generate deliverables
+    // logger.info('Generating Deliverables!');
+    // const eQuery = await db.Events.findAll();
+    // for (const event of eQuery) {
+    //   const qSr = await db.StudentRegistrations.findOne({ where: { id: event.dataValues.StudentRegistrationId } });
+    //   if (qSr.dataValues.SemesterId === 1) {
+    //     const qSheet = await db.ExerciseSheets.findOne({ where: { id: event.dataValues.ExerciseSheetId } });
+    //     const qCat = await db.ExerciseCategories.findOne({ where: { id: qSheet.dataValues.ExerciseCategoryId } });
+    //     const qDelTemp = await db.DeliverableTemplates.findAll({ where: { EventTemplateId: qCat.dataValues.EventTemplateId } });
+    //     for (const item of qDelTemp) {
+    //       const date = event.dataValues.date;
+    //       date.setDate(date.getDate() + 10);
+    //       const del = [{ data: {
+    //         deadline: date,
+    //         EventId: event.dataValues.id,
+    //         DeliverableTemplateId: item.dataValues.id
+    //       } }];
+    //       try {
+    //         await seedDBwithObjects(db, 'Deliverables', del);
+    //       } catch (err) {
+    //         throw err;
+    //       }
+    //     }
+    //   }
+    // }
+    // logger.info('Deliverable generation succeed!');
   } catch (err) {
     throw err;
   } finally {
