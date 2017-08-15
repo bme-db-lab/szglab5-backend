@@ -106,14 +106,14 @@ module.exports = async () => {
     const eventTemplate = await db.EventTemplates.findById(1);
     const events = await eventTemplate.getEvents();
     const deliverableTemplates = await eventTemplate.getDeliverableTemplates();
-    logger.debug('Generating Deliverables!');
+    logger.info('Generating Deliverables!');
     for (const event of events) {
       logger.debug(`Event: loc - "${event.dataValues.location}" date - "${event.dataValues.date}"`);
       for (const deliverableTemplate of deliverableTemplates) {
         logger.debug(` DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`);
       }
     }
-    logger.debug('Generating Deliverables succeed!');
+    logger.info('Generating Deliverables succeed!');
     // // TODO generate deliverables
     // logger.info('Generating Deliverables!');
     // const eQuery = await db.Events.findAll();
