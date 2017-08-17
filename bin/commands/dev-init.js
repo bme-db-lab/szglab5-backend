@@ -115,9 +115,12 @@ module.exports = async () => {
         for (const deliverableTemplate of deliverableTemplates) {
           logger.debug(` DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`);
           const eventDate = event.dataValues.date;
-          eventDate.setDate(eventDate.getDate() + 10);
+          let deadline = moment(eventDate).add(10, 'd');
+          if (i === 0 || i === 1) {
+            deadline = moment(eventDate).subtract(1, 'y');
+          }
           await db.Deliverables.create({
-            deadline: eventDate,
+            deadline,
             EventId: event.dataValues.id,
             DeliverableTemplateId: deliverableTemplate.dataValues.id
           });

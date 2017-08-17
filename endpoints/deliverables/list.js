@@ -46,16 +46,32 @@ module.exports = async (req, res) => {
 
     const userInfo = req.userInfo;
     const userId = userInfo ? userInfo.userId : -1;
+    console.log(userId);
 
     const db = getDB();
-
     let queryObj = {};
     if (filter) {
       queryObj = {
         where: getQuery(filter, userId)
       };
-    }
 
+      if ('isCorrector' in filter) {
+        queryObj.include = [
+          {
+            model: db.Events,
+            where: {},
+            include: [{
+              model: db.StudentRegistrations,
+              where: {},
+              include: [{
+                model: db.Users,
+                where: {}
+              }]
+            }]
+          }
+        ];
+      }
+    }
     const deliverables = await db.Deliverables.findAll(queryObj);
     const response = await genJSONApiResByRecords(db, 'Deliverables', deliverables);
     response.included = [];
@@ -68,6 +84,21 @@ module.exports = async (req, res) => {
           type: 'DeliverableTemplates',
           attributes: delTemplate.dataValues
         });
+      }
+      if (deliverable.attributes.Event &&
+        deliverable.attributes.Event.StudentRegistration &&
+        deliverable.attributes.Event.StudentRegistration.User) {
+        const user = deliverable.attributes.Event.StudentRegistration.User;
+        response.included.push({
+          id: user.id,
+          type: 'Users',
+          attributes: user
+        });
+        deliverable.relationships.Student = {
+          id: user.id,
+          type: 'Users'
+        };
+        delete deliverable.attributes.Event;
       }
     }
 
