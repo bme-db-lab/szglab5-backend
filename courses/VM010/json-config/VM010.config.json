@@ -199,6 +199,51 @@
         "description": "SQL script az 2. laborhoz",
         "EventTemplateId": 2
       }
+    },
+    {
+      "data": {
+        "name": "Beugro",
+        "type": "BEUGRO",
+        "EventTemplateId": 3
+      }
+    },
+    {
+      "data": {
+        "type": "FILE",
+        "name": "sql",
+        "description": "SQL script az 1. laborhoz",
+        "EventTemplateId": 3
+      }
+    },
+    {
+      "data": {
+        "name": "Beugro",
+        "type": "BEUGRO",
+        "EventTemplateId": 4
+      }
+    },
+    {
+      "data": {
+        "type": "FILE",
+        "name": "sql",
+        "description": "SQL script az 1. laborhoz",
+        "EventTemplateId": 4
+      }
+    },
+    {
+      "data": {
+        "name": "Beugro",
+        "type": "BEUGRO",
+        "EventTemplateId": 5
+      }
+    },
+    {
+      "data": {
+        "type": "FILE",
+        "name": "sql",
+        "description": "SQL script az 1. laborhoz",
+        "EventTemplateId": 5
+      }
     }
   ],
   "Roles": [

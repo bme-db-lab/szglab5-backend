@@ -85,10 +85,25 @@ module.exports = async (req, res) => {
     // Included: EventTemplate
     if (response.data.relationships.EventTemplate.data !== null) {
       const eventTemplate = await db.EventTemplates.findById(response.data.relationships.EventTemplate.data.id);
+      const exCat = await eventTemplate.getExerciseCategory();
+
+      let exCatRel = null;
+      if (exCat) {
+        exCatRel = {
+          data: {
+            id: exCat.id,
+            type: 'ExerciseCategories'
+          }
+        };
+      }
+
       response.included.push({
         id: response.data.relationships.EventTemplate.data.id,
         type: 'EventTemplates',
-        attributes: eventTemplate.dataValues
+        attributes: eventTemplate.dataValues,
+        relationships: {
+          ExerciseCategory: exCatRel
+        }
       });
     }
     res.send(response);

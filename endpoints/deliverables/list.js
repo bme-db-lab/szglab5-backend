@@ -29,27 +29,35 @@ function getQuery(filter) {
   return query;
 }
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   try {
     const filter = req.query.filter;
-    console.log('filter', filter);
 
     const db = getDB();
-    let queryObj = {};
-    if (filter) {
-      queryObj = {
-        where: getQuery(filter)
-      };
+
+    // let queryObj = {};
+    // if (filter) {
+    //   queryObj = {
+    //     where: getQuery(filter)
+    //   };
+    // }
+
+    const deliverables = await db.Deliverables.findAll();
+    const response = await genJSONApiResByRecords(db, 'Deliverables', deliverables);
+    response.included = [];
+    for (const deliverable of response.data) {
+      // Included: Deliverable-Templates
+      if (deliverable.relationships.DeliverableTemplate.data !== null) {
+        const delTemplate = await db.DeliverableTemplates.findById(deliverable.relationships.DeliverableTemplate.data.id);
+        response.included.push({
+          id: delTemplate.dataValues.id,
+          type: 'DeliverableTemplates',
+          attributes: delTemplate.dataValues
+        });
+      }
     }
 
-    db.Deliverables.findAll(queryObj)
-      .then(genJSONApiResByRecords.bind(null, db, 'Deliverables'))
-      .then((response) => {
-        res.send(response);
-      })
-      .catch((err) => {
-        res.status(500).send(genErrorObj(err.message));
-      });
+    res.send(response);
   } catch (err) {
     res.status(500).send(genErrorObj(err.message));
   }
