@@ -46,9 +46,15 @@ module.exports = async (req, res) => {
     const dateTime = moment().format('YYYY_MM_DD-hh_mm');
     const newFileName = `${user.neptun}_${dateTime}_${uploadedFile.originalname}`;
     const savePath = path.join(currentStorage.resolvedRootPath, specificPath, newFileName);
+    console.log(savePath);
     await makeDir(path.dirname(savePath));
 
     await promisify(fs.writeFile)(savePath, uploadedFile.buffer);
+    await deliverables.update({
+      uploaded: true,
+      filePath: savePath,
+      lastSubmittedDate: new Date()
+    });
 
     res.send('ok');
   } catch (err) {
