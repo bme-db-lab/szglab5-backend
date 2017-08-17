@@ -1,5 +1,4 @@
 const { isDate } = require('lodash');
-const async = require('async');
 const { genErrorObj } = require('../../utils/utils.js');
 const { genJSONApiResByRecords } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
@@ -7,14 +6,21 @@ const { getDB } = require('../../db/db.js');
 function getQuery(filter) {
   const query = {};
 
-  if ('location' in filter)
+  if ('location' in filter) {
     query.location = filter.location;
+  }
 
-  if ('student' in filter)
+  if ('student' in filter) {
     query.StudentRegistrationId = filter.student;
+  }
 
-  if ('demonstrator' in filter)
+  if ('demonstrator' in filter) {
     query.DemonstratorEmail = filter.demonstrator;
+  }
+
+  if ('exerciseSheetId' in filter) {
+    query.ExerciseSheetId = filter.exerciseSheetId;
+  }
 
   if ('datestart' in filter && 'dateend' in filter) {
     const startDate = new Date(filter.datestart);
