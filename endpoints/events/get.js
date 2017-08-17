@@ -75,10 +75,27 @@ module.exports = async (req, res) => {
     if (response.data.relationships.Deliverables.data.length !== 0) {
       for (const delItem of response.data.relationships.Deliverables.data) {
         const deliverables = await db.Deliverables.findById(delItem.id);
+        const deliverableTemplate = await deliverables.getDeliverableTemplate();
+
+        let delTemplateRel = null;
+        if (deliverableTemplate) {
+          delTemplateRel = {
+            id: deliverableTemplate.id,
+            type: 'DeliverableTemplates'
+          };
+          response.included.push({
+            id: deliverableTemplate.id,
+            type: 'DeliverableTemplates',
+            attributes: deliverableTemplate.dataValues
+          });
+        }
         response.included.push({
           id: deliverables.dataValues.id,
           type: 'Deliverables',
-          attributes: deliverables.dataValues
+          attributes: deliverables.dataValues,
+          relationships: {
+            DeliverableTemplate: delTemplateRel
+          }
         });
       }
     }
