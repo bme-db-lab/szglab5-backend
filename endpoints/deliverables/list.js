@@ -95,8 +95,10 @@ module.exports = async (req, res) => {
           attributes: user
         });
         deliverable.relationships.Student = {
-          id: user.id,
-          type: 'Users'
+          data: {
+            id: user.id,
+            type: 'Users'
+          }
         };
         delete deliverable.attributes.Event;
       }
