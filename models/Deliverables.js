@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Deliverables = sequelize.define('Deliverables', {
     deadline: DataTypes.DATE,
-    submitteddate: DataTypes.DATE,
+    submittedDate: DataTypes.DATE,
     grading: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

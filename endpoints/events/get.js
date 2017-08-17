@@ -80,9 +80,11 @@ module.exports = async (req, res) => {
         let delTemplateRel = null;
         if (deliverableTemplate) {
           delTemplateRel = {
-            id: deliverableTemplate.id,
-            type: 'DeliverableTemplates'
-          };
+            data: {
+              id: deliverableTemplate.id,
+              type: 'DeliverableTemplates'
+            }
+          }
           response.included.push({
             id: deliverableTemplate.id,
             type: 'DeliverableTemplates',
