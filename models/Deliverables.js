@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     Deliverables.belongsTo(models.Events);
     Deliverables.belongsTo(models.DeliverableTemplates);
     Deliverables.belongsTo(models.Users, { as: 'Corrector' });
-    Deliverables.belongsTo(models.Users, { as: 'Deputy' });
+    // Deliverables.belongsTo(models.Users, { as: 'Deputy' });
   };
 
   return Deliverables;

@@ -9,6 +9,7 @@ const listDeliverables = require('./list.js');
 const updateDeliverables = require('./update.js');
 const updateDeliverableEvent = require('./updateEvent.js');
 const uploadDeliverable = require('./upload');
+const downloadDeliverable = require('./download');
 
 const multer = require('multer');
 
@@ -26,4 +27,5 @@ module.exports = (app) => {
   app.patch('/deliverables/:id/event', updateDeliverableEvent);
   app.post('/deliverables', addDeliverable);
   app.post('/deliverables/:id/upload', upload.single('file'), uploadDeliverable);
+  app.get('/deliverables/:id/download', downloadDeliverable);
 };
