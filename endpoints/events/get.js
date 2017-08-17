@@ -84,7 +84,7 @@ module.exports = async (req, res) => {
               id: deliverableTemplate.id,
               type: 'DeliverableTemplates'
             }
-          }
+          };
           response.included.push({
             id: deliverableTemplate.id,
             type: 'DeliverableTemplates',

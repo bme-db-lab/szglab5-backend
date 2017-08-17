@@ -1,5 +1,6 @@
 const path = require('path');
 
+const moment = require('moment');
 const { initDB, closeDB } = require('../../db/db.js');
 const logger = require('../../utils/logger.js');
 const { seedDBwithJSON, seedDBwithObjects } = require('./../../db/seed');
@@ -67,7 +68,7 @@ module.exports = async () => {
         const exerciseSheet = await db.ExerciseSheets.findOne({ where: { ExerciseCategoryId: eventTemplate.dataValues.ExerciseCategoryId, ExerciseTypeId: studentReg.dataValues.ExerciseTypeId } });
 
         const event = [{ data: {
-          date: appointment.dataValues.date,
+          date: moment(appointment.dataValues.date).add(1, 'y'),
           location: appointment.dataValues.location,
           StudentRegistrationId: studentReg.dataValues.id,
           EventTemplateId: eventTemplate.id,
