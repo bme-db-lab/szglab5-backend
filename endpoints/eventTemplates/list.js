@@ -1,5 +1,3 @@
-const { isDate } = require('lodash');
-const async = require('async');
 const { genErrorObj } = require('../../utils/utils.js');
 const { genJSONApiResByRecords } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
@@ -11,6 +9,7 @@ module.exports = async (req, res) => {
     const response = await genJSONApiResByRecords(db, 'EventTemplates', eventTemplates);
     response.included = [];
     for (const eventTemplate of response.data) {
+      // Included: Deliverable-Templates
       if (eventTemplate.relationships.DeliverableTemplates.data.length !== 0) {
         for (const delItem of eventTemplate.relationships.DeliverableTemplates.data) {
           const delTemplate = await db.DeliverableTemplates.findById(delItem.id);
