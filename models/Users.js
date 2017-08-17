@@ -29,7 +29,6 @@ module.exports = (sequelize, DataTypes) => {
     Users.hasMany(models.Deliverables, { foreignKey: 'CorrectorId' });
     Users.hasMany(models.Deliverables, { foreignKey: 'DeputyId' });
     Users.hasMany(models.Events, { foreignKey: 'DemonstratorId' });
-    Users.hasMany(models.ExerciseTypes, { foreignKey: 'GuruId' });
     Users.hasMany(models.StudentGroups);
     Users.belongsToMany(models.Roles, { through: 'UserRoles' });
     Users.belongsToMany(models.ExerciseTypes, { through: 'UserExerciseTypes' });
