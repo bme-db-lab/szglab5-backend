@@ -254,6 +254,10 @@ function _getSetFunc(type) {
 
 async function setRelations(db, resource, relationGroups) {
   for (const relGroupKey of Object.keys(relationGroups)) {
+    // TODO: workaround for jsonapi
+    if (relGroupKey === 'Student') {
+      break;
+    }
     const relGroupObj = relationGroups[relGroupKey];
     if (Array.isArray(relGroupObj.data)) {
       const setFunc = _getSetFunc(relGroupKey);
@@ -263,9 +267,11 @@ async function setRelations(db, resource, relationGroups) {
       await resource[setFunc](objectsToSet);
     } else {
       const setFunc = _getSetFunc(relGroupKey);
-      const type = uppercamelcase(relGroupObj.data.type);
-
-      const objectToSet = await db[type].findById(relGroupObj.data.id);
+      let objectToSet = null;
+      if (relGroupObj.data !== null) {
+        const type = uppercamelcase(relGroupObj.data.type);
+        objectToSet = await db[type].findById(relGroupObj.data.id);
+      }
       await resource[setFunc](objectToSet);
     }
   }
