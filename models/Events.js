@@ -3,6 +3,12 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.DATE,
     location: DataTypes.STRING,
     attempt: DataTypes.INTEGER,
+    grade: DataTypes.INTEGER,
+    finalized: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
     comment: DataTypes.STRING
   });
 

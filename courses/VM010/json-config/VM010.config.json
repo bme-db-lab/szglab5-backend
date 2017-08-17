@@ -186,7 +186,7 @@
     },
     {
       "data": {
-        "type": "File",
+        "type": "FILE",
         "name": "sql_file_1",
         "description": "SQL script az 2. laborhoz",
         "EventTemplateId": 2
@@ -194,7 +194,7 @@
     },
     {
       "data": {
-        "type": "File",
+        "type": "FILE",
         "name": "sql_file_2",
         "description": "SQL script az 2. laborhoz",
         "EventTemplateId": 2
@@ -211,7 +211,7 @@
       "data": {
         "type": "FILE",
         "name": "sql",
-        "description": "SQL script az 1. laborhoz",
+        "description": "SQL script a laborhoz",
         "EventTemplateId": 3
       }
     },
@@ -226,7 +226,7 @@
       "data": {
         "type": "FILE",
         "name": "sql",
-        "description": "SQL script az 1. laborhoz",
+        "description": "SQL script a laborhoz",
         "EventTemplateId": 4
       }
     },
@@ -241,7 +241,7 @@
       "data": {
         "type": "FILE",
         "name": "sql",
-        "description": "SQL script az 1. laborhoz",
+        "description": "SQL script a laborhoz",
         "EventTemplateId": 5
       }
     }
