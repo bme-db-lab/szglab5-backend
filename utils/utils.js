@@ -2,6 +2,7 @@ const { isString, isObject, isArray, isFunction } = require('lodash');
 const async = require('async');
 const logger = require('./logger.js');
 const pluralize = require('pluralize');
+const uppercamelcase = require('uppercamelcase');
 
 function genErrorObj(errors) {
   if (isString(errors)) {
@@ -257,12 +258,13 @@ async function setRelations(db, resource, relationGroups) {
     if (Array.isArray(relGroupObj.data)) {
       const setFunc = _getSetFunc(relGroupKey);
       const ids = relGroupObj.data.map(relGroupItem => relGroupItem.id);
-      const type = relGroupObj.data.type;
+      const type = uppercamelcase(relGroupObj.data.type);
       const objectsToSet = await db[type].findAll({ where: { id: ids } });
       await resource[setFunc](objectsToSet);
     } else {
       const setFunc = _getSetFunc(relGroupKey);
-      const type = relGroupObj.data.type;
+      const type = uppercamelcase(relGroupObj.data.type);
+
       const objectToSet = await db[type].findById(relGroupObj.data.id);
       await resource[setFunc](objectToSet);
     }
