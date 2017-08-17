@@ -4,17 +4,28 @@ const { genErrorObj } = require('../../utils/utils.js');
 const { genJSONApiResByRecords } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 
-function getQuery(filter) {
+function getQuery(filter, userId) {
   const query = {};
 
-  if ('template' in filter)
+  if ('template' in filter) {
     query.DeliverableTemplateId = filter.template;
+  }
 
-  if ('grade' in filter)
+  if ('grade' in filter) {
     query.grade = filter.grade;
+  }
 
-  if ('git' in filter)
+  if ('git' in filter) {
     query.url = filter.git;
+  }
+
+  if ('isCorrector' in filter) {
+    query.CorrectorId = userId;
+  }
+
+  if ('finalized' in filter) {
+    query.finalized = filter.finalized;
+  }
 
   if ('deadlinestart' in filter && 'deadlineend' in filter) {
     const startDate = new Date(filter.deadlinestart);
@@ -33,16 +44,19 @@ module.exports = async (req, res) => {
   try {
     const filter = req.query.filter;
 
+    const userInfo = req.userInfo;
+    const userId = userInfo ? userInfo.userId : -1;
+
     const db = getDB();
 
-    // let queryObj = {};
-    // if (filter) {
-    //   queryObj = {
-    //     where: getQuery(filter)
-    //   };
-    // }
+    let queryObj = {};
+    if (filter) {
+      queryObj = {
+        where: getQuery(filter, userId)
+      };
+    }
 
-    const deliverables = await db.Deliverables.findAll();
+    const deliverables = await db.Deliverables.findAll(queryObj);
     const response = await genJSONApiResByRecords(db, 'Deliverables', deliverables);
     response.included = [];
     for (const deliverable of response.data) {

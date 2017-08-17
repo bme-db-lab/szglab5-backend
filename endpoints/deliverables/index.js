@@ -16,7 +16,7 @@ const multer = require('multer');
 const upload = multer();
 
 module.exports = (app) => {
-  app.use('/deliverables/*', auth);
+  app.use('/deliverables*', auth);
   app.get('/deliverables/:id', getDeliverables);
   app.get('/deliverables/:id/corrector', getDeliverableCorrector);
   app.get('/deliverables/:id/event', getDeliverableEvent);
