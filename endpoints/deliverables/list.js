@@ -27,6 +27,12 @@ function getQuery(filter, userId) {
     query.finalized = filter.finalized;
   }
 
+  if ('hasGrade' in filter) {
+    query.grade = {
+      $ne: null
+    };
+  }
+
   if ('deadlinestart' in filter && 'deadlineend' in filter) {
     const startDate = new Date(filter.deadlinestart);
     const endDate = new Date(filter.deadlineend);
