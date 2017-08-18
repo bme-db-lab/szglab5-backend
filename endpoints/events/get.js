@@ -76,6 +76,7 @@ module.exports = async (req, res) => {
       for (const delItem of response.data.relationships.Deliverables.data) {
         const deliverables = await db.Deliverables.findById(delItem.id);
         const deliverableTemplate = await deliverables.getDeliverableTemplate();
+        const corrector = await deliverables.getCorrector();
 
         let delTemplateRel = null;
         if (deliverableTemplate) {
@@ -91,12 +92,23 @@ module.exports = async (req, res) => {
             attributes: deliverableTemplate.dataValues
           });
         }
+        let correctorRel = null;
+        if (corrector) {
+          correctorRel = {
+            data: {
+              id: corrector.id,
+              type: 'Users'
+            }
+          };
+        }
+
         response.included.push({
           id: deliverables.dataValues.id,
           type: 'Deliverables',
           attributes: deliverables.dataValues,
           relationships: {
-            DeliverableTemplate: delTemplateRel
+            DeliverableTemplate: delTemplateRel,
+            Corrector: correctorRel
           }
         });
       }
