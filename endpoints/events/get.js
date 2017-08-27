@@ -92,7 +92,7 @@ module.exports = async (req, res) => {
             attributes: deliverableTemplate.dataValues
           });
         }
-        let correctorRel = null;
+        let correctorRel = { data: null };
         if (corrector) {
           correctorRel = {
             data: {
