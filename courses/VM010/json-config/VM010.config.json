@@ -188,7 +188,7 @@
       "data": {
         "type": "FILE",
         "name": "sql_file_1",
-        "description": "SQL script az 2. laborhoz",
+        "description": "SQL script1 ",
         "EventTemplateId": 2
       }
     },
@@ -196,7 +196,7 @@
       "data": {
         "type": "FILE",
         "name": "sql_file_2",
-        "description": "SQL script az 2. laborhoz",
+        "description": "SQL script2",
         "EventTemplateId": 2
       }
     },
