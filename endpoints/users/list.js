@@ -1,9 +1,11 @@
 const { genErrorObj } = require('../../utils/utils.js');
-const { genJSONApiResByRecords } = require('../../utils/jsonapi.js');
+const { getJSONApiResponseFromRecords } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   try {
+    const db = getDB();
+
     const queryObj = {};
     if (req.query.filter && req.query.filter.search) {
       queryObj.where = {
@@ -34,17 +36,14 @@ module.exports = (req, res) => {
     if (req.query.offset) {
       queryObj.offset = parseInt(req.query.offset, 10);
     }
-    console.log(JSON.stringify(queryObj));
 
-    const db = getDB();
-    db.Users.findAll(queryObj)
-      .then(genJSONApiResByRecords.bind(null, db, 'Users'))
-      .then((response) => {
-        res.send(response);
-      })
-      .catch((err) => {
-        res.status(500).send(genErrorObj(err.message));
-      });
+    queryObj.include = [{ all: true }];
+
+    const records = await db.Users.findAll(queryObj);
+    const response = getJSONApiResponseFromRecords(db, 'Users', records, {
+      includeModels: []
+    });
+    res.send(response);
   } catch (err) {
     res.status(500).send(genErrorObj(err.message));
   }
