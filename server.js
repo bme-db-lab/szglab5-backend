@@ -2,8 +2,6 @@
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
-const Prometheus = require("prometheus-client");
-const client = new Prometheus();
 //
 const config = require('./config/config.js');
 const cors = require('cors');
@@ -52,16 +50,6 @@ initDB()
     const server = http.createServer(app);
     server.listen(port, () => {
       logger.info(`API Server is listenning on localhost:${port}`);
-    });
-
-    // Monitoring
-    promEndpoint = express();
-    promEndpoint.get('/metrics',client.metricsFunc());
-    const memUsed = client.newGauge({ namespace: "performance", name: "memUsed", help: "Backend memory usage." });
-    const monitoring = config.monitoring;
-    setInterval(function() { memUsed.set({ period: monitoring.updateSec + "sec" }, process.memoryUsage().heapUsed); }, monitoring.updateSec * 1000);
-    promEndpoint.listen(monitoring.port, () => {
-      logger.info(`Monitoring endpoint is on localhost:${monitoring.port}/metrics`);
     });
   })
   .catch((err) => {

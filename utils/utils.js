@@ -215,43 +215,6 @@ function _getSetFunc(type) {
   return `set${capitalizeFirstLetter(type)}`;
 }
 
-// function setRelations(resource, relationGroups) {
-//   return new Promise((resolve, reject) => {
-//     async.eachSeries(Object.keys(relationGroups),
-//       (relGroup, callbackGroup) => {
-//         const relGroupObj = relationGroups[relGroup];
-//         if (isArray(relGroupObj)) {
-//           async.eachSeries(relGroupObj,
-//             (relGroupItem, callbackInner) => {
-//               const setFunc = _getSetFunc(relGroup);
-//               resource[setFunc](relGroupItem.obj)
-//                 .then(() => callbackInner(null))
-//                 .catch(err => callbackInner(err));
-//             },
-//             (err) => {
-//               if (err) {
-//                 callbackGroup(err);
-//               } else {
-//                 callbackGroup(null);
-//               }
-//             });
-//         } else {
-//           const setFunc = _getSetFunc(relGroup);
-//           resource[setFunc](relGroupObj.obj)
-//             .then(() => callbackGroup(null))
-//             .catch(err => callbackGroup(err));
-//         }
-//       },
-//       (err) => {
-//         if (err) {
-//           reject(err);
-//         } else {
-//           resolve();
-//         }
-//       });
-//   });
-// }
-
 async function setRelations(db, resource, relationGroups) {
   for (const relGroupKey of Object.keys(relationGroups)) {
     // TODO: workaround for jsonapi
