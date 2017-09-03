@@ -81,7 +81,6 @@ module.exports = async (semesterId) => {
     const groups = await parseGroups(semesterId);
     await seedDBwithObjects(db, 'StudentGroups', groups);
     const regs = await parseStudentRegs(semesterId);
-    console.log(regs);
     await seedDBwithObjects(db, 'StudentRegistrations', regs);
     const timetable = await parseTimetable();
     await seedDBwithObjects(db, 'Appointments', timetable);

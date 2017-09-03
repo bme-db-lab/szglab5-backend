@@ -9,8 +9,7 @@ module.exports = async (semesterId) => {
     const seedFilePath = 'courses/VM010/xls-data/hallgatok-minta.xlsx';
     const sheetName = 'Hallgatoi csoportbeosztas másol';
     const opts = {
-      sheetStubs: true,
-      sheetRows: 10,
+      sheetStubs: true
     };
     const workbook = XLSX.readFile(seedFilePath, opts);
     seed = workbook.Sheets[sheetName];
@@ -64,8 +63,6 @@ module.exports = async (semesterId) => {
               if (user.data.neptun !== null) {
                 user.data.university = 'BME';
                 users.push(user);
-              } else {
-                return true;
               }
               break;
             default:

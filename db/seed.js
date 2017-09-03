@@ -8,8 +8,9 @@ const logger = require('../utils/logger.js');
  * @param  {object} db
  * @param  {string} modelName
  * @param  {array} data
+ * @param  {string} condition
  */
-async function seedDBwithObjects(db, modelName, data) {
+async function seedDBwithObjects(db, modelName, data, condition) {
   for (const modelInstance of data) {
     const obj = modelInstance.data;
     const includes = modelInstance.include;
@@ -21,7 +22,11 @@ async function seedDBwithObjects(db, modelName, data) {
       const passwordHash = bcrypt.hashSync(obj.password, config.bcrypt.saltRounds);
       obj.password = passwordHash;
     }
-    await db[modelName].create(obj, { include: includeModels });
+    if (condition !== undefined && condition !== null) {
+      await db[modelName].findOrCreate({ where: { condition: obj[condition] } }, { defaults: obj }, { include: includeModels });
+    } else {
+      await db[modelName].create(obj, { include: includeModels });
+    }
   }
 }
 

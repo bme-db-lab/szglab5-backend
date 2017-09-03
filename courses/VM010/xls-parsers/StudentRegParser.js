@@ -9,8 +9,7 @@ module.exports = async (semesterId) => {
     const seedFilePath = 'courses/VM010/xls-data/hallgatok-minta.xlsx';
     const sheetName = 'Hallgatoi csoportbeosztas másol';
     const opts = {
-      sheetStubs: true,
-      sheetRows: 10,
+      sheetStubs: true
     };
     const workbook = XLSX.readFile(seedFilePath, opts);
     seed = workbook.Sheets[sheetName];
@@ -54,7 +53,7 @@ module.exports = async (semesterId) => {
                 });
                 sreg.data.UserId = nQueryResult.dataValues.id;
               } else {
-                sreg.data.userId = null;
+                sreg.data.UserId = null;
               }
               break;
             case 'G':
@@ -66,8 +65,6 @@ module.exports = async (semesterId) => {
                 const record = qEx[Math.floor(Math.random() * qEx.length)];
                 sreg.data.ExerciseTypeId = record.dataValues.id;
                 regs.push(sreg);
-              } else {
-                return true;
               }
               break;
             default:
