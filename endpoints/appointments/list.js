@@ -1,18 +1,16 @@
 const { genErrorObj } = require('../../utils/utils.js');
-const { genJSONApiResByRecords } = require('../../utils/jsonapi.js');
+const { getJSONApiResponseFromRecords } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   try {
     const db = getDB();
-    db.Appointments.findAll()
-      .then(genJSONApiResByRecords.bind(null, db, 'Appointments'))
-      .then((response) => {
-        res.send(response);
-      })
-      .catch((err) => {
-        res.status(500).send(genErrorObj(err.message));
-      });
+
+    const appointments = await db.Appointments.findAll({ include: [{ all: true }] });
+    const response = getJSONApiResponseFromRecords(db, 'Appointments', appointments, {
+      includeModels: []
+    });
+    res.send(response);
   } catch (err) {
     res.status(500).send(genErrorObj(err.message));
   }

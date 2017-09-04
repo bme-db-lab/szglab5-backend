@@ -2,31 +2,23 @@ const { genErrorObj } = require('../../utils/utils.js');
 const { updateResource, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   try {
     const reqId = req.params.id;
-    const reqIdNum = parseInt(reqId, 10);
-    if (isNaN(reqId)) {
-      res.status(400).send(genErrorObj('Requested id is not a number'));
-      return;
-    }
 
     const { data } = req.body;
     const db = getDB();
-    db.News.findById(reqId)
-      .then(checkIfExist)
-      .then(updateResource.bind(null, db, 'News', data))
-      .then(() => {
-        res.status(204).send();
-      })
-      .catch((err) => {
-        if (err.notFound) {
-          res.status(404).send(genErrorObj(err.message));
-          return;
-        }
-        res.status(500).send(genErrorObj(err.message));
-      });
+
+    const newsToUpdate = await db.News.findById(reqId);
+    checkIfExist(newsToUpdate);
+    await updateResource(db, 'News', data, newsToUpdate);
+    res.status(204).send();
   } catch (err) {
+    if (err.notFound) {
+      res.status(404).send(genErrorObj(err.message));
+      return;
+    }
     res.status(500).send(genErrorObj(err.message));
   }
 };
+

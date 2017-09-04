@@ -3,13 +3,15 @@ const getEvent = require('./get.js');
 const getEventDemonstrator = require('./getDemonstrator.js');
 const getExerciseSheet = require('./getExerciseSheet.js');
 const getExerciseType = require('./getExerciseType.js');
+const updateEvent = require('./update.js');
 const getStudent = require('./getStudent.js');
 const listDeliverables = require('./listDeliverables.js');
 const listEvents = require('./list.js');
 const listStudents = require('./listStudents.js');
-const updateEvent = require('./update.js');
+const auth = require('../../middlewares/auth.js');
 
 module.exports = (app) => {
+  app.use('/events*', auth);
   app.get('/events/:id', getEvent);
   app.get('/events/:id/demonstrator', getEventDemonstrator);
   app.get('/events/:id/exercisesheet', getExerciseSheet);

@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     ExerciseCategories.hasMany(models.ExerciseSheets);
     ExerciseCategories.hasMany(models.Questions);
     ExerciseCategories.belongsTo(models.Courses);
+    ExerciseCategories.hasOne(models.EventTemplates);
   };
 
   return ExerciseCategories;

@@ -13,9 +13,9 @@ const logger = new (winston.Logger)({
     fatal: 2,
   },
   colors: {
-    verbose: 'green',
-    debug: 'blue',
-    info: 'yellow',
+    verbose: 'yellow',
+    debug: 'gray',
+    info: 'cyan',
     warning: 'orange',
     error: 'red',
     fatal: 'red'
