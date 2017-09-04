@@ -5,6 +5,7 @@ module.exports = async (req, res) => {
   try {
     const { data } = req.body;
     const db = getDB();
+    throw new Error('Not implemented exception!');
 
     await db.Deliverables.create(data.attributes);
   } catch (err) {

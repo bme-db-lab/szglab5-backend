@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
     if (data.attributes.newpwd !== null && data.attributes.newpwd !== undefined) {
       const user = await db.Users.findById(reqId);
       checkIfExist(user);
-      // IF the user has ADMIN roles check old password checking
+      // IF the user has ADMIN roles skip old password checking
       if (!checkIfHasRole(req.userInfo.roles, 'ADMIN')) {
         const passwordHash = user.dataValues.password;
         if (!data.attributes.oldpwd) {

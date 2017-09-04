@@ -1,7 +1,6 @@
 const { isDate } = require('lodash');
-const async = require('async');
 const { genErrorObj } = require('../../utils/utils.js');
-const { genJSONApiResByRecords } = require('../../utils/jsonapi.js');
+const { getJSONApiResponseFromRecords } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 
 function getQuery(filter, userId) {
@@ -78,39 +77,48 @@ module.exports = async (req, res) => {
         ];
       }
     }
+    queryObj.include = [
+      {
+        model: db.DeliverableTemplates
+      }
+    ];
     const deliverables = await db.Deliverables.findAll(queryObj);
-    const response = await genJSONApiResByRecords(db, 'Deliverables', deliverables);
-    response.included = [];
-    for (const deliverable of response.data) {
-      // Included: Deliverable-Templates
-      if (deliverable.relationships.DeliverableTemplate.data !== null) {
-        const delTemplate = await db.DeliverableTemplates.findById(deliverable.relationships.DeliverableTemplate.data.id);
-        response.included.push({
-          id: delTemplate.dataValues.id,
-          type: 'DeliverableTemplates',
-          attributes: delTemplate.dataValues
-        });
-      }
-      if (deliverable.attributes.Event &&
-        deliverable.attributes.Event.StudentRegistration &&
-        deliverable.attributes.Event.StudentRegistration.User) {
-        const user = deliverable.attributes.Event.StudentRegistration.User;
-        response.included.push({
-          id: user.id,
-          type: 'Users',
-          attributes: user
-        });
-        deliverable.relationships.Student = {
-          data: {
-            id: user.id,
-            type: 'Users'
-          }
-        };
-        delete deliverable.attributes.Event;
-      }
-    }
+
+    const response = getJSONApiResponseFromRecords(db, 'Deliverables', deliverables, {
+      includeModels: ['DeliverableTemplates']
+    });
 
     res.send(response);
+    // const response = await genJSONApiResByRecords(db, 'Deliverables', deliverables);
+    // response.included = [];
+    // for (const deliverable of response.data) {
+    //   // Included: Deliverable-Templates
+    //   if (deliverable.relationships.DeliverableTemplate.data !== null) {
+    //     const delTemplate = await db.DeliverableTemplates.findById(deliverable.relationships.DeliverableTemplate.data.id);
+    //     response.included.push({
+    //       id: delTemplate.dataValues.id,
+    //       type: 'DeliverableTemplates',
+    //       attributes: delTemplate.dataValues
+    //     });
+    //   }
+    //   if (deliverable.attributes.Event &&
+    //     deliverable.attributes.Event.StudentRegistration &&
+    //     deliverable.attributes.Event.StudentRegistration.User) {
+    //     const user = deliverable.attributes.Event.StudentRegistration.User;
+    //     response.included.push({
+    //       id: user.id,
+    //       type: 'Users',
+    //       attributes: user
+    //     });
+    //     deliverable.relationships.Student = {
+    //       data: {
+    //         id: user.id,
+    //         type: 'Users'
+    //       }
+    //     };
+    //     delete deliverable.attributes.Event;
+    //   }
+    // }
   } catch (err) {
     res.status(500).send(genErrorObj(err.message));
   }

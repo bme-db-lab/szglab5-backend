@@ -1,5 +1,8 @@
 const { checkIfDbHasModel } = require('./utils.js');
 const logger = require('./logger.js');
+const { isPlainObject } = require('lodash');
+console.log(isPlainObject);
+const uppercamelcase = require('uppercamelcase');
 
 function checkIfExist(record) {
   if (record === null) {
@@ -181,9 +184,27 @@ async function updateResource(db, modelName, data) {
   await db[modelName].update(attributes, { where: { id } });
 }
 
+async function createResource(db, modelName, data) {
+  const createdResource = await db[modelName].create(data.attributes);
+  for (const relationKey of Object.keys(data.relationships)) {
+    if (data.relationships[relationKey].data !== null && isPlainObject(data.relationships[relationKey].data)) {
+      const type = uppercamelcase(data.relationships[relationKey].data.type);
+      console.log(type);
+      const objToSet = await db[type].findById(data.relationships[relationKey].data.id);
+      const setFuncName = `set${relationKey}`;
+      console.log('setFuncName', setFuncName);
+      await createdResource[setFuncName](objToSet);
+      console.log(objToSet);
+    }
+  }
+
+  return createdResource;
+}
+
 module.exports = {
   getJSONApiResponseFromRecord,
   getJSONApiResponseFromRecords,
   updateResource,
+  createResource,
   checkIfExist
 };
