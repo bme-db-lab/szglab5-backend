@@ -10,14 +10,50 @@ module.exports = async (req, res) => {
     const db = getDB();
     const event = await db.Events.findById(
       reqIdNum,
-      { include: [{ all: true }] }
+      // { include: [{ all: true }] }
+      {
+        include: [
+          {
+            model: db.ExerciseSheets,
+            include: [
+              {
+                model: db.ExerciseCategories
+              },
+              {
+                model: db.ExerciseTypes
+              }
+            ]
+          },
+          {
+            model: db.StudentRegistrations
+          },
+          {
+            model: db.Users,
+            as: 'Demonstrator'
+          },
+          {
+            model: db.Deliverables,
+            include: {
+              model: db.DeliverableTemplates
+            }
+          },
+          {
+            model: db.EventTemplates,
+            include: {
+              model: db.ExerciseCategories
+            }
+          }
+        ]
+      }
     );
+
     checkIfExist(event);
     const response = getJSONApiResponseFromRecord(db, 'Events', event, {
-      includeModels: ['Users', 'ExerciseSheets', 'Deliverables', 'EventTemplates']
+      includeModels: ['Users', 'ExerciseSheets', 'Deliverables', 'EventTemplates', 'DeliverableTemplates']
     });
     res.send(response);
   } catch (err) {
+    console.log(err);
     if (err.notFound) {
       res.status(404).send(genErrorObj(err.message));
       return;

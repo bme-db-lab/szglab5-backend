@@ -10,6 +10,48 @@ function checkIfExist(record) {
   return record;
 }
 
+function getJSONapiObj(record, models, currentOptions) {
+  const attributes = {};
+  const relationships = {};
+  const included = [];
+
+  for (const innerKeyName of Object.keys(record.dataValues)) {
+    const attrConstructorName = record.dataValues[innerKeyName] !== null ? record.dataValues[innerKeyName].constructor.name : null;
+
+    if (models.find(item => item === attrConstructorName)) {
+      relationships[innerKeyName] = {
+        data: {
+          type: attrConstructorName,
+          id: record.dataValues[innerKeyName].dataValues.id
+        }
+      };
+      // add to included if its present in options
+      if (currentOptions.includeModels.find(includeModelName => includeModelName === attrConstructorName)) {
+        const checkIfExistItem = included.find(include => include.type === attrConstructorName
+        && include.id === record.dataValues[innerKeyName].dataValues.id);
+        if (!checkIfExistItem) {
+          included.push({
+            type: attrConstructorName,
+            id: record.dataValues[innerKeyName].dataValues.id,
+            attributes: record.dataValues[innerKeyName].dataValues
+          });
+        }
+      }
+    } else if ((Array.isArray(record.dataValues[innerKeyName]))) {
+      // array relation
+      console.log('Array TODO');
+    } else {
+      attributes[innerKeyName] = record.dataValues[innerKeyName];
+    }
+  }
+
+  return {
+    attributes,
+    relationships,
+    included
+  };
+}
+
 function getJSONApiResponseFromRecord(db, modelName, record, options) {
   const _defaultOptions = {
     includeModels: []
@@ -32,30 +74,75 @@ function getJSONApiResponseFromRecord(db, modelName, record, options) {
           id: recordData[keyName].dataValues.id
         }
       };
+      // INNER checking for 2nd level including
+      // check for attributes
+      const innerAttributes = {};
+      const innerRelationships = {};
+
+      for (const innerKeyName of Object.keys(recordData[keyName].dataValues)) {
+        const innerAttrConstructorName = recordData[keyName].dataValues[innerKeyName] !== null ? recordData[keyName].dataValues[innerKeyName].constructor.name : null;
+
+        if (models.find(item => item === innerAttrConstructorName)) {
+          innerRelationships[innerKeyName] = {
+            data: {
+              type: innerAttrConstructorName,
+              id: recordData[keyName].dataValues[innerKeyName].dataValues.id
+            }
+          };
+          // add to included if its present in options
+          if (currentOptions.includeModels.find(includeModelName => includeModelName === attrConstructorName)) {
+            const checkIfExistItem = included.find(include => include.type === innerAttrConstructorName
+            && include.id === recordData[keyName].dataValues[innerKeyName].dataValues.id);
+            if (!checkIfExistItem) {
+              included.push({
+                type: innerAttrConstructorName,
+                id: recordData[keyName].dataValues[innerKeyName].dataValues.id,
+                attributes: recordData[keyName].dataValues[innerKeyName].dataValues
+              });
+            }
+          }
+        } else if ((Array.isArray(recordData[keyName].dataValues[innerKeyName]))) {
+          // array relation
+          console.log('Array TODO');
+        } else {
+          innerAttributes[innerKeyName] = recordData[keyName].dataValues[innerKeyName];
+        }
+      }
       // add to included if its present in options
       if (currentOptions.includeModels.find(includeModelName => includeModelName === attrConstructorName)) {
         included.push({
           type: attrConstructorName,
           id: recordData[keyName].dataValues.id,
-          attributes: recordData[keyName].dataValues
+          attributes: innerAttributes,
+          relationships: innerRelationships
         });
       }
     } else if (Array.isArray(recordData[keyName])) {
-      relationships[keyName] = [];
+      relationships[keyName] = {
+        data: []
+      };
       for (const innerData of recordData[keyName]) {
         const innerAttrConstructorName = innerData.constructor.name;
-        relationships[keyName].push({
-          data: {
-            type: innerAttrConstructorName,
-            id: innerData.dataValues.id
-          }
+        relationships[keyName].data.push({
+          type: innerAttrConstructorName,
+          id: innerData.dataValues.id
         });
+        const innerObj = getJSONapiObj(innerData, models, currentOptions);
+        for (const include of innerObj.included) {
+          const checkIfExistItem = included.find(alreadyInclude => alreadyInclude.type === innerAttrConstructorName
+            && alreadyInclude.id === include.attributes.id);
+          if (!checkIfExistItem) {
+            included.push(include);
+          }
+        }
+
         // add to included if its present in options
         if (currentOptions.includeModels.find(includeModelName => includeModelName === innerAttrConstructorName)) {
           included.push({
             type: innerAttrConstructorName,
             id: innerData.dataValues.id,
-            attributes: innerData.dataValues
+            attributes: innerObj.attributes,
+            relationships: innerObj.relationships
           });
         }
       }

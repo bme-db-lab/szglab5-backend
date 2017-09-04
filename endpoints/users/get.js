@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
     );
     checkIfExist(record);
     const response = getJSONApiResponseFromRecord(db, 'Users', record, {
-      includeModels: ['Roles']
+      includeModels: []
     });
     res.send(response);
   } catch (err) {

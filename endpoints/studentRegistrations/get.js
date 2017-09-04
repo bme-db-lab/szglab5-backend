@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
       { include: [{ all: true }] });
     checkIfExist(studentReg);
     const response = getJSONApiResponseFromRecord(db, 'StudentRegistrations', studentReg, {
-      includeModels: ['Events']
+      includeModels: []
     });
     res.send(response);
   } catch (err) {

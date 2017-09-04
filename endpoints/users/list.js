@@ -36,7 +36,6 @@ module.exports = async (req, res) => {
     if (req.query.offset) {
       queryObj.offset = parseInt(req.query.offset, 10);
     }
-
     queryObj.include = [{ all: true }];
 
     const records = await db.Users.findAll(queryObj);
