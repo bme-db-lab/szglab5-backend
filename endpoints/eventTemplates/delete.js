@@ -1,10 +1,10 @@
 const { genErrorObj } = require('../../utils/utils.js');
 const { genJSONApiResByRecord, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
-const logger = require('../../utils/logger.js');
 
 module.exports = (req, res) => {
   try {
+    throw new Error('Not implemented exception');
     const reqId = req.params.id;
     const reqIdNum = parseInt(reqId, 10);
     if (isNaN(reqId)) {

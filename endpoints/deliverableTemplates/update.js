@@ -4,6 +4,7 @@ const { getDB } = require('../../db/db.js');
 
 module.exports = (req, res) => {
   try {
+    throw new Error('Not implemented exception');
     const reqId = req.params.id;
     const reqIdNum = parseInt(reqId, 10);
     if (isNaN(reqId)) {

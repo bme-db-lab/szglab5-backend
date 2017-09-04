@@ -51,7 +51,6 @@ module.exports = async (req, res) => {
 
     const userInfo = req.userInfo;
     const userId = userInfo ? userInfo.userId : -1;
-    console.log(userId);
 
     const db = getDB();
     let queryObj = {};
