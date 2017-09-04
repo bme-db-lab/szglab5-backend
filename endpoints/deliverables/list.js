@@ -23,13 +23,27 @@ function getQuery(filter, userId) {
   }
 
   if ('finalized' in filter) {
-    query.finalized = filter.finalized;
+    if (filter.finalized === 'true') {
+      query.finalized = true;
+    } else if (filter.finalized === 'false') {
+      query.finalized = false;
+    }
   }
 
   if ('hasGrade' in filter) {
     query.grade = {
       $ne: null
     };
+  }
+
+  if ('isFree' in filter) {
+    if (filter.isFree === 'true') {
+      query.CorrectorId = null;
+    } else if (filter.isFree === 'false') {
+      query.CorrectorId = {
+        $ne: null
+      };
+    }
   }
 
   if ('deadlinestart' in filter && 'deadlineend' in filter) {
@@ -41,7 +55,6 @@ function getQuery(filter, userId) {
       };
     }
   }
-
   return query;
 }
 
@@ -54,13 +67,30 @@ module.exports = async (req, res) => {
 
     const db = getDB();
     let queryObj = {};
+    queryObj.include = [];
+
     if (filter) {
       queryObj = {
         where: getQuery(filter, userId)
       };
+      queryObj.include = [];
+      if ('exerciseCategoryId' in filter) {
+        queryObj.include.push(
+          {
+            model: db.Events,
+            where: {},
+            include: [{
+              model: db.ExerciseSheets,
+              where: {
+                ExerciseCategoryId: filter.exerciseCategoryId
+              }
+            }]
+          }
+        );
+      }
 
       if ('isCorrector' in filter) {
-        queryObj.include = [
+        queryObj.include.push(
           {
             model: db.Events,
             where: {},
@@ -73,14 +103,30 @@ module.exports = async (req, res) => {
               }]
             }]
           }
-        ];
+        );
       }
     }
-    queryObj.include = [
-      {
-        model: db.DeliverableTemplates
-      }
-    ];
+    if ('deliverableTemplateId' in filter) {
+      queryObj.include.push({
+        where: {
+          id: filter.deliverableTemplateId
+        },
+        model: db.DeliverableTemplates,
+      });
+    } else {
+      queryObj.include.push({
+        model: db.DeliverableTemplates,
+      });
+    }
+
+    if (req.query.limit) {
+      queryObj.limit = parseInt(req.query.limit, 10);
+    }
+
+    if (req.query.offset) {
+      queryObj.offset = parseInt(req.query.offset, 10);
+    }
+
     const deliverables = await db.Deliverables.findAll(queryObj);
 
     const response = getJSONApiResponseFromRecords(db, 'Deliverables', deliverables, {
