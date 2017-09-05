@@ -3,6 +3,7 @@ const { genErrorObj } = require('../../utils/utils.js');
 const { getJSONApiResponseFromRecords } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 
+
 function getQuery(filter, userId) {
   const query = {};
 
