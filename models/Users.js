@@ -9,8 +9,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: 'blue-gray'
     },
-    subscribedToMailList: DataTypes.BOOLEAN,
-    subscribedToEmailNotify: DataTypes.BOOLEAN,
+    subscribedToMailList: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    subscribedToEmailNotify: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     gitlabUserid: DataTypes.INTEGER,
     // Student specific attributes
     neptun: { type: DataTypes.STRING, unique: true },

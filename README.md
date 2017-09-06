@@ -15,7 +15,7 @@ Backend repository for laboradmin backend
 You will need the following things properly installed on your computer.
 
 * [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (6.x)
+* [Node.js](https://nodejs.org/) (8.x)
 * [PostgreSQL](https://www.postgresql.org/)
 
 ## Installation
@@ -31,7 +31,7 @@ npm install nodemon -g
 Available node environments ('dev' | 'prod' | 'test')
 
 Steps to add specific config:
-* Create a new file to config/ with name of config.[env].json 
+* Create a new file to config/ with name of config.[env].json
 * Copy the content of config.example.json to the new file
 *  Modify, or delete rows
 
