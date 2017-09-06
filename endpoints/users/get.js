@@ -8,9 +8,13 @@ module.exports = async (req, res) => {
     const reqIdNum = parseInt(reqId, 10);
 
     const db = getDB();
+
     const record = await db.Users.findById(
       reqIdNum,
-      { include: [{ all: true }] }
+      {
+        include: [{ all: true }],
+        attributes: ['id', 'loginName', 'displayName', 'email', 'subscribedToMailList', 'subscribedToEmailNotify', 'neptun', 'email_official']
+      }
     );
     checkIfExist(record);
     const response = getJSONApiResponseFromRecord(db, 'Users', record, {

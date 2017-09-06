@@ -8,10 +8,14 @@ const getStudent = require('./getStudent.js');
 const listDeliverables = require('./listDeliverables.js');
 const listEvents = require('./list.js');
 const listStudents = require('./listStudents.js');
+
 const auth = require('../../middlewares/auth.js');
+const epLogger = require('../../middlewares/ep-logger');
 
 module.exports = (app) => {
   app.use('/events*', auth);
+  app.use('/events*', epLogger);
+
   app.get('/events/:id', getEvent);
   app.get('/events/:id/demonstrator', getEventDemonstrator);
   app.get('/events/:id/exercisesheet', getExerciseSheet);

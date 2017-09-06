@@ -37,6 +37,7 @@ module.exports = async (req, res) => {
       queryObj.offset = parseInt(req.query.offset, 10);
     }
     queryObj.include = [{ all: true }];
+    queryObj.attributes = ['loginName', 'displayName', 'email', 'subscribedToMailList', 'subscribedToEmailNotify', 'neptun', 'email_official'];
 
     const records = await db.Users.findAll(queryObj);
     const response = getJSONApiResponseFromRecords(db, 'Users', records, {

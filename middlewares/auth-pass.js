@@ -2,8 +2,7 @@ const { verifyToken } = require('../utils/jwt.js');
 const { genErrorObj } = require('../utils/utils.js');
 
 function auth(req, res, next) {
-  // process.env.NODE_ENV !== 'dev' || req.get('Authorization') !== undefined
-  if (true) {
+  if (process.env.NODE_ENV !== 'dev' || req.get('Authorization') !== undefined) {
     try {
       const authHeader = req.get('Authorization');
       if (!authHeader) {
@@ -31,6 +30,7 @@ function auth(req, res, next) {
       res.status(500).send(genErrorObj([err.message]));
     }
   } else {
+    req.authStatus = 'UNAUTH';
     next();
   }
 }

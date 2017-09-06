@@ -19,6 +19,7 @@ module.exports = async (req, res) => {
       res.send(response);
     } else {
       // authenticated
+      console.log('hellos');
       console.log(req.userInfo);
       const { roles } = req.userInfo;
       const isAdmin = roles.find(role => role === 'ADMIN') !== undefined;

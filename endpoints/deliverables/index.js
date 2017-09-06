@@ -1,4 +1,6 @@
 const auth = require('../../middlewares/auth.js');
+const epLogger = require('../../middlewares/ep-logger');
+
 const addDeliverable = require('./add.js');
 const getDeliverables = require('./get.js');
 const getDeliverableCorrector = require('./getCorrector.js');
@@ -17,6 +19,8 @@ const upload = multer();
 
 module.exports = (app) => {
   app.use('/deliverables*', auth);
+  app.use('/deliverables*', epLogger);
+
   app.get('/deliverables/:id', getDeliverables);
   app.get('/deliverables/:id/corrector', getDeliverableCorrector);
   app.get('/deliverables/:id/event', getDeliverableEvent);
