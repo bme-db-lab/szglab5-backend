@@ -181,6 +181,8 @@ function getJSONApiResponseFromRecords(db, modelName, records, options) {
 async function updateResource(db, modelName, data) {
   const id = data.id;
   const attributes = data.attributes;
+  delete attributes.createdAt;
+  delete attributes.updatedAt;
   await db[modelName].update(attributes, { where: { id } });
 }
 
