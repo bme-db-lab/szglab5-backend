@@ -2,27 +2,30 @@ const { verifyToken } = require('../utils/jwt.js');
 const { genErrorObj } = require('../utils/utils.js');
 
 function auth(req, res, next) {
-  if (process.env.NODE_ENV !== 'dev' || req.get('Authorization') !== undefined) {
+  // process.env.NODE_ENV !== 'dev' || req.get('Authorization') !== undefined
+  if (true) {
     try {
       const authHeader = req.get('Authorization');
       if (!authHeader) {
-        res.status(403).send(genErrorObj('No Authorization header present!'));
+        req.authStatus = 'UNAUTH';
+        next();
         return;
       }
       const bearerPattern = /^Bearer /;
       if (!authHeader.match(bearerPattern)) {
-        res.status(403).send(genErrorObj('Invalid Authorization header format'));
+        req.authStatus = 'UNAUTH';
+        next();
         return;
       }
       const token = authHeader.split(' ')[1];
       verifyToken(token)
         .then((userInfo) => {
           req.userInfo = userInfo;
-          req.authStatus = 'AUTH';
           next();
         })
         .catch((err) => {
-          res.status(403).send(genErrorObj([err.message]));
+          req.authStatus = 'UNAUTH';
+          next();
         });
     } catch (err) {
       res.status(500).send(genErrorObj([err.message]));
