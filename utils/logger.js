@@ -28,14 +28,16 @@ if (config.logger.fileLogEnabled) {
     filename: path.join(config.logger.filePath, 'laboradmin.log'),
     datePattern: config.logger.rotatePattern,
     maxsize: config.logger.rotateSize,
-    level: config.logger.fileLevel
+    level: config.logger.fileLevel,
+    timestamp: true
   });
 }
 
 if (config.logger.consoleLogEnabled) {
   logger.add(winston.transports.Console, {
     level: config.logger.consoleLevel,
-    colorize: true
+    colorize: true,
+    timestamp: true
   });
 }
 
