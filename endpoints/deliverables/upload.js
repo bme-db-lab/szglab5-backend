@@ -21,6 +21,7 @@ module.exports = async (req, res) => {
       throw new Error('Request id is invalid');
     }
     const deliverables = await db.Deliverables.findById(reqIdNum);
+    const delTempl = await deliverables.getDeliverableTemplate();
     const event = await deliverables.getEvent();
     const exSheet = await event.getExerciseSheet();
     const exCat = await exSheet.getExerciseCategory();
@@ -44,9 +45,14 @@ module.exports = async (req, res) => {
     });
 
     const dateTime = moment().format('YYYY_MM_DD-hh_mm');
-    const newFileName = `${user.neptun}_${dateTime}_${uploadedFile.originalname}`;
+    let AKEPFileEnding = '';
+    if (delTempl.dataValues.AKEP) {
+      AKEPFileEnding = `_AKEP_${exCat.type}_${exType.shortName}`;
+    }
+
+    const semesterForFileName = `${semester.academicyear.replace('/', '_')}_${semester.academicterm}`;
+    const newFileName = `${course.codeName}_${semesterForFileName}_${user.neptun}_${dateTime}_${uploadedFile.originalname}_${delTempl.name}_${AKEPFileEnding}`;
     const savePath = path.join(currentStorage.resolvedRootPath, specificPath, newFileName);
-    console.log(savePath);
     await makeDir(path.dirname(savePath));
 
     await promisify(fs.writeFile)(savePath, uploadedFile.buffer);

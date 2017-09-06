@@ -1,7 +1,6 @@
 const { checkIfDbHasModel } = require('./utils.js');
 const logger = require('./logger.js');
 const { isPlainObject } = require('lodash');
-console.log(isPlainObject);
 const uppercamelcase = require('uppercamelcase');
 
 function checkIfExist(record) {

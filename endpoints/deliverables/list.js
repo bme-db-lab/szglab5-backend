@@ -107,7 +107,7 @@ module.exports = async (req, res) => {
         );
       }
     }
-    if ('deliverableTemplateId' in filter) {
+    if (filter && 'deliverableTemplateId' in filter) {
       queryObj.include.push({
         where: {
           id: filter.deliverableTemplateId

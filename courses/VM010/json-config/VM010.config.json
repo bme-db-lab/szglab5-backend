@@ -174,7 +174,8 @@
         "type": "FILE",
         "name": "sql",
         "description": "SQL script az 1. laborhoz",
-        "EventTemplateId": 1
+        "EventTemplateId": 1,
+        "AKEP": true
       }
     },
     {
@@ -189,7 +190,8 @@
         "type": "FILE",
         "name": "sql_file_1",
         "description": "SQL script1 ",
-        "EventTemplateId": 2
+        "EventTemplateId": 2,
+        "AKEP": true
       }
     },
     {
@@ -197,7 +199,8 @@
         "type": "FILE",
         "name": "sql_file_2",
         "description": "SQL script2",
-        "EventTemplateId": 2
+        "EventTemplateId": 2,
+        "AKEP": true
       }
     },
     {
@@ -212,7 +215,8 @@
         "type": "FILE",
         "name": "sql",
         "description": "SQL script a laborhoz",
-        "EventTemplateId": 3
+        "EventTemplateId": 3,
+        "AKEP": true
       }
     },
     {
@@ -227,7 +231,8 @@
         "type": "FILE",
         "name": "sql",
         "description": "SQL script a laborhoz",
-        "EventTemplateId": 4
+        "EventTemplateId": 4,
+        "AKEP": true
       }
     },
     {
@@ -242,7 +247,8 @@
         "type": "FILE",
         "name": "sql",
         "description": "SQL script a laborhoz",
-        "EventTemplateId": 5
+        "EventTemplateId": 5,
+        "AKEP": true
       }
     }
   ],
