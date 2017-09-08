@@ -29,7 +29,8 @@ initDB()
 
     app.use(bodyParser.urlencoded({
       limit: '10mb',
-      type: 'application/x-www-form-urlencoded'
+      type: 'application/x-www-form-urlencoded',
+      extended: false
     }));
 
     let whitelist = [];
