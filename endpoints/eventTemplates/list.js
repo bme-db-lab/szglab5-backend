@@ -6,6 +6,9 @@ module.exports = async (req, res) => {
   try {
     const db = getDB();
 
+    const userInfo = req.userInfo;
+    console.log(userInfo);
+
     const records = await db.EventTemplates.findAll({
       include: [
         {
@@ -15,6 +18,9 @@ module.exports = async (req, res) => {
           model: db.DeliverableTemplates
         },
         {
+          where: {
+            DemonstratorId: userInfo.userId
+          },
           model: db.Events,
           include: [
             {
