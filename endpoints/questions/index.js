@@ -9,12 +9,12 @@ const auth = require('../../middlewares/auth.js');
 const epLogger = require('../../middlewares/ep-logger');
 
 module.exports = (app) => {
+  app.post('/generatePDF', generatePDF);
   app.use('/questions*', auth);
   app.use('/questions*', epLogger);
 
   app.get('/questions', listQuestions);
   app.get('/questions/:id', getQuestion);
-  app.get('/generatePDF', generatePDF);
   app.delete('/questions/:id', deleteQuestion);
   app.patch('/questions/:id', updateQuestions);
   app.post('/questions', addQuestion);

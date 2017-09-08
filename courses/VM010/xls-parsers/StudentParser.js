@@ -69,7 +69,7 @@ module.exports = async (semesterId, devInit) => {
                     numbers: true
                   });
                 }
-                user.data.password = initPassword;
+                user.data.initPassword = initPassword;
                 user.data.password = initPassword;
               }
               break;

@@ -21,9 +21,15 @@ initDB()
       limit: '10mb',
       type: 'application/vnd.api+json'
     }));
+
     app.use(bodyParser.json({
       limit: '10mb',
       type: 'application/json'
+    }));
+
+    app.use(bodyParser.urlencoded({
+      limit: '10mb',
+      type: 'application/x-www-form-urlencoded'
     }));
 
     let whitelist = [];

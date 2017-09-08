@@ -1,12 +1,19 @@
 const pdf = require('pdfjs');
 const pdfFontFile = require('pdfjs/font/Helvetica.json');
 const { genErrorObj } = require('../../utils/utils.js');
+const { verifyToken } = require('../../utils/jwt');
 const { getDB } = require('../../db/db.js');
 
 module.exports = async (req, res) => {
   try {
     if (!req.query.questionId || !Array.isArray(req.query.questionId)) {
       throw new Error('No questionids specified');
+    }
+    const { token } = req.body;
+    try {
+      await verifyToken(token);
+    } catch (err) {
+      res.status(403).send(genErrorObj('Invalid token'));
     }
     const questionIds = req.query.questionId;
     // get questions from db

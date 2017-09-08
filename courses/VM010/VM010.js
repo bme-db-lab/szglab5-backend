@@ -29,7 +29,7 @@ module.exports = async (semesterId, devInit) => {
     }
     const exercises = await parseExercises(semesterId);
     await seedDBwithObjects(db, 'ExerciseTypes', exercises);
-    const parsedStaff = await parseStaff();
+    const parsedStaff = await parseStaff(devInit);
     const staff = parsedStaff.simpleUsers;
     const exList = parsedStaff.exList;
     await seedDBwithObjects(db, 'Users', staff);
@@ -82,7 +82,6 @@ module.exports = async (semesterId, devInit) => {
     const groups = await parseGroups(semesterId);
     await seedDBwithObjects(db, 'StudentGroups', groups);
     const regs = await parseStudentRegs(semesterId, devInit);
-    console.log(regs);
     await seedDBwithObjects(db, 'StudentRegistrations', regs);
     const timetable = await parseTimetable();
     await seedDBwithObjects(db, 'Appointments', timetable);

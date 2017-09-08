@@ -1,7 +1,9 @@
 const XLSX = require('xlsx');
 const { getDB } = require('../../../db/db.js');
 
-module.exports = async () => {
+const generator = require('generate-password');
+
+module.exports = async (devInit) => {
   const db = getDB();
   let seed = null;
   try {
@@ -67,7 +69,15 @@ module.exports = async () => {
             }
             if (user.data.email_official !== null) {
               user.data.university = 'BME';
-              user.data.password = '12345';
+              let initPassword = '12345';
+              if (!devInit) {
+                initPassword = generator.generate({
+                  length: 10,
+                  numbers: true
+                });
+              }
+              user.data.initPassword = initPassword;
+              user.data.password = initPassword;
               users[user.data.email_official] = user;
             } else {
               return true;

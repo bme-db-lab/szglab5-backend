@@ -18,6 +18,7 @@ const multer = require('multer');
 const upload = multer();
 
 module.exports = (app) => {
+  app.post('/deliverables/:id/download', downloadDeliverable);
   app.use('/deliverables*', auth);
   app.use('/deliverables*', epLogger);
 
@@ -31,5 +32,4 @@ module.exports = (app) => {
   app.patch('/deliverables/:id/event', updateDeliverableEvent);
   app.post('/deliverables', addDeliverable);
   app.post('/deliverables/:id/upload', upload.single('file'), uploadDeliverable);
-  app.get('/deliverables/:id/download', downloadDeliverable);
 };
