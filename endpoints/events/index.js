@@ -20,7 +20,7 @@ module.exports = (app) => {
   app.get('/events/:id', getEvent);
   app.get('/events/:id/demonstrator', getEventDemonstrator);
   app.get('/events/:id/exercisesheet', getExerciseSheet);
-  app.post('/events/:id/exercisesheet/generate', generateExerciseSheet);
+  app.get('/events/:id/exercisesheet/generate', generateExerciseSheet);
   app.get('/events/:id/exercisetype', getExerciseType);
   app.get('/events/:id/student', getStudent);
   app.get('/events/:id/deliverables', listDeliverables);

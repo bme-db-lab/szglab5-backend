@@ -1,5 +1,6 @@
 const xmlbuilder = require('xmlbuilder');
 
+
 function magicPasswordGeneratorThatDefinitelyShouldNotBeHereOrImplementedLikeThis(student) {
   const md5 = require('crypto').createHash('md5');
   const year = (new Date()).getFullYear();
