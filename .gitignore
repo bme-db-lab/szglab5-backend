@@ -63,3 +63,6 @@ typings/
 .env
 *.bak
 files/
+
+/generated/exercisesheet
+!/generated/exercisesheet/.gitkeep

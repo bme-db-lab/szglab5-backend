@@ -75,7 +75,8 @@ const defaultConfig = {
         rootPath: '../files'
       }
     ]
-  }
+  },
+  generatedFilesPath: path.join(__dirname, '../generated')
 };
 let specConfig = {};
 try {
