@@ -91,6 +91,9 @@ module.exports = async (req, res) => {
       {
         model: db.Users,
         as: 'Demonstrator'
+      },
+      {
+        model: db.StudentRegistrations
       }
     ];
 
