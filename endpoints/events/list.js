@@ -34,23 +34,23 @@ function getQuery(filter) {
   return query;
 }
 
-function getIncludes(filter, db) {
-  const includes = [];
-  if ('exercisecat' in filter) {
-    includes.push({
-      model: db.ExerciseSheets,
-      where: {},
-      include: {
-        model: db.ExerciseCategories,
-        where: {
-          type: filter.exercisecat
-        }
-      }
-    });
-  }
+// function getIncludes(filter, db) {
+//   const includes = [];
+//   if ('exercisecat' in filter) {
+//     includes.push({
+//       model: db.ExerciseSheets,
+//       where: {},
+//       include: {
+//         model: db.ExerciseCategories,
+//         where: {
+//           type: filter.exercisecat
+//         }
+//       }
+//     });
+//   }
 
-  return includes;
-}
+//   return includes;
+// }
 
 module.exports = async (req, res) => {
   try {
@@ -60,15 +60,44 @@ module.exports = async (req, res) => {
     let queryObj = {};
     if (filter) {
       queryObj = {
-        where: getQuery(filter),
-        include: getIncludes(filter, db)
+        where: getQuery(filter)
       };
     }
+
+    let exCat = {};
+    if (filter && 'exercisecat' in filter) {
+      exCat = {
+        type: filter.exercisecat
+      };
+    }
+
+    queryObj.include = [
+      {
+        model: db.Deliverables,
+        include: {
+          model: db.DeliverableTemplates
+        }
+      },
+      {
+        model: db.ExerciseSheets,
+        include: {
+          model: db.ExerciseCategories,
+          where: exCat
+        }
+      },
+      {
+        model: db.EventTemplates
+      },
+      {
+        model: db.Users,
+        as: 'Demonstrator'
+      }
+    ];
 
     const events = await db.Events.findAll(queryObj);
 
     const response = getJSONApiResponseFromRecords(db, 'Events', events, {
-      includeModels: []
+      includeModels: ['Deliverables', 'ExerciseSheets', 'Users', 'DeliverableTemplates', 'ExerciseCategories']
     });
     res.send(response);
   } catch (err) {
