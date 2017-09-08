@@ -19,8 +19,6 @@ module.exports = async (req, res) => {
       res.send(response);
     } else {
       // authenticated
-      console.log('hellos');
-      console.log(req.userInfo);
       const { roles } = req.userInfo;
       const isAdmin = roles.find(role => role === 'ADMIN') !== undefined;
       const isStudent = roles.find(role => role === 'STUDENT') !== undefined;
@@ -46,6 +44,11 @@ module.exports = async (req, res) => {
           include: [{ all: true }]
         });
       } else if (isDemonstrator) {
+        records = await db.News.findAll({
+          where: { demonstrators: isDemonstrator },
+          include: [{ all: true }]
+        });
+      } else if (isAdmin) {
         records = await db.News.findAll({
           where: { demonstrators: isDemonstrator },
           include: [{ all: true }]

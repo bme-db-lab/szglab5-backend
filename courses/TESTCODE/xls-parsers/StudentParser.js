@@ -1,5 +1,7 @@
 const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
+const generator = require('generate-password');
+
 
 module.exports = () => {
   let seed = null;
@@ -8,7 +10,7 @@ module.exports = () => {
     const sheetName = 'Hallgatoi csoportbeosztas másol';
     const opts = {
       sheetStubs: true,
-      //sheetRows: 10,
+      sheetRows: 10,
     };
     const workbook = XLSX.readFile(seedFilePath, opts);
     seed = workbook.Sheets[sheetName];
@@ -20,6 +22,13 @@ module.exports = () => {
     const users = [];
     const regs = [];
     let user = { data: {} };
+    // generate init-password
+    const password = generator.generate({
+      length: 10,
+      numbers: true
+    });
+    console.log(password);
+
     let sreg = { data: {} };
     Object.keys(seed).some(
       (key) => {

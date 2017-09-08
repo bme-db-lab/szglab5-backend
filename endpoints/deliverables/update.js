@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
       res.status(400).send(genErrorObj('Requested id is not a number'));
       return;
     }
-
+    // csak ADMIN DEMONSTRATOR CORRECTOR
     const { data } = req.body;
     const db = getDB();
     const deliverable = await db.Deliverables.findById(reqId);

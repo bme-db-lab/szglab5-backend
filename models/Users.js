@@ -27,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     printSupport: DataTypes.STRING,
     classroom: DataTypes.STRING,
-    spec: DataTypes.STRING
+    spec: DataTypes.STRING,
+    initPassword: DataTypes.STRING
   });
 
   Users.associate = (models) => {

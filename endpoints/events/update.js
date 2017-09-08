@@ -5,11 +5,6 @@ const { getDB } = require('../../db/db.js');
 module.exports = (req, res) => {
   try {
     const reqId = req.params.id;
-    const reqIdNum = parseInt(reqId, 10);
-    if (isNaN(reqId)) {
-      res.status(400).send(genErrorObj('Requested id is not a number'));
-      return;
-    }
 
     const { data } = req.body;
     const db = getDB();

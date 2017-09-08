@@ -42,6 +42,7 @@ const defaultConfig = {
     filePath: './',
     rotatePattern: '.yyyy-MM-dd.bak',
     rotateSize: 1000000,
+    logPostData: false
   },
   env,
   cors: {

@@ -1,6 +1,7 @@
 const winston = require('winston');
 const config = require('../config/config.js');
 const path = require('path');
+const moment = require('moment');
 require('winston-daily-rotate-file');
 
 const logger = new (winston.Logger)({
@@ -29,7 +30,7 @@ if (config.logger.fileLogEnabled) {
     datePattern: config.logger.rotatePattern,
     maxsize: config.logger.rotateSize,
     level: config.logger.fileLevel,
-    timestamp: true
+    timestamp: () => moment().format('MMM Do YYYY, h:mm:ss a[ -]')
   });
 }
 
@@ -37,7 +38,7 @@ if (config.logger.consoleLogEnabled) {
   logger.add(winston.transports.Console, {
     level: config.logger.consoleLevel,
     colorize: true,
-    timestamp: true
+    timestamp: () => moment().format('MMM Do YYYY, h:mm:ss a[ -]')
   });
 }
 
