@@ -41,7 +41,7 @@ function getJSONapiObj(record, models, currentOptions) {
       }
     } else if ((Array.isArray(record.dataValues[innerKeyName]))) {
       // array relation
-      console.log('Array TODO');
+      console.log('Array TODOOO');
     } else {
       attributes[innerKeyName] = record.dataValues[innerKeyName];
     }
@@ -105,7 +105,29 @@ function getJSONApiResponseFromRecord(db, modelName, record, options) {
           }
         } else if ((Array.isArray(recordData[keyName].dataValues[innerKeyName]))) {
           // array relation
+          innerRelationships[innerKeyName] = {
+            data: []
+          };
           console.log('Array TODO');
+          for (const innerData of recordData[keyName].dataValues[innerKeyName]) {
+            innerRelationships[innerKeyName].data.push({
+              id: innerData.dataValues.id,
+              type: innerData.constructor.name
+            });
+            if (currentOptions.includeModels.find(includeModelName => includeModelName === attrConstructorName)) {
+              const innerArrayObj = getJSONapiObj(innerData, models, currentOptions);
+              const checkIfExistItem = included.find(include => include.type === innerData.constructor.name
+                && include.id === innerData.dataValues.id);
+              if (checkIfExistItem) {
+                included.push({
+                  type: innerData.constructor.name,
+                  id: innerData.dataValues.id,
+                  attributes: innerArrayObj.attributes,
+                  relationships: innerArrayObj.relationships
+                });
+              }
+            }
+          }
         } else {
           innerAttributes[innerKeyName] = recordData[keyName].dataValues[innerKeyName];
         }

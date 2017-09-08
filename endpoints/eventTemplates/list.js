@@ -12,7 +12,12 @@ module.exports = async (req, res) => {
     const records = await db.EventTemplates.findAll({
       include: [
         {
-          model: db.ExerciseCategories
+          model: db.ExerciseCategories,
+          include: [
+            {
+              model: db.ExerciseSheets
+            }
+          ]
         },
         {
           model: db.DeliverableTemplates
@@ -31,7 +36,7 @@ module.exports = async (req, res) => {
       ]
     });
     const response = getJSONApiResponseFromRecords(db, 'EventTemplates', records, {
-      includeModels: ['Events', 'DeliverableTemplates', 'ExerciseCategories']
+      includeModels: ['Events', 'DeliverableTemplates', 'ExerciseCategories', 'ExerciseSheets']
     });
     res.send(response);
   } catch (err) {
