@@ -38,13 +38,26 @@ module.exports = async (req, res) => {
           include: [
             {
               model: db.StudentRegistrations
+            },
+            {
+              model: db.Users,
+              as: 'Demonstrator'
+            },
+            {
+              model: db.Deliverables
+            },
+            {
+              model: db.EventTemplates
+            },
+            {
+              model: db.ExerciseSheets
             }
           ]
         }
       ]
     });
     const response = getJSONApiResponseFromRecords(db, 'EventTemplates', records, {
-      includeModels: ['Events', 'DeliverableTemplates', 'ExerciseCategories', 'ExerciseSheets']
+      includeModels: ['DeliverableTemplates', 'ExerciseCategories', 'ExerciseSheets']
     });
     res.send(response);
   } catch (err) {
