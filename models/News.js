@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     until: DataTypes.DATE,
     admins: DataTypes.BOOLEAN,
     students: DataTypes.BOOLEAN,
-    demonstators: DataTypes.BOOLEAN,
+    demonstrators: DataTypes.BOOLEAN,
     evaluators: DataTypes.BOOLEAN,
     onLogin: DataTypes.BOOLEAN
   });

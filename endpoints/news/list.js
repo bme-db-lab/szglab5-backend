@@ -50,7 +50,6 @@ module.exports = async (req, res) => {
         });
       } else if (isAdmin) {
         records = await db.News.findAll({
-          where: { demonstrators: isDemonstrator },
           include: [{ all: true }]
         });
       }
