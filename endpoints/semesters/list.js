@@ -15,7 +15,10 @@ module.exports = async (req, res) => {
     if (req.query.offset) {
       queryObj.offset = parseInt(req.query.offset, 10);
     }
-    queryObj.include = [{ all: true }];
+    queryObj.include = [
+      {
+        model: db.Course
+      }];
 
     const records = await db.Semesters.findAll(queryObj);
     const response = getJSONApiResponseFromRecords(db, 'Semesters', records, {

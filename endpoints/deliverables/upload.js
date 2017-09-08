@@ -56,11 +56,11 @@ module.exports = async (req, res) => {
     const dateTime = moment().format('YYYY_MM_DD-hh_mm');
     let AKEPFileEnding = '';
     if (delTempl.dataValues.AKEP) {
-      AKEPFileEnding = `_AKEP_${exCat.type}_${exType.shortName}`;
+      AKEPFileEnding = `_AKEP_${exCat.type}_${exType.shortName}_${user.neptun}`;
     }
 
     const semesterForFileName = `${semester.academicyear.replace('/', '_')}_${semester.academicterm}`;
-    const newFileName = `${course.codeName}_${semesterForFileName}_${user.neptun}_${dateTime}_${uploadedFile.originalname}_${delTempl.name}_${AKEPFileEnding}`;
+    const newFileName = `${course.codeName}_${semesterForFileName}_${dateTime}_${uploadedFile.originalname}_${delTempl.name}_${AKEPFileEnding}`;
     const savePath = path.join(currentStorage.resolvedRootPath, specificPath, newFileName);
     await makeDir(path.dirname(savePath));
 
