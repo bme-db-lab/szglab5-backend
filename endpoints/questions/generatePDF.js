@@ -30,12 +30,20 @@ module.exports = async (req, res) => {
       padding: 10
     });
     doc.pipe(res);
-    doc.text('Laboradmin questions', {
-      fontSize: 16
-    });
-    questions.forEach((question) => {
-      doc.text(question.text);
-    });
+    for (let i = 0; i < 1; i++) {
+      const table = doc.table({ widths: [350, 300], paddingBottom: 10 }).row();
+      table.cell().text('Adatbázisok labor beugró', { fontSize: 20 });
+      table.cell().table({ widths: [200] }).row()
+        .cell('Név:', { fontSize: 14 })
+        .cell('Neptun:', { fontSize: 14 });
+      doc.text('     ', { fontSize: 14 });
+      questions.forEach((question) => {
+        doc.text(question.text, { fontSize: 16 });
+        doc.text('                 ', { fontSize: 24 });
+        doc.text('                 ', { fontSize: 24 });
+        doc.text('                 ', { fontSize: 24 });
+      });
+    }
     await doc.end();
   } catch (err) {
     res.status(500).send(genErrorObj(err.message));

@@ -88,6 +88,7 @@ module.exports = async () => {
     const admin = [{
       data: {
         loginName: adminLoginName,
+        displayName: 'Admin',
         password: '12345'
       }
     }];
