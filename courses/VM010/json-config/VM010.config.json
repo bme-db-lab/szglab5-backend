@@ -18,74 +18,32 @@
   "ExerciseCategories": [
     {
       "data": {
-        "type": "DBMS",
+        "type": "oracle1",
         "CourseId": 1
       }
     },
     {
       "data": {
-        "type": "SQL1",
+        "type": "sql1",
         "CourseId": 1
       }
     },
     {
       "data": {
-        "type": "SQL2",
+        "type": "sql2",
         "CourseId": 1
       }
     },
     {
       "data": {
-        "type": "SQL3",
-        "CourseCodeName": "VM010"
+        "type": "sql3",
+        "CourseId": 1
       }
     },
     {
       "data": {
-        "type": "XML",
-        "CourseCodeName": "VM010"
-      }
-    },
-    {
-      "data": {
-        "type": "OPTI",
-        "CourseCodeName": "VM010"
-      }
-    },
-    {
-      "data": {
-        "type": "ER",
-        "CourseCodeName": "VM010"
-      }
-    },
-    {
-      "data": {
-        "type": "Lekérdezések",
-        "CourseCodeName": "VM010"
-      }
-    },
-    {
-      "data": {
-        "type": "Normalizálás",
-        "CourseCodeName": "VM010"
-      }
-    },
-    {
-      "data": {
-        "type": "Fizikai",
-        "CourseCodeName": "VM010"
-      }
-    },
-    {
-      "data": {
-        "type": "Opti",
-        "CourseCodeName": "VM010"
-      }
-    },
-    {
-      "data": {
-        "type": "Tr.kezelés",
-        "CourseCodeName": "VM010"
+        "type": "opti",
+        "CourseId": 1
       }
     }
   ],
@@ -124,41 +82,6 @@
         "ExerciseCategoryId": 5,
         "seqNumber": 5
       }
-    },
-    {
-      "data": {
-        "type": "Gyakorlat",
-        "ExerciseCategoryId": 6,
-        "seqNumber": 1
-      }
-    },
-    {
-      "data": {
-        "type": "Gyakorlat",
-        "ExerciseCategoryId": 7,
-        "seqNumber": 2
-      }
-    },
-    {
-      "data": {
-        "type": "Gyakorlat",
-        "ExerciseCategoryId": 8,
-        "seqNumber": 3
-      }
-    },
-    {
-      "data": {
-        "type": "Gyakorlat",
-        "ExerciseCategoryId": 9,
-        "seqNumber": 4
-      }
-    },
-    {
-      "data": {
-        "type": "Gyakorlat",
-        "ExerciseCategoryId": 10,
-        "seqNumber": 5
-      }
     }
   ],
   "DeliverableTemplates": [
@@ -172,10 +95,9 @@
     {
       "data": {
         "type": "FILE",
-        "name": "sql",
-        "description": "SQL script az 1. laborhoz",
-        "EventTemplateId": 1,
-        "AKEP": true
+        "name": "jegyzokonyv_1",
+        "description": "Jegyzőkönyv",
+        "EventTemplateId": 1
       }
     },
     {
@@ -188,17 +110,16 @@
     {
       "data": {
         "type": "FILE",
-        "name": "sql_file_1",
-        "description": "SQL script1 ",
-        "EventTemplateId": 2,
-        "AKEP": true
+        "name": "jegyzokonyv_2",
+        "description": "Jegyzőkönyv",
+        "EventTemplateId": 2
       }
     },
     {
       "data": {
         "type": "FILE",
-        "name": "sql_file_2",
-        "description": "SQL script2",
+        "name": "sql_2",
+        "description": "SQL file",
         "EventTemplateId": 2,
         "AKEP": true
       }
@@ -213,8 +134,8 @@
     {
       "data": {
         "type": "FILE",
-        "name": "sql",
-        "description": "SQL script a laborhoz",
+        "name": "sql_3",
+        "description": "SQL file",
         "EventTemplateId": 3,
         "AKEP": true
       }
@@ -229,8 +150,8 @@
     {
       "data": {
         "type": "FILE",
-        "name": "sql",
-        "description": "SQL script a laborhoz",
+        "name": "sql_4",
+        "description": "SQL file",
         "EventTemplateId": 4,
         "AKEP": true
       }
@@ -245,8 +166,8 @@
     {
       "data": {
         "type": "FILE",
-        "name": "sql",
-        "description": "SQL script a laborhoz",
+        "name": "jegyzokonyv",
+        "description": "Jegyzőkönyv",
         "EventTemplateId": 5,
         "AKEP": true
       }
