@@ -40,13 +40,7 @@ module.exports = async (req, res) => {
       ]
     });
 
-    const exerciseSheet = event.ExerciseSheet;
-    const exerciseCategory = exerciseSheet.ExerciseCategory;
-    const exerciseType = exerciseSheet.ExerciseType;
-    const student = event.StudentRegistration.User;
-    const demonstrator = event.Demonstrator;
-
-    const sheetXml = generateSheet(exerciseCategory, exerciseType, student, demonstrator, event);
+    const sheetXml = generateSheet(event);
 
     const tmpNamePromisified = promisify(tmp.tmpName);
     const fsWriteFilePromisified = promisify(fs.writeFile);
