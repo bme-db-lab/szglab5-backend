@@ -2,7 +2,7 @@ const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
 const { getDB } = require('../../../db/db.js');
 
-module.exports = async (semesterId) => {
+module.exports = async (semesterId, devInit) => {
   const db = getDB();
   let seed = null;
   try {
@@ -11,6 +11,11 @@ module.exports = async (semesterId) => {
     const opts = {
       sheetStubs: true
     };
+
+    if (devInit) {
+      opts.sheetRows = 10;
+    }
+
     const workbook = XLSX.readFile(seedFilePath, opts);
     seed = workbook.Sheets[sheetName];
   } catch (err) {

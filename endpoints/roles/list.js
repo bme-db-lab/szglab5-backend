@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
   try {
     const db = getDB();
 
-    const records = await db.Roles.findAll({ include: [{ all: true }] });
+    const records = await db.Roles.findAll();
     const response = getJSONApiResponseFromRecords(db, 'Roles', records, {
       includeModels: []
     });

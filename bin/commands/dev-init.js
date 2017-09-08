@@ -38,7 +38,7 @@ module.exports = async () => {
     // Generate records for semester - xls parsers
     logger.info('Initializing semester, please wait...');
     const courseMethod = require(`../../courses/${code}/${code}.js`); // eslint-disable-line
-    await courseMethod(qResult.dataValues.id);
+    await courseMethod(qResult.dataValues.id, true);
 
     // generate exercise sheets
     logger.info('Generating Exercise Sheets!');

@@ -9,8 +9,7 @@ module.exports = async (req, res) => {
 
     const db = getDB();
     const record = await db.Roles.findById(
-      reqIdNum,
-      { include: [{ all: true }] }
+      reqIdNum
     );
     checkIfExist(record);
     const response = getJSONApiResponseFromRecord(db, 'Roles', record, {
