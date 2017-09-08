@@ -9,6 +9,16 @@ module.exports = async (req, res) => {
     const userInfo = req.userInfo;
     console.log(userInfo);
 
+    const { roles } = req.userInfo;
+    const isAdmin = roles.find(role => role === 'ADMIN') !== undefined;
+
+    let demoFilter = {};
+    if (!isAdmin) {
+      demoFilter = {
+        DemonstratorId: userInfo.userId
+      };
+    }
+
     const records = await db.EventTemplates.findAll({
       include: [
         {
@@ -23,9 +33,7 @@ module.exports = async (req, res) => {
           model: db.DeliverableTemplates
         },
         {
-          where: {
-            DemonstratorId: userInfo.userId
-          },
+          where: demoFilter,
           model: db.Events,
           include: [
             {
