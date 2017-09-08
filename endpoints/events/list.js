@@ -1,6 +1,6 @@
 const { isDate } = require('lodash');
 const { genErrorObj } = require('../../utils/utils.js');
-const { genJSONApiResByRecords } = require('../../utils/jsonapi.js');
+const { getJSONApiResponseFromRecords } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 
 function getQuery(filter) {
@@ -52,7 +52,7 @@ function getIncludes(filter, db) {
   return includes;
 }
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   try {
     const filter = req.query.filter;
 
@@ -65,14 +65,12 @@ module.exports = (req, res) => {
       };
     }
 
-    db.Events.findAll(queryObj)
-      .then(genJSONApiResByRecords.bind(null, db, 'Events'))
-      .then((response) => {
-        res.send(response);
-      })
-      .catch((err) => {
-        res.status(500).send(genErrorObj(err.message));
-      });
+    const events = await db.Events.findAll(queryObj);
+
+    const response = getJSONApiResponseFromRecords(db, 'Events', events, {
+      includeModels: []
+    });
+    res.send(response);
   } catch (err) {
     res.status(500).send(genErrorObj(err.message));
   }
