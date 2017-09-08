@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
     }
     queryObj.include = [
       {
-        model: db.Course
+        model: db.Courses
       }];
 
     const records = await db.Semesters.findAll(queryObj);

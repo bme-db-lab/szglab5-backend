@@ -2,7 +2,6 @@ const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
 const generator = require('generate-password');
 
-
 module.exports = () => {
   let seed = null;
   try {
@@ -23,11 +22,6 @@ module.exports = () => {
     const regs = [];
     let user = { data: {} };
     // generate init-password
-    const password = generator.generate({
-      length: 10,
-      numbers: true
-    });
-    console.log(password);
 
     let sreg = { data: {} };
     Object.keys(seed).some(
@@ -77,7 +71,7 @@ module.exports = () => {
               if (seed[key].w !== undefined) {
                 user.data.password = seed[key].w;
               } else {
-                user.data.password = 'defaultpass';
+                user.data.password = password;
               }
               break;
             case 'G':

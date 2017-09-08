@@ -1,6 +1,7 @@
 const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
 const { getDB } = require('../../../db/db.js');
+const generator = require('generate-password');
 
 module.exports = async (semesterId, devInit) => {
   const db = getDB();
@@ -61,7 +62,15 @@ module.exports = async (semesterId, devInit) => {
               if (seed[key].w !== undefined) {
                 user.data.password = seed[key].w;
               } else {
-                user.data.password = '12345';
+                let initPassword = '12345';
+                if (!devInit) {
+                  initPassword = generator.generate({
+                    length: 10,
+                    numbers: true
+                  });
+                }
+                user.data.password = initPassword;
+                user.data.password = initPassword;
               }
               break;
             case 'G':
