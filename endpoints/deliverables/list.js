@@ -114,6 +114,13 @@ module.exports = async (req, res) => {
         },
         model: db.DeliverableTemplates,
       });
+    } else if (filter && 'isFile' in filter && filter.isFile === 'true') {
+      queryObj.include.push({
+        where: {
+          type: 'FILE'
+        },
+        model: db.DeliverableTemplates,
+      });
     } else {
       queryObj.include.push({
         model: db.DeliverableTemplates,
