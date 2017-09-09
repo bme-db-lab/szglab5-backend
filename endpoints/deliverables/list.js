@@ -47,6 +47,12 @@ function getQuery(filter, userId) {
     }
   }
 
+  if ('isOver' in filter && filter.isOver === 'true') {
+    query.deadline = {
+      $lt: new Date()
+    };
+  }
+
   if ('deadlinestart' in filter && 'deadlineend' in filter) {
     const startDate = new Date(filter.deadlinestart);
     const endDate = new Date(filter.deadlineend);
