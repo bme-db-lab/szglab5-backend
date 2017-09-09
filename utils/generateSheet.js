@@ -1,14 +1,19 @@
 const xmlbuilder = require('xmlbuilder');
+const config = require('../config/config.js');
+const fs = require('fs');
+const tmp = require('tmp');
+const { promisify } = require('util');
+const { exec } = require('child_process');
+const makeDir = require('make-dir');
+const logger = require('../utils/logger.js');
 
 
 function generateHandout(event) {
   const exerciseSheet = event.ExerciseSheet;
-  console.log(exerciseSheet);
   const exerciseCategory = exerciseSheet.ExerciseCategory;
   const exerciseType = exerciseSheet.ExerciseType;
   const student = event.StudentRegistration.User;
   const demonstrator = event.Demonstrator;
-
 
   const categoryId = exerciseCategory.id;
   const categoryName = exerciseCategory.type;
@@ -62,5 +67,29 @@ function generateXml(handoutsObj) {
   return node.end({ pretty: true });
 }
 
-module.exports = event => generateXml(concatHandouts([generateHandout(event)]));
+async function generateZip(studentGroupId, eventTemplateId, sheetXml) {
+  const tmpNamePromisified = promisify(tmp.tmpName);
+  const fsWriteFilePromisified = promisify(fs.writeFile);
+  const xmlFileName = await tmpNamePromisified({ prefix: `laboradmin-handouts-${studentGroupId}-${eventTemplateId}`, postfix: '.xml' });
+  const xmlBaseName = xmlFileName.substr(xmlFileName.lastIndexOf('/') + 1);
+
+  await fsWriteFilePromisified(xmlFileName, sheetXml);
+  const pexec = promisify(exec);
+
+  const genFileDir = `${config.generatedFilesPath}/handout/${studentGroupId}-${eventTemplateId}/`;
+  await makeDir(genFileDir);
+
+  const zipBaseName = xmlBaseName.replace(/\.xml/, '.zip');
+  const genFilePath = (genFileDir + zipBaseName).replace(/\/\//, '/');
+  const scriptOutput = await pexec(`sudo /usr/local/bin/genhandout.sh ${xmlFileName} ${genFileDir}`);
+  logger.log('genhandout: ', scriptOutput.stdout, '\n', scriptOutput.stderr);
+  return genFilePath;
+}
+
+module.exports = {
+  generateHandout,
+  generateXml,
+  concatHandouts,
+  generateZip
+};
 
