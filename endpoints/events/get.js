@@ -49,7 +49,7 @@ module.exports = async (req, res) => {
 
     checkIfExist(event);
     const response = getJSONApiResponseFromRecord(db, 'Events', event, {
-      includeModels: ['Users', 'ExerciseSheets', 'Deliverables', 'EventTemplates', 'DeliverableTemplates']
+      includeModels: ['Users', 'ExerciseSheets', 'Deliverables', 'EventTemplates', 'DeliverableTemplates', 'ExerciseCategories']
     });
     res.send(response);
   } catch (err) {

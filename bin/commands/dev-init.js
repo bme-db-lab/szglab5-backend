@@ -117,9 +117,9 @@ module.exports = async () => {
           logger.debug(` DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`);
           const eventDate = event.dataValues.date;
           let deadline = moment(eventDate).add(10, 'd');
-          if (i === 0 || i === 1) {
-            deadline = moment(eventDate).subtract(1, 'y');
-          }
+          // if (i === 0 || i === 1) {
+          //   deadline = moment(eventDate).subtract(1, 'y');
+          // }
           await db.Deliverables.create({
             deadline,
             EventId: event.dataValues.id,
