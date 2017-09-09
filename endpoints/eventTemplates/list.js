@@ -5,6 +5,7 @@ const { getDB } = require('../../db/db.js');
 module.exports = async (req, res) => {
   try {
     const db = getDB();
+    const filter = req.query.filter;
 
     const userInfo = req.userInfo;
     console.log(userInfo);
@@ -13,7 +14,12 @@ module.exports = async (req, res) => {
     const isAdmin = roles.find(role => role === 'ADMIN') !== undefined;
 
     let demoFilter = {};
-    if (!isAdmin) {
+    console.log(0);
+    console.log(filter);
+    console.log(isAdmin);
+    console.log(!(filter && 'asCorrector' in filter));
+    if (!isAdmin && !(filter && 'asCorrector' in filter)) {
+      console.log('1');
       demoFilter = {
         DemonstratorId: userInfo.userId
       };

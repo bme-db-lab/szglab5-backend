@@ -90,11 +90,9 @@ function getJSONApiResponseFromRecord(db, modelName, record, options) {
             const innerInnerAttrConstructorName = recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].dataValues !== null ? recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].constructor.name : null;
             if (models.find(item => item === innerInnerAttrConstructorName)) {
               // add to included if its present in options
-              console.log(innerInnerAttrConstructorName);
               if (currentOptions.includeModels.find(includeModelName => includeModelName === innerInnerAttrConstructorName)) {
                 const checkIfExistItem = included.find(include => include.type === innerInnerAttrConstructorName
                 && include.id === recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].dataValues.id);
-                console.log(checkIfExistItem);
                 if (!checkIfExistItem) {
                   included.push({
                     type: innerInnerAttrConstructorName,
@@ -141,7 +139,7 @@ function getJSONApiResponseFromRecord(db, modelName, record, options) {
               const innerArrayObj = getJSONapiObj(innerData, models, currentOptions);
               const checkIfExistItem = included.find(include => include.type === innerData.constructor.name
                 && include.id === innerData.dataValues.id);
-              if (checkIfExistItem) {
+              if (!checkIfExistItem) {
                 included.push({
                   type: innerData.constructor.name,
                   id: innerData.dataValues.id,
@@ -157,12 +155,16 @@ function getJSONApiResponseFromRecord(db, modelName, record, options) {
       }
       // add to included if its present in options
       if (currentOptions.includeModels.find(includeModelName => includeModelName === attrConstructorName)) {
-        included.push({
-          type: attrConstructorName,
-          id: recordData[keyName].dataValues.id,
-          attributes: innerAttributes,
-          relationships: innerRelationships
-        });
+        const checkIfExistItem = included.find(include => include.type === recordData[keyName].constructor.name
+          && include.id === recordData[keyName].dataValues.id);
+        if (!checkIfExistItem) {
+          included.push({
+            type: attrConstructorName,
+            id: recordData[keyName].dataValues.id,
+            attributes: innerAttributes,
+            relationships: innerRelationships
+          });
+        }
       }
     } else if (Array.isArray(recordData[keyName])) {
       relationships[keyName] = {
@@ -185,6 +187,7 @@ function getJSONApiResponseFromRecord(db, modelName, record, options) {
 
         // add to included if its present in options
         if (currentOptions.includeModels.find(includeModelName => includeModelName === innerAttrConstructorName)) {
+
           included.push({
             type: innerAttrConstructorName,
             id: innerData.dataValues.id,

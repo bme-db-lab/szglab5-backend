@@ -10,8 +10,35 @@ module.exports = async (req, res) => {
     const db = getDB();
     const deliverable = await db.Deliverables.findById(
       reqIdNum,
-      { include: [{ all: true }] }
+      {
+        include: [
+          {
+            model: db.Events,
+            include: [{
+              model: db.StudentRegistrations,
+              include: [{
+                model: db.Users,
+              }]
+            }]
+          },
+          {
+
+          }
+        ]
+      }
     );
+
+
+    queryObj.include.push({
+      model: db.Events,
+      include: [{
+        model: db.StudentRegistrations,
+        include: [{
+          model: db.Users,
+        }]
+      }]
+    });
+
     checkIfExist(deliverable);
     const response = getJSONApiResponseFromRecord(db, 'Deliverables', deliverable, {
       includeModels: ['DeliverableTemplates', 'Events']

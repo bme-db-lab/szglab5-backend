@@ -118,13 +118,21 @@ module.exports = async (req, res) => {
 
     queryObj.include.push({
       model: db.Events,
-      include: [{
-        model: db.StudentRegistrations,
-        include: [{
-          model: db.Users,
-        }]
-      }]
+      where: (filter && 'eventTemplateId' in filter) ? {
+        EventTemplateId: filter.eventTemplateId
+      } : {},
+      include: [
+        {
+          model: db.StudentRegistrations,
+          include: [{ model: db.Users, }]
+        },
+        {
+          model: db.EventTemplates
+        }
+      ]
     });
+
+    console.log(JSON.stringify(queryObj));
 
     if (req.query.limit) {
       queryObj.limit = parseInt(req.query.limit, 10);
