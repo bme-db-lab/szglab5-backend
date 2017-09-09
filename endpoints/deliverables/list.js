@@ -32,9 +32,13 @@ function getQuery(filter, userId) {
   }
 
   if ('hasGrade' in filter) {
-    query.grade = {
-      $ne: null
-    };
+    if (filter.hasGrade === 'true') {
+      query.grade = {
+        $ne: null
+      };
+    } else if (filter.hasGrade === 'false') {
+      query.grade = null;
+    }
   }
 
   if ('isFree' in filter) {
