@@ -10,8 +10,11 @@ const generateDeliverables = require('./generateDeliverables.js');
 const downloadHandouts = require('./downloadHandouts.js');
 
 module.exports = (app) => {
-  app.use('/event-templates*', auth);
   app.use('/event-templates*', epLogger);
+
+  app.post('/event-templates/:id/listDownload.zip', downloadHandouts);
+
+  app.use('/event-templates*', auth);
 
   app.delete('/event-templates/:id', deleteEventTemplate);
   app.get('/event-templates', listEventTemplates);
@@ -19,5 +22,4 @@ module.exports = (app) => {
   app.patch('/event-templates/:id', updateEventTemplate);
   app.post('/event-templates', addEventTemplate);
   app.get('/event-templates/:id/generate-deliverables', generateDeliverables);
-  app.post('/event-templates/:id/handouts-download.zip', downloadHandouts);
 };
