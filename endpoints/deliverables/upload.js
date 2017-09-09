@@ -65,12 +65,19 @@ module.exports = async (req, res) => {
     await makeDir(path.dirname(savePath));
 
     await promisify(fs.writeFile)(savePath, uploadedFile.buffer);
-    await deliverables.update({
+
+    const deliverableUpdate = {
       uploaded: true,
       filePath: savePath,
       lastSubmittedDate: new Date()
-    });
+    };
 
+    // TODO ONLY FOR TEST WEEKEND
+    if (Math.floor(Math.random() * 2) === 0) {
+      deliverableUpdate.deadline = '2013-09-09T02:31:24.530Z';
+    }
+
+    await deliverables.update(deliverableUpdate);
     res.send('ok');
   } catch (err) {
     res.status(500).send({
