@@ -7,6 +7,7 @@ const getEventTemplate = require('./get.js');
 const listEventTemplates = require('./list.js');
 const updateEventTemplate = require('./update.js');
 const generateDeliverables = require('./generateDeliverables.js');
+const downloadHandouts = require('./downloadHandouts.js');
 
 module.exports = (app) => {
   app.use('/event-templates*', auth);
@@ -18,4 +19,5 @@ module.exports = (app) => {
   app.patch('/event-templates/:id', updateEventTemplate);
   app.post('/event-templates', addEventTemplate);
   app.get('/event-templates/:id/generate-deliverables', generateDeliverables);
+  app.post('/event-templates/:id/handouts-download.zip', downloadHandouts);
 };
