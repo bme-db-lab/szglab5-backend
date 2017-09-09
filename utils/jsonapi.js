@@ -85,6 +85,29 @@ function getJSONApiResponseFromRecord(db, modelName, record, options) {
         const innerAttrConstructorName = recordData[keyName].dataValues[innerKeyName] !== null ? recordData[keyName].dataValues[innerKeyName].constructor.name : null;
 
         if (models.find(item => item === innerAttrConstructorName)) {
+
+          for (const innerInnerKeyname of Object.keys(recordData[keyName].dataValues[innerKeyName].dataValues)) {
+            const innerInnerAttrConstructorName = recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].dataValues !== null ? recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].constructor.name : null;
+            if (models.find(item => item === innerInnerAttrConstructorName)) {
+              // add to included if its present in options
+              console.log(innerInnerAttrConstructorName);
+              if (currentOptions.includeModels.find(includeModelName => includeModelName === innerInnerAttrConstructorName)) {
+                const checkIfExistItem = included.find(include => include.type === innerInnerAttrConstructorName
+                && include.id === recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].dataValues.id);
+                console.log(checkIfExistItem);
+                if (!checkIfExistItem) {
+                  included.push({
+                    type: innerInnerAttrConstructorName,
+                    id: recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].dataValues.id,
+                    attributes: recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].dataValues,
+                  });
+                }
+              }
+            }
+          }
+
+          // get ready for 3rd level
+          const innerInnerObj = getJSONapiObj(recordData[keyName].dataValues[innerKeyName], models, currentOptions);
           innerRelationships[innerKeyName] = {
             data: {
               type: innerAttrConstructorName,
@@ -92,14 +115,15 @@ function getJSONApiResponseFromRecord(db, modelName, record, options) {
             }
           };
           // add to included if its present in options
-          if (currentOptions.includeModels.find(includeModelName => includeModelName === attrConstructorName)) {
+          if (currentOptions.includeModels.find(includeModelName => includeModelName === innerAttrConstructorName)) {
             const checkIfExistItem = included.find(include => include.type === innerAttrConstructorName
             && include.id === recordData[keyName].dataValues[innerKeyName].dataValues.id);
             if (!checkIfExistItem) {
               included.push({
                 type: innerAttrConstructorName,
                 id: recordData[keyName].dataValues[innerKeyName].dataValues.id,
-                attributes: recordData[keyName].dataValues[innerKeyName].dataValues
+                attributes: innerInnerObj.attributes,
+                relationships: innerInnerObj.relationships
               });
             }
           }
@@ -108,7 +132,6 @@ function getJSONApiResponseFromRecord(db, modelName, record, options) {
           innerRelationships[innerKeyName] = {
             data: []
           };
-          console.log('Array TODO');
           for (const innerData of recordData[keyName].dataValues[innerKeyName]) {
             innerRelationships[innerKeyName].data.push({
               id: innerData.dataValues.id,
@@ -212,12 +235,9 @@ async function createResource(db, modelName, data) {
   for (const relationKey of Object.keys(data.relationships)) {
     if (data.relationships[relationKey].data !== null && isPlainObject(data.relationships[relationKey].data)) {
       const type = uppercamelcase(data.relationships[relationKey].data.type);
-      console.log(type);
       const objToSet = await db[type].findById(data.relationships[relationKey].data.id);
       const setFuncName = `set${relationKey}`;
-      console.log('setFuncName', setFuncName);
       await createdResource[setFuncName](objToSet);
-      console.log(objToSet);
     }
   }
 
