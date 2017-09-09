@@ -58,7 +58,9 @@ function generateHandout(event) {
 
 function concatHandouts(handouts) {
   return {
-    handouts
+    handouts: {
+      handout: handouts
+    }
   };
 }
 
