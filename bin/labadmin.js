@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const yargs = require('yargs');
-console.log(process.argv);
+// console.log(process.argv);
 
 yargs // eslint-disable-line no-unused-expressions
   .usage('Usage: labadmin <command> [options]')
@@ -121,7 +121,7 @@ yargs // eslint-disable-line no-unused-expressions
     handler: async (argv) => {
       const logger = require('../utils/logger.js');
       try {
-        console.log(argv);
+        // console.log(argv);
         const init = require('./commands/dev-init.js');
         await init(argv.allUser, argv.genPass);
       } catch (err) {

@@ -136,7 +136,7 @@ module.exports = async (req, res) => {
       ]
     });
 
-    console.log(JSON.stringify(queryObj));
+    // console.log(JSON.stringify(queryObj));
 
     if (req.query.limit) {
       queryObj.limit = parseInt(req.query.limit, 10);

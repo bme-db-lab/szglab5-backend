@@ -53,7 +53,7 @@ module.exports = async (req, res) => {
     });
     res.send(response);
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     if (err.notFound) {
       res.status(404).send(genErrorObj(err.message));
       return;

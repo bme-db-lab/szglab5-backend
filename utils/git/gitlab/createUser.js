@@ -17,8 +17,8 @@ module.exports = async (username, name, email, password) => {
       password
     })
   });
-  console.log(response.status);
+  // console.log(response.status);
   const responseJSON = await response.json();
-  console.log(responseJSON);
+  // console.log(responseJSON);
 };
 

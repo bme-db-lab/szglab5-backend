@@ -12,7 +12,7 @@ module.exports = async (semesterId, options) => {
   const db = getDB();
   // get initialized courses from db
   try {
-    console.log('initOptions', options);
+    // console.log('initOptions', options);
     const students = await parseStudents(semesterId, options);
     await seedDBwithObjects(db, 'Users', students);
     // set user roles

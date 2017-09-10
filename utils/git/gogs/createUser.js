@@ -1,4 +1,4 @@
 module.exports = () => {
-  console.log('Gogs create user');
+  // console.log('Gogs create user');
 };
 

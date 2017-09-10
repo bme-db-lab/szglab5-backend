@@ -119,7 +119,7 @@ module.exports = () => {
       }
       return false;
     });
-    console.log(metadata.courses);
+    // console.log(metadata.courses);
     return metadata;
   }
   logger.warn('No seed data provided');

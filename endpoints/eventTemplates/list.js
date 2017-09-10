@@ -8,18 +8,18 @@ module.exports = async (req, res) => {
     const filter = req.query.filter;
 
     const userInfo = req.userInfo;
-    console.log(userInfo);
+    // console.log(userInfo);
 
     const { roles } = req.userInfo;
     const isAdmin = roles.find(role => role === 'ADMIN') !== undefined;
 
     let demoFilter = {};
-    console.log(0);
-    console.log(filter);
-    console.log(isAdmin);
-    console.log(!(filter && 'asCorrector' in filter));
+    // console.log(0);
+    // console.log(filter);
+    // console.log(isAdmin);
+    // console.log(!(filter && 'asCorrector' in filter));
     if (!isAdmin && !(filter && 'asCorrector' in filter)) {
-      console.log('1');
+      // console.log('1');
       demoFilter = {
         DemonstratorId: userInfo.userId
       };

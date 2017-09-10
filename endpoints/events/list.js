@@ -79,7 +79,6 @@ module.exports = async (req, res) => {
       };
 
       const { userId } = req.userInfo;
-      console.log(userId);
 
       demonstratorId = {
         id: userId
@@ -135,7 +134,7 @@ module.exports = async (req, res) => {
     });
     res.send(response);
   } catch (err) {
-    console.log(err.stack);
+    // console.log(err.stack);
     res.status(500).send(genErrorObj(err.message));
   }
 };

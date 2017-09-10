@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
     if (isNaN(reqId)) {
       throw new Error('Request id is invalid');
     }
-    console.log(req.userInfo);
+    // console.log(req.userInfo);
     const { roles } = req.userInfo;
     // TODO: STUDENT csak saját deliverables
     if (roles.includes('STUDENT')) {
