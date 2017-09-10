@@ -115,8 +115,14 @@ module.exports = async (req, res) => {
 
     const events = await db.Events.findAll(queryObj);
 
+    const includeModels = ['Deliverables', 'ExerciseSheets', 'Users', 'DeliverableTemplates', 'ExerciseCategories'];
+    if (filter && 'eventTemplateId' in filter) {
+      includeModels.push('ExerciseTypes');
+      includeModels.push('StudentRegistrations');
+    }
+
     const response = getJSONApiResponseFromRecords(db, 'Events', events, {
-      includeModels: ['Deliverables', 'ExerciseSheets', 'Users', 'DeliverableTemplates', 'ExerciseCategories']
+      includeModels
     });
     res.send(response);
   } catch (err) {
