@@ -40,8 +40,6 @@ function getJSONapiObj(record, models, currentOptions) {
         }
       }
     } else if ((Array.isArray(record.dataValues[innerKeyName]))) {
-      // array relation
-      console.log('Array TODOOO');
     } else {
       attributes[innerKeyName] = record.dataValues[innerKeyName];
     }
