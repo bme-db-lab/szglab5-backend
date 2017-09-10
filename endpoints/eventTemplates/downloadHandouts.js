@@ -67,14 +67,11 @@ module.exports = async (req, res) => {
     const user = await db.Users.findById(userInfo.userId, {
       include: {
         model: db.StudentGroups,
-        all: true,
         include: {
           model: db.StudentRegistrations,
-          all: true,
           include: {
             model: db.Events,
-            all: true,
-            where: { eventTemplateId: req.params.id }
+            where: { EventTemplateId: req.params.id }
           }
         }
       }
