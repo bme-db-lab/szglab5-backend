@@ -7,10 +7,14 @@ const getEventTemplate = require('./get.js');
 const listEventTemplates = require('./list.js');
 const updateEventTemplate = require('./update.js');
 const generateDeliverables = require('./generateDeliverables.js');
+const downloadHandouts = require('./downloadHandouts.js');
 
 module.exports = (app) => {
-  app.use('/event-templates*', auth);
   app.use('/event-templates*', epLogger);
+
+  app.post('/event-templates/:id/listDownload.zip', downloadHandouts);
+
+  app.use('/event-templates*', auth);
 
   app.delete('/event-templates/:id', deleteEventTemplate);
   app.get('/event-templates', listEventTemplates);

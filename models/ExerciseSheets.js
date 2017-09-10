@@ -1,5 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const ExerciseSheets = sequelize.define('ExerciseSheets', {
+    generatedPathPrefix: DataTypes.TEXT
   });
 
   ExerciseSheets.associate = (models) => {
