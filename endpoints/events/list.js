@@ -72,9 +72,17 @@ module.exports = async (req, res) => {
     }
 
     let eventTempl = {};
+    let demonstratorId = {};
     if (filter && 'eventTemplateId' in filter) {
       eventTempl = {
         id: filter.eventTemplateId
+      };
+
+      const { userId } = req.userInfo;
+      console.log(userId);
+
+      demonstratorId = {
+        id: userId
       };
     }
 
@@ -103,7 +111,8 @@ module.exports = async (req, res) => {
       },
       {
         model: db.Users,
-        as: 'Demonstrator'
+        as: 'Demonstrator',
+        where: demonstratorId
       },
       {
         model: db.StudentRegistrations,
