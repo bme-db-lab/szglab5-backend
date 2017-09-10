@@ -20,24 +20,10 @@ module.exports = async (req, res) => {
                 model: db.Users,
               }]
             }]
-          },
-          {
-
           }
         ]
       }
     );
-
-
-    queryObj.include.push({
-      model: db.Events,
-      include: [{
-        model: db.StudentRegistrations,
-        include: [{
-          model: db.Users,
-        }]
-      }]
-    });
 
     checkIfExist(deliverable);
     const response = getJSONApiResponseFromRecord(db, 'Deliverables', deliverable, {
