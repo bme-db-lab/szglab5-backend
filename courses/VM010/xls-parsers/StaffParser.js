@@ -70,7 +70,7 @@ module.exports = async (options) => {
             if (user.data.email_official !== null) {
               user.data.university = 'BME';
               let initPassword = '12345';
-              if (!options.genPass) {
+              if (options.genPass) {
                 initPassword = generator.generate({
                   length: 10,
                   numbers: true
