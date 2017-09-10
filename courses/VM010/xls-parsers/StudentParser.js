@@ -50,13 +50,13 @@ module.exports = async (semesterId, devInit) => {
               }
               break;
             case 'D':
-              if (seed[key].w !== undefined) {
+              /*if (seed[key].w !== undefined) {
                 user.data.loginName = seed[key].w;
               } else if (user.data.neptun) {
                 user.data.loginName = user.data.neptun;
               } else {
                 user.data.loginName = null;
-              }
+              }*/
               break;
             case 'E':
               if (seed[key].w !== undefined) {
