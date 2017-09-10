@@ -8,12 +8,12 @@ const parseTimetable = require('./xls-parsers/TimetableParser.js');
 const parseGroups = require('./xls-parsers/StudentGroupParser.js');
 const { updateResource, checkIfExist } = require('../../utils/jsonapi.js');
 
-module.exports = async (semesterId, devInit) => {
+module.exports = async (semesterId, options) => {
   const db = getDB();
   // get initialized courses from db
   try {
-    console.log(devInit);
-    const students = await parseStudents(semesterId, devInit);
+    console.log('initOptions', options);
+    const students = await parseStudents(semesterId, options);
     await seedDBwithObjects(db, 'Users', students);
     // set user roles
     const studentRole = await db.Roles.findOne({ where: { name: 'STUDENT' } });
@@ -29,7 +29,7 @@ module.exports = async (semesterId, devInit) => {
     }
     const exercises = await parseExercises(semesterId);
     await seedDBwithObjects(db, 'ExerciseTypes', exercises);
-    const parsedStaff = await parseStaff(devInit);
+    const parsedStaff = await parseStaff(options);
     const staff = parsedStaff.simpleUsers;
     const exList = parsedStaff.exList;
     await seedDBwithObjects(db, 'Users', staff);
@@ -81,7 +81,7 @@ module.exports = async (semesterId, devInit) => {
 
     const groups = await parseGroups(semesterId);
     await seedDBwithObjects(db, 'StudentGroups', groups);
-    const regs = await parseStudentRegs(semesterId, devInit);
+    const regs = await parseStudentRegs(semesterId, options);
     await seedDBwithObjects(db, 'StudentRegistrations', regs);
     const timetable = await parseTimetable();
     await seedDBwithObjects(db, 'Appointments', timetable);

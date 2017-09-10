@@ -3,7 +3,7 @@ const { getDB } = require('../../../db/db.js');
 
 const generator = require('generate-password');
 
-module.exports = async (devInit) => {
+module.exports = async (options) => {
   const db = getDB();
   let seed = null;
   try {
@@ -70,7 +70,7 @@ module.exports = async (devInit) => {
             if (user.data.email_official !== null) {
               user.data.university = 'BME';
               let initPassword = '12345';
-              if (!devInit) {
+              if (!options.genPass) {
                 initPassword = generator.generate({
                   length: 10,
                   numbers: true

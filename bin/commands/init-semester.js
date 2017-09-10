@@ -63,7 +63,10 @@ module.exports = async () => {
     });
     logger.info('Initializing semester, please wait...');
     const courseMethod = require(`../../courses/${code}/${code}.js`);
-    await courseMethod(qResult.dataValues.id);
+    await courseMethod(qResult.dataValues.id, {
+      allUser: true,
+      genPass: true
+    });
   } catch (err) {
     throw err;
   } finally {

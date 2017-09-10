@@ -3,7 +3,7 @@ const XLSX = require('xlsx');
 const { getDB } = require('../../../db/db.js');
 const generator = require('generate-password');
 
-module.exports = async (semesterId, devInit) => {
+module.exports = async (semesterId, options) => {
   const db = getDB();
   let seed = null;
   try {
@@ -13,7 +13,7 @@ module.exports = async (semesterId, devInit) => {
       sheetStubs: true,
     };
 
-    if (devInit) {
+    if (!options.allUser) {
       opts.sheetRows = 10;
     }
 
@@ -63,7 +63,7 @@ module.exports = async (semesterId, devInit) => {
                 user.data.password = seed[key].w;
               } else {
                 let initPassword = '12345';
-                if (!devInit) {
+                if (options.genPass) {
                   initPassword = generator.generate({
                     length: 10,
                     numbers: true

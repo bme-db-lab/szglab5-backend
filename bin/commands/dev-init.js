@@ -5,8 +5,13 @@ const { initDB, closeDB } = require('../../db/db.js');
 const logger = require('../../utils/logger.js');
 const { seedDBwithJSON, seedDBwithObjects } = require('./../../db/seed');
 
-module.exports = async () => {
+module.exports = async (allUser, genPass) => {
   const code = 'VM010';
+
+  const options = {
+    allUser: allUser || false,
+    genPass: genPass || false
+  };
 
   // rd then ic
   try {
@@ -38,7 +43,7 @@ module.exports = async () => {
     // Generate records for semester - xls parsers
     logger.info('Initializing semester, please wait...');
     const courseMethod = require(`../../courses/${code}/${code}.js`); // eslint-disable-line
-    await courseMethod(qResult.dataValues.id, true);
+    await courseMethod(qResult.dataValues.id, options);
 
     // generate exercise sheets
     logger.info('Generating Exercise Sheets!');

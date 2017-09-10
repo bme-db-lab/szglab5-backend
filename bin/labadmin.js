@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const yargs = require('yargs');
+console.log(process.argv);
 
 yargs // eslint-disable-line no-unused-expressions
   .usage('Usage: labadmin <command> [options]')
@@ -106,11 +107,23 @@ yargs // eslint-disable-line no-unused-expressions
     command: 'dev-init',
     aliases: ['di'],
     desc: 'Shortcut for rd -> ic -> is -> gse',
-    handler: async () => {
+    builder: () => yargs
+    .options({
+      'all-user': {
+        type: 'boolean',
+        default: false
+      },
+      'gen-pass': {
+        type: 'boolean',
+        default: false
+      }
+    }),
+    handler: async (argv) => {
       const logger = require('../utils/logger.js');
       try {
+        console.log(argv);
         const init = require('./commands/dev-init.js');
-        await init();
+        await init(argv.allUser, argv.genPass);
       } catch (err) {
         logger.error('Error while executing init');
         logger.error(err);

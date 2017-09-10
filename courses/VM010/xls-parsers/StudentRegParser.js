@@ -2,7 +2,7 @@ const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
 const { getDB } = require('../../../db/db.js');
 
-module.exports = async (semesterId, devInit) => {
+module.exports = async (semesterId, options) => {
   const db = getDB();
   let seed = null;
   try {
@@ -12,7 +12,7 @@ module.exports = async (semesterId, devInit) => {
       sheetStubs: true
     };
 
-    if (devInit) {
+    if (!options.allUser) {
       opts.sheetRows = 10;
     }
 
