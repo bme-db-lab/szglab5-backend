@@ -71,6 +71,13 @@ module.exports = async (req, res) => {
       };
     }
 
+    let eventTempl = {};
+    if (filter && 'eventTemplateId' in filter) {
+      eventTempl = {
+        id: filter.eventTemplateId
+      };
+    }
+
     queryObj.include = [
       {
         model: db.Deliverables,
@@ -80,20 +87,29 @@ module.exports = async (req, res) => {
       },
       {
         model: db.ExerciseSheets,
-        include: {
-          model: db.ExerciseCategories,
-          where: exCat
-        }
+        include: [
+          {
+            model: db.ExerciseCategories,
+            where: exCat
+          },
+          {
+            model: db.ExerciseTypes
+          }
+        ]
       },
       {
-        model: db.EventTemplates
+        model: db.EventTemplates,
+        where: eventTempl
       },
       {
         model: db.Users,
         as: 'Demonstrator'
       },
       {
-        model: db.StudentRegistrations
+        model: db.StudentRegistrations,
+        include: {
+          model: db.Users
+        }
       }
     ];
 
