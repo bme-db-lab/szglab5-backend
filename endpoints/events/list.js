@@ -120,6 +120,7 @@ module.exports = async (req, res) => {
     });
     res.send(response);
   } catch (err) {
+    console.log(err.stack);
     res.status(500).send(genErrorObj(err.message));
   }
 };

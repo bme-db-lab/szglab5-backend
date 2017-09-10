@@ -85,18 +85,20 @@ function getJSONApiResponseFromRecord(db, modelName, record, options) {
         if (models.find(item => item === innerAttrConstructorName)) {
 
           for (const innerInnerKeyname of Object.keys(recordData[keyName].dataValues[innerKeyName].dataValues)) {
-            const innerInnerAttrConstructorName = recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].dataValues !== null ? recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].constructor.name : null;
-            if (models.find(item => item === innerInnerAttrConstructorName)) {
-              // add to included if its present in options
-              if (currentOptions.includeModels.find(includeModelName => includeModelName === innerInnerAttrConstructorName)) {
-                const checkIfExistItem = included.find(include => include.type === innerInnerAttrConstructorName
-                && include.id === recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].dataValues.id);
-                if (!checkIfExistItem) {
-                  included.push({
-                    type: innerInnerAttrConstructorName,
-                    id: recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].dataValues.id,
-                    attributes: recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].dataValues,
-                  });
+            if (recordData[keyName].dataValues[innerKeyName] !== null && recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname] !== null) {
+              const innerInnerAttrConstructorName = recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].dataValues !== null ? recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].constructor.name : null;
+              if (models.find(item => item === innerInnerAttrConstructorName)) {
+                // add to included if its present in options
+                if (currentOptions.includeModels.find(includeModelName => includeModelName === innerInnerAttrConstructorName)) {
+                  const checkIfExistItem = included.find(include => include.type === innerInnerAttrConstructorName
+                  && include.id === recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].dataValues.id);
+                  if (!checkIfExistItem) {
+                    included.push({
+                      type: innerInnerAttrConstructorName,
+                      id: recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].dataValues.id,
+                      attributes: recordData[keyName].dataValues[innerKeyName].dataValues[innerInnerKeyname].dataValues,
+                    });
+                  }
                 }
               }
             }
