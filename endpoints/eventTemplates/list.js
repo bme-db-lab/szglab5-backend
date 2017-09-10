@@ -14,6 +14,7 @@ module.exports = async (req, res) => {
     const isAdmin = roles.find(role => role === 'ADMIN') !== undefined;
 
     let demoFilter = {};
+    const eventInclude = [];
     // console.log(0);
     // console.log(filter);
     // console.log(isAdmin);
@@ -23,6 +24,30 @@ module.exports = async (req, res) => {
       demoFilter = {
         DemonstratorId: userInfo.userId
       };
+      eventInclude.push({
+        where: demoFilter,
+        model: db.Events,
+        include: [
+          {
+            model: db.StudentRegistrations
+          },
+          {
+            model: db.Users,
+            as: 'Demonstrator'
+          },
+          {
+            model: db.Deliverables
+          },
+          {
+            model: db.EventTemplates
+          },
+          {
+            model: db.ExerciseSheets
+          }
+        ]
+      });
+    } else {
+
     }
 
     const records = await db.EventTemplates.findAll({
@@ -38,28 +63,7 @@ module.exports = async (req, res) => {
         {
           model: db.DeliverableTemplates
         },
-        {
-          where: demoFilter,
-          model: db.Events,
-          include: [
-            {
-              model: db.StudentRegistrations
-            },
-            {
-              model: db.Users,
-              as: 'Demonstrator'
-            },
-            {
-              model: db.Deliverables
-            },
-            {
-              model: db.EventTemplates
-            },
-            {
-              model: db.ExerciseSheets
-            }
-          ]
-        }
+        ...eventInclude
       ]
     });
     const response = getJSONApiResponseFromRecords(db, 'EventTemplates', records, {
