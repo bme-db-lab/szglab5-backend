@@ -31,7 +31,7 @@ module.exports = async (semesterId, options) => {
             case 'A':
               exercise = { data: {} };
               if (seed[key].w !== undefined) {
-                exercise.data.id = seed[key].w;
+                exercise.data.exerciseId = seed[key].w;
               } else {
                 exercise.data.id = null;
               }

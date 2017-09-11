@@ -47,6 +47,7 @@ module.exports = async (semesterId, options) => {
             case 'C':
               if (seed[key].w !== undefined) {
                 user.data.neptun = seed[key].w;
+                user.data.loginName = seed[key].w;
               } else {
                 user.data.neptun = null;
               }
