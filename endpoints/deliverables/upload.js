@@ -69,7 +69,8 @@ module.exports = async (req, res) => {
     const deliverableUpdate = {
       uploaded: true,
       filePath: savePath,
-      lastSubmittedDate: new Date()
+      lastSubmittedDate: new Date(),
+      originalFileName: uploadedFile.originalname
     };
 
     // TODO ONLY FOR TEST WEEKEND

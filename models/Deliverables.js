@@ -24,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     commit: DataTypes.STRING,
     // file
     uploaded: DataTypes.BOOLEAN,
-    filePath: DataTypes.STRING
+    filePath: DataTypes.STRING,
+    originalFileName: DataTypes.STRING
   });
   Deliverables.associate = (models) => {
     Deliverables.belongsTo(models.Events);

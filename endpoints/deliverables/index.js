@@ -12,6 +12,7 @@ const updateDeliverables = require('./update.js');
 const updateDeliverableEvent = require('./updateEvent.js');
 const uploadDeliverable = require('./upload');
 const downloadDeliverable = require('./download');
+const downloadWithOrigFileName = require('./downloadOrigFileName');
 
 const multer = require('multer');
 
@@ -19,6 +20,7 @@ const upload = multer();
 
 module.exports = (app) => {
   app.post('/deliverables/:id/download', downloadDeliverable);
+  app.get('/deliverables/:id/download/:fileName', downloadWithOrigFileName);
   app.use('/deliverables*', auth);
   app.use('/deliverables*', epLogger);
 
