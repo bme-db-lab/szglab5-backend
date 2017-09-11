@@ -75,7 +75,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas) => {
         const exerciseSheet = await db.ExerciseSheets.findOne({ where: { ExerciseCategoryId: eventTemplate.dataValues.ExerciseCategoryId, ExerciseTypeId: studentReg.dataValues.ExerciseTypeId } });
 
         const event = [{ data: {
-          date: moment(appointment.dataValues.date).add(1, 'y'),
+          date: appointment.dataValues.date,
           location: appointment.dataValues.location,
           StudentRegistrationId: studentReg.dataValues.id,
           EventTemplateId: eventTemplate.id,
