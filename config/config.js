@@ -83,10 +83,10 @@ try {
   const specConfigPath = path.join(__dirname, `./config.${env}.json`);
   const specConfigFile = readFileSync(specConfigPath);
   specConfig = JSON.parse(specConfigFile.toString());
-  // console.log(`Config file(${path.basename(specConfigPath)}) loaded`);
+  console.log(`Config file(${path.basename(specConfigPath)}) loaded`);
 } catch (err) {
-  // console.log(`Can not read specific config file: ${err}`);
-  // console.log('Fallback to default config!');
+  console.log(`Can not read specific config file: ${err}`);
+  console.log('Fallback to default config!');
 }
 
 const config = _.merge(defaultConfig, specConfig);
