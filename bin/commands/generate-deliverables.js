@@ -1,4 +1,6 @@
 const inquirer = require('inquirer');
+const moment = require('moment');
+
 const { initDB, closeDB } = require('../../db/db.js');
 const logger = require('../../utils/logger.js');
 
@@ -33,9 +35,10 @@ module.exports = async () => {
       for (const deliverableTemplate of deliverableTemplates) {
         logger.debug(` DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`);
         const eventDate = event.dataValues.date;
-        eventDate.setDate(eventDate.getDate() + 10);
+        let deadline = moment(eventDate).add(1, 'd');
+
         await db.Deliverables.create({
-          deadline: eventDate,
+          deadline,
           EventId: event.dataValues.id,
           DeliverableTemplateId: deliverableTemplate.dataValues.id
         });

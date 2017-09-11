@@ -73,9 +73,9 @@ module.exports = async (req, res) => {
     };
 
     // TODO ONLY FOR TEST WEEKEND
-    if (Math.floor(Math.random() * 2) === 0) {
-      deliverableUpdate.deadline = '2013-09-09T02:31:24.530Z';
-    }
+    // if (Math.floor(Math.random() * 2) === 0) {
+    //   deliverableUpdate.deadline = '2013-09-09T02:31:24.530Z';
+    // }
 
     await deliverables.update(deliverableUpdate);
     res.send('ok');
