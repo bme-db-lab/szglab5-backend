@@ -36,6 +36,7 @@ module.exports = async (semesterId, options) => {
           switch (key[0]) {
             case 'A': {
               user = { data: {} };
+              users.push(user);
               let initPassword = '12345';
               if (options.genPass) {
                 initPassword = generator.generate({
@@ -89,10 +90,10 @@ module.exports = async (semesterId, options) => {
             case 'G':
               if (user.data.neptun !== null) {
                 user.data.university = 'BME';
-                users.push(user);
               }
               break;
             default:
+              console.log(seed[key]);
           }
         }
       }
