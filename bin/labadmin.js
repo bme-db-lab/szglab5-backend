@@ -45,11 +45,20 @@ yargs // eslint-disable-line no-unused-expressions
     command: 'init-semester',
     aliases: ['is'],
     desc: 'Initalize a new semester in a course',
-    handler: async () => {
+    builder: () => yargs
+    .options({
+      hallgatok: {
+        default: 'hallgatok-minta'
+      },
+      beosztas: {
+        default: 'beosztas-minta'
+      }
+    }),
+    handler: async (argv) => {
       const logger = require('../utils/logger.js');
       try {
         const initSemester = require('./commands/init-semester');
-        await initSemester();
+        await initSemester(argv.hallgatok, argv.beosztas);
         logger.info('Semester initializing succeed!');
       } catch (err) {
         logger.error('Error while initializing semester');
@@ -116,6 +125,12 @@ yargs // eslint-disable-line no-unused-expressions
       'gen-pass': {
         type: 'boolean',
         default: false
+      },
+      hallgatok: {
+        default: 'hallgatok-minta'
+      },
+      beosztas: {
+        default: 'beosztas-minta'
       }
     }),
     handler: async (argv) => {
@@ -123,7 +138,7 @@ yargs // eslint-disable-line no-unused-expressions
       try {
         // console.log(argv);
         const init = require('./commands/dev-init.js');
-        await init(argv.allUser, argv.genPass);
+        await init(argv.allUser, argv.genPass, argv.hallgatok, argv.beosztas);
       } catch (err) {
         logger.error('Error while executing init');
         logger.error(err);

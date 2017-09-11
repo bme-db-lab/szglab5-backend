@@ -5,12 +5,14 @@ const { initDB, closeDB } = require('../../db/db.js');
 const logger = require('../../utils/logger.js');
 const { seedDBwithJSON, seedDBwithObjects } = require('./../../db/seed');
 
-module.exports = async (allUser, genPass) => {
+module.exports = async (allUser, genPass, hallgatok, beosztas) => {
   const code = 'VM010';
 
   const options = {
     allUser: allUser || false,
-    genPass: genPass || false
+    genPass: genPass || false,
+    xlsBeosztasFileName: beosztas || 'beosztas-minta',
+    xlsHallgatokFileName: hallgatok || 'hallgatok-minta'
   };
 
   // rd then ic

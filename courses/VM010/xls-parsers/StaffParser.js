@@ -7,7 +7,9 @@ module.exports = async (options) => {
   const db = getDB();
   let seed = null;
   try {
-    const seedFile = 'courses/VM010/xls-data/beosztas-minta.xlsx';
+    const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta';
+
+    const seedFile = `courses/VM010/xls-data/${xlsFileName}.xlsx`;
     const sheetName = 'Nevek, elerhetosegek';
     const opts = {
       sheetStubs: true,

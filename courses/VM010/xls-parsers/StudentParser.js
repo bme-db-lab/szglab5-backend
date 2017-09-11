@@ -7,7 +7,9 @@ module.exports = async (semesterId, options) => {
   const db = getDB();
   let seed = null;
   try {
-    const seedFilePath = 'courses/VM010/xls-data/hallgatok-minta.xlsx';
+    const xlsFileName = options.xlsHallgatokFileName || 'hallgatok-minta';
+
+    const seedFilePath = `courses/VM010/xls-data/${xlsFileName}.xlsx`;
     const sheetName = 'Hallgatoi csoportbeosztas másol';
     const opts = {
       sheetStubs: true,

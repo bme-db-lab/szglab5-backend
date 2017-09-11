@@ -12,7 +12,7 @@ module.exports = async (semesterId, options) => {
   const db = getDB();
   // get initialized courses from db
   try {
-    // console.log('initOptions', options);
+    console.log('initOptions', options);
     const students = await parseStudents(semesterId, options);
     await seedDBwithObjects(db, 'Users', students);
     // set user roles
@@ -27,7 +27,7 @@ module.exports = async (semesterId, options) => {
       }];
       await seedDBwithObjects(db, 'UserRoles', userRole);
     }
-    const exercises = await parseExercises(semesterId);
+    const exercises = await parseExercises(semesterId, options);
     await seedDBwithObjects(db, 'ExerciseTypes', exercises);
     const parsedStaff = await parseStaff(options);
     const staff = parsedStaff.simpleUsers;
@@ -78,12 +78,11 @@ module.exports = async (semesterId, options) => {
       }
     }
 
-
-    const groups = await parseGroups(semesterId);
+    const groups = await parseGroups(semesterId, options);
     await seedDBwithObjects(db, 'StudentGroups', groups);
     const regs = await parseStudentRegs(semesterId, options);
     await seedDBwithObjects(db, 'StudentRegistrations', regs);
-    const timetable = await parseTimetable();
+    const timetable = await parseTimetable(options);
     await seedDBwithObjects(db, 'Appointments', timetable);
   } catch (error) {
     throw error;

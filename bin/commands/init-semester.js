@@ -3,7 +3,7 @@ const { initDB, closeDB } = require('../../db/db.js');
 const logger = require('../../utils/logger.js');
 const { seedDBwithObjects } = require('./../../db/seed');
 
-module.exports = async () => {
+module.exports = async (hallgatoXls, beosztasXls) => {
   // get initialized courses from db
   const db = await initDB();
   const result = await db.Courses.findAll();
@@ -65,7 +65,9 @@ module.exports = async () => {
     const courseMethod = require(`../../courses/${code}/${code}.js`);
     await courseMethod(qResult.dataValues.id, {
       allUser: true,
-      genPass: true
+      genPass: true,
+      xlsBeosztasFileName: hallgatoXls || 'beosztas-minta',
+      xlsHallgatokFileName: beosztasXls || 'hallgatok-minta'
     });
   } catch (err) {
     throw err;

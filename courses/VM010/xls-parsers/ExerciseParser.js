@@ -2,11 +2,13 @@ const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
 const { getDB } = require('../../../db/db.js');
 
-module.exports = async (semesterId) => {
+module.exports = async (semesterId, options) => {
   const db = getDB();
   let seed = null;
   try {
-    const seedFile = 'courses/VM010/xls-data/beosztas-minta.xlsx';
+    const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta';
+
+    const seedFile = `courses/VM010/xls-data/${xlsFileName}.xlsx`;
     const sheetName = 'Feladatok es kodjaik';
     const opts = {
       sheetStubs: true,
