@@ -2,14 +2,16 @@ const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
 const { getDB } = require('../../../db/db.js');
 const generator = require('generate-password');
+const { join } = require('path');
 
 module.exports = async (semesterId, options) => {
   const db = getDB();
   let seed = null;
   try {
     const xlsFileName = options.xlsHallgatokFileName || 'hallgatok-minta';
+    const basePath = options.basePath || 'courses/VM010/xls-data';
 
-    const seedFilePath = `courses/VM010/xls-data/${xlsFileName}.xlsx`;
+    const seedFilePath = join(basePath, `${xlsFileName}.xlsx`);
     const sheetName = 'Hallgatoi csoportbeosztas másol';
     const opts = {
       sheetStubs: true,

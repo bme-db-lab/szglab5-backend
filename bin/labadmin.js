@@ -131,6 +131,9 @@ yargs // eslint-disable-line no-unused-expressions
       },
       beosztas: {
         default: 'beosztas-minta'
+      },
+      'base-path': {
+        default: ''
       }
     }),
     handler: async (argv) => {
