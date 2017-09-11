@@ -17,7 +17,7 @@ function generateHandout(event) {
 
   const categoryId = exerciseCategory.id;
   const categoryName = exerciseCategory.type;
-  const exerciseTypeId = exerciseType.id;
+  const exerciseTypeId = exerciseType.exerciseId;
   const shortName = exerciseType.shortName;
   const exerciseTypeName = exerciseType.name;
   const studentName = student.displayName;
