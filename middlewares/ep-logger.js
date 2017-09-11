@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
       const bodyData = Object.assign({}, req.body);
       bodyData.password = '********';
       reqData = JSON.stringify(bodyData);
-    } else if (req.body.data.attributes.newpwd) {
+    } else if (req.body && req.body.data && req.body.data.attributes && req.body.data.attributes.newpwd) {
       const bodyData = Object.assign({}, req.body);
       bodyData.data.attributes.newpwd = '*******';
       reqData = JSON.stringify(bodyData);
