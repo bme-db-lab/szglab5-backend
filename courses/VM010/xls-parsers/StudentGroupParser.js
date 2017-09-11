@@ -2,7 +2,7 @@ const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
 const { getDB } = require('../../../db/db.js');
 
-module.exports = async (options) => {
+module.exports = async (semesterId, options) => {
   const db = getDB();
   let seed = null;
   try {
@@ -35,7 +35,7 @@ module.exports = async (options) => {
                 const uQueryResult = await db.Users.findOne({
                   attributes: ['id'],
                   where: {
-                    email_official: seed[key].w
+                    displayName: seed[key].w
                   }
                 });
                 group.data.UserId = uQueryResult.dataValues.id;

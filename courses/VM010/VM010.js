@@ -36,16 +36,17 @@ module.exports = async (semesterId, options) => {
     for (const record of exList) {
       const qGuru = await db.Users.findOne({ where: { email_official: record.data.guru } });
       if (record.data.ex !== undefined && record.data.ex !== null) {
-        const qEx = await db.ExerciseTypes.findOne({ where: { id: record.data.ex } });
+        const qEx = await db.ExerciseTypes.findOne({ where: { exerciseId: record.data.ex } });
         await db.ExerciseTypes.update({ GuruId: qGuru.dataValues.id }, { where: { id: qEx.dataValues.id } });
       }
 
       if (record.data.exercises !== undefined && record.data.exercises !== null) {
         const aEx = record.data.exercises.split(',');
         for (const ex of aEx) {
+          const qEx = await db.ExerciseTypes.findOne({ where: { exerciseId: ex } });
           const data = [{
             data: {
-              ExerciseTypeId: ex,
+              ExerciseTypeId: qEx.dataValues.id,
               UserId: qGuru.dataValues.id
             }
           }];

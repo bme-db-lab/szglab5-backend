@@ -44,6 +44,14 @@ module.exports = async (options) => {
           if (seed[(`A${rKey[2]}`)] !== undefined) {
             app.data.location = seed[(`A${rKey[2]}`)].w;
             const date = seed[(`${rKey[1]}2`)].w;
+            console.log('---');
+            console.log(typeof date);
+            console.log(date);
+            console.log('***');
+            const dateFix = new Date(date);
+            console.log(dateFix);
+            console.log('***');
+            console.log('---');
             const hour = seed[(`${rKey[1]}1`)].w;
             app.data.date = new Date(`${date}`);
             app.data.date.setHours(hour);

@@ -5,6 +5,7 @@ const { getDB } = require('../../../db/db.js');
 module.exports = async (semesterId, options) => {
   const db = getDB();
   let seed = null;
+
   try {
     const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta';
 
