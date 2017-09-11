@@ -34,8 +34,18 @@ module.exports = async (semesterId, options) => {
       if (rKey !== null) {
         if (rKey[2] !== '1') {
           switch (key[0]) {
-            case 'A':
+            case 'A': {
               user = { data: {} };
+              let initPassword = '12345';
+              if (options.genPass) {
+                initPassword = generator.generate({
+                  length: 10,
+                  numbers: true
+                });
+              }
+              user.data.initPassword = initPassword;
+              user.data.password = initPassword;
+            }
               break;
             case 'B':
               if (seed[key].w !== undefined) {
@@ -62,19 +72,19 @@ module.exports = async (semesterId, options) => {
               } */
               break;
             case 'E':
-              if (seed[key].w !== undefined) {
-                user.data.password = seed[key].w;
-              } else {
-                let initPassword = '12345';
-                if (options.genPass) {
-                  initPassword = generator.generate({
-                    length: 10,
-                    numbers: true
-                  });
-                }
-                user.data.initPassword = initPassword;
-                user.data.password = initPassword;
-              }
+              // let initPassword = '12345';
+              // if (seed[key].w !== undefined) {
+              //   user.data.password = seed[key].w;
+              // } else {
+              //   if (options.genPass) {
+              //     initPassword = generator.generate({
+              //       length: 10,
+              //       numbers: true
+              //     });
+              //   }
+              //   user.data.initPassword = initPassword;
+              //   user.data.password = initPassword;
+              // }
               break;
             case 'G':
               if (user.data.neptun !== null) {
