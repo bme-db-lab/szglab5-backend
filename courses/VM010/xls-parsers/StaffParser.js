@@ -113,46 +113,46 @@ module.exports = async (options) => {
     if (rKey[2] !== '1') {
       switch (key[0]) {
         case 'A':
-          user = { data: {} };
-          if (seed[key].w !== undefined) {
-            user.data.email_official = seed[key].w;
-          } else {
-            user.data.email_official = null;
-          }
+          // user = { data: {} };
+          // if (seed[key].w !== undefined) {
+          //   user.data.email_official = seed[key].w;
+          // } else {
+          //   user.data.email_official = null;
+          // }
           break;
         case 'B':
-          if (user.data.email_official != null) {
+          if (user.data.displayName != null) {
             if (seed[key].w !== undefined) {
-              users[user.data.email_official].data.studentgroup_id = seed[key].w;
+              users[user.data.displayName].data.studentgroup_id = seed[key].w;
             } else {
-              users[user.data.email_official].data.studentgroup_id = null;
+              users[user.data.displayName].data.studentgroup_id = null;
             }
           }
           break;
         case 'C':
-          if (user.data.email_official != null) {
+          if (user.data.displayName != null) {
             if (seed[key].w !== undefined) {
-              users[user.data.email_official].data.classroom = seed[key].w;
+              users[user.data.displayName].data.classroom = seed[key].w;
             } else {
-              users[user.data.email_official].data.classroom = null;
+              users[user.data.displayName].data.classroom = null;
             }
           }
           break;
         case 'D':
-          if (user.data.email_official != null) {
+          if (user.data.displayName != null) {
             if (seed[key].w !== undefined) {
-              users[user.data.email_official].data.spec = seed[key].w;
+              users[user.data.displayName].data.spec = seed[key].w;
             } else {
-              users[user.data.email_official].data.spec = null;
+              users[user.data.displayName].data.spec = null;
             }
           }
           break;
         case 'E':
-          if (user.data.email_official != null) {
+          if (user.data.displayName != null) {
             if (seed[key].w !== undefined) {
-              users[user.data.email_official].data.printSupport = seed[key].w;
+              users[user.data.displayName].data.printSupport = seed[key].w;
             } else {
-              users[user.data.email_official].data.printSupport = null;
+              users[user.data.displayName].data.printSupport = null;
             }
           } else {
             return true;
