@@ -13,7 +13,17 @@ module.exports = (req, res, next) => {
   }
 
   if ((req.method === 'POST' || req.method === 'PATCH') && config.logger.logPostData) {
-    reqData = JSON.stringify(req.body);
+    if (req.body.password) {
+      const bodyData = Object.assign({}, req.body);
+      bodyData.password = '********';
+      reqData = JSON.stringify(bodyData);
+    } else if (req.body.data.attributes.newpwd) {
+      const bodyData = Object.assign({}, req.body);
+      bodyData.data.attributes.newpwd = '*******';
+      reqData = JSON.stringify(bodyData);
+    } else {
+      reqData = JSON.stringify(req.body);
+    }
   }
 
   logger.info(`"${loginName}" ${req.method} request ${req.baseUrl} FROM ${req.ip} DATA ${JSON.stringify(reqData)}`);
