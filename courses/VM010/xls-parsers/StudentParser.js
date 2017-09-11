@@ -93,7 +93,6 @@ module.exports = async (semesterId, options) => {
               }
               break;
             default:
-              console.log(seed[key]);
           }
         }
       }
