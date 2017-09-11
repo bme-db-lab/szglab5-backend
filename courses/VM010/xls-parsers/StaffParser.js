@@ -93,7 +93,8 @@ module.exports = async (options) => {
 
   seed = null;
   try {
-    const seedFile = 'courses/VM010/xls-data/beosztas-minta.xlsx';
+    const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta';
+    const seedFile = `courses/VM010/xls-data/${xlsFileName}.xlsx`;
     const sheetName = 'Laborvezetok';
     const opts = {};
     opts.sheetStubs = true;
@@ -167,7 +168,8 @@ module.exports = async (options) => {
 
   seed = null;
   try {
-    const seedFile = 'courses/VM010/xls-data/beosztas-minta.xlsx';
+    const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta';
+    const seedFile = `courses/VM010/xls-data/${xlsFileName}.xlsx`;
     const sheetName = 'Guruk, javitok';
     const opts = {};
     opts.sheetStubs = true;
