@@ -133,7 +133,7 @@ yargs // eslint-disable-line no-unused-expressions
         default: 'beosztas-minta'
       },
       'base-path': {
-        default: ''
+        default: 'courses/VM010/xls-data'
       }
     }),
     handler: async (argv) => {
@@ -141,7 +141,7 @@ yargs // eslint-disable-line no-unused-expressions
       try {
         // console.log(argv);
         const init = require('./commands/dev-init.js');
-        await init(argv.allUser, argv.genPass, argv.hallgatok, argv.beosztas);
+        await init(argv.allUser, argv.genPass, argv.hallgatok, argv.beosztas, argv.basePath);
       } catch (err) {
         logger.error('Error while executing init');
         logger.error(err);
