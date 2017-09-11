@@ -35,7 +35,7 @@ module.exports = async (semesterId, options) => {
                 const uQueryResult = await db.Users.findOne({
                   attributes: ['id'],
                   where: {
-                    displayName: seed[key].w
+                    email_official: seed[key].w
                   }
                 });
                 group.data.UserId = uQueryResult.dataValues.id;
