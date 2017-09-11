@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
     // TODO: validate path
     // res.sendFile(path);
     const fileName = deliverable.originalFileName;
-    res.redirect(`/deliverables/${reqId}/download/${fileName}?token=${token}`);
+    res.redirect(`deliverables/${reqId}/download/${fileName}?token=${token}`);
   } catch (err) {
     res.status(500).send({
       errors: [
