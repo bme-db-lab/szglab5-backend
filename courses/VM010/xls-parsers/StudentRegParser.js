@@ -38,6 +38,7 @@ module.exports = async (semesterId, options) => {
           switch (key[0]) {
             case 'A':
               sreg = { data: {} };
+              regs.push(sreg);
               if (seed[key].w !== undefined) {
                 sreg.data.neptunCourseCode = seed[key].w;
                 const gQueryResult = await db.StudentGroups.findOne({
@@ -74,7 +75,6 @@ module.exports = async (semesterId, options) => {
                 const qEx = await db.ExerciseTypes.findAll({ where: { CourseId: qCourse.dataValues.id } });
                 const record = qEx[Math.floor(Math.random() * qEx.length)];
                 sreg.data.ExerciseTypeId = record.dataValues.id;
-                regs.push(sreg);
               }
               break;
             default:
