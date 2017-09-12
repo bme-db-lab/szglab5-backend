@@ -53,6 +53,11 @@ module.exports = async (semesterId, options) => {
               }
               sreg.data.neptunSubjectCode = 'DUMMY';
               sreg.data.SemesterId = semesterId;
+              // random exercise type distribution
+              const qCourse = await db.Semesters.findOne({ where: { id: semesterId } });
+              const qEx = await db.ExerciseTypes.findAll({ where: { CourseId: qCourse.dataValues.id } });
+              const record = qEx[Math.floor(Math.random() * qEx.length)];
+              sreg.data.ExerciseTypeId = record.dataValues.id;
               break;
             case 'C':
               if (seed[key].w !== undefined) {
@@ -70,11 +75,6 @@ module.exports = async (semesterId, options) => {
             case 'G':
               if (sreg.data.UserId !== null) {
                 sreg.data.LanguageId = 1;
-                // random exercise type distribution
-                const qCourse = await db.Semesters.findOne({ where: { id: semesterId } });
-                const qEx = await db.ExerciseTypes.findAll({ where: { CourseId: qCourse.dataValues.id } });
-                const record = qEx[Math.floor(Math.random() * qEx.length)];
-                sreg.data.ExerciseTypeId = record.dataValues.id;
               }
               break;
             default:
