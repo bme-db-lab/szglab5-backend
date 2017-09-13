@@ -1,6 +1,6 @@
 const { initDB, closeDB } = require('../../db/db.js');
 const inquirer = require('inquirer');
-
+const moment = require('moment');
 
 module.exports = async () => {
   try {
@@ -78,7 +78,7 @@ module.exports = async () => {
       throw new Error('Event not found!');
     }
     console.log('Current event to update:');
-    console.log(eventToUpdate);
+    console.log(eventToUpdate.dataValues);
 
 
     // get new Appointment
@@ -124,6 +124,29 @@ module.exports = async () => {
     );
     console.log('Event updated');
     console.log(updatedEvent);
+
+    console.log('Modify deliverables deadline');
+    const deliverables = await eventToUpdate.getDeliverables();
+    console.log(deliverables.map(del => del.dataValues.id));
+    for (const deliverable of deliverables) {
+      const deadline = moment(updateEventInfo.date).add(1, 'd');
+      console.log(deadline);
+      await db.Deliverables.update(
+        {
+          deadline
+        },
+        {
+          where: { id: deliverable.id },
+          include: {
+            model: db.DeliverableTemplates,
+            where: {
+              type: 'FILE'
+            }
+          }
+        }
+      );
+    }
+    console.log('Deliverables deadline modified!');
   } catch (err) {
     console.log(err);
   } finally {
