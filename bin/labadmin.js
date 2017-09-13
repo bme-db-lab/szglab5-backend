@@ -219,6 +219,15 @@ yargs // eslint-disable-line no-unused-expressions
       await changeDeadlines();
     }
   })
+  .command({
+    command: 'get-student-extypes',
+    aliases: ['gsex'],
+    desc: 'Get student exerciseTypes',
+    handler: async () => {
+      const getStudentExtypes = require('./commands/get-student-extypes');
+      await getStudentExtypes();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'

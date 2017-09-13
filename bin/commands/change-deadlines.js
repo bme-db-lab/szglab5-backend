@@ -38,25 +38,22 @@ module.exports = async () => {
     const studentGroupNames = studentGroupPromptResult.studentGroups.split(',');
 
     for (const studentGroupName of studentGroupNames) {
-      console.log(studentGroupName);
+      const studentGroupNameTrim = studentGroupName.trim();
+      console.log(studentGroupNameTrim);
       const studentGroup = await db.StudentGroups.find({
-        name: studentGroupName
+        where: { name: studentGroupNameTrim }
       });
       if (!studentGroup) {
-        throw new Error(`Student group not found: ${studentGroupName}`);
+        throw new Error(`Student group not found: ${studentGroupNameTrim}`);
       }
+      console.log('student group id: ', studentGroup.id);
       const studentRegs = await studentGroup.getStudentRegistrations();
       for (const studentReg of studentRegs) {
         // const events = await studentReg.getEvents();
         const events = await db.Events.findAll({
           where: {
-            StudentRegistrationId: studentReg.dataValues.id
-          },
-          include: {
-            model: db.EventTemplates,
-            where: {
-              id: studentGroupPromptResult.eventTemplateId
-            }
+            StudentRegistrationId: studentReg.id,
+            EventTemplateId: studentGroupPromptResult.eventTemplateId
           }
         });
         for (const event of events) {
