@@ -65,25 +65,20 @@ module.exports = async () => {
     ]);
 
     // get event to update
+    const studentRegs = await student.getStudentRegistrations();
+    const studentReg = studentRegs[0];
+
     const eventToUpdate = await db.Events.find({
       where: {
-        EventTemplateId: newGroupPromptResult.eventTemplateId
-      },
-      include: {
-        model: db.StudentRegistrations,
-        include: {
-          model: db.Users,
-          where: {
-            neptun: studentNeptunResult.neptun
-          }
-        }
+        EventTemplateId: newGroupPromptResult.eventTemplateId,
+        StudentRegistrationId: studentReg.dataValues.id
       }
     });
     if (!eventToUpdate) {
       throw new Error('Event not found!');
     }
     console.log('Current event to update:');
-    console.log(eventToUpdate.dataValues);
+    console.log(eventToUpdate);
 
 
     // get new Appointment
