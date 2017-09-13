@@ -206,8 +206,17 @@ yargs // eslint-disable-line no-unused-expressions
     aliases: ['sng'],
     desc: 'Set new event for a single student',
     handler: async () => {
-      const test = require('./commands/student-new-group.js');
-      await test();
+      const studentNewGroup = require('./commands/student-new-group.js');
+      await studentNewGroup();
+    }
+  })
+  .command({
+    command: 'change-deadlines',
+    aliases: ['cd'],
+    desc: 'Change deliverables deadline',
+    handler: async () => {
+      const changeDeadlines = require('./commands/change-deadlines');
+      await changeDeadlines();
     }
   })
   .option('env', {
