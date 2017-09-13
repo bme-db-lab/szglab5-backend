@@ -193,6 +193,23 @@ yargs // eslint-disable-line no-unused-expressions
       }
     }
   })
+  .command({
+    command: 'change-user-pass',
+    aliases: ['cup'],
+    desc: 'Change user\'s password',
+    handler: async () => {
+
+    }
+  })
+  .command({
+    command: 'student-new-group',
+    aliases: ['sng'],
+    desc: 'Set new event for a single student',
+    handler: async () => {
+      const test = require('./commands/student-new-group.js');
+      await test();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
