@@ -1,14 +1,16 @@
 const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
 const { getDB } = require('../../../db/db.js');
+const { join } = require('path');
 
 module.exports = async (semesterId, options) => {
   const db = getDB();
   let seed = null;
   try {
     const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta';
+    const basePath = options.basePath || 'courses/VM010/xls-data';
 
-    const seedFile = `courses/VM010/xls-data/${xlsFileName}.xlsx`;
+    const seedFile = join(basePath, `${xlsFileName}.xlsx`);
     const sheetName = 'Laborvezetok';
     const opts = {
       sheetStubs: true,
@@ -35,7 +37,7 @@ module.exports = async (semesterId, options) => {
                 const uQueryResult = await db.Users.findOne({
                   attributes: ['id'],
                   where: {
-                    displayName: seed[key].w
+                    email_official: seed[key].w
                   }
                 });
                 group.data.UserId = uQueryResult.dataValues.id;

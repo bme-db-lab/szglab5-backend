@@ -1,5 +1,6 @@
 const logger = require('../utils/logger');
 const config = require('../config/config');
+const { cloneDeep } = require('lodash');
 
 module.exports = (req, res, next) => {
   let loginName = 'Unknown';
@@ -14,11 +15,11 @@ module.exports = (req, res, next) => {
 
   if ((req.method === 'POST' || req.method === 'PATCH') && config.logger.logPostData) {
     if (req.body.password) {
-      const bodyData = Object.assign({}, req.body);
+      const bodyData = cloneDeep(req.body);
       bodyData.password = '********';
       reqData = JSON.stringify(bodyData);
-    } else if (req.body.data.attributes.newpwd) {
-      const bodyData = Object.assign({}, req.body);
+    } else if (req.body && req.body.data && req.body.data.attributes && req.body.data.attributes.newpwd) {
+      const bodyData = cloneDeep(req.body);
       bodyData.data.attributes.newpwd = '*******';
       reqData = JSON.stringify(bodyData);
     } else {

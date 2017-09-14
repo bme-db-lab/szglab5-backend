@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: false
     },
-    comment: DataTypes.STRING
+    comment: DataTypes.STRING(64000)
   });
 
   Events.associate = (models) => {

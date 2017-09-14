@@ -17,7 +17,7 @@ function generateHandout(event) {
 
   const categoryId = exerciseCategory.id;
   const categoryName = exerciseCategory.type;
-  const exerciseTypeId = exerciseType.id;
+  const exerciseTypeId = exerciseType.exerciseId;
   const shortName = exerciseType.shortName;
   const exerciseTypeName = exerciseType.name;
   const studentName = student.displayName;
@@ -84,7 +84,7 @@ async function generateZip(studentGroupId, eventTemplateId, sheetXml) {
   const zipBaseName = xmlBaseName.replace(/\.xml/, '.zip');
   const genFilePath = (genFileDir + zipBaseName).replace(/\/\//, '/');
   const scriptOutput = await pexec(`sudo /usr/local/bin/genhandout.sh ${xmlFileName} ${genFileDir}`);
-  logger.log('genhandout: ', scriptOutput.stdout, '\n', scriptOutput.stderr);
+  logger.debug('genhandout: ', scriptOutput.stdout, '\n', scriptOutput.stderr);
   return genFilePath;
 }
 

@@ -1,5 +1,7 @@
 const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
+const { join } = require('path');
+
 const { getDB } = require('../../../db/db.js');
 
 module.exports = async (options) => {
@@ -8,7 +10,9 @@ module.exports = async (options) => {
   try {
     const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta';
 
-    const seedFile = `courses/VM010/xls-data/${xlsFileName}.xlsx`;
+    const basePath = options.basePath || 'courses/VM010/xls-data';
+
+    const seedFile = join(basePath, `${xlsFileName}.xlsx`);
     const sheetName = 'Idopontok';
     const opts = {
       sheetStubs: true

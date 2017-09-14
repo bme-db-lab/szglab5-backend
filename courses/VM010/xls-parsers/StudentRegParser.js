@@ -1,6 +1,7 @@
 const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
 const { getDB } = require('../../../db/db.js');
+const { join } = require('path');
 
 module.exports = async (semesterId, options) => {
   const db = getDB();
@@ -8,7 +9,9 @@ module.exports = async (semesterId, options) => {
   try {
     const xlsFileName = options.xlsHallgatokFileName || 'hallgatok-minta';
 
-    const seedFilePath = `courses/VM010/xls-data/${xlsFileName}.xlsx`;
+    const basePath = options.basePath || 'courses/VM010/xls-data';
+
+    const seedFilePath = join(basePath, `${xlsFileName}.xlsx`);
     const sheetName = 'Hallgatoi csoportbeosztas másol';
     const opts = {
       sheetStubs: true
@@ -35,6 +38,7 @@ module.exports = async (semesterId, options) => {
           switch (key[0]) {
             case 'A':
               sreg = { data: {} };
+              regs.push(sreg);
               if (seed[key].w !== undefined) {
                 sreg.data.neptunCourseCode = seed[key].w;
                 const gQueryResult = await db.StudentGroups.findOne({
@@ -49,6 +53,11 @@ module.exports = async (semesterId, options) => {
               }
               sreg.data.neptunSubjectCode = 'DUMMY';
               sreg.data.SemesterId = semesterId;
+              // random exercise type distribution
+              const qCourse = await db.Semesters.findOne({ where: { id: semesterId } });
+              const qEx = await db.ExerciseTypes.findAll({ where: { CourseId: qCourse.dataValues.id } });
+              const record = qEx[Math.floor(Math.random() * qEx.length)];
+              sreg.data.ExerciseTypeId = record.dataValues.id;
               break;
             case 'C':
               if (seed[key].w !== undefined) {
@@ -66,12 +75,6 @@ module.exports = async (semesterId, options) => {
             case 'G':
               if (sreg.data.UserId !== null) {
                 sreg.data.LanguageId = 1;
-                // random exercise type distribution
-                const qCourse = await db.Semesters.findOne({ where: { id: semesterId } });
-                const qEx = await db.ExerciseTypes.findAll({ where: { CourseId: qCourse.dataValues.id } });
-                const record = qEx[Math.floor(Math.random() * qEx.length)];
-                sreg.data.ExerciseTypeId = record.dataValues.id;
-                regs.push(sreg);
               }
               break;
             default:

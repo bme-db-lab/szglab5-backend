@@ -2,14 +2,16 @@ const logger = require('../../../utils/logger.js');
 const XLSX = require('xlsx');
 const { getDB } = require('../../../db/db.js');
 const generator = require('generate-password');
+const { join } = require('path');
 
 module.exports = async (semesterId, options) => {
   const db = getDB();
   let seed = null;
   try {
     const xlsFileName = options.xlsHallgatokFileName || 'hallgatok-minta';
+    const basePath = options.basePath || 'courses/VM010/xls-data';
 
-    const seedFilePath = `courses/VM010/xls-data/${xlsFileName}.xlsx`;
+    const seedFilePath = join(basePath, `${xlsFileName}.xlsx`);
     const sheetName = 'Hallgatoi csoportbeosztas másol';
     const opts = {
       sheetStubs: true,
@@ -34,8 +36,19 @@ module.exports = async (semesterId, options) => {
       if (rKey !== null) {
         if (rKey[2] !== '1') {
           switch (key[0]) {
-            case 'A':
+            case 'A': {
               user = { data: {} };
+              users.push(user);
+              let initPassword = '12345';
+              if (options.genPass) {
+                initPassword = generator.generate({
+                  length: 10,
+                  numbers: true
+                });
+              }
+              user.data.initPassword = initPassword;
+              user.data.password = initPassword;
+            }
               break;
             case 'B':
               if (seed[key].w !== undefined) {
@@ -62,24 +75,23 @@ module.exports = async (semesterId, options) => {
               } */
               break;
             case 'E':
-              if (seed[key].w !== undefined) {
-                user.data.password = seed[key].w;
-              } else {
-                let initPassword = '12345';
-                if (options.genPass) {
-                  initPassword = generator.generate({
-                    length: 10,
-                    numbers: true
-                  });
-                }
-                user.data.initPassword = initPassword;
-                user.data.password = initPassword;
-              }
+              // let initPassword = '12345';
+              // if (seed[key].w !== undefined) {
+              //   user.data.password = seed[key].w;
+              // } else {
+              //   if (options.genPass) {
+              //     initPassword = generator.generate({
+              //       length: 10,
+              //       numbers: true
+              //     });
+              //   }
+              //   user.data.initPassword = initPassword;
+              //   user.data.password = initPassword;
+              // }
               break;
             case 'G':
               if (user.data.neptun !== null) {
                 user.data.university = 'BME';
-                users.push(user);
               }
               break;
             default:

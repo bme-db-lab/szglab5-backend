@@ -1,15 +1,18 @@
 const XLSX = require('xlsx');
+const generator = require('generate-password');
+const { join } = require('path');
+
 const { getDB } = require('../../../db/db.js');
 
-const generator = require('generate-password');
 
 module.exports = async (options) => {
   const db = getDB();
   let seed = null;
   try {
     const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta';
+    const basePath = options.basePath || 'courses/VM010/xls-data';
 
-    const seedFile = `courses/VM010/xls-data/${xlsFileName}.xlsx`;
+    const seedFile = join(basePath, `${xlsFileName}.xlsx`);
     const sheetName = 'Nevek, elerhetosegek';
     const opts = {
       sheetStubs: true,
@@ -94,7 +97,9 @@ module.exports = async (options) => {
   seed = null;
   try {
     const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta';
-    const seedFile = `courses/VM010/xls-data/${xlsFileName}.xlsx`;
+    const basePath = options.basePath || 'courses/VM010/xls-data';
+
+    const seedFile = join(basePath, `${xlsFileName}.xlsx`);
     const sheetName = 'Laborvezetok';
     const opts = {};
     opts.sheetStubs = true;
@@ -113,46 +118,46 @@ module.exports = async (options) => {
     if (rKey[2] !== '1') {
       switch (key[0]) {
         case 'A':
-          // user = { data: {} };
-          // if (seed[key].w !== undefined) {
-          //   user.data.email_official = seed[key].w;
-          // } else {
-          //   user.data.email_official = null;
-          // }
+          user = { data: {} };
+          if (seed[key].w !== undefined) {
+            user.data.email_official = seed[key].w;
+          } else {
+            user.data.email_official = null;
+          }
           break;
         case 'B':
-          if (user.data.displayName != null) {
+          if (user.data.email_official != null) {
             if (seed[key].w !== undefined) {
-              users[user.data.displayName].data.studentgroup_id = seed[key].w;
+              users[user.data.email_official].data.studentgroup_id = seed[key].w;
             } else {
-              users[user.data.displayName].data.studentgroup_id = null;
+              users[user.data.email_official].data.studentgroup_id = null;
             }
           }
           break;
         case 'C':
-          if (user.data.displayName != null) {
+          if (user.data.email_official != null) {
             if (seed[key].w !== undefined) {
-              users[user.data.displayName].data.classroom = seed[key].w;
+              users[user.data.email_official].data.classroom = seed[key].w;
             } else {
-              users[user.data.displayName].data.classroom = null;
+              users[user.data.email_official].data.classroom = null;
             }
           }
           break;
         case 'D':
-          if (user.data.displayName != null) {
+          if (user.data.email_official != null) {
             if (seed[key].w !== undefined) {
-              users[user.data.displayName].data.spec = seed[key].w;
+              users[user.data.email_official].data.spec = seed[key].w;
             } else {
-              users[user.data.displayName].data.spec = null;
+              users[user.data.email_official].data.spec = null;
             }
           }
           break;
         case 'E':
-          if (user.data.displayName != null) {
+          if (user.data.email_official != null) {
             if (seed[key].w !== undefined) {
-              users[user.data.displayName].data.printSupport = seed[key].w;
+              users[user.data.email_official].data.printSupport = seed[key].w;
             } else {
-              users[user.data.displayName].data.printSupport = null;
+              users[user.data.email_official].data.printSupport = null;
             }
           } else {
             return true;
@@ -169,7 +174,9 @@ module.exports = async (options) => {
   seed = null;
   try {
     const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta';
-    const seedFile = `courses/VM010/xls-data/${xlsFileName}.xlsx`;
+    const basePath = options.basePath || 'courses/VM010/xls-data';
+
+    const seedFile = join(basePath, `${xlsFileName}.xlsx`);
     const sheetName = 'Guruk, javitok';
     const opts = {};
     opts.sheetStubs = true;

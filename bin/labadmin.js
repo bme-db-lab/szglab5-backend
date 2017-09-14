@@ -131,6 +131,9 @@ yargs // eslint-disable-line no-unused-expressions
       },
       beosztas: {
         default: 'beosztas-minta'
+      },
+      'base-path': {
+        default: 'courses/VM010/xls-data'
       }
     }),
     handler: async (argv) => {
@@ -138,7 +141,7 @@ yargs // eslint-disable-line no-unused-expressions
       try {
         // console.log(argv);
         const init = require('./commands/dev-init.js');
-        await init(argv.allUser, argv.genPass, argv.hallgatok, argv.beosztas);
+        await init(argv.allUser, argv.genPass, argv.hallgatok, argv.beosztas, argv.basePath);
       } catch (err) {
         logger.error('Error while executing init');
         logger.error(err);
@@ -188,6 +191,41 @@ yargs // eslint-disable-line no-unused-expressions
         logger.error('Error while generating deliverables');
         logger.error(err);
       }
+    }
+  })
+  .command({
+    command: 'change-user-pass',
+    aliases: ['cup'],
+    desc: 'Change user\'s password',
+    handler: async () => {
+
+    }
+  })
+  .command({
+    command: 'student-new-group',
+    aliases: ['sng'],
+    desc: 'Set new event for a single student',
+    handler: async () => {
+      const studentNewGroup = require('./commands/student-new-group.js');
+      await studentNewGroup();
+    }
+  })
+  .command({
+    command: 'change-deadlines',
+    aliases: ['cd'],
+    desc: 'Change deliverables deadline',
+    handler: async () => {
+      const changeDeadlines = require('./commands/change-deadlines');
+      await changeDeadlines();
+    }
+  })
+  .command({
+    command: 'get-student-extypes',
+    aliases: ['gsex'],
+    desc: 'Get student exerciseTypes',
+    handler: async () => {
+      const getStudentExtypes = require('./commands/get-student-extypes');
+      await getStudentExtypes();
     }
   })
   .option('env', {

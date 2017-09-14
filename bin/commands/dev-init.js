@@ -5,14 +5,15 @@ const { initDB, closeDB } = require('../../db/db.js');
 const logger = require('../../utils/logger.js');
 const { seedDBwithJSON, seedDBwithObjects } = require('./../../db/seed');
 
-module.exports = async (allUser, genPass, hallgatok, beosztas) => {
+module.exports = async (allUser, genPass, hallgatok, beosztas, basePath) => {
   const code = 'VM010';
 
   const options = {
     allUser: allUser || false,
     genPass: genPass || false,
     xlsBeosztasFileName: beosztas || 'beosztas-minta',
-    xlsHallgatokFileName: hallgatok || 'hallgatok-minta'
+    xlsHallgatokFileName: hallgatok || 'hallgatok-minta',
+    basePath: basePath || 'courses/VM010/xls-data'
   };
 
   // rd then ic
@@ -75,7 +76,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas) => {
         const exerciseSheet = await db.ExerciseSheets.findOne({ where: { ExerciseCategoryId: eventTemplate.dataValues.ExerciseCategoryId, ExerciseTypeId: studentReg.dataValues.ExerciseTypeId } });
 
         const event = [{ data: {
-          date: moment(appointment.dataValues.date).add(1, 'y'),
+          date: appointment.dataValues.date,
           location: appointment.dataValues.location,
           StudentRegistrationId: studentReg.dataValues.id,
           EventTemplateId: eventTemplate.id,

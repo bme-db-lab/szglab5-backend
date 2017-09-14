@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: false
     },
-    comment: DataTypes.STRING,
+    comment: DataTypes.STRING(64000),
     // git
     url: DataTypes.STRING,
     commit: DataTypes.STRING,
