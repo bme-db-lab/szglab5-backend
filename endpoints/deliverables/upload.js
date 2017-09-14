@@ -41,6 +41,7 @@ module.exports = async (req, res) => {
     const course = await semester.getCourse();
 
     const uploadedFile = req.file;
+    const originalFilenameWithoutSpaces = uploadedFile.originalname.replace(/ /g, '');
     const { currentStorage } = config.uploadFile;
 
     const specificPath = generateSpecificPath({
@@ -60,7 +61,7 @@ module.exports = async (req, res) => {
     }
 
     const semesterForFileName = `${semester.academicyear.replace('/', '_')}_${semester.academicterm}`;
-    const newFileName = `${course.codeName}_${semesterForFileName}_${dateTime}_${uploadedFile.originalname}_${delTempl.name}_${AKEPFileEnding}`;
+    const newFileName = `${course.codeName}_${semesterForFileName}_${dateTime}_${originalFilenameWithoutSpaces}_${delTempl.name}_${AKEPFileEnding}`;
     const savePath = path.join(currentStorage.resolvedRootPath, specificPath, newFileName);
     await makeDir(path.dirname(savePath));
 
@@ -70,7 +71,7 @@ module.exports = async (req, res) => {
       uploaded: true,
       filePath: savePath,
       lastSubmittedDate: new Date(),
-      originalFileName: uploadedFile.originalname
+      originalFileName: originalFilenameWithoutSpaces
     };
 
     // TODO ONLY FOR TEST WEEKEND
