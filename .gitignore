@@ -68,3 +68,4 @@ files/
 !/generated/exercisesheet/.gitkeep
 /generated/handout
 !/generated/handout/.gitkeep
+*.csv
