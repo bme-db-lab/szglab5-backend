@@ -56,7 +56,13 @@ module.exports = async (req, res) => {
     const { loginName, password } = data;
     // get user from db with loginName
     const db = getDB();
-    const user = await db.Users.findOne({ where: { loginName } });
+    const user = await db.Users.findOne({
+      where: {
+        loginName: {
+          $iLike: loginName
+        }
+      }
+    });
     if (user === null) {
       res.status(403).send(genErrorObj([`User with login name "${loginName}" does not exist!`]));
       return;

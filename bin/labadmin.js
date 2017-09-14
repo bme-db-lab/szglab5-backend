@@ -223,9 +223,14 @@ yargs // eslint-disable-line no-unused-expressions
     command: 'get-student-extypes',
     aliases: ['gsex'],
     desc: 'Get student exerciseTypes',
-    handler: async () => {
+    builder: () => yargs
+    .option('output-filename', {
+      alias: 'of',
+      default: 'hallgato_feladat_tipus.csv'
+    }),
+    handler: async (argv) => {
       const getStudentExtypes = require('./commands/get-student-extypes');
-      await getStudentExtypes();
+      await getStudentExtypes(argv);
     }
   })
   .option('env', {
