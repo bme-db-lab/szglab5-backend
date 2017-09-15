@@ -198,7 +198,12 @@ yargs // eslint-disable-line no-unused-expressions
     aliases: ['cup'],
     desc: 'Change user\'s password',
     handler: async () => {
-
+      try {
+        const changeUserPassword = require('./commands/change-user-password');
+        await changeUserPassword();
+      } catch (err) {
+        console.log(err);
+      }
     }
   })
   .command({
