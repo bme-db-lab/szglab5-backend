@@ -12,17 +12,17 @@ module.exports = async (req, res) => {
         $or: [
           {
             loginName: {
-              $like: `%${req.query.filter.search}%`
+              $iLike: `%${req.query.filter.search}%`
             }
           },
           {
             displayName: {
-              $like: `%${req.query.filter.search}%`
+              $iLike: `%${req.query.filter.search}%`
             }
           },
           {
             neptun: {
-              $like: `%${req.query.filter.search}%`
+              $iLike: `%${req.query.filter.search}%`
             }
           }
         ]
