@@ -9,7 +9,6 @@ module.exports = async () => {
       {
         type: 'input',
         name: 'neptun',
-        default: 'N42GXH',
         message: 'Users\'s Neptun'
       }
     ]);

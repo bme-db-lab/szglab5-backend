@@ -238,6 +238,15 @@ yargs // eslint-disable-line no-unused-expressions
       await getStudentExtypes(argv);
     }
   })
+  .command({
+    command: 'add-new-student',
+    aliases: ['ans'],
+    desc: 'Add new student',
+    builder: async () => {
+      const addNewStudent = require('./commands/add-new-student');
+      await addNewStudent();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
