@@ -69,3 +69,5 @@ files/
 /generated/handout
 !/generated/handout/.gitkeep
 *.csv
+hallgatok2.xlsx
+beosztas2.xlsx
