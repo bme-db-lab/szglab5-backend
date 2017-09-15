@@ -6,6 +6,16 @@ const logger = require('../../utils/logger.js');
 
 module.exports = async () => {
   try {
+    const confirmPromptResult = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'res',
+        message: 'Are you sure?'
+      }
+    ]);
+    if (!confirmPromptResult.res) {
+      throw new Error('Confirmation error!');
+    }
     const db = await initDB();
     // prompt for user eventTemplate
     const eventTemplates = await db.EventTemplates.findAll();

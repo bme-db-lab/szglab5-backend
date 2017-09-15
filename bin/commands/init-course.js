@@ -7,6 +7,16 @@ const courses = require('./../../courses/index');
 const { seedDBwithJSON } = require('./../../db/seed');
 
 module.exports = async () => {
+  const confirmPromptResult = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'res',
+      message: 'Are you sure?'
+    }
+  ]);
+  if (!confirmPromptResult.res) {
+    throw new Error('Confirmation error!');
+  }
   // Ask the user which course to initialize
   const courseNames = courses.map(course => `${course.name} - ${course.code}`);
 

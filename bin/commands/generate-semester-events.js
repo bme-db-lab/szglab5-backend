@@ -6,6 +6,16 @@ const { seedDBwithObjects } = require('./../../db/seed');
 
 module.exports = async () => {
   try {
+    const confirmPromptResult = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'res',
+        message: 'Are you sure?'
+      }
+    ]);
+    if (!confirmPromptResult.res) {
+      throw new Error('Confirmation error!');
+    }
     // prompt user for course
     const db = await initDB();
     const courseQuery = await db.Courses.findAll();

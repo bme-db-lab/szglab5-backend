@@ -4,6 +4,16 @@ const logger = require('../../utils/logger.js');
 const { seedDBwithObjects } = require('./../../db/seed');
 
 module.exports = async (hallgatoXls, beosztasXls) => {
+  const confirmPromptResult = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'res',
+      message: 'Are you sure?'
+    }
+  ]);
+  if (!confirmPromptResult.res) {
+    throw new Error('Confirmation error!');
+  }
   // get initialized courses from db
   const db = await initDB();
   const result = await db.Courses.findAll();

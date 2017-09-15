@@ -1,4 +1,5 @@
 const path = require('path');
+const inquirer = require('inquirer');
 
 const moment = require('moment');
 const { initDB, closeDB } = require('../../db/db.js');
@@ -18,6 +19,17 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath) => {
 
   // rd then ic
   try {
+    const confirmPromptResult = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'res',
+        message: 'Are you sure?'
+      }
+    ]);
+    if (!confirmPromptResult.res) {
+      throw new Error('Confirmation error!');
+    }
+
     const db = await initDB({ force: true });
     const result = await db.Courses.findAll({ where: { codeName: code } });
     // Initialize Course
