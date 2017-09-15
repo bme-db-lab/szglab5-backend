@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false
     },
     comment: DataTypes.STRING(64000),
-    ismc: DataTypes.INTEGER
+    imsc: DataTypes.INTEGER
   });
 
   Events.associate = (models) => {
