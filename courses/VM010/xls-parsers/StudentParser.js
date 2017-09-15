@@ -43,7 +43,8 @@ module.exports = async (semesterId, options) => {
               if (options.genPass) {
                 initPassword = generator.generate({
                   length: 10,
-                  numbers: true
+                  numbers: true,
+                  excludeSimilarCharacters: true
                 });
               }
               user.data.initPassword = initPassword;
