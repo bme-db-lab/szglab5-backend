@@ -90,7 +90,6 @@ module.exports = async (req, res) => {
         if (user) {
           const exerciseTypes = await user.getExerciseTypes();
           userExTypeIds = exerciseTypes.map(exType => exType.id);
-          console.log(userExTypeIds);
         }
       }
     }
