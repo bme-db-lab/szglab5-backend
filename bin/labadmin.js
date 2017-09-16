@@ -247,6 +247,15 @@ yargs // eslint-disable-line no-unused-expressions
       await addNewStudent();
     }
   })
+  .command({
+    command: 'change-event-class-room',
+    aliases: ['cecr'],
+    desc: 'Change event class room',
+    builder: async () => {
+      const changeEventClassRoom = require('./commands/change-event-class-room');
+      await changeEventClassRoom();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
