@@ -164,7 +164,7 @@ module.exports = async (req, res) => {
     const deliverables = await db.Deliverables.findAll(queryObj);
 
     const response = getJSONApiResponseFromRecords(db, 'Deliverables', deliverables, {
-      includeModels: ['DeliverableTemplates', 'Events', 'Users', 'StudentRegistrations', 'ExerciseTypes']
+      includeModels: ['DeliverableTemplates', 'Events', 'Users', 'StudentRegistrations', 'ExerciseTypes', 'ExerciseSheets']
     });
 
     res.send(response);
