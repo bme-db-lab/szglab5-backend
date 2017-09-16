@@ -14,8 +14,7 @@ module.exports = async () => {
       {
         type: 'input',
         name: 'loginName',
-        message: 'Users\'s login name',
-        default: 'bqmu81'
+        message: 'Users\'s login name'
       }
     ]);
     const user = await db.Users.find({
