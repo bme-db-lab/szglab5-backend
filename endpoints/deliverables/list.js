@@ -15,10 +15,6 @@ function getQuery(filter, userId) {
     query.grade = filter.grade;
   }
 
-  if ('git' in filter) {
-    query.url = filter.git;
-  }
-
   if ('isCorrector' in filter) {
     query.CorrectorId = userId;
   }
@@ -76,30 +72,29 @@ module.exports = async (req, res) => {
     const userInfo = req.userInfo;
     const userId = userInfo ? userInfo.userId : -1;
 
+
     const db = getDB();
     let queryObj = {};
     queryObj.include = [];
+
+    let userExTypeIds = [];
 
     if (filter) {
       queryObj = {
         where: getQuery(filter, userId)
       };
       queryObj.include = [];
-      if ('exerciseCategoryId' in filter) {
-        queryObj.include.push(
-          {
-            model: db.Events,
-            where: {},
-            include: [{
-              model: db.ExerciseSheets,
-              where: {
-                ExerciseCategoryId: filter.exerciseCategoryId
-              }
-            }]
-          }
-        );
+
+      if ('isAttached' in filter) {
+        const user = await db.Users.findById(userId);
+        if (user) {
+          const exerciseTypes = await user.getExerciseTypes();
+          userExTypeIds = exerciseTypes.map(exType => exType.id);
+          console.log(userExTypeIds);
+        }
       }
     }
+
     if (filter && 'deliverableTemplateId' in filter) {
       queryObj.include.push({
         where: {
@@ -132,6 +127,26 @@ module.exports = async (req, res) => {
         },
         {
           model: db.EventTemplates
+        },
+        {
+          model: db.ExerciseSheets,
+          where: {
+            $and: [
+              (filter && 'exerciseCategoryId' in filter) ? {
+                ExerciseCategoryId: filter.exerciseCategoryId
+              } : {},
+              (filter && 'isAttached' in filter) ? {
+                ExerciseTypeId: {
+                  $in: userExTypeIds
+                }
+              } : {},
+            ]
+          },
+          include: [
+            {
+              model: db.ExerciseTypes
+            }
+          ]
         }
       ]
     });
@@ -149,40 +164,10 @@ module.exports = async (req, res) => {
     const deliverables = await db.Deliverables.findAll(queryObj);
 
     const response = getJSONApiResponseFromRecords(db, 'Deliverables', deliverables, {
-      includeModels: ['DeliverableTemplates', 'Events', 'Users', 'StudentRegistrations']
+      includeModels: ['DeliverableTemplates', 'Events', 'Users', 'StudentRegistrations', 'ExerciseTypes']
     });
 
     res.send(response);
-    // const response = await genJSONApiResByRecords(db, 'Deliverables', deliverables);
-    // response.included = [];
-    // for (const deliverable of response.data) {
-    //   // Included: Deliverable-Templates
-    //   if (deliverable.relationships.DeliverableTemplate.data !== null) {
-    //     const delTemplate = await db.DeliverableTemplates.findById(deliverable.relationships.DeliverableTemplate.data.id);
-    //     response.included.push({
-    //       id: delTemplate.dataValues.id,
-    //       type: 'DeliverableTemplates',
-    //       attributes: delTemplate.dataValues
-    //     });
-    //   }
-    //   if (deliverable.attributes.Event &&
-    //     deliverable.attributes.Event.StudentRegistration &&
-    //     deliverable.attributes.Event.StudentRegistration.User) {
-    //     const user = deliverable.attributes.Event.StudentRegistration.User;
-    //     response.included.push({
-    //       id: user.id,
-    //       type: 'Users',
-    //       attributes: user
-    //     });
-    //     deliverable.relationships.Student = {
-    //       data: {
-    //         id: user.id,
-    //         type: 'Users'
-    //       }
-    //     };
-    //     delete deliverable.attributes.Event;
-    //   }
-    // }
   } catch (err) {
     res.status(500).send(genErrorObj(err.message));
   }
