@@ -77,6 +77,21 @@ module.exports = async () => {
         }
       }
     }
+    // change appointment data
+    console.log('Updating student group\'s appointments');
+    for (const eventAttribute of eventAttributes) {
+      const appointment = await db.Appointments.find({
+        where: {
+          StudentGroupId: studentGroup.id,
+          EventTemplateId: eventAttribute.eventTemplateId
+        }
+      });
+      if (appointment) {
+        await appointment.updateAttributes({
+          date: eventAttribute.date
+        });
+      }
+    }
   } catch (err) {
     console.log(err);
   } finally {

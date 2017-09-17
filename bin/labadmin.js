@@ -267,7 +267,7 @@ yargs // eslint-disable-line no-unused-expressions
   })
   .command({
     command: 'change-event-attributes-json',
-    aliases: ['json-ceaj'],
+    aliases: ['json-cea'],
     desc: 'Change event\'s attributes from json',
     builder: async () => {
       const changeEvents = require('./commands/change-event-attributes-json');
