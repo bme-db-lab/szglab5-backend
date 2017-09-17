@@ -1,22 +1,22 @@
 [
   {
     "eventTemplateId": 1,
-    "date": "2017-09-25T12:15:00Z"
+    "date": "2017-09-25T12:15:00"
   },
   {
     "eventTemplateId": 2,
-    "date": "2017-10-16T12:15:00Z"
+    "date": "2017-10-16T12:15:00"
   },
   {
     "eventTemplateId": 3,
-    "date": "2017-10-30T12:15:00Z"
+    "date": "2017-10-30T12:15:00"
   },
   {
     "eventTemplateId": 4,
-    "date": "2017-11-13T12:15:00Z"
+    "date": "2017-11-13T12:15:00"
   },
   {
     "eventTemplateId": 5,
-    "date": "2017-11-27T12:15:00Z"
+    "date": "2017-11-27T12:15:00"
   }
 ]
