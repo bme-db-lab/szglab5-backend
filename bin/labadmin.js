@@ -265,6 +265,15 @@ yargs // eslint-disable-line no-unused-expressions
       await changeExTypes();
     }
   })
+  .command({
+    command: 'change-event-attributes-json',
+    aliases: ['json-ceaj'],
+    desc: 'Change event\'s attributes from json',
+    builder: async () => {
+      const changeEvents = require('./commands/change-event-attributes-json');
+      await changeEvents();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
