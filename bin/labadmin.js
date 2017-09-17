@@ -256,6 +256,15 @@ yargs // eslint-disable-line no-unused-expressions
       await changeEventClassRoom();
     }
   })
+  .command({
+    command: 'change-exercise-types-json',
+    aliases: ['json-cet'],
+    desc: 'Change student\'s exercise types from json file',
+    builder: async () => {
+      const changeExTypes = require('./commands/change-exercise-types-json');
+      await changeExTypes();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
