@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
       return;
     }
     const { roles } = req.userInfo;
-    console.log(roles);
+    // console.log(roles);
 
     // only ADMIN DEMONSTRATOR CORRECTOR
     if (!roles.includes('ADMIN') && !roles.includes('DEMONSTRATOR') && !roles.includes('CORRECTOR')) {
