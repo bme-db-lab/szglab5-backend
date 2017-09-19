@@ -216,6 +216,9 @@ function _getSetFunc(type) {
 }
 
 async function setRelations(db, resource, relationGroups) {
+  if (!relationGroups) {
+    return;
+  }
   for (const relGroupKey of Object.keys(relationGroups)) {
     // TODO: workaround for jsonapi
     if (relGroupKey === 'Student') {

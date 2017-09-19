@@ -6,8 +6,33 @@ module.exports = async (req, res) => {
   try {
     const reqId = req.params.id;
     const reqIdNum = parseInt(reqId, 10);
-
     const db = getDB();
+
+    const { roles, userId } = req.userInfo;
+
+    if (roles.includes('STUDENT')) {
+      const deliverables = await db.Deliverables.findAll({
+        include: [
+          {
+            attributes: ['id'],
+            model: db.Events,
+            where: {},
+            include: {
+              attributes: ['id'],
+              model: db.StudentRegistrations,
+              where: { UserId: userId }
+            }
+          }
+        ],
+        attributes: ['id']
+      });
+      const deliverableIds = deliverables.map(del => del.id);
+      if (!deliverableIds.includes(reqIdNum)) {
+        res.status(403).send(genErrorObj('Unathorized'));
+        return;
+      }
+    }
+
     const deliverable = await db.Deliverables.findById(reqIdNum, {
       include: [{ model: db.Events }]
     });

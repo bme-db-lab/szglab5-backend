@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
 const makeDir = require('make-dir');
+const { genErrorObj } = require('../../utils/utils.js');
 
 const { getDB } = require('../../db/db');
 
@@ -21,12 +22,30 @@ module.exports = async (req, res) => {
       throw new Error('Request id is invalid');
     }
     // console.log(req.userInfo);
-    const { roles } = req.userInfo;
-    // TODO: STUDENT csak saját deliverables
+    const { roles, userId } = req.userInfo;
+
+    // TODO: Student should only access its own deliverable, ADMIN CORRECTOR DEMONSTRATOR should access every
     if (roles.includes('STUDENT')) {
-
-    } else if (roles.includes('ADMIN') || roles.includes('CORRECTOR') || roles.includes('')) {
-
+      const deliverables = await db.Deliverables.findAll({
+        include: [
+          {
+            attributes: ['id'],
+            model: db.Events,
+            where: {},
+            include: {
+              attributes: ['id'],
+              model: db.StudentRegistrations,
+              where: { UserId: userId }
+            }
+          }
+        ],
+        attributes: ['id']
+      });
+      const deliverableIds = deliverables.map(del => del.id);
+      if (!deliverableIds.includes(reqIdNum)) {
+        res.status(403).send(genErrorObj('Unathorized'));
+        return;
+      }
     }
 
     const deliverables = await db.Deliverables.findById(reqIdNum);

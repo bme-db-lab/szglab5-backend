@@ -8,12 +8,38 @@ module.exports = async (req, res) => {
     const reqId = req.params.id;
     const reqIdNum = parseInt(reqId, 10);
     const { token } = req.body;
+    let userInfo;
     try {
-      await verifyToken(token);
+      userInfo = await verifyToken(token);
     } catch (err) {
       res.status(403).send(genErrorObj('Invalid token'));
     }
-    // TODO: Student csak saját, ADMIN CORRECTOR DEMONSTRATOR akármelyik
+    const { roles, userId } = userInfo;
+
+    // TODO: Student should only access its own deliverable, ADMIN CORRECTOR DEMONSTRATOR should access every
+    if (roles.includes('STUDENT')) {
+      const deliverables = await db.Deliverables.findAll({
+        include: [
+          {
+            attributes: ['id'],
+            model: db.Events,
+            where: {},
+            include: {
+              attributes: ['id'],
+              model: db.StudentRegistrations,
+              where: { UserId: userId }
+            }
+          }
+        ],
+        attributes: ['id']
+      });
+      const deliverableIds = deliverables.map(del => del.id);
+      if (!deliverableIds.includes(reqIdNum)) {
+        res.status(403).send(genErrorObj('Unathorized'));
+        return;
+      }
+    }
+
     const deliverable = await db.Deliverables.findById(reqIdNum);
     // const path = deliverable.dataValues.filePath;
     // TODO: validate path
