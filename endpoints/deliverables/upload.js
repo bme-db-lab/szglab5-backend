@@ -40,6 +40,10 @@ module.exports = async (req, res) => {
     const semester = await studentReg.getSemester();
     const course = await semester.getCourse();
 
+    if (roles.includes('STUDENT') && (deliverables.finalized || deliverables.CorrectorId !== null)) {
+      throw new Error('Already finalized, can\'t upload new version!');
+    }
+
     const uploadedFile = req.file;
     const originalFilenameWithoutSpaces = uploadedFile.originalname.replace(/ /g, '');
     const { currentStorage } = config.uploadFile;
@@ -79,6 +83,7 @@ module.exports = async (req, res) => {
     //   deliverableUpdate.deadline = '2013-09-09T02:31:24.530Z';
     // }
 
+    console.log(deliverableUpdate);
     await deliverables.update(deliverableUpdate);
     res.send('ok');
   } catch (err) {
