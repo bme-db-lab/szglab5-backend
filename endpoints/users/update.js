@@ -8,13 +8,14 @@ const config = require('./../../config/config');
 module.exports = async (req, res) => {
   try {
     const reqId = req.params.id;
+    const reqIdNum = parseInt(reqId, 10);
     const { data } = req.body;
     const db = getDB();
 
     if (checkIfHasRole(req.userInfo.roles, 'STUDENT')) {
       // check if userid match request id
       const { userId } = req.userInfo;
-      if (userId !== reqId) {
+      if (userId !== reqIdNum) {
         res.status(403).send(genErrorObj('Unathorized'));
         return;
       }
