@@ -3,6 +3,7 @@ const { verifyToken } = require('../../utils/jwt');
 const { getDB } = require('../../db/db.js');
 const sheet = require('../../utils/generateSheet.js');
 const logger = require('../../utils/logger.js');
+const { genErrorObj } = require('../../utils/utils.js');
 
 /*
 function getEventsByDemonstrator(demonstrator, db) {
@@ -102,6 +103,11 @@ module.exports = async (req, res) => {
     res.status(403).send(JSON.stringify(err));
   }
 
+  const { roles } = userInfo;
+  if (roles.includes('STUDENT')) {
+    res.status(403).send(genErrorObj('Unathorized'));
+    return;
+  }
 
   try {
     const db = getDB();

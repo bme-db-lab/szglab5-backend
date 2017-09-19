@@ -9,6 +9,12 @@ module.exports = async (req, res) => {
     const { data } = req.body;
     const db = getDB();
 
+    const { roles } = req.userInfo;
+    if (!roles.includes('ADMIN')) {
+      res.status(403).send(genErrorObj('Unathorized'));
+      return;
+    }
+
     const newsToUpdate = await db.News.findById(reqId);
     checkIfExist(newsToUpdate);
     await updateResource(db, 'News', data, newsToUpdate);

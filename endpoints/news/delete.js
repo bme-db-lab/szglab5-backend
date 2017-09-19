@@ -7,6 +7,12 @@ module.exports = async (req, res) => {
     const reqId = req.params.id;
     const reqIdNum = parseInt(reqId, 10);
 
+    const { roles } = req.userInfo;
+    if (!roles.includes('ADMIN')) {
+      res.status(403).send(genErrorObj('Unathorized'));
+      return;
+    }
+
     const db = getDB();
     await db.News.destroy({ where: { id: reqIdNum } });
     res.status(204).send();

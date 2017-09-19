@@ -2,6 +2,7 @@ const moment = require('moment');
 
 const { getDB } = require('../../db/db');
 const logger = require('../../utils/logger');
+const { genErrorObj } = require('../../utils/utils.js');
 
 module.exports = async (req, res) => {
   try {
@@ -11,6 +12,12 @@ module.exports = async (req, res) => {
     const reqIdNum = parseInt(reqId, 10);
     if (isNaN(reqId)) {
       throw new Error('Request id is invalid');
+    }
+
+    const { roles } = req.userInfo;
+    if (roles.includes('STUDENT')) {
+      res.status(403).send(genErrorObj('Unathorized'));
+      return;
     }
 
     const eventTemplate = await db.EventTemplates.findById(reqIdNum);

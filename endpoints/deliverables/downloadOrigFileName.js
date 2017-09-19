@@ -12,6 +12,7 @@ module.exports = async (req, res) => {
       userInfo = await verifyToken(token);
     } catch (err) {
       res.status(403).send(genErrorObj('Invalid token'));
+      return;
     }
     const { roles, userId } = userInfo;
 

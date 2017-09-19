@@ -8,6 +8,12 @@ module.exports = async (req, res) => {
   try {
     const { data } = req.body;
 
+    const { roles } = req.userInfo;
+    if (!roles.includes('ADMIN')) {
+      res.status(403).send(genErrorObj('Unathorized'));
+      return;
+    }
+
     const db = getDB();
     if (data.attributes.newpwd) {
       const newPasswordHash = await bcrypt.hash(data.attributes.newpwd, config.bcrypt.saltRounds);

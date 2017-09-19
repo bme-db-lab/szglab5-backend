@@ -6,6 +6,7 @@ const { getDB } = require('../../db/db.js');
 
 module.exports = (req, res) => {
   try {
+    throw new Error('Not implemented exception!');
     const filter = req.query.filter;
 
     let queryObj = {};

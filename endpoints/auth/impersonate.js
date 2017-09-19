@@ -5,12 +5,19 @@ const { checkIfExist } = require('../../utils/jsonapi');
 
 module.exports = async (req, res) => {
   try {
+    const { roles } = req.userInfo;
+
+    if (!roles.includes('ADMIN')) {
+      res.status(403).send(genErrorObj('Unathorized'));
+      return;
+    }
+
     const userId = req.body.userId;
     const db = getDB();
     const user = await db.Users.findById(userId);
     checkIfExist(user);
-    const roles = await user.getRoles();
-    const roleNames = roles.map(role => role.dataValues.name);
+    const rolesToSign = await user.getRoles();
+    const roleNames = rolesToSign.map(role => role.dataValues.name);
     const token = await signToken(user.dataValues, roleNames);
 
     res.send({ token });

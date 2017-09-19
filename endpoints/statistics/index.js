@@ -10,8 +10,8 @@ module.exports = (app) => {
   app.get('/statistics*', auth);
   app.get('/statistics*', epLogger);
 
-  app.get('/statistics/student', getStudentStatistics);
-  app.get('/statistics/group', getGroupStatistics);
-  app.get('/statistics/corrector', getCorrectorStatistics);
-  app.get('/statistics/ungraded', getUngradedDeliverables);
+  // app.get('/statistics/student', getStudentStatistics);
+  // app.get('/statistics/group', getGroupStatistics);
+  // app.get('/statistics/corrector', getCorrectorStatistics);
+  // app.get('/statistics/ungraded', getUngradedDeliverables);
 };

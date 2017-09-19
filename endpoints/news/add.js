@@ -9,6 +9,13 @@ module.exports = async (req, res) => {
     if (req.userInfo) {
       data.attributes.publisherId = req.userInfo.userId;
     }
+
+    const { roles } = req.userInfo;
+    if (!roles.includes('ADMIN')) {
+      res.status(403).send(genErrorObj('Unathorized'));
+      return;
+    }
+
     data.attributes.published = new Date();
     const db = getDB();
     const createdNews = await createResource(db, 'News', data);

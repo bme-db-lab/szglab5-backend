@@ -54,8 +54,14 @@ function getQuery(filter) {
 
 module.exports = async (req, res) => {
   try {
-    const filter = req.query.filter;
+    const { roles } = req.userInfo;
 
+    if (roles.includes('STUDENT')) {
+      res.status(403).send(genErrorObj('Unathorized'));
+      return;
+    }
+
+    const filter = req.query.filter;
     const db = getDB();
     let queryObj = {};
     if (filter) {

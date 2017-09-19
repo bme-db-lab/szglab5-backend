@@ -16,6 +16,7 @@ module.exports = async (req, res) => {
     // only ADMIN DEMONSTRATOR CORRECTOR
     if (!roles.includes('ADMIN') && !roles.includes('DEMONSTRATOR') && !roles.includes('CORRECTOR')) {
       res.status(403).send(genErrorObj('Unathorized'));
+      return;
     }
 
     const { data } = req.body;

@@ -3,9 +3,9 @@ const { getDB } = require('../../db/db.js');
 
 module.exports = async (req, res) => {
   try {
+    throw new Error('Not implemented exception!');
     const { data } = req.body;
     const db = getDB();
-    throw new Error('Not implemented exception!');
 
     await db.Deliverables.create(data.attributes);
   } catch (err) {

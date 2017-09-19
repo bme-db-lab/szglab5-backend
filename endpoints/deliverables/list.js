@@ -70,8 +70,14 @@ module.exports = async (req, res) => {
     const filter = req.query.filter;
 
     const userInfo = req.userInfo;
-    const userId = userInfo ? userInfo.userId : -1;
+    const { roles } = req.userInfo;
 
+    if (roles.includes('STUDENT')) {
+      res.status(403).send(genErrorObj('Unathorized'));
+      return;
+    }
+
+    const userId = userInfo ? userInfo.userId : -1;
 
     const db = getDB();
     let queryObj = {};

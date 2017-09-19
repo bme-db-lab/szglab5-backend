@@ -5,6 +5,7 @@ const logger = require('../../utils/logger.js');
 
 module.exports = (req, res) => {
   try {
+    throw new Error('Not implemented exception!');
     const { data } = req.body;
     logger.info("Event added", data);
     const db = getDB();

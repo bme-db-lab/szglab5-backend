@@ -11,6 +11,15 @@ module.exports = async (req, res) => {
     const { data } = req.body;
     const db = getDB();
 
+    if (checkIfHasRole(req.userInfo.roles, 'STUDENT')) {
+      // check if userid match request id
+      const { userId } = req.userInfo;
+      if (userId !== reqId) {
+        res.status(403).send(genErrorObj('Unathorized'));
+        return;
+      }
+    }
+
     // check if password changing
     if (data.attributes.newpwd !== null && data.attributes.newpwd !== undefined) {
       const user = await db.Users.findById(reqId);
