@@ -11,10 +11,14 @@ module.exports = async (req, res) => {
         where: {
           onLogin: true
         },
-        include: [{ all: true }]
+        include: {
+          model: db.Users,
+          as: 'publisher',
+          attributes: ['id', 'displayName', 'email']
+        }
       });
       const response = getJSONApiResponseFromRecords(db, 'News', records, {
-        includeModels: []
+        includeModels: ['Users']
       });
       res.send(response);
     } else {
@@ -54,7 +58,7 @@ module.exports = async (req, res) => {
         });
       }
       const response = getJSONApiResponseFromRecords(db, 'News', records, {
-        includeModels: []
+        includeModels: ['Users']
       });
       res.send(response);
     }

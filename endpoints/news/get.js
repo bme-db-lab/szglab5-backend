@@ -10,11 +10,17 @@ module.exports = async (req, res) => {
     const db = getDB();
     const record = await db.News.findById(
       reqIdNum,
-      { include: [{ all: true }] }
+      {
+        include: {
+          model: db.Users,
+          as: 'publisher',
+          attributes: ['id', 'displayName', 'email']
+        }
+      }
     );
     checkIfExist(record);
     const response = getJSONApiResponseFromRecord(db, 'News', record, {
-      includeModels: []
+      includeModels: ['Users']
     });
     res.send(response);
   } catch (err) {
