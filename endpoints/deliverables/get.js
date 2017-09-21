@@ -45,6 +45,11 @@ module.exports = async (req, res) => {
                 model: db.Users,
               }]
             }]
+          },
+          {
+            model: db.Users,
+            as: 'Corrector',
+            attributes: ['id', 'displayName', 'email_official']
           }
         ]
       }
@@ -52,7 +57,7 @@ module.exports = async (req, res) => {
 
     checkIfExist(deliverable);
     const response = getJSONApiResponseFromRecord(db, 'Deliverables', deliverable, {
-      includeModels: ['DeliverableTemplates', 'Events']
+      includeModels: ['DeliverableTemplates', 'Events', 'Users']
     });
     res.send(response);
   } catch (err) {
