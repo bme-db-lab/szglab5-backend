@@ -94,9 +94,16 @@ module.exports = async (req, res) => {
     queryObj.include = [
       {
         model: db.Deliverables,
-        include: {
-          model: db.DeliverableTemplates
-        }
+        include: [
+          {
+            model: db.DeliverableTemplates
+          },
+          {
+            model: db.Users,
+            as: 'Corrector',
+            attributes: ['id', 'displayName', 'email_official', 'email']
+          }
+        ]
       },
       {
         model: db.ExerciseSheets,

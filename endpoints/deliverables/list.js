@@ -156,6 +156,12 @@ module.exports = async (req, res) => {
       ]
     });
 
+    queryObj.include.push({
+      model: db.Users,
+      as: 'Corrector',
+      attributes: ['id', 'displayName', 'email_official', 'email']
+    });
+
     // console.log(JSON.stringify(queryObj));
 
     if (req.query.limit) {
