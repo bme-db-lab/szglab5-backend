@@ -53,6 +53,14 @@ function getQuery(filter, userId) {
     };
   }
 
+  if ('isUploaded' in filter) {
+    if (filter.isUploaded === 'true') {
+      query.uploaded = true;
+    } else if (filter.isUploaded === 'false') {
+      query.uploaded = false;
+    }
+  }
+
   if ('deadlinestart' in filter && 'deadlineend' in filter) {
     const startDate = new Date(filter.deadlinestart);
     const endDate = new Date(filter.deadlineend);
