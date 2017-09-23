@@ -39,12 +39,19 @@ module.exports = async (req, res) => {
         include: [
           {
             model: db.Events,
-            include: [{
-              model: db.StudentRegistrations,
-              include: [{
+            include: [
+              {
+                model: db.StudentRegistrations,
+                include: [{
+                  model: db.Users,
+                }]
+              },
+              {
                 model: db.Users,
-              }]
-            }]
+                as: 'Demonstrator',
+                attributes: ['id', 'displayName', 'email_official', 'email']
+              }
+            ]
           },
           {
             model: db.Users,

@@ -160,6 +160,11 @@ module.exports = async (req, res) => {
               model: db.ExerciseTypes
             }
           ]
+        },
+        {
+          model: db.Users,
+          as: 'Demonstrator',
+          attributes: ['id', 'displayName', 'email_official', 'email']
         }
       ]
     });
