@@ -50,22 +50,25 @@ module.exports = async (req, res) => {
 
     }
 
-    const records = await db.EventTemplates.findAll({
-      include: [
-        {
-          model: db.ExerciseCategories,
-          include: [
-            {
-              model: db.ExerciseSheets
-            }
-          ]
-        },
-        {
-          model: db.DeliverableTemplates
-        },
-        ...eventInclude
-      ]
-    });
+    const records = await db.EventTemplates.findAll(
+      {
+        include: [
+          {
+            model: db.ExerciseCategories,
+            include: [
+              {
+                model: db.ExerciseSheets
+              }
+            ]
+          },
+          {
+            model: db.DeliverableTemplates
+          },
+          ...eventInclude
+        ],
+        order: ['seqNumber']
+      }
+    );
     const response = getJSONApiResponseFromRecords(db, 'EventTemplates', records, {
       includeModels: ['DeliverableTemplates', 'ExerciseCategories', 'ExerciseSheets']
     });
