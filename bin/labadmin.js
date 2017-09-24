@@ -242,7 +242,7 @@ yargs // eslint-disable-line no-unused-expressions
     command: 'add-new-student',
     aliases: ['ans'],
     desc: 'Add new student',
-    builder: async () => {
+    handler: async () => {
       const addNewStudent = require('./commands/add-new-student');
       await addNewStudent();
     }
@@ -251,7 +251,7 @@ yargs // eslint-disable-line no-unused-expressions
     command: 'change-event-class-room',
     aliases: ['cecr'],
     desc: 'Change event class room',
-    builder: async () => {
+    handler: async () => {
       const changeEventClassRoom = require('./commands/change-event-class-room');
       await changeEventClassRoom();
     }
@@ -260,18 +260,23 @@ yargs // eslint-disable-line no-unused-expressions
     command: 'change-exercise-types-json',
     aliases: ['json-cet'],
     desc: 'Change student\'s exercise types from json file',
-    builder: async () => {
+    handler: async (argv) => {
       const changeExTypes = require('./commands/change-exercise-types-json');
-      await changeExTypes();
+      await changeExTypes(argv);
     }
   })
   .command({
     command: 'change-event-attributes-json',
     aliases: ['json-cea'],
     desc: 'Change event\'s attributes from json',
-    builder: async () => {
+    builder: () => yargs
+    .option('reset-deliverables', {
+      alias: 'rd',
+      default: false
+    }),
+    handler: async (argv) => {
       const changeEvents = require('./commands/change-event-attributes-json');
-      await changeEvents();
+      await changeEvents(argv);
     }
   })
   .option('env', {

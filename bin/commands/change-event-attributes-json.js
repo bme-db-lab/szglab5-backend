@@ -4,9 +4,13 @@ const path = require('path');
 const fs = require('fs');
 const moment = require('moment');
 
-module.exports = async () => {
+module.exports = async (argv) => {
   try {
     const db = await initDB();
+    console.log(argv);
+    const options = {
+      resetDeliverables: argv.resetDeliverables || false
+    };
 
     const studentGroups = await db.StudentGroups.findAll();
     const studentGroupsChoices = [];
@@ -74,6 +78,30 @@ module.exports = async () => {
               }
             }
           );
+          if (options.resetDeliverables) {
+            await db.Deliverables.update(
+              {
+                lastSubmittedDate: null,
+                grading: false,
+                grade: null,
+                imsc: 0,
+                finalized: false,
+                comment: null,
+                uploaded: null,
+                filePath: null,
+                originalFileName: null
+              },
+              {
+                where: { id: deliverable.id },
+                include: {
+                  model: db.DeliverableTemplates,
+                  where: {
+                    type: 'FILE'
+                  }
+                }
+              }
+            );
+          }
         }
       }
     }
