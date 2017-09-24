@@ -5,6 +5,12 @@ const studentGroupsNotToUpdate = [
   'c12-A'
 ];
 
+const exTypesToSkip = [
+  52,
+  57,
+  63
+];
+
 module.exports = async () => {
   try {
     const confirmPromptResult = await inquirer.prompt([
@@ -20,7 +26,11 @@ module.exports = async () => {
     const db = await initDB();
 
     const studentGroups = await db.StudentGroups.findAll();
-    const exTypes = await db.ExerciseTypes.findAll();
+    const exTypes = await db.ExerciseTypes.findAll({
+      where: {
+        exerciseId: { $notIn: exTypesToSkip }
+      }
+    });
     let currentExTypeIndex = 0;
 
     for (const studentGroup of studentGroups) {
