@@ -17,7 +17,22 @@ module.exports = async (argv) => {
         }
       ]
     });
+    const exTypesRecords = await db.ExerciseTypes.findAll();
+    const exTypes = exTypesRecords.map(exTypeRecord => ({
+      id: exTypeRecord.id,
+      exerciseId: exTypeRecord.dataValues.exerciseId,
+      shortName: exTypeRecord.dataValues.shortName,
+      count: 0
+    }));
     console.log(`Student registrations count: ${studentRegs.length}`);
+    studentRegs.forEach((studentReg) => {
+      const actExType = exTypes.find(exType => exType.id === studentReg.dataValues.ExerciseTypeId);
+      if (actExType) {
+        actExType.count += 1;
+      }
+    });
+    console.log(exTypes);
+
     const studentExTypes = studentRegs.map(
       studentReg => ({
         neptun: studentReg.dataValues.User.dataValues.neptun,

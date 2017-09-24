@@ -279,6 +279,15 @@ yargs // eslint-disable-line no-unused-expressions
       await changeEvents(argv);
     }
   })
+  .command({
+    command: 'set-new-student-extypes',
+    aliases: ['snse'],
+    desc: 'Set new student exercise-types',
+    handler: async () => {
+      const setNewStudentExtypes = require('./commands/set-new-student-extypes');
+      await setNewStudentExtypes();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
