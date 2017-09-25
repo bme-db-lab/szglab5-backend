@@ -1,6 +1,7 @@
 const { getDB } = require('../../db/db');
 const { genErrorObj } = require('../../utils/utils.js');
 const { verifyToken } = require('../../utils/jwt');
+const { get } = require('lodash');
 
 module.exports = async (req, res) => {
   try {
@@ -41,11 +42,41 @@ module.exports = async (req, res) => {
       }
     }
 
-    const deliverable = await db.Deliverables.findById(reqIdNum);
+    const deliverable = await db.Deliverables.findById(reqIdNum, {
+      include: [
+        {
+          attributes: ['id'],
+          model: db.Events,
+          where: {},
+          include: [
+            {
+              attributes: ['id'],
+              model: db.StudentRegistrations,
+              where: {},
+              include: {
+                attributes: ['id', 'neptun'],
+                model: db.Users
+              }
+            },
+            {
+              attributes: ['id'],
+              where: {},
+              model: db.EventTemplates,
+              include: {
+                model: db.ExerciseCategories,
+                attributes: ['type']
+              }
+            }
+          ]
+        }
+      ]
+    });
     // const path = deliverable.dataValues.filePath;
     // TODO: validate path
     // res.sendFile(path);
-    const fileName = deliverable.originalFileName;
+    const userNeptun = get(deliverable, 'Event.StudentRegistration.User.neptun', 'UNKNOWN_STUDENT');
+    const exCategoryType = get(deliverable, 'Event.EventTemplate.ExerciseCategory.type', 'UNKNOWN_CATEGORY');
+    const fileName = `${userNeptun}_${exCategoryType}_${deliverable.originalFileName}`;
     res.redirect(`download/${fileName}?token=${token}`);
   } catch (err) {
     res.status(500).send({
