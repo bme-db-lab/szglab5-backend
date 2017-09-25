@@ -153,6 +153,9 @@ module.exports = async (req, res) => {
                   $in: userExTypeIds
                 }
               } : {},
+              (filter && 'exerciseTypeId' in filter) ? {
+                ExerciseTypeId: parseInt(filter.exerciseTypeId, 10)
+              } : {}
             ]
           },
           include: [
