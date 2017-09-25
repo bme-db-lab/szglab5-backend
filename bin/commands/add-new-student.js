@@ -74,7 +74,7 @@ module.exports = async () => {
     ]);
 
     // \Randomize\ -> Prompt exerciseTypes for student reg
-    const exTypes = await db.ExerciseTypes.findAll({ where: { CourseId: courseId } });
+    const exTypes = await db.ExerciseTypes.findAll();
     const exTypeChoices = exTypes.map(exType => ({
       value: exType.id,
       name: exType.shortName
