@@ -73,6 +73,22 @@ module.exports = async () => {
       }
     ]);
 
+    // \Randomize\ -> Prompt exerciseTypes for student reg
+    const exTypes = await db.ExerciseTypes.findAll({ where: { CourseId: courseId } });
+    const exTypeChoices = exTypes.map(exType => ({
+      value: exType.id,
+      name: exType.shortName
+    }));
+    const exTypeAnswer = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'exTypeId',
+        message: 'Please select an exerciseType',
+        choices: exTypeChoices
+      }
+    ]);
+    // const randomExerciseType = exTypes[Math.floor(Math.random() * exTypes.length)];
+
     const initPassword = generator.generate({
       length: 10,
       numbers: true,
@@ -102,10 +118,6 @@ module.exports = async () => {
       RoleId: studentRole.id
     });
 
-    // Randomize exerciseTypes for student reg
-    const exTypes = await db.ExerciseTypes.findAll({ where: { CourseId: courseId } });
-    const randomExerciseType = exTypes[Math.floor(Math.random() * exTypes.length)];
-
     const studentGroup = await db.StudentGroups.findById(newUserPromptResult.studentGroupId);
     // Create Student Registration
     const studentReg = await db.StudentRegistrations.create({
@@ -115,7 +127,7 @@ module.exports = async () => {
       SemesterId: semester.id,
       StudentGroupId: studentGroup.id,
       UserId: newUser.id,
-      ExerciseTypeId: randomExerciseType.id
+      ExerciseTypeId: exTypeAnswer.exTypeId
     });
     // Generate Events
     console.log('Generating events...');
