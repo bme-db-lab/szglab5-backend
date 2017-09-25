@@ -147,6 +147,9 @@ module.exports = async () => {
       });
       console.log(`  Event: loc - "${newEvent.dataValues.location}" date - "${newEvent.dataValues.date}"`);
       // Generate Deliverables
+      if (eventTemplate.id > 3) {
+        continue;
+      }
       const deliverableTemplates = await eventTemplate.getDeliverableTemplates();
       for (const deliverableTemplate of deliverableTemplates) {
         console.log(`    DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`);
