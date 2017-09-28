@@ -89,7 +89,6 @@ module.exports = async (req, res) => {
         }
       ]
     });
-    console.log(deliverables.length);
     const table = {
       headers: ['id', 'name', 'neptun', 'exercise', 'labor', 'file', 'description', 'deadline', 'submittedDate', 'grade', 'imsc', 'finalized', 'corrector'],
       data: deliverables.map(deliverable => ({
@@ -111,7 +110,6 @@ module.exports = async (req, res) => {
         count: deliverables.length
       }
     };
-
     res.send(table);
   } catch (error) {
     res.status(500).send(genErrorObj(error.message));
