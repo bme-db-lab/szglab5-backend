@@ -87,9 +87,10 @@ module.exports = async (argv) => {
                 imsc: 0,
                 finalized: false,
                 comment: null,
-                uploaded: null,
+                uploaded: false,
                 filePath: null,
-                originalFileName: null
+                originalFileName: null,
+                CorrectorId: null
               },
               {
                 where: { id: deliverable.id },
