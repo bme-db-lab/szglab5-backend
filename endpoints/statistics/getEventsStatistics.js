@@ -44,7 +44,6 @@ module.exports = async (req, res) => {
       let hasGrade = 0;
       let finalized = 0;
       studentGroup.StudentRegistrations.forEach((studentReg) => {
-        console.log(studentReg.Events[0]);
         if (studentReg.Events[0].finalized === true) {
           finalized += 1;
         }
