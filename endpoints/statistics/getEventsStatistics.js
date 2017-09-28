@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
           where: {},
           include: {
             model: db.Events,
-            attributes: ['id'],
+            attributes: ['id', 'finalized', 'grade', 'date'],
             where: {
               EventTemplateId: parseInt(eventTemplateId, 10)
             }
@@ -44,11 +44,12 @@ module.exports = async (req, res) => {
       let hasGrade = 0;
       let finalized = 0;
       studentGroup.StudentRegistrations.forEach((studentReg) => {
+        console.log(studentReg.Events[0]);
         if (studentReg.Events[0].finalized === true) {
-          finalized++;
+          finalized += 1;
         }
         if (studentReg.Events[0].grade > 0 && studentReg.Events[0].grade < 6) {
-          hasGrade++;
+          hasGrade += 1;
         }
       });
       data.push({
@@ -56,12 +57,13 @@ module.exports = async (req, res) => {
         demonstrator: studentGroup.User.displayName,
         students: studentGroup.StudentRegistrations.length,
         hasGrade,
-        finalized
+        finalized,
+        date: studentGroup.StudentRegistrations[0].Events[0].date
       });
     });
 
     const table = {
-      headers: ['groupName', 'demonstrator', 'students', 'hasGrade', 'finalized'],
+      headers: ['groupName', 'demonstrator', 'students', 'hasGrade', 'finalized', 'date'],
       data
     };
     res.send(table);
