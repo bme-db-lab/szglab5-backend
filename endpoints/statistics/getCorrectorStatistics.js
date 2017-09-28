@@ -1,34 +1,92 @@
 const { getDB } = require('../../db/db.js');
 const { genErrorObj } = require('../../utils/utils.js');
 
-// http://expressjs.com/en/api.html#req.query
-// localhost:7000/statistics/student?studentId=1
 module.exports = async (req, res) => {
   try {
     const db = getDB();
-    const correctors = [];
-    const roleQuery = await db.Roles.findOne({ where: { name: 'CORRECTOR' } });
-    const correctorRoleQuery = await db.UserRoles.findAll({ where: { RoleId: roleQuery.dataValues.id } });
-    for (const role of correctorRoleQuery) {
-      const correctorQuery = await db.Users.findById(role.dataValues.UserId);
-      const resCorrector = {
-        id: correctorQuery.dataValues.id,
-        name: correctorQuery.dataValues.displayName,
-        num: 0
-      };
-      const deliverableQuery = await db.Deliverables.findAll({ where: { CorrectorId: correctorQuery.dataValues.id } });
-      for (const deliverable of deliverableQuery) {
-        if (deliverable.dataValues.finalized === undefined ||
-            deliverable.dataValues.finalized === null ||
-            deliverable.dataValues.finalized === false) {
-          resCorrector.num += 1;
-        }
-      }
-      correctors.push(resCorrector);
+
+    const { roles } = req.userInfo;
+
+    // only ADMIN DEMONSTRATOR CORRECTOR
+    if (!roles.includes('ADMIN') && !roles.includes('DEMONSTRATOR') && !roles.includes('CORRECTOR')) {
+      res.status(403).send(genErrorObj('Unathorized'));
+      return;
     }
 
+    const exerciseCategories = await db.ExerciseCategories.findAll({
+      attributes: ['id', 'type']
+    });
+    const exerciseCategoryNames = exerciseCategories.map(exCat => exCat.type);
 
-    res.send({ headers: ['id', 'name', 'num'], data: correctors });
+    const correctors = await db.Users.findAll({
+      include: [
+        {
+          model: db.Roles,
+          where: {
+            name: 'CORRECTOR'
+          }
+        },
+        {
+          model: db.Deliverables,
+          where: {},
+          include: [
+            {
+              model: db.DeliverableTemplates,
+              where: { type: 'FILE' }
+            },
+            {
+              model: db.Events,
+              attributes: ['id'],
+              include: {
+                model: db.EventTemplates,
+                include: {
+                  model: db.ExerciseCategories
+                }
+              }
+            }
+          ]
+        },
+        {
+          model: db.ExerciseTypes
+        }
+      ]
+    });
+
+    const correctorStat = [];
+    correctors.forEach((corrector) => {
+      const exCatStat = {};
+      let sum = 0;
+      exerciseCategoryNames.forEach((exCatName) => {
+        exCatStat[exCatName] = 0;
+      });
+
+
+      corrector.Deliverables.forEach((deliverable) => {
+        const delExCatType = deliverable.Event.EventTemplate.ExerciseCategory.type;
+        exCatStat[delExCatType] += 1;
+        sum += 1;
+      });
+
+      const exTypes = corrector.ExerciseTypes.map(exType => exType.shortName);
+      let exTypesString = '';
+      exTypes.forEach((exType) => {
+        exTypesString += `${exType} `;
+      });
+
+      correctorStat.push(
+        Object.assign({
+          displayName: corrector.displayName,
+          exerciseType: exTypesString.trim(),
+        }, exCatStat, { sum })
+      );
+    });
+
+    const table = {
+      headers: ['displayName', 'exerciseType', ...exerciseCategoryNames, 'sum'],
+      data: correctorStat
+    };
+
+    res.send(table);
   } catch (error) {
     res.status(500).send(genErrorObj(error.message));
   }
