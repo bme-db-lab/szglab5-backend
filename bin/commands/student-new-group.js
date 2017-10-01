@@ -115,7 +115,9 @@ module.exports = async () => {
       {
         date: updateEventInfo.date,
         location: updateEventInfo.location,
-        DemonstratorId: updateEventInfo.DemonstratorId
+        DemonstratorId: updateEventInfo.DemonstratorId,
+        finalized: false,
+        grade: null
       },
       {
         where: { id: eventToUpdate.id }
@@ -132,7 +134,17 @@ module.exports = async () => {
       console.log(deadline);
       await db.Deliverables.update(
         {
-          deadline
+          deadline,
+          lastSubmittedDate: null,
+          grading: false,
+          grade: null,
+          imsc: 0,
+          finalized: false,
+          comment: null,
+          uploaded: false,
+          filePath: null,
+          originalFileName: null,
+          CorrectorId: null
         },
         {
           where: { id: deliverable.id },
