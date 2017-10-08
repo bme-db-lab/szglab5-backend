@@ -29,6 +29,16 @@ module.exports = async (req, res) => {
             attributes: ['id', 'finalized', 'grade', 'date'],
             where: {
               EventTemplateId: parseInt(eventTemplateId, 10)
+            },
+            include: {
+              model: db.Deliverables,
+              include: {
+                model: db.DeliverableTemplates,
+                attributes: ['id'],
+                where: {
+                  type: 'FILE'
+                }
+              },
             }
           }
         },
@@ -43,13 +53,22 @@ module.exports = async (req, res) => {
     studentGroups.forEach((studentGroup) => {
       let hasGrade = 0;
       let finalized = 0;
+      let correctedDeliverables = 0;
       studentGroup.StudentRegistrations.forEach((studentReg) => {
         if (studentReg.Events[0].finalized === true) {
           finalized += 1;
         }
-        if (studentReg.Events[0].grade > 0 && studentReg.Events[0].grade < 6) {
+        // if ((studentReg.Events[0].grade >= 0 && studentReg.Events[0].grade < 6)) {
+        //   hasGrade += 1;
+        // }
+        if (studentReg.Events[0].grade !== null) {
           hasGrade += 1;
         }
+        studentReg.Events[0].Deliverables.forEach((deliverable) => {
+          if (deliverable.finalized) {
+            correctedDeliverables += 1;
+          }
+        });
       });
       data.push({
         groupName: studentGroup.name,
@@ -57,12 +76,13 @@ module.exports = async (req, res) => {
         students: studentGroup.StudentRegistrations.length,
         hasGrade,
         finalized,
+        correctedDeliverables,
         date: studentGroup.StudentRegistrations[0].Events[0].date
       });
     });
 
     const table = {
-      headers: ['groupName', 'demonstrator', 'students', 'hasGrade', 'finalized', 'date'],
+      headers: ['groupName', 'demonstrator', 'students', 'hasGrade', 'correctedDeliverables', 'finalized'],
       data
     };
     res.send(table);
