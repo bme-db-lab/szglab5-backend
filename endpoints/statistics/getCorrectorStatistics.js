@@ -82,7 +82,7 @@ module.exports = async (req, res) => {
     });
 
     correctorStat.sort((corrector1, corrector2) => {
-      if (corrector1.sum > corrector2.sum) {
+      if (corrector1.exerciseType > corrector2.exerciseType) {
         return -1;
       } else {
         return 1;
