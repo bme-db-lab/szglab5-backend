@@ -81,6 +81,14 @@ module.exports = async (req, res) => {
       );
     });
 
+    correctorStat.sort((corrector1, corrector2) => {
+      if (corrector1.sum > corrector2.sum) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+
     const table = {
       headers: ['displayName', 'exerciseType', ...exerciseCategoryNames, 'sum'],
       data: correctorStat
