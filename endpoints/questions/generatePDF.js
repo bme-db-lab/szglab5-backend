@@ -10,12 +10,21 @@ module.exports = async (req, res) => {
       throw new Error('No questionids specified');
     }
     const { token } = req.body;
+    let userInfo = null;
+
     try {
-      await verifyToken(token);
+      userInfo = await verifyToken(token);
     } catch (err) {
       res.status(403).send(genErrorObj('Invalid token'));
     }
     const questionIds = req.query.questionId;
+
+    const { roles } = userInfo;
+    // only ADMIN DEMONSTRATOR CORRECTOR
+    if (!roles.includes('ADMIN') && !roles.includes('DEMONSTRATOR') && !roles.includes('CORRECTOR')) {
+      res.status(403).send(genErrorObj('Unathorized'));
+      return;
+    }
     // get questions from db
 
     const db = getDB();

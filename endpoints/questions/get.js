@@ -7,6 +7,13 @@ module.exports = async (req, res) => {
     const reqId = req.params.id;
     const reqIdNum = parseInt(reqId, 10);
 
+    const { roles } = req.userInfo;
+    // only ADMIN DEMONSTRATOR CORRECTOR
+    if (!roles.includes('ADMIN') && !roles.includes('DEMONSTRATOR') && !roles.includes('CORRECTOR')) {
+      res.status(403).send(genErrorObj('Unathorized'));
+      return;
+    }
+
     const db = getDB();
     const record = await db.Questions.findById(
       reqIdNum,
