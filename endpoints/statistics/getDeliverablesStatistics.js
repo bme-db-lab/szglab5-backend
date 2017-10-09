@@ -118,7 +118,7 @@ module.exports = async (req, res) => {
     const sortedData = orderBy(data, ['corrector', 'submittedDate'], [true, false]);
 
     const table = {
-      headers: ['name', 'neptun', 'description', 'elapsedTime', 'submittedDate', 'grade', 'imsc', 'finalized', 'corrector'],
+      headers: ['name', 'neptun', 'description', 'elapsedTime', 'grade', 'imsc', 'finalized', 'corrector'],
       data: sortedData,
       meta: {
         count: deliverables.length
