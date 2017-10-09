@@ -81,9 +81,16 @@ module.exports = async (req, res) => {
       });
     });
 
+    const sortedData = data.sort((event1, event2) => {
+      if (event1.demonstrator > event2.demonstrator) {
+        return 1;
+      }
+      return -1;
+    });
+
     const table = {
-      headers: ['groupName', 'demonstrator', 'students', 'hasGrade', 'correctedDeliverables', 'finalized'],
-      data
+      headers: ['groupName', 'demonstrator', 'students', 'correctedDeliverables', 'hasGrade', 'finalized'],
+      data: sortedData
     };
     res.send(table);
   } catch (error) {
