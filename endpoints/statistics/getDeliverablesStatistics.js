@@ -1,5 +1,7 @@
 const { getDB } = require('../../db/db.js');
 const { genErrorObj } = require('../../utils/utils.js');
+const { orderBy } = require('lodash');
+const moment = require('moment');
 
 module.exports = async (req, res) => {
   try {
@@ -89,9 +91,14 @@ module.exports = async (req, res) => {
         }
       ]
     });
-    const table = {
-      headers: ['id', 'name', 'neptun', 'exercise', 'labor', 'file', 'description', 'deadline', 'submittedDate', 'grade', 'imsc', 'finalized', 'corrector'],
-      data: deliverables.map(deliverable => ({
+    const data = deliverables.map((deliverable) => {
+      let elapsedTime = 'Not uploaded';
+      if (deliverable.uploaded) {
+        const diffDays = moment().diff(deliverable.lastSubmittedDate, 'days');
+        const diffHours = moment().diff(deliverable.lastSubmittedDate, 'hours') % 24;
+        elapsedTime = `${diffDays} days ${diffHours !== 0 ? `${diffHours} hours` : ''}`;
+      }
+      return {
         id: deliverable.id,
         name: deliverable.Event.StudentRegistration.User.displayName,
         neptun: deliverable.Event.StudentRegistration.User.neptun,
@@ -101,11 +108,18 @@ module.exports = async (req, res) => {
         description: deliverable.DeliverableTemplate.description,
         deadline: deliverable.deadline,
         submittedDate: deliverable.lastSubmittedDate,
+        elapsedTime,
         grade: deliverable.grade,
         imsc: deliverable.imsc,
         finalized: deliverable.finalized,
-        corrector: (deliverable.Corrector) ? deliverable.Corrector.displayName : 'Free'
-      })),
+        corrector: (deliverable.Corrector) ? deliverable.Corrector.displayName : '_Free'
+      };
+    });
+    const sortedData = orderBy(data, ['corrector', 'submittedDate'], [true, false]);
+
+    const table = {
+      headers: ['name', 'neptun', 'description', 'elapsedTime', 'submittedDate', 'grade', 'imsc', 'finalized', 'corrector'],
+      data: sortedData,
       meta: {
         count: deliverables.length
       }
