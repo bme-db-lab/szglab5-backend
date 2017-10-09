@@ -14,7 +14,8 @@ module.exports = async (req, res) => {
         {
           model: db.StudentRegistrations
         }
-      ]
+      ],
+      order: ['shortName']
     });
     const response = getJSONApiResponseFromRecords(db, 'ExerciseTypes', records, {
       includeModels: []
