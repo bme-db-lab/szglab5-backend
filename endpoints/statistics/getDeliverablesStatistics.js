@@ -92,15 +92,17 @@ module.exports = async (req, res) => {
       ]
     });
     const data = deliverables.map((deliverable) => {
-      let elapsedTime = 'Not uploaded';
-      if (deliverable.uploaded) {
+      let elapsedTime = 'Not Uploaded';
+      if (deliverable.finalized) {
+        elapsedTime = 'OK';
+      } else if (deliverable.uploaded) {
         const diffHours = moment().diff(deliverable.lastSubmittedDate, 'hours');
         const diffDays = Math.floor(diffHours / 24);
 
         const hoursStr = diffHours % 24 !== 0 ? `${diffHours % 24} hours` : '';
         const daysStr = diffDays !== 0 ? `${diffDays} days` : '';
 
-        elapsedTime = `${daysStr} ${hoursStr}`;
+        elapsedTime = `~${daysStr} ${hoursStr}`;
       }
       return {
         id: deliverable.id,
@@ -119,7 +121,7 @@ module.exports = async (req, res) => {
         corrector: (deliverable.Corrector) ? deliverable.Corrector.displayName : '_Free'
       };
     });
-    const sortedData = orderBy(data, ['corrector', 'submittedDate'], [true, false]);
+    const sortedData = orderBy(data, ['elapsedTime', 'corrector', 'finalized'], ['desc', 'asc', 'desc']);
 
     const table = {
       headers: ['name', 'neptun', 'description', 'elapsedTime', 'grade', 'imsc', 'finalized', 'corrector'],
