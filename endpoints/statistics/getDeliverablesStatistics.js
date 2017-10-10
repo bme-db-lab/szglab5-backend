@@ -93,9 +93,13 @@ module.exports = async (req, res) => {
     });
     const data = deliverables.map((deliverable) => {
       let elapsedTime = 'Not Uploaded';
+      let elapsedTimeHours = -2;
+
       if (deliverable.finalized) {
         elapsedTime = 'OK';
+        elapsedTimeHours = -1;
       } else if (deliverable.uploaded) {
+        elapsedTimeHours = moment().diff(deliverable.lastSubmittedDate, 'hours');
         const diffHours = moment().diff(deliverable.lastSubmittedDate, 'hours');
         const diffDays = Math.floor(diffHours / 24);
 
@@ -107,6 +111,7 @@ module.exports = async (req, res) => {
       return {
         id: deliverable.id,
         name: deliverable.Event.StudentRegistration.User.displayName,
+        elapsedTimeHours,
         neptun: deliverable.Event.StudentRegistration.User.neptun,
         exercise: deliverable.Event.ExerciseSheet.ExerciseType.shortName,
         labor: deliverable.Event.ExerciseSheet.ExerciseCategory.type,
@@ -121,7 +126,7 @@ module.exports = async (req, res) => {
         corrector: (deliverable.Corrector) ? deliverable.Corrector.displayName : '_Free'
       };
     });
-    const sortedData = orderBy(data, ['elapsedTime', 'corrector', 'finalized'], ['desc', 'asc', 'desc']);
+    const sortedData = orderBy(data, ['elapsedTimeHours', 'corrector', 'finalized'], ['desc', 'asc', 'desc']);
 
     const table = {
       headers: ['name', 'neptun', 'description', 'elapsedTime', 'grade', 'imsc', 'finalized', 'corrector'],
