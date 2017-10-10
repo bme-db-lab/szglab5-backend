@@ -94,9 +94,13 @@ module.exports = async (req, res) => {
     const data = deliverables.map((deliverable) => {
       let elapsedTime = 'Not uploaded';
       if (deliverable.uploaded) {
-        const diffDays = moment().diff(deliverable.lastSubmittedDate, 'days');
-        const diffHours = moment().diff(deliverable.lastSubmittedDate, 'hours') % 24;
-        elapsedTime = `${diffDays} days ${diffHours !== 0 ? `${diffHours} hours` : ''}`;
+        const diffHours = moment().diff(deliverable.lastSubmittedDate, 'hours');
+        const diffDays = Math.floor(diffHours / 24);
+
+        const hoursStr = diffHours % 24 !== 0 ? `${diffHours % 24} hours` : '';
+        const daysStr = diffDays !== 0 ? `${diffDays} days` : '';
+
+        elapsedTime = `${daysStr} ${hoursStr}`;
       }
       return {
         id: deliverable.id,

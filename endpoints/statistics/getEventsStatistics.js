@@ -49,6 +49,20 @@ module.exports = async (req, res) => {
       ]
     });
 
+    const deliverableTemplates = await db.DeliverableTemplates.findAll({
+      where: {
+        $and: [
+          {
+            type: 'FILE'
+          },
+          {
+            EventTemplateId: parseInt(eventTemplateId, 10)
+          }
+        ]
+      },
+      attributes: ['id']
+    });
+
     const data = [];
     studentGroups.forEach((studentGroup) => {
       let hasGrade = 0;
@@ -76,7 +90,7 @@ module.exports = async (req, res) => {
         students: studentGroup.StudentRegistrations.length,
         hasGrade,
         finalized,
-        correctedDeliverables,
+        correctedDeliverables: correctedDeliverables / deliverableTemplates.length,
         date: studentGroup.StudentRegistrations[0].Events[0].date
       });
     });
