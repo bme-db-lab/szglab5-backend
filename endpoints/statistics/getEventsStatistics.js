@@ -90,7 +90,7 @@ module.exports = async (req, res) => {
         students: studentGroup.StudentRegistrations.length,
         hasGrade,
         finalized,
-        correctedDeliverables: correctedDeliverables / deliverableTemplates.length,
+        correctedStudents: correctedDeliverables / deliverableTemplates.length,
         date: studentGroup.StudentRegistrations[0].Events[0].date
       });
     });
@@ -103,7 +103,7 @@ module.exports = async (req, res) => {
     });
 
     const table = {
-      headers: ['groupName', 'demonstrator', 'students', 'correctedDeliverables', 'hasGrade', 'finalized'],
+      headers: ['groupName', 'demonstrator', 'students', 'correctedStudents', 'hasGrade', 'finalized'],
       data: sortedData
     };
     res.send(table);
