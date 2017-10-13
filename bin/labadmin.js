@@ -288,6 +288,15 @@ yargs // eslint-disable-line no-unused-expressions
       await setNewStudentExtypes();
     }
   })
+  .command({
+    command: 'list-deliverable-templates',
+    aliases: ['ldt'],
+    desc: 'List deliverable templates',
+    handler: async () => {
+      const listDeliverableTemplates = require('./commands/list-deliverable-templates');
+      await listDeliverableTemplates();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
