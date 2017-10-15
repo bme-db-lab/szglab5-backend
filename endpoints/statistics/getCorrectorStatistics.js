@@ -69,9 +69,12 @@ module.exports = async (req, res) => {
 
       const exTypes = corrector.ExerciseTypes.map(exType => exType.shortName);
       let exTypesString = '';
-      exTypes.forEach((exType) => {
-        exTypesString += `${exType} `;
-      });
+      for (let i = 0; i < exTypes.length; i++) {
+        exTypesString += `${exTypes[i]}`;
+        if (i < exTypes.length - 1) {
+          exTypesString += ', ';
+        }
+      }
 
       correctorStat.push(
         Object.assign({
