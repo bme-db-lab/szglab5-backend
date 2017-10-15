@@ -1,6 +1,7 @@
 const { genErrorObj } = require('../../utils/utils.js');
 const { getJSONApiResponseFromRecord, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
+const { orderBy } = require('lodash');
 
 module.exports = async (req, res) => {
   try {
@@ -17,7 +18,6 @@ module.exports = async (req, res) => {
           },
           {
             model: db.Events,
-            order: ['date']
           },
           {
             model: db.Users
@@ -32,6 +32,9 @@ module.exports = async (req, res) => {
       }
     );
     checkIfExist(studentReg);
+    const sortedEvents = orderBy(studentReg.Events, ['date']);
+    studentReg.Events = sortedEvents;
+
     const response = getJSONApiResponseFromRecord(db, 'StudentRegistrations', studentReg, {
       includeModels: []
     });
