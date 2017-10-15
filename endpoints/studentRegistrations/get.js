@@ -10,7 +10,27 @@ module.exports = async (req, res) => {
     const db = getDB();
     const studentReg = await db.StudentRegistrations.findById(
       reqIdNum,
-      { include: [{ all: true }] });
+      {
+        include: [
+          {
+            model: db.Semesters
+          },
+          {
+            model: db.Events,
+            order: ['date']
+          },
+          {
+            model: db.Users
+          },
+          {
+            model: db.StudentGroups
+          },
+          {
+            model: db.ExerciseTypes
+          }
+        ]
+      }
+    );
     checkIfExist(studentReg);
     const response = getJSONApiResponseFromRecord(db, 'StudentRegistrations', studentReg, {
       includeModels: []
