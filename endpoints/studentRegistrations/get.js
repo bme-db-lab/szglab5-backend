@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
             model: db.Semesters
           },
           {
-            model: db.Events,
+            model: db.Events
           },
           {
             model: db.Users
@@ -32,9 +32,8 @@ module.exports = async (req, res) => {
       }
     );
     checkIfExist(studentReg);
-    const sortedEvents = orderBy(studentReg.Events, ['date']);
-    studentReg.Events = sortedEvents;
-
+    const sortedEvents = orderBy(studentReg.dataValues.Events, ['date']);
+    studentReg.dataValues.Events = sortedEvents;
     const response = getJSONApiResponseFromRecord(db, 'StudentRegistrations', studentReg, {
       includeModels: []
     });

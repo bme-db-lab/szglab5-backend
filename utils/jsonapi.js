@@ -187,7 +187,6 @@ function getJSONApiResponseFromRecord(db, modelName, record, options) {
 
         // add to included if its present in options
         if (currentOptions.includeModels.find(includeModelName => includeModelName === innerAttrConstructorName)) {
-
           included.push({
             type: innerAttrConstructorName,
             id: innerData.dataValues.id,
