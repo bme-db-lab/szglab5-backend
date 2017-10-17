@@ -2,6 +2,7 @@ const { isDate } = require('lodash');
 const { genErrorObj } = require('../../utils/utils.js');
 const { getJSONApiResponseFromRecords } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
+const { orderBy } = require('lodash');
 
 function getQuery(filter) {
   const query = {};
@@ -134,7 +135,13 @@ module.exports = async (req, res) => {
       }
     ];
 
+
     const events = await db.Events.findAll(queryObj);
+
+    events.forEach((event) => {
+      const sortedDeliverables = orderBy(event.dataValues.Deliverables, ['DeliverableTemplate.name'], ['asc']);
+      event.dataValues.Deliverables = sortedDeliverables;
+    });
 
     const includeModels = ['Deliverables', 'ExerciseSheets', 'Users', 'DeliverableTemplates', 'ExerciseCategories'];
     if (filter && 'eventTemplateId' in filter) {
