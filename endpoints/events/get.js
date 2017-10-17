@@ -73,11 +73,11 @@ module.exports = async (req, res) => {
         ]
       }
     );
+    checkIfExist(event);
 
     const sortedDeliverables = orderBy(event.dataValues.Deliverables, ['DeliverableTemplate.name'], ['asc']);
     event.dataValues.Deliverables = sortedDeliverables;
 
-    checkIfExist(event);
     const response = getJSONApiResponseFromRecord(db, 'Events', event, {
       includeModels: ['Users', 'ExerciseSheets', 'Deliverables', 'EventTemplates', 'DeliverableTemplates', 'ExerciseCategories']
     });
