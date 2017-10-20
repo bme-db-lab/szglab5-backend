@@ -188,6 +188,10 @@ module.exports = async (req, res) => {
       queryObj.offset = parseInt(req.query.offset, 10);
     }
 
+    queryObj.order = [
+      ['lastSubmittedDate', 'DESC']
+    ];
+
     const deliverables = await db.Deliverables.findAll(queryObj);
 
     const response = getJSONApiResponseFromRecords(db, 'Deliverables', deliverables, {
