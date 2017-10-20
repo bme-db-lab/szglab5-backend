@@ -39,9 +39,15 @@ module.exports = async (req, res) => {
               attributes: ['id'],
               include: {
                 model: db.EventTemplates,
-                include: {
-                  model: db.ExerciseCategories
-                }
+                include: [
+                  {
+                    model: db.ExerciseCategories
+                  },
+                  {
+                    model: db.DeliverableTemplates,
+                    where: { type: 'FILE' }
+                  }
+                ]
               }
             }
           ]
@@ -63,8 +69,9 @@ module.exports = async (req, res) => {
 
       corrector.Deliverables.forEach((deliverable) => {
         const delExCatType = deliverable.Event.EventTemplate.ExerciseCategory.type;
-        exCatStat[delExCatType] += 1;
-        sum += 1;
+        const weightedCorrected = 1 / deliverable.Event.EventTemplate.DeliverableTemplates.length;
+        exCatStat[delExCatType] += weightedCorrected;
+        sum += weightedCorrected;
       });
 
       const exTypes = corrector.ExerciseTypes.map(exType => exType.shortName);
