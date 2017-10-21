@@ -273,6 +273,10 @@ yargs // eslint-disable-line no-unused-expressions
     .option('reset-deliverables', {
       alias: 'rd',
       default: false
+    })
+    .option('deadline-day', {
+      alias: 'dd',
+      default: 1
     }),
     handler: async (argv) => {
       const changeEvents = require('./commands/change-event-attributes-json');
