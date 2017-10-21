@@ -9,7 +9,8 @@ module.exports = async (argv) => {
     const db = await initDB();
     console.log(argv);
     const options = {
-      resetDeliverables: argv.resetDeliverables || false
+      resetDeliverables: argv.resetDeliverables || false,
+      deadlineDay: argv.deadlineDay || 1
     };
 
     const studentGroups = await db.StudentGroups.findAll();
@@ -63,7 +64,7 @@ module.exports = async (argv) => {
         console.log('Modify deliverables deadline');
         const deliverables = await event.getDeliverables();
         for (const deliverable of deliverables) {
-          const deadline = moment(eventAttribute.date).add(1, 'd');
+          const deadline = moment(eventAttribute.date).add(options.deadlineDay, 'd');
           await db.Deliverables.update(
             {
               deadline
