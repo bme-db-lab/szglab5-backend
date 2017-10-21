@@ -22,11 +22,22 @@ module.exports = async (argv) => {
       });
     }
 
+    const jsonFiles = fs.readdirSync(path.join(__dirname, 'data'));
+    console.log(jsonFiles);
+
+    const jsonFileChoices =
+      jsonFiles
+        .filter(jsonFile => jsonFile.match(/.json$/g))
+        .map(jsonFile => ({
+          name: jsonFile,
+          value: jsonFile
+        }));
+
     const prompt = await inquirer.prompt([
       {
-        type: 'input',
-        default: 'studentgroup-event-data.json',
-        message: 'Give JSON file, relative to ./data',
+        type: 'list',
+        choices: jsonFileChoices,
+        message: 'json file',
         name: 'path'
       },
       {
