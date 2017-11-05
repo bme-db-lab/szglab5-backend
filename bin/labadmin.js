@@ -182,11 +182,16 @@ yargs // eslint-disable-line no-unused-expressions
     command: 'generate-deliverables',
     aliases: ['gd'],
     desc: 'Generate deliverables for event-template',
-    handler: async () => {
+    builder: () => yargs
+    .option('reset-existing-deliverables', {
+      alias: 'red',
+      default: false
+    }),
+    handler: async (argv) => {
       const logger = require('../utils/logger.js');
       try {
         const generateDeliverables = require('./commands/generate-deliverables.js');
-        await generateDeliverables();
+        await generateDeliverables(argv);
       } catch (err) {
         logger.error('Error while generating deliverables');
         logger.error(err);
@@ -299,6 +304,15 @@ yargs // eslint-disable-line no-unused-expressions
     handler: async () => {
       const listDeliverableTemplates = require('./commands/list-deliverable-templates');
       await listDeliverableTemplates();
+    }
+  })
+  .command({
+    command: 'create-deliverable-templates-json',
+    aliases: ['json-cdt'],
+    desc: 'Create deliverable templates from json',
+    handler: async () => {
+      const createDeliverableTemplates = require('./commands/create-deliverable-templates-json');
+      await createDeliverableTemplates();
     }
   })
   .option('env', {
