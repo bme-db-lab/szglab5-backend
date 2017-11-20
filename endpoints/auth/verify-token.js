@@ -12,5 +12,4 @@ module.exports = async (req, res) => {
       message: 'Invalid token'
     });
   }
-  res.send('hello!');
 };
