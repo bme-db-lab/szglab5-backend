@@ -1,8 +1,11 @@
 const pdf = require('pdfjs');
+const { readFileSync } = require('fs');
 const pdfFontFile = require('pdfjs/font/Helvetica.json');
 const { genErrorObj } = require('../../utils/utils.js');
 const { verifyToken } = require('../../utils/jwt');
 const { getDB } = require('../../db/db.js');
+
+const liberationSans = readFileSync('/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf');
 
 module.exports = async (req, res) => {
   try {
@@ -35,7 +38,7 @@ module.exports = async (req, res) => {
     });
 
     const doc = new pdf.Document({
-      font: new pdf.Font(pdfFontFile),
+      font: new pdf.Font(liberationSans),
       padding: 10
     });
     doc.pipe(res);
