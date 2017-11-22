@@ -1,11 +1,18 @@
 const pdf = require('pdfjs');
 const { readFileSync } = require('fs');
-const pdfFontFile = require('pdfjs/font/Helvetica.json');
 const { genErrorObj } = require('../../utils/utils.js');
 const { verifyToken } = require('../../utils/jwt');
 const { getDB } = require('../../db/db.js');
 
-const liberationSans = readFileSync('/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf');
+
+let fontFile = null;
+try {
+  fontFile = readFileSync('/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf');
+} catch (err) {
+  console.log(err.message);
+  console.log('Can not read font file, using default (some problem with hungarian special characters)');
+  fontFile = require('pdfjs/font/Helvetica.json');
+}
 
 module.exports = async (req, res) => {
   try {
@@ -38,7 +45,7 @@ module.exports = async (req, res) => {
     });
 
     const doc = new pdf.Document({
-      font: new pdf.Font(liberationSans),
+      font: new pdf.Font(fontFile),
       padding: 10
     });
     doc.pipe(res);
