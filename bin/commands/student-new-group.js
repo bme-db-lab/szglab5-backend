@@ -38,7 +38,7 @@ module.exports = async () => {
       });
     }
 
-    const studentGroups = await db.StudentGroups.findAll();
+    const studentGroups = await db.StudentGroups.findAll({ order: ['name'] });
     const studentGroupsChoices = [];
     for (const studentGroup of studentGroups) {
       studentGroupsChoices.push({
