@@ -64,7 +64,6 @@ module.exports = async (req, res) => {
         if (event.grade === null) {
           const eventCategory = event.ExerciseSheet.ExerciseCategory.type;
           const index = exCatStat.findIndex(exCatStatItem => exCatStatItem.exerciseCategoryType === eventCategory);
-          console.log(index);
           exCatStat[index].gradeNotAvailable++;
         }
 
