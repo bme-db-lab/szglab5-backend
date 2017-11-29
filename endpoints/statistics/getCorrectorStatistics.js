@@ -77,10 +77,19 @@ module.exports = async (req, res) => {
       });
 
       const exTypes = corrector.ExerciseTypes.map(exType => exType.shortName);
+      const exTypesSorted = exTypes.sort((exType1, exType2) => {
+        if (exType1 > exType2) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      console.log(exTypesSorted);
+
       let exTypesString = '';
-      for (let i = 0; i < exTypes.length; i++) {
-        exTypesString += `${exTypes[i]}`;
-        if (i < exTypes.length - 1) {
+      for (let i = 0; i < exTypesSorted.length; i++) {
+        exTypesString += `${exTypesSorted[i]}`;
+        if (i < exTypesSorted.length - 1) {
           exTypesString += ', ';
         }
       }
@@ -93,7 +102,7 @@ module.exports = async (req, res) => {
       );
     });
 
-    correctorStat.sort((corrector1, corrector2) => {
+    const correctorStatSorted = correctorStat.sort((corrector1, corrector2) => {
       if (corrector1.exerciseType > corrector2.exerciseType) {
         return 1;
       } else {
@@ -103,7 +112,7 @@ module.exports = async (req, res) => {
 
     const table = {
       headers: ['displayName', 'exerciseType', ...exerciseCategoryNames, 'sum'],
-      data: correctorStat
+      data: correctorStatSorted
     };
 
     res.send(table);
