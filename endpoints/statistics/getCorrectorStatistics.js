@@ -68,10 +68,12 @@ module.exports = async (req, res) => {
 
 
       corrector.Deliverables.forEach((deliverable) => {
-        const delExCatType = deliverable.Event.EventTemplate.ExerciseCategory.type;
-        const weightedCorrected = 1 / deliverable.Event.EventTemplate.DeliverableTemplates.length;
-        exCatStat[delExCatType] += weightedCorrected;
-        sum += weightedCorrected;
+        if (deliverable.grade && deliverable.finalized) {
+          const delExCatType = deliverable.Event.EventTemplate.ExerciseCategory.type;
+          const weightedCorrected = 1 / deliverable.Event.EventTemplate.DeliverableTemplates.length;
+          exCatStat[delExCatType] += weightedCorrected;
+          sum += weightedCorrected;
+        }
       });
 
       const exTypes = corrector.ExerciseTypes.map(exType => exType.shortName);
