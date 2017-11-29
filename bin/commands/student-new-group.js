@@ -2,8 +2,13 @@ const { initDB, closeDB } = require('../../db/db.js');
 const inquirer = require('inquirer');
 const moment = require('moment');
 
-module.exports = async () => {
+module.exports = async (argv) => {
   try {
+    const options = {
+      resetGrades: argv.resetGrades || false,
+    };
+    console.log(`Reset grades: ${options.resetGrades}`);
+
     const db = await initDB();
     const studentNeptunResult = await inquirer.prompt([
       {
@@ -116,13 +121,23 @@ module.exports = async () => {
         date: updateEventInfo.date,
         location: updateEventInfo.location,
         DemonstratorId: updateEventInfo.DemonstratorId,
-        finalized: false,
-        grade: null
       },
       {
         where: { id: eventToUpdate.id }
       }
     );
+    if (options.resetGrades) {
+      console.log('Reset event grade');
+      await db.Events.update(
+        {
+          finalized: false,
+          grade: null
+        },
+        {
+          where: { id: eventToUpdate.id }
+        }
+      );
+    }
     console.log('Event updated');
     console.log(updatedEvent);
 
@@ -135,16 +150,6 @@ module.exports = async () => {
       await db.Deliverables.update(
         {
           deadline,
-          lastSubmittedDate: null,
-          grading: false,
-          grade: null,
-          imsc: 0,
-          finalized: false,
-          comment: null,
-          uploaded: false,
-          filePath: null,
-          originalFileName: null,
-          CorrectorId: null
         },
         {
           where: { id: deliverable.id },
@@ -158,6 +163,34 @@ module.exports = async () => {
       );
     }
     console.log('Deliverables deadline modified!');
+    if (options.resetGrades) {
+      console.log('Reset deliverables grading');
+      for (const deliverable of deliverables) {
+        await db.Deliverables.update(
+          {
+            lastSubmittedDate: null,
+            grading: false,
+            grade: null,
+            imsc: 0,
+            finalized: false,
+            comment: null,
+            uploaded: false,
+            filePath: null,
+            originalFileName: null,
+            CorrectorId: null
+          },
+          {
+            where: { id: deliverable.id },
+            include: {
+              model: db.DeliverableTemplates,
+              where: {
+                type: 'FILE'
+              }
+            }
+          }
+        );
+      }
+    }
   } catch (err) {
     console.log(err);
   } finally {

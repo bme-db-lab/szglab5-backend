@@ -215,9 +215,14 @@ yargs // eslint-disable-line no-unused-expressions
     command: 'student-new-group',
     aliases: ['sng'],
     desc: 'Set new event for a single student',
-    handler: async () => {
+    builder: () => yargs
+      .option('reset-grades', {
+        alias: 'rg',
+        default: false
+      }),
+    handler: async (argv) => {
       const studentNewGroup = require('./commands/student-new-group.js');
-      await studentNewGroup();
+      await studentNewGroup(argv);
     }
   })
   .command({
