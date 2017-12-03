@@ -26,12 +26,25 @@ module.exports = async (req, res) => {
       include: [
         {
           model: db.Events,
-          include: {
-            model: db.ExerciseSheets,
-            include: {
-              model: db.ExerciseCategories
+          include: [
+            {
+              where: {},
+              model: db.Deliverables,
+              include: {
+                model: db.DeliverableTemplates,
+                attributes: ['id', 'description'],
+                where: {
+                  type: 'FILE'
+                }
+              }
+            },
+            {
+              model: db.ExerciseSheets,
+              include: {
+                model: db.ExerciseCategories
+              }
             }
-          }
+          ]
         },
         {
           where: {},
@@ -51,13 +64,18 @@ module.exports = async (req, res) => {
       exCatStat.push({
         exerciseCategoryType: exCatName,
         gradeNotAvailable: 0,
-        supplementaryAvailable: 0
+        supplementaryAvailable: 0,
+        supplementaryAvailableOptimist: 0,
       });
     });
 
     for (const studentReg of studentRegs) {
       let failedEvent = null;
-      let failedEventCount = 0;
+      let okEventCount = 0;
+
+      let okEventCountPlus = 0;
+      let failedEventPlus = null;
+
       // console.log(studentReg.id);
       for (const event of studentReg.Events) {
         // console.log(`${event.id}: ${event.grade}`);
@@ -67,23 +85,33 @@ module.exports = async (req, res) => {
           exCatStat[index].gradeNotAvailable++;
         }
 
-        if ((event.grade <= 1) && (event.grade !== null)) {
-          failedEventCount++;
+        if (event.grade >= 2) {
+          okEventCountPlus++;
+        } else {
+          failedEventPlus = event;
+        }
+
+        if (event.grade >= 2 || event.grade == null) {
+          okEventCount++;
+        } else {
           failedEvent = event;
         }
       }
-      if (failedEventCount === 0) {
-        // StudentReg is ok
-      } else if (failedEventCount === 1) {
+
+      if (okEventCount === 4) {
         const eventCategory = failedEvent.ExerciseSheet.ExerciseCategory.type;
         const index = exCatStat.findIndex(exCatStatItem => exCatStatItem.exerciseCategoryType === eventCategory);
+        exCatStat[index].supplementaryAvailableOptimist++;
+      }
+
+      if (okEventCountPlus === 4) {
+        const eventCategory = failedEventPlus.ExerciseSheet.ExerciseCategory.type;
+        const index = exCatStat.findIndex(exCatStatItem => exCatStatItem.exerciseCategoryType === eventCategory);
         exCatStat[index].supplementaryAvailable++;
-      } else if (failedEventCount > 1) {
-        // StudentReg failed nothing to do
       }
     }
     const table = {
-      headers: ['exerciseCategoryType', 'gradeNotAvailable', 'supplementaryAvailable'],
+      headers: ['exerciseCategoryType', 'gradeNotAvailable', 'supplementaryAvailable', 'supplementaryAvailableOptimist'],
       data: exCatStat
     };
 
