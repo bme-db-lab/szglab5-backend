@@ -84,7 +84,6 @@ module.exports = async (req, res) => {
           return -1;
         }
       });
-      console.log(exTypesSorted);
 
       let exTypesString = '';
       for (let i = 0; i < exTypesSorted.length; i++) {
