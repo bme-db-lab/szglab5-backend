@@ -173,10 +173,6 @@ module.exports = async (argv) => {
             grade: null,
             imsc: 0,
             finalized: false,
-            comment: null,
-            uploaded: false,
-            filePath: null,
-            originalFileName: null,
             CorrectorId: null
           },
           {
