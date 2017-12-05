@@ -5,6 +5,7 @@ const tmp = require('tmp');
 const { promisify } = require('util');
 const { exec } = require('child_process');
 const makeDir = require('make-dir');
+const moment = require('moment');
 const logger = require('../utils/logger.js');
 
 
@@ -22,7 +23,7 @@ function generateHandout(event) {
   const exerciseTypeName = exerciseType.name;
   const studentName = student.displayName;
   const demonstratorName = demonstrator.displayName;
-  const timeOfEvent = event.date;
+  const timeOfEvent = moment(event.date);
   const initialPassword = student.initPassword;
 
   return {
@@ -45,7 +46,7 @@ function generateHandout(event) {
         },
         {
           '@description': 'Mérés időpontja',
-          '#text': timeOfEvent.toDateString()
+          '#text': timeOfEvent.format('YYYY-MM-DD HH:mm')
         },
         {
           '@description': 'Portál jelszó',
