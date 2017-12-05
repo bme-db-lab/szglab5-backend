@@ -77,7 +77,7 @@ module.exports = async (req, res) => {
       exType: exType.shortName
     });
 
-    const dateTime = moment().format('YYYY_MM_DD-hh_mm');
+    const dateTime = moment().format('YYYY_MM_DD-HH_mm');
     let AKEPFileEnding = '';
     if (delTempl.dataValues.AKEP) {
       AKEPFileEnding = `_AKEP_${exCat.type}_${exType.shortName}_${user.neptun}`;
