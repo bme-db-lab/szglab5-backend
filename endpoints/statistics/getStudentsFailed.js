@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
     });
 
     const failedStudentRegs = studentRegs.filter((studentReg) => {
-      const failedEvents = studentReg.Events.filter(event => event.grade <= 1);
+      const failedEvents = studentReg.Events.filter(event => (event.grade <= 1 && event.grade !== null));
       return failedEvents.length >= 2;
     });
 
