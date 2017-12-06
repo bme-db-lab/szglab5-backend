@@ -5,6 +5,8 @@ const getDeliverablesStatistics = require('./getDeliverablesStatistics.js');
 const getEventsStatistics = require('./getEventsStatistics.js');
 const getCorrectorsStatistics = require('./getCorrectorStatistics.js');
 const getSupplementaryStatistics = require('./getSupplementaryStatistics');
+const getStudentsPassedStatistics = require('./getStudentsPassed');
+const getStudentsFailedStatistics = require('./getStudentsFailed');
 
 const auth = require('../../middlewares/auth.js');
 const epLogger = require('../../middlewares/ep-logger');
@@ -17,6 +19,8 @@ module.exports = (app) => {
   app.get('/statistics/events', getEventsStatistics);
   app.get('/statistics/correctors', getCorrectorsStatistics);
   app.get('/statistics/supplementary', getSupplementaryStatistics);
+  app.get('/statistics/passed', getStudentsPassedStatistics);
+  app.get('/statistics/failed', getStudentsFailedStatistics);
 
   // app.get('/statistics/student', getStudentStatistics);
   // app.get('/statistics/group', getGroupStatistics);
