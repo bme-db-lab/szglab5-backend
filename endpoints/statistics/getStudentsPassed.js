@@ -18,6 +18,14 @@ module.exports = async (req, res) => {
       include: [
         {
           model: db.Events,
+          include: {
+            where: {},
+            model: db.Deliverables,
+            include: {
+              model: db.DeliverableTemplates,
+              where: { type: 'FILE' }
+            }
+          }
         },
         {
           where: {},
@@ -33,7 +41,13 @@ module.exports = async (req, res) => {
     });
 
     const okStudentRegs = studentRegs.filter((studentReg) => {
-      const okEvents = studentReg.Events.filter(event => event.grade >= 2);
+      const okEvents = studentReg.Events.filter((event) => {
+        const eventGreade = event.grade >= 2;
+
+        const deliverableGrade = event.Deliverables.every(deliverable => deliverable.uploaded && deliverable.grade >= 2);
+
+        return eventGreade || deliverableGrade;
+      });
       return okEvents.length === 5;
     });
 
