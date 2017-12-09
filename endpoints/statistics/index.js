@@ -7,6 +7,7 @@ const getCorrectorsStatistics = require('./getCorrectorStatistics.js');
 const getSupplementaryStatistics = require('./getSupplementaryStatistics');
 const getStudentsPassedStatistics = require('./getStudentsPassed');
 const getStudentsFailedStatistics = require('./getStudentsFailed');
+const getStudentsFailedPredictStatistics = require('./getStudentsFailedPredict');
 
 const auth = require('../../middlewares/auth.js');
 const epLogger = require('../../middlewares/ep-logger');
@@ -21,6 +22,7 @@ module.exports = (app) => {
   app.get('/statistics/supplementary', getSupplementaryStatistics);
   app.get('/statistics/passed', getStudentsPassedStatistics);
   app.get('/statistics/failed', getStudentsFailedStatistics);
+  app.get('/statistics/failedpredict', getStudentsFailedPredictStatistics);
 
   // app.get('/statistics/student', getStudentStatistics);
   // app.get('/statistics/group', getGroupStatistics);
