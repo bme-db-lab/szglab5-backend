@@ -320,6 +320,15 @@ yargs // eslint-disable-line no-unused-expressions
       await createDeliverableTemplates();
     }
   })
+  .command({
+    command: 'generate-supplementary-events',
+    aliases: [],
+    desc: 'Generate supplementary events',
+    handler: async () => {
+      const generateSupplementaryEvents = require('./commands/generate-supplementary-events');
+      await generateSupplementaryEvents();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'

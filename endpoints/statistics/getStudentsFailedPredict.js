@@ -43,7 +43,7 @@ module.exports = async (req, res) => {
     const failedStudentRegs = studentRegs.filter((studentReg) => {
       const failedEvents = studentReg.Events.filter((event) => {
         const eventFailed = event.grade <= 1 && event.grade !== null;
-        const deliverableFailed = event.Deliverables.some(deliverable => !deliverable.uploaded);
+        const deliverableFailed = event.Deliverables.some(deliverable => !deliverable.uploaded || deliverable.grade < 2);
 
         return eventFailed || deliverableFailed;
       });
