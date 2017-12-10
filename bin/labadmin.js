@@ -329,6 +329,15 @@ yargs // eslint-disable-line no-unused-expressions
       await generateSupplementaryEvents();
     }
   })
+  .command({
+    command: 'generate-semester-results',
+    aliases: ['gsr'],
+    desc: 'Generate semester results csv file',
+    handler: async () => {
+      const generateSemesterResults = require('./commands/generate-semester-results');
+      await generateSemesterResults();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
