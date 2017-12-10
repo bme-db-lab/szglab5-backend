@@ -42,13 +42,13 @@ module.exports = async (req, res) => {
     });
 
     const failedStudentRegs = studentRegs.filter((studentReg) => {
-      const failedEvents = studentReg.Events.filter((event) => {
-        const eventFailed = event.grade <= 1 && event.grade !== null;
-        const deliverableFailed = event.Deliverables.some(deliverable => !deliverable.uploaded || (deliverable.grade < 2 && deliverable.grade !== null));
+      const okEvents = studentReg.Events.filter((event) => {
+        const eventOk = event.grade >= 2;
+        const deliverableOk = event.Deliverables.every(deliverable => deliverable.uploaded && deliverable.grade >= 2);
 
-        return eventFailed || deliverableFailed;
+        return eventOk || (deliverableOk && event.grade === null);
       });
-      return failedEvents.length === 1;
+      return okEvents.length === 4;
     });
 
     const data = failedStudentRegs.map(sr => ({
