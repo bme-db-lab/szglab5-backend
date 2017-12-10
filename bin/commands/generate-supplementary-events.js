@@ -11,6 +11,22 @@ const exTypesToSkip = [
   63
 ];
 
+function getRoomForStudent(rooms, exerciseCategory) {
+  const suitableRoom = rooms.find((room) => {
+    const exCatok = room.exerciseCategories.includes(exerciseCategory);
+    const hasMoreRoom = room.currentUsage < room.capacity;
+
+    return exCatok && hasMoreRoom;
+  });
+
+  if (!suitableRoom) {
+    throw new Error(`No room for ${exerciseCategory}`);
+  }
+
+  return suitableRoom;
+}
+
+
 module.exports = async () => {
   try {
     const db = await initDB();
@@ -57,13 +73,13 @@ module.exports = async () => {
 
 
     const studentRegsWithSupplementary = studentRegs.filter((studentReg) => {
-      const failedEvents = studentReg.Events.filter((event) => {
-        const eventFailed = event.grade <= 1 && event.grade !== null;
-        const deliverableFailed = event.Deliverables.some(deliverable => !deliverable.uploaded || (deliverable.grade < 2 && deliverable.grade !== null));
+      const okEvents = studentReg.Events.filter((event) => {
+        const eventOk = event.grade >= 2;
+        const deliverableOk = event.Deliverables.every(deliverable => deliverable.uploaded && deliverable.grade >= 1);
 
-        return eventFailed || deliverableFailed;
+        return eventOk || (deliverableOk && event.grade === null);
       });
-      return failedEvents.length === 1;
+      return okEvents.length === 4;
     });
 
     const capacityNeeded = studentRegsWithSupplementary.length;
@@ -138,6 +154,7 @@ module.exports = async () => {
         capacity: supplementaryConfigObj.capacity,
         studentGroupId: newStudentGroup.id,
         demonstratorId: demonstrator.id,
+        exerciseCategories: supplementaryConfigObj.exerciseCategories,
         currentUsage: 0
       });
     }
@@ -154,16 +171,38 @@ module.exports = async () => {
     });
     let currentExTypeIndex = 0;
 
+    const eventTemplates = await db.EventTemplates.findAll({
+      include: {
+        model: db.ExerciseCategories
+      },
+      order: ['seqNumber']
+    });
+
+    const exCategories = eventTemplates.map(eventTemplate => eventTemplate.ExerciseCategory.type);
+
+    const failedEventStats = {};
+    exCategories.forEach((exCategory) => {
+      failedEventStats[exCategory] = 0;
+    });
+
     for (const studentReg of studentRegsWithSupplementary) {
       console.log(`Creating event for ${studentReg.User.neptun}`);
-      // Check room
-      let currentRoom = null;
-      if (rooms[currentRoomIndex].currentUsage < rooms[currentRoomIndex].capacity) {
-        currentRoom = rooms[currentRoomIndex];
-      } else {
-        currentRoomIndex++;
-        currentRoom = rooms[currentRoomIndex];
-      }
+      // // Check room
+      // let currentRoom = null;
+      // if (rooms[currentRoomIndex].currentUsage < rooms[currentRoomIndex].capacity) {
+      //   currentRoom = rooms[currentRoomIndex];
+      // } else {
+      //   currentRoomIndex++;
+      //   currentRoom = rooms[currentRoomIndex];
+      // }
+      const failedEvent = studentReg.Events.find((event) => {
+        const eventFailed = event.grade <= 1;
+        return eventFailed;
+      });
+      failedEventStats[failedEvent.ExerciseSheet.ExerciseCategory.type]++;
+      console.log(failedEventStats);
+
+      const currentRoom = getRoomForStudent(rooms, failedEvent.ExerciseSheet.ExerciseCategory.type);
       currentRoom.currentUsage++;
 
       const newEvent = await db.Events.create({
@@ -177,12 +216,6 @@ module.exports = async () => {
         DemonstratorId: currentRoom.demonstratorId
       });
       await studentReg.addEvent(newEvent);
-
-      const failedEvent = studentReg.Events.find((event) => {
-        const eventFailed = event.grade <= 1 && event.grade !== null;
-        const deliverableFailed = event.Deliverables.some(deliverable => !deliverable.uploaded || (deliverable.grade < 2 && deliverable.grade !== null));
-        return eventFailed || deliverableFailed;
-      });
 
       const failedExerciseCategory = failedEvent.ExerciseSheet.ExerciseCategory;
       // connect event-template
@@ -206,8 +239,10 @@ module.exports = async () => {
       }
       // random new exerciseType
       const failedExerciseType = failedEvent.ExerciseSheet.ExerciseType;
-      if (failedExerciseType.id === exTypes[currentExTypeIndex].id) {
+      if (failedExerciseType.id === exTypes[currentExTypeIndex].id && currentExTypeIndex < exTypes.length - 1) {
         currentExTypeIndex++;
+      } else {
+        currentExTypeIndex = 0;
       }
       const currentExType = exTypes[currentExTypeIndex];
       if (currentExTypeIndex < exTypes.length - 1) {
