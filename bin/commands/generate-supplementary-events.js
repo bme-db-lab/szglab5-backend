@@ -75,7 +75,7 @@ module.exports = async () => {
     const studentRegsWithSupplementary = studentRegs.filter((studentReg) => {
       const okEvents = studentReg.Events.filter((event) => {
         const eventOk = event.grade >= 2;
-        const deliverableOk = event.Deliverables.every(deliverable => deliverable.uploaded && deliverable.grade >= 1);
+        const deliverableOk = event.Deliverables.every(deliverable => deliverable.uploaded && deliverable.grade >= 2);
 
         return eventOk || (deliverableOk && event.grade === null);
       });
