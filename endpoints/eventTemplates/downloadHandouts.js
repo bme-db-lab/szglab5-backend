@@ -56,8 +56,11 @@ function getEventsByDemonstrator(demonstrator, db, supplementary) {
     const events = [];
     const promises = [];
     demonstrator.Events.forEach((event) => {
-      promises.push(db.Events.findById(event.id, {
-        where: supplementary ? { attempt: 2 } : { attempt: null },
+      promises.push(db.Events.find({
+        where: {
+          id: event.id,
+          attempt: supplementary === 'true' ? 2 : null
+        },
         include: [
           {
             model: db.ExerciseSheets,
@@ -82,7 +85,9 @@ function getEventsByDemonstrator(demonstrator, db, supplementary) {
           }
         ]
       }).then((result) => {
-        events.push(result);
+        if (result) {
+          events.push(result);
+        }
       }).catch((err) => {
         throw err;
       }));
