@@ -51,12 +51,13 @@ function getEventsByDemonstrator(demonstrator, db) {
   });
 }*/
 
-function getEventsByDemonstrator(demonstrator, db) {
+function getEventsByDemonstrator(demonstrator, db, supplementary) {
   return new Promise((resolve, reject) => {
     const events = [];
     const promises = [];
     demonstrator.Events.forEach((event) => {
       promises.push(db.Events.findById(event.id, {
+        where: supplementary ? { attempt: 2 } : { attempt: null },
         include: [
           {
             model: db.ExerciseSheets,
@@ -95,7 +96,8 @@ function getEventsByDemonstrator(demonstrator, db) {
 
 module.exports = async (req, res) => {
   /*  get user by token */
-  const { token } = req.body;
+  const { token, supplementary } = req.body;
+
   let userInfo;
   try {
     userInfo = await verifyToken(token);
@@ -119,7 +121,7 @@ module.exports = async (req, res) => {
       }
     });
 
-    const events = await getEventsByDemonstrator(user, db);
+    const events = await getEventsByDemonstrator(user, db, supplementary);
 
     const handoutDescriptorObjects = [];
     events.forEach((event) => {
