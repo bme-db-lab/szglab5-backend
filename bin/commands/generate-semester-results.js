@@ -76,7 +76,7 @@ module.exports = async () => {
 
     const fields = ['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => exCat.type)];
     const result = json2csv({ data: studentRegData, fields });
-    const pathToWrite = path.join(__dirname, `semester_results_${moment().format('YYYY_MM_DD_ HH-mm')}.csv`);
+    const pathToWrite = path.join(__dirname, `semester_results_${moment().format('YYYY_MM_DD_HH-mm')}.csv`);
     fs.writeFileSync(pathToWrite, result);
     console.log(`CSV file created at: ${pathToWrite}`);
     console.log(studentRegs.length);
