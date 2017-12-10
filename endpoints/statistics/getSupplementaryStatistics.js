@@ -26,6 +26,7 @@ module.exports = async (req, res) => {
       include: [
         {
           model: db.Events,
+          where: { attempt: null },
           include: [
             {
               where: {},
@@ -85,7 +86,9 @@ module.exports = async (req, res) => {
           exCatStat[index].gradeNotAvailable++;
         }
 
-        if (event.grade >= 2) {
+        const deliverableOk = event.Deliverables.every(deliverable => deliverable.uploaded && deliverable.grade >= 2);
+
+        if (event.grade >= 2 || (deliverableOk && event.grade === null)) {
           okEventCountPlus++;
         } else {
           failedEventPlus = event;

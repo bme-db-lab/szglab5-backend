@@ -18,6 +18,7 @@ module.exports = async (req, res) => {
       include: [
         {
           model: db.Events,
+          where: { attempt: null },
         },
         {
           where: {},

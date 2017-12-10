@@ -17,6 +17,7 @@ module.exports = async (req, res) => {
     const studentRegs = await db.StudentRegistrations.findAll({
       include: [
         {
+          where: { attempt: null },
           model: db.Events,
           include: {
             where: {},
