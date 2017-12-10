@@ -68,6 +68,11 @@ module.exports = async () => {
             }
           }
         },
+        {
+          // exclude english student group
+          where: { name: { $ne: 'c12-A' } },
+          model: db.StudentGroups
+        }
       ]
     });
 
