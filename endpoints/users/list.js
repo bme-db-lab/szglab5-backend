@@ -45,6 +45,17 @@ module.exports = async (req, res) => {
       queryObj.offset = parseInt(req.query.offset, 10);
     }
     // queryObj.include = [{ all: true }];
+    queryObj.include = [
+      {
+        model: db.Roles
+      },
+      {
+        model: db.ExerciseTypes
+      },
+      {
+        model: db.StudentRegistrations
+      }
+    ];
     queryObj.attributes = ['id', 'loginName', 'displayName', 'email', 'subscribedToMailList', 'subscribedToEmailNotify', 'neptun', 'email_official'];
 
     const records = await db.Users.findAll(queryObj);
