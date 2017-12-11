@@ -244,11 +244,14 @@ module.exports = async () => {
       }
       // random new exerciseType
       const failedExerciseType = failedEvent.ExerciseSheet.ExerciseType;
-      if (failedExerciseType.id === exTypes[currentExTypeIndex].id && currentExTypeIndex < exTypes.length - 1) {
-        currentExTypeIndex++;
-      } else {
-        currentExTypeIndex = 0;
+      if ((failedExerciseType.id === exTypes[currentExTypeIndex].id)) {
+        if (currentExTypeIndex < (exTypes.length - 1)) {
+          currentExTypeIndex++;
+        } else {
+          currentExTypeIndex = 0;
+        }
       }
+      console.log(currentExTypeIndex);
       const currentExType = exTypes[currentExTypeIndex];
       if (currentExTypeIndex < exTypes.length - 1) {
         currentExTypeIndex += 1;
