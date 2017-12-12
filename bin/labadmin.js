@@ -338,6 +338,13 @@ yargs // eslint-disable-line no-unused-expressions
       await generateSemesterResults();
     }
   })
+  .command({
+    command: 'get-extypes-count',
+    handler: async () => {
+      const getExtypesCount = require('./commands/get-extypes-count');
+      await getExtypesCount();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
