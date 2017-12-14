@@ -12,7 +12,17 @@ module.exports = async (req, res) => {
     const record = await db.Users.findById(
       reqIdNum,
       {
-        include: [{ all: true }],
+        include: [
+          {
+            model: db.Roles
+          },
+          {
+            model: db.ExerciseTypes
+          },
+          {
+            model: db.StudentRegistrations
+          }
+        ],
         attributes: ['id', 'loginName', 'displayName', 'email', 'subscribedToMailList', 'subscribedToEmailNotify', 'neptun', 'email_official']
       }
     );
