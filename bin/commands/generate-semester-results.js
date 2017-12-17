@@ -77,7 +77,7 @@ module.exports = async () => {
       exCategories.forEach((exCategory) => {
         let grade = 'n/a';
 
-        const eventFound = studentReg.Events.find(event => exCategory.id === event.ExerciseSheet.ExerciseCategory.id);
+        const eventFound = studentReg.Events.find(event => exCategory.id === event.ExerciseSheet.ExerciseCategory.id && event.attempt === null);
         if (eventFound) {
           grade = eventFound.grade;
         }
@@ -119,9 +119,6 @@ module.exports = async () => {
       } else {
         statObj.Pot = '-';
       }
-
-      console.log(statObj);
-
       return statObj;
     });
 
@@ -129,7 +126,6 @@ module.exports = async () => {
     const result = json2csv({ data: studentRegData, fields });
     const pathToWrite = path.join(__dirname, `semester_results_${moment().format('YYYY_MM_DD_HH-mm')}.csv`);
     fs.writeFileSync(pathToWrite, result);
-    console.log(result);
     console.log(`CSV file created at: ${pathToWrite}`);
     console.log(studentRegs.length);
   } catch (err) {
