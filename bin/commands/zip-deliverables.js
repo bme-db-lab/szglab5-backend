@@ -74,7 +74,7 @@ module.exports = async () => {
           if (deliverable.filePath) {
             const supplementary = (event.attempt === 2) ? '_POT' : '';
             const exCategoryType = event.EventTemplate.ExerciseCategory.type;
-            const fileName = `${userNeptun}_${supplementary}_${exCategoryType}_${deliverable.originalFileName}`;
+            const fileName = `${userNeptun}${supplementary}_${exCategoryType}_${deliverable.originalFileName}`;
             fs.copyFileSync(deliverable.filePath, path.join(basePath, userNeptun, fileName));
           }
         }
