@@ -120,6 +120,7 @@ module.exports = async () => {
         statObj.Pot = '-';
       }
 
+      console.log(statObj);
 
       return statObj;
     });
