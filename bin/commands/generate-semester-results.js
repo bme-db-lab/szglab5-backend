@@ -96,7 +96,15 @@ module.exports = async () => {
 
       if (supplEvent) {
         if (supplEvent.grade) {
-          statObj.Pot = (supplEvent.grade);
+          statObj.Pot = supplEvent.grade;
+          statObj.Pot_imsc_labor = supplEvent.imsc;
+          let deliverablesIMSC = null;
+          for (const deliverable of supplEvent.Deliverables) {
+            if (deliverable.imsc) {
+              deliverablesIMSC += deliverable.imsc;
+            }
+          }
+          statObj.Pot_imsc_beadando = deliverablesIMSC;
         } else {
           let grade = null;
           for (const deliverable of supplEvent.Deliverables) {
@@ -112,13 +120,15 @@ module.exports = async () => {
         statObj.Pot = '-';
       }
 
+
       return statObj;
     });
 
-    const fields = flatten(['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => [exCat.type, `${exCat.type}_imsc_labor`, `${exCat.type}_imsc_beadando`]), 'Pot']);
+    const fields = flatten(['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => [exCat.type, `${exCat.type}_imsc_labor`, `${exCat.type}_imsc_beadando`]), 'Pot', 'Pot_imsc_labor', 'Pot_imsc_beadando']);
     const result = json2csv({ data: studentRegData, fields });
     const pathToWrite = path.join(__dirname, `semester_results_${moment().format('YYYY_MM_DD_HH-mm')}.csv`);
     fs.writeFileSync(pathToWrite, result);
+    console.log(result);
     console.log(`CSV file created at: ${pathToWrite}`);
     console.log(studentRegs.length);
   } catch (err) {
