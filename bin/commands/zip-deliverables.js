@@ -70,6 +70,7 @@ module.exports = async () => {
       makeDir.sync(path.join(basePath, userNeptun));
       for (const event of studentReg.Events) {
         for (const deliverable of event.Deliverables) {
+          console.log(deliverable.id);
           if (deliverable.filePath) {
             const supplementary = (event.attempt === 2) ? '_POT' : '';
             const exCategoryType = event.EventTemplate.ExerciseCategory.type;
