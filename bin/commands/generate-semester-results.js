@@ -2,6 +2,7 @@ const json2csv = require('json2csv');
 const path = require('path');
 const moment = require('moment');
 const fs = require('fs');
+const { flatten } = require('lodash');
 
 const { initDB, closeDB } = require('../../db/db.js');
 
@@ -23,12 +24,24 @@ module.exports = async () => {
         },
         {
           model: db.Events,
-          include: {
-            model: db.ExerciseSheets,
-            include: {
-              model: db.ExerciseCategories
-            }
-          }
+          include: [
+            {
+              model: db.ExerciseSheets,
+              include: {
+                model: db.ExerciseCategories
+              }
+            },
+            {
+              where: {},
+              model: db.Deliverables,
+              include: {
+                model: db.DeliverableTemplates,
+                attributes: ['id', 'description'],
+                where: {
+                  type: 'FILE'
+                }
+              }
+            }]
         },
         {
           model: db.ExerciseTypes
@@ -69,12 +82,32 @@ module.exports = async () => {
           grade = eventFound.grade;
         }
         statObj[exCategory.type] = grade;
+        statObj[`${exCategory.type}_imsc_labor`] = eventFound.imsc;
+        let deliverablesIMSC = null;
+        for (const deliverable of eventFound.Deliverables) {
+          if (deliverable.imsc) {
+            deliverablesIMSC += deliverable.imsc;
+          }
+        }
+        statObj[`${exCategory.type}_imsc_beadando`] = deliverablesIMSC;
       });
 
       const supplEvent = studentReg.Events.find(event => event.attempt === 2);
 
       if (supplEvent) {
-        statObj.Pot = supplEvent.grade;
+        if (supplEvent.grade) {
+          statObj.Pot = (supplEvent.grade);
+        } else {
+          let grade = null;
+          for (const deliverable of supplEvent.Deliverables) {
+            if (!deliverable.grade) {
+              grade = null;
+              break;
+            }
+            grade += deliverable.grade / supplEvent.Deliverables.length;
+          }
+          statObj.Pot = grade;
+        }
       } else {
         statObj.Pot = '-';
       }
@@ -82,7 +115,7 @@ module.exports = async () => {
       return statObj;
     });
 
-    const fields = ['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => exCat.type), 'Pot'];
+    const fields = flatten(['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => [exCat.type, `${exCat.type}_imsc_labor`, `${exCat.type}_imsc_beadando`]), 'Pot']);
     const result = json2csv({ data: studentRegData, fields });
     const pathToWrite = path.join(__dirname, `semester_results_${moment().format('YYYY_MM_DD_HH-mm')}.csv`);
     fs.writeFileSync(pathToWrite, result);

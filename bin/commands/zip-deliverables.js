@@ -80,7 +80,6 @@ module.exports = async () => {
         }
       }
     }
-
     console.log(studentRegs.length);
   } catch (err) {
     console.log(err);
