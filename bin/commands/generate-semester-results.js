@@ -71,10 +71,18 @@ module.exports = async () => {
         statObj[exCategory.type] = grade;
       });
 
+      const supplEvent = studentReg.Events.find(event => event.attempt === 2);
+
+      if (supplEvent) {
+        statObj.Pot = supplEvent.grade;
+      } else {
+        statObj.Pot = '-';
+      }
+
       return statObj;
     });
 
-    const fields = ['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => exCat.type)];
+    const fields = ['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => exCat.type), 'Pot'];
     const result = json2csv({ data: studentRegData, fields });
     const pathToWrite = path.join(__dirname, `semester_results_${moment().format('YYYY_MM_DD_HH-mm')}.csv`);
     fs.writeFileSync(pathToWrite, result);
