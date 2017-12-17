@@ -345,6 +345,13 @@ yargs // eslint-disable-line no-unused-expressions
       await getExtypesCount();
     }
   })
+  .command({
+    command: 'zip-deliverables',
+    handler: async () => {
+      const zipDeliverables = require('./commands/zip-deliverables');
+      await zipDeliverables();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
