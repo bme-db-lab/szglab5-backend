@@ -70,11 +70,12 @@ module.exports = async () => {
       makeDir.sync(path.join(basePath, userNeptun));
       for (const event of studentReg.Events) {
         for (const deliverable of event.Deliverables) {
-          const supplementary = (event.attempt === 2) ? '_POT' : '';
-          const exCategoryType = event.EventTemplate.ExerciseCategory.type;
-          const fileName = `${userNeptun}_${exCategoryType}_${deliverable.originalFileName}`;
-
-          fs.copyFileSync(deliverable.filePath, path.join(basePath, userNeptun, fileName, supplementary));
+          if (deliverable.filePath) {
+            const supplementary = (event.attempt === 2) ? '_POT' : '';
+            const exCategoryType = event.EventTemplate.ExerciseCategory.type;
+            const fileName = `${userNeptun}_${exCategoryType}_${deliverable.originalFileName}`;
+            fs.copyFileSync(deliverable.filePath, path.join(basePath, userNeptun, fileName, supplementary));
+          }
         }
       }
     }
