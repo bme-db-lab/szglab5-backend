@@ -1,6 +1,6 @@
 # szglab5-backend
 
-Backend repository for laboradmin backend
+Git repository for laboradmin backend service
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
@@ -20,11 +20,23 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
+Clone repository
 ```
-git clone <repository-url> this repository
+git clone <repository-url>
+```
+Install npm packages
+```
 cd szglab5-backend
 npm install
+```
+Install nodemon (automatic server restart)
+```
 npm install nodemon -g
+```
+Create database (default is "laboradmin")
+```
+psql -U postgres
+CREATE DATABASE laboradmin;
 ```
 
 ## Config
@@ -33,7 +45,7 @@ Available node environments ('dev' | 'prod' | 'test')
 Steps to add specific config:
 * Create a new file to config/ with name of config.[env].json
 * Copy the content of config.example.json to the new file
-*  Modify, or delete rows
+*  Modify or delete rows
 
 ## Commands
 #### CLI (npm run start cli:"ENV" "command")
