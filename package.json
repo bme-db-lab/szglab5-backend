@@ -85,6 +85,7 @@
     "pg": "^6.4.1",
     "pluralize": "^4.0.0",
     "prometheus-client": "^0.1.1",
+    "remove-accents": "^0.4.2",
     "sequelize": "^4.3.2",
     "tmp": "0.0.33",
     "uppercamelcase": "^3.0.0",

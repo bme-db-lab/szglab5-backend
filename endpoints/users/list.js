@@ -1,4 +1,5 @@
 const sequelize = require('sequelize');
+const removeAccents = require('remove-accents');
 
 const { genErrorObj } = require('../../utils/utils.js');
 const { getJSONApiResponseFromRecords } = require('../../utils/jsonapi.js');
@@ -15,6 +16,7 @@ module.exports = async (req, res) => {
       return;
     }
 
+    const searchWithoutAccent = removeAccents(req.query.filter.search);
 
     const queryObj = {};
     if (req.query.filter && req.query.filter.search) {
@@ -22,15 +24,15 @@ module.exports = async (req, res) => {
         $or: [
           sequelize.where(
             sequelize.fn('unaccent', sequelize.col('loginName')),
-            { ilike: `%${req.query.filter.search}%` }
+            { ilike: `%${searchWithoutAccent}%` }
           ),
           sequelize.where(
             sequelize.fn('unaccent', sequelize.col('displayName')),
-            { ilike: `%${req.query.filter.search}%` }
+            { ilike: `%${searchWithoutAccent}%` }
           ),
           sequelize.where(
             sequelize.fn('unaccent', sequelize.col('neptun')),
-            { ilike: `%${req.query.filter.search}%` }
+            { ilike: `%${searchWithoutAccent}%` }
           )
         ]
       };
