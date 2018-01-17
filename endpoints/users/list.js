@@ -1,3 +1,5 @@
+const sequelize = require('sequelize');
+
 const { genErrorObj } = require('../../utils/utils.js');
 const { getJSONApiResponseFromRecords } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
@@ -18,21 +20,18 @@ module.exports = async (req, res) => {
     if (req.query.filter && req.query.filter.search) {
       queryObj.where = {
         $or: [
-          {
-            loginName: {
-              $iLike: `%${req.query.filter.search}%`
-            }
-          },
-          {
-            displayName: {
-              $iLike: `%${req.query.filter.search}%`
-            }
-          },
-          {
-            neptun: {
-              $iLike: `%${req.query.filter.search}%`
-            }
-          }
+          sequelize.where(
+            sequelize.fn('unaccent', sequelize.col('loginName')),
+            { ilike: `%${req.query.filter.search}%` }
+          ),
+          sequelize.where(
+            sequelize.fn('unaccent', sequelize.col('displayName')),
+            { ilike: `%${req.query.filter.search}%` }
+          ),
+          sequelize.where(
+            sequelize.fn('unaccent', sequelize.col('neptun')),
+            { ilike: `%${req.query.filter.search}%` }
+          )
         ]
       };
     }
