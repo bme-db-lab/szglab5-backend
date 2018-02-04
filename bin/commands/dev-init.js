@@ -17,7 +17,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath) => {
     basePath: basePath || 'courses/VM010/xls-data'
   };
 
-  // rd then ic
+  // reset-database then init-course
   try {
     const confirmPromptResult = await inquirer.prompt([
       {

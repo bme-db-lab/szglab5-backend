@@ -89,6 +89,11 @@ module.exports = async (options) => {
               return true;
             }
             break;
+          case 'F':
+            if (seed[key].w !== undefined) {
+              user.data.neptun = seed[key].w;
+            }
+            break;
           default:
         }
       }
