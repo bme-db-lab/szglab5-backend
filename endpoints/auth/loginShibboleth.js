@@ -39,18 +39,21 @@ module.exports = async (req, res) => {
     niifpersonorgid
   } = req.headers;
 
-  const neptunFixed = fixEncoding(niifpersonorgid);
+  const neptunFixed = niifpersonorgid; // Neptun code should consist only ASCII characters, thus we don't fix its encoding
   const displayNameFixed = fixEncoding(displayname);
   const emailFixed = fixEncoding(email);
 
   console.log(`Neptun: ${neptunFixed}, displayName: ${displayNameFixed}, email: ${emailFixed}`);
 
+  if (neptunFixed === null || neptunFixed === '') {
+    res.status(403).send(genErrorObj([`No neptun code was received!`]));
+    return;
+  }
+
   const db = getDB();
-  const user = await db.Users.findOne({
+  const user = await db.Users.findOne({ // neptun is unique in the data model, so findOne is deterministic
     where: {
-      neptun: {
-        $iLike: neptunFixed
-      }
+      neptun: neptunFixed
     }
   });
   if (user === null) {
