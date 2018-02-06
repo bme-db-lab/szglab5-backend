@@ -6,7 +6,7 @@ const { initDB, closeDB } = require('../../db/db.js');
 const logger = require('../../utils/logger.js');
 const { seedDBwithJSON, seedDBwithObjects } = require('./../../db/seed');
 
-module.exports = async (allUser, genPass, hallgatok, beosztas, basePath) => {
+module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdminPass) => {
   const code = 'VM010';
 
   const options = {
@@ -14,7 +14,8 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath) => {
     genPass: genPass || false,
     xlsBeosztasFileName: beosztas || 'beosztas-minta.xlsx',
     xlsHallgatokFileName: hallgatok || 'hallgatok-minta.xlsx',
-    basePath: basePath || 'courses/VM010/xls-data'
+    basePath: basePath || 'courses/VM010/xls-data',
+    initAdminPass: initAdminPass || '12345'
   };
 
   // reset-database then init-course
@@ -109,7 +110,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath) => {
       data: {
         loginName: adminLoginName,
         displayName: 'Admin',
-        password: '12345'
+        password: options.initAdminPass
       }
     }];
     await seedDBwithObjects(db, 'Users', admin);

@@ -134,13 +134,16 @@ yargs // eslint-disable-line no-unused-expressions
       },
       'base-path': {
         default: 'courses/VM010/xls-data'
+      },
+      adminPass: {
+        default: '12345'
       }
     }),
     handler: async (argv) => {
       const logger = require('../utils/logger.js');
       try {
         const init = require('./commands/dev-init.js');
-        await init(argv.allUser, argv.genPass, argv.hallgatok, argv.beosztas, argv.basePath);
+        await init(argv.allUser, argv.genPass, argv.hallgatok, argv.beosztas, argv.basePath, argv.adminPass);
       } catch (err) {
         logger.error('Error while executing init');
         logger.error(err);
