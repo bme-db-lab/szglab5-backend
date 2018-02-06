@@ -6,5 +6,5 @@
 # Excel Backup File
 *.xlk
 
-*.xls?
-!minta.xls?
+*.xls*
+!*-minta.xls*
