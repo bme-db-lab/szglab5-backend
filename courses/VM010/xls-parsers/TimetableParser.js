@@ -8,7 +8,7 @@ module.exports = async (options) => {
   const db = getDB();
   let seed = null;
   try {
-    const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta';
+    const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta.xlsx';
     const basePath = options.basePath || 'courses/VM010/xls-data';
 
     const seedFile = join(basePath, xlsFileName);
