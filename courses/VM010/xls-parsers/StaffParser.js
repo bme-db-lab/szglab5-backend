@@ -9,10 +9,10 @@ module.exports = async (options) => {
   const db = getDB();
   let seed = null;
   try {
-    const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta';
+    const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta.xlsx';
     const basePath = options.basePath || 'courses/VM010/xls-data';
 
-    const seedFile = join(basePath, `${xlsFileName}.xlsx`);
+    const seedFile = join(basePath, xlsFileName);
     const sheetName = 'Nevek, elerhetosegek';
     const opts = {
       sheetStubs: true,
@@ -102,10 +102,10 @@ module.exports = async (options) => {
 
   seed = null;
   try {
-    const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta';
+    const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta.xlsx';
     const basePath = options.basePath || 'courses/VM010/xls-data';
 
-    const seedFile = join(basePath, `${xlsFileName}.xlsx`);
+    const seedFile = join(basePath, xlsFileName);
     const sheetName = 'Laborvezetok';
     const opts = {};
     opts.sheetStubs = true;
@@ -179,10 +179,10 @@ module.exports = async (options) => {
 
   let gurukJavitok = null;
   try {
-    const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta';
+    const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta.xlsx';
     const basePath = options.basePath || 'courses/VM010/xls-data';
 
-    const seedFile = join(basePath, `${xlsFileName}.xlsx`);
+    const seedFile = join(basePath, xlsFileName);
     const sheetName = 'Guruk, javitok';
     const opts = {};
     opts.sheetStubs = true;

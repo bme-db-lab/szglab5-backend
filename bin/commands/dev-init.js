@@ -12,8 +12,8 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath) => {
   const options = {
     allUser: allUser || false,
     genPass: genPass || false,
-    xlsBeosztasFileName: beosztas || 'beosztas-minta',
-    xlsHallgatokFileName: hallgatok || 'hallgatok-minta',
+    xlsBeosztasFileName: beosztas || 'beosztas-minta.xlsx',
+    xlsHallgatokFileName: hallgatok || 'hallgatok-minta.xlsx',
     basePath: basePath || 'courses/VM010/xls-data'
   };
 

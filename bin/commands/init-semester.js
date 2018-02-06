@@ -76,8 +76,8 @@ module.exports = async (hallgatoXls, beosztasXls) => {
     await courseMethod(qResult.dataValues.id, {
       allUser: true,
       genPass: true,
-      xlsBeosztasFileName: hallgatoXls || 'beosztas-minta',
-      xlsHallgatokFileName: beosztasXls || 'hallgatok-minta'
+      xlsBeosztasFileName: hallgatoXls || 'beosztas-minta.xlsx',
+      xlsHallgatokFileName: beosztasXls || 'hallgatok-minta.xlsx'
     });
   } catch (err) {
     throw err;

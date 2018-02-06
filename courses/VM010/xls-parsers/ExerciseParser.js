@@ -8,11 +8,11 @@ module.exports = async (semesterId, options) => {
   let seed = null;
 
   try {
-    const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta';
+    const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta.xlsx';
 
     const basePath = options.basePath || 'courses/VM010/xls-data';
 
-    const seedFile = join(basePath, `${xlsFileName}.xlsx`);
+    const seedFile = join(basePath, xlsFileName);
     const sheetName = 'Feladatok es kodjaik';
     const opts = {
       sheetStubs: true,

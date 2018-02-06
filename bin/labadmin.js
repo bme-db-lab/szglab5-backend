@@ -48,10 +48,10 @@ yargs // eslint-disable-line no-unused-expressions
     builder: () => yargs
     .options({
       hallgatok: {
-        default: 'hallgatok-minta'
+        default: 'hallgatok-minta.xlsx'
       },
       beosztas: {
-        default: 'beosztas-minta'
+        default: 'beosztas-minta.xlsx'
       }
     }),
     handler: async (argv) => {
@@ -127,10 +127,10 @@ yargs // eslint-disable-line no-unused-expressions
         default: false
       },
       hallgatok: {
-        default: 'hallgatok-minta'
+        default: 'hallgatok-minta.xlsx'
       },
       beosztas: {
-        default: 'beosztas-minta'
+        default: 'beosztas-minta.xlsx'
       },
       'base-path': {
         default: 'courses/VM010/xls-data'
@@ -139,7 +139,6 @@ yargs // eslint-disable-line no-unused-expressions
     handler: async (argv) => {
       const logger = require('../utils/logger.js');
       try {
-        // console.log(argv);
         const init = require('./commands/dev-init.js');
         await init(argv.allUser, argv.genPass, argv.hallgatok, argv.beosztas, argv.basePath);
       } catch (err) {

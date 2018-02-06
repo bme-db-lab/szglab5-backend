@@ -9,10 +9,9 @@ module.exports = async (options) => {
   let seed = null;
   try {
     const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta';
-
     const basePath = options.basePath || 'courses/VM010/xls-data';
 
-    const seedFile = join(basePath, `${xlsFileName}.xlsx`);
+    const seedFile = join(basePath, xlsFileName);
     const sheetName = 'Idopontok';
     const opts = {
       sheetStubs: true
