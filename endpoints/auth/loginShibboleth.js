@@ -57,11 +57,14 @@ module.exports = async (req, res) => {
     res.status(403).send(genErrorObj([`User with neptun "${neptunFixed}" does not exist!`]));
     return;
   }
+  console.log('email from db', user.email);
+  console.log('displayname from db', user.displayName);
   // Check if first login with shibboleth
-  if (user.email === null) {
+  if (user.email === null || user.displayName === null) {
+    console.log('Updating user');
     // Update user data
     await user.update({
-      displayname: displayNameFixed,
+      displayName: displayNameFixed,
       email: emailFixed
     });
   }
