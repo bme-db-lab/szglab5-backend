@@ -63,7 +63,7 @@ module.exports = async (req, res) => {
   console.log('email from db', user.email);
   console.log('displayname from db', user.displayName);
   // Check if first login with shibboleth
-  if (user.email === null || user.displayName === null) {
+  if (user.email === null || user.email === '' || user.displayName === null || user.displayName === '') {
     console.log('Updating user');
     // Update user data
     await user.update({
