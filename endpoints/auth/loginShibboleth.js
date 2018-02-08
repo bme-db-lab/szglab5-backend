@@ -62,15 +62,22 @@ module.exports = async (req, res) => {
   }
   console.log('email from db', user.email);
   console.log('displayname from db', user.displayName);
+
+  const userUpdateData = {};
   // Check if first login with shibboleth
-  if (user.email === null || user.email === '' || user.displayName === null || user.displayName === '') {
-    console.log('Updating user');
-    // Update user data
-    await user.update({
-      displayName: displayNameFixed,
-      email: emailFixed
-    });
+  if (user.email === null || user.email === '') {
+    userUpdateData.email = emailFixed;
   }
+
+  if (user.displayName === null || user.displayName === '') {
+    userUpdateData.displayName = displayNameFixed;
+  }
+
+  if (Object.keys(userUpdateData).length > 0) {
+    console.log('Updating user', userUpdateData);
+    await user.update(userUpdateData);
+  }
+
   // Sign token for the user
   const roles = await user.getRoles();
   const roleNames = roles.map(role => role.dataValues.name);
