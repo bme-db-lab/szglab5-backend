@@ -6,14 +6,12 @@ const { join } = require('path');
 module.exports = async (semesterId, options) => {
   const db = getDB();
   let seed = null;
-
   try {
     const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta.xlsx';
-
     const basePath = options.basePath || 'courses/VM007/xls-data';
 
     const seedFile = join(basePath, xlsFileName);
-    const sheetName = 'Feladatok es kodjaik';
+    const sheetName = 'Laborvezetok';
     const opts = {
       sheetStubs: true,
     };
@@ -24,8 +22,9 @@ module.exports = async (semesterId, options) => {
   }
 
   if (seed !== null) {
-    const exercises = [];
-    let exercise = { data: {} };
+    const groups = [];
+    const names = [];
+    let group = { data: {} };
     for (const key of Object.keys(seed)) {
       const reg = /([A-Z]+)([0-9]+)/;
       const rKey = reg.exec(key);
@@ -33,38 +32,38 @@ module.exports = async (semesterId, options) => {
         if (rKey[2] !== '1') {
           switch (key[0]) {
             case 'A':
-              exercise = { data: {} };
+              group = { data: {} };
               if (seed[key].w !== undefined) {
-                exercise.data.exerciseId = seed[key].w;
+                const uQueryResult = await db.Users.findOne({
+                  attributes: ['id'],
+                  where: {
+                    email_official: seed[key].w.trim()
+                  }
+                });
+                group.data.UserId = uQueryResult.dataValues.id;
               } else {
-                exercise.data.id = null;
+                group.data.UserId = null;
               }
               break;
             case 'B':
               if (seed[key].w !== undefined) {
-                exercise.data.name = seed[key].w;
+                group.data.name = seed[key].w;
               } else {
-                exercise.data.name = null;
+                group.data.name = null;
               }
               break;
-            case 'C':
-              if (seed[key].w !== undefined) {
-                exercise.data.shortName = seed[key].w;
+            case 'D':
+              if (seed[key].w === undefined) {
+                group.data.language = 'magyar';
               } else {
-                exercise.data.shortName = null;
+                group.data.language = seed[key].w;
               }
-              if (exercise.data.name !== null) {
-                if (exercise.data.language === undefined) {
-                  exercise.data.LanguageId = 1;
+              if (group.data.name !== null) {
+                if (names.includes(group.data.name) === false) {
+                  group.data.SemesterId = 1;
+                  groups.push(group);
+                  names.push(group.data.name);
                 }
-                const cQueryResult = await db.Semesters.findOne({
-                  attributes: ['CourseId'],
-                  where: {
-                    id: semesterId
-                  }
-                });
-                exercise.data.CourseId = cQueryResult.dataValues.CourseId;
-                exercises.push(exercise);
               }
               break;
             default:
@@ -72,7 +71,7 @@ module.exports = async (semesterId, options) => {
         }
       }
     }
-    return exercises;
+    return groups;
   }
   logger.warn('No seed data provided');
   return null;

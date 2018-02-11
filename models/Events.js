@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Events.associate = (models) => {
     Events.belongsTo(models.StudentRegistrations);
     Events.belongsTo(models.Users, { as: 'Demonstrator' });
+    Events.belongsTo(models.Events, { as: 'RetryEvent' });
     Events.hasMany(models.Deliverables);
     Events.belongsTo(models.ExerciseSheets);
     Events.belongsTo(models.EventTemplates);

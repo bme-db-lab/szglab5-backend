@@ -7,14 +7,14 @@ const logger = require('../../utils/logger.js');
 const { seedDBwithJSON, seedDBwithObjects } = require('./../../db/seed');
 
 module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdminPass) => {
-  const code = 'VM010';
+  const code = 'VM007';
 
   const options = {
     allUser: allUser || false,
     genPass: genPass || false,
     xlsBeosztasFileName: beosztas || 'beosztas-minta.xlsx',
     xlsHallgatokFileName: hallgatok || 'hallgatok-minta.xlsx',
-    basePath: basePath || 'courses/VM010/xls-data',
+    basePath: basePath || 'courses/VM007/xls-data',
     initAdminPass: initAdminPass || '12345'
   };
 
@@ -44,7 +44,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
     // Initialize Semester
     const semesterData = [{ data: {
       academicyear: '2017/2018',
-      academicterm: 1,
+      academicterm: 2,
       CourseId: 1
     } }];
     await seedDBwithObjects(db, 'Semesters', semesterData);
@@ -52,7 +52,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
       attributes: ['id'],
       where: {
         academicyear: '2017/2018',
-        academicterm: 1,
+        academicterm: 2,
         CourseId: 1
       }
     });
@@ -89,7 +89,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
         const exerciseSheet = await db.ExerciseSheets.findOne({ where: { ExerciseCategoryId: eventTemplate.dataValues.ExerciseCategoryId, ExerciseTypeId: studentReg.dataValues.ExerciseTypeId } });
 
         const event = [{ data: {
-          date: appointment.dataValues.date,
+          date: moment(appointment.dataValues.date).add(15, 'm'),
           location: appointment.dataValues.location,
           StudentRegistrationId: studentReg.dataValues.id,
           EventTemplateId: eventTemplate.id,
@@ -104,6 +104,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
       }
     }
     logger.info('Event generation succeed!');
+
     logger.info('Adding admin user');
     const adminLoginName = 'admin';
     const admin = [{
@@ -127,7 +128,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
     logger.info('Succesfully added new admin user!');
 
     // iterate through event-template's events
-    for (let i = 1; i < 4; i++) {
+    for (let i = 1; i < 6; i++) {
       logger.info(`Generating Deliverables for id=${i} EventTemplate!`);
       const eventTemplate = await db.EventTemplates.findById(i);
       const events = await eventTemplate.getEvents();
@@ -137,7 +138,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
         for (const deliverableTemplate of deliverableTemplates) {
           logger.debug(` DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`);
           const eventDate = event.dataValues.date;
-          let deadline = moment(eventDate).add(1, 'd');
+          const deadline = moment(eventDate).add(3, 'd');
           // if (i === 0 || i === 1) {
           //   deadline = moment(eventDate).subtract(1, 'y');
           // }

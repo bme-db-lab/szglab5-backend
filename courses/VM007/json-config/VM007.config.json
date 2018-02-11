@@ -1,0 +1,191 @@
+{
+  "Languages": [
+    {
+      "data": {
+        "name": "Magyar",
+        "shortName": "HU"
+      }
+    }
+  ],
+  "Courses": [
+    {
+      "data": {
+        "name": "adatlabor régi",
+        "codeName": "VM007"
+      }
+    }
+  ],
+  "ExerciseCategories": [
+    {
+      "data": {
+        "type": "oracle",
+        "CourseId": 1
+      }
+    },
+    {
+      "data": {
+        "type": "sql",
+        "CourseId": 1
+      }
+    },
+    {
+      "data": {
+        "type": "jdbc",
+        "CourseId": 1
+      }
+    },
+    {
+      "data": {
+        "type": "soa",
+        "CourseId": 1
+      }
+    },
+    {
+      "data": {
+        "type": "xml",
+        "CourseId": 1
+      }
+    }
+  ],
+  "EventTemplates": [
+    {
+      "data": {
+        "type": "Labor",
+        "ExerciseCategoryId": 1,
+        "seqNumber": 1
+      }
+    },
+    {
+      "data": {
+        "type": "Labor",
+        "ExerciseCategoryId": 2,
+        "seqNumber": 2
+      }
+    },
+    {
+      "data": {
+        "type": "Labor",
+        "ExerciseCategoryId": 3,
+        "seqNumber": 3
+      }
+    },
+    {
+      "data": {
+        "type": "Labor",
+        "ExerciseCategoryId": 4,
+        "seqNumber": 4
+      }
+    },
+    {
+      "data": {
+        "type": "Labor",
+        "ExerciseCategoryId": 5,
+        "seqNumber": 5
+      }
+    }
+  ],
+  "DeliverableTemplates": [
+    {
+      "data": {
+        "name": "Beugro",
+        "type": "BEUGRO",
+        "EventTemplateId": 1
+      }
+    },
+    {
+      "data": {
+        "type": "FILE",
+        "name": "jegyzokonyv_1",
+        "description": "Jegyzőkönyv",
+        "EventTemplateId": 1,
+        "AKEP": true
+      }
+    },
+    {
+      "data": {
+        "name": "Beugro",
+        "type": "BEUGRO",
+        "EventTemplateId": 2
+      }
+    },
+    {
+      "data": {
+        "type": "FILE",
+        "name": "jegyzokonyv_2",
+        "description": "Jegyzőkönyv",
+        "EventTemplateId": 2,
+        "AKEP": true
+      }
+    },
+    {
+      "data": {
+        "name": "Beugro",
+        "type": "BEUGRO",
+        "EventTemplateId": 3
+      }
+    },
+    {
+      "data": {
+        "type": "FILE",
+        "name": "jegyzokonyv_3",
+        "description": "Jegyzőkönyv",
+        "EventTemplateId": 3,
+        "AKEP": true
+      }
+    },
+    {
+      "data": {
+        "name": "Beugro",
+        "type": "BEUGRO",
+        "EventTemplateId": 4
+      }
+    },
+    {
+      "data": {
+        "type": "FILE",
+        "name": "jegyzokonyv_4",
+        "description": "Jegyzőkönyv",
+        "EventTemplateId": 4,
+        "AKEP": true
+      }
+    },
+    {
+      "data": {
+        "name": "Beugro",
+        "type": "BEUGRO",
+        "EventTemplateId": 5
+      }
+    },
+    {
+      "data": {
+        "type": "FILE",
+        "name": "jegyzokonyv_4",
+        "description": "Jegyzőkönyv",
+        "EventTemplateId": 5,
+        "AKEP": true
+      }
+    }
+  ],
+  "Roles": [
+    {
+      "data": {
+        "name": "ADMIN"
+      }
+    },
+    {
+      "data": {
+        "name": "STUDENT"
+      }
+    },
+    {
+      "data": {
+        "name": "DEMONSTRATOR"
+      }
+    },
+    {
+      "data": {
+        "name": "CORRECTOR"
+      }
+    }
+  ]
+}
