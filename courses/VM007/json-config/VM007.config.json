@@ -96,7 +96,7 @@
       "data": {
         "type": "FILE",
         "name": "jegyzokonyv_1",
-        "description": "Jegyzőkönyv",
+        "description": "Report",
         "EventTemplateId": 1,
         "AKEP": true
       }
@@ -112,7 +112,7 @@
       "data": {
         "type": "FILE",
         "name": "jegyzokonyv_2",
-        "description": "Jegyzőkönyv",
+        "description": "Report",
         "EventTemplateId": 2,
         "AKEP": true
       }
@@ -128,7 +128,7 @@
       "data": {
         "type": "FILE",
         "name": "jegyzokonyv_3",
-        "description": "Jegyzőkönyv",
+        "description": "Report",
         "EventTemplateId": 3,
         "AKEP": true
       }
@@ -144,7 +144,7 @@
       "data": {
         "type": "FILE",
         "name": "jegyzokonyv_4",
-        "description": "Jegyzőkönyv",
+        "description": "Report",
         "EventTemplateId": 4,
         "AKEP": true
       }
@@ -160,7 +160,7 @@
       "data": {
         "type": "FILE",
         "name": "jegyzokonyv_4",
-        "description": "Jegyzőkönyv",
+        "description": "Report",
         "EventTemplateId": 5,
         "AKEP": true
       }
