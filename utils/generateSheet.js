@@ -24,7 +24,7 @@ function generateHandout(event) {
   const studentName = student.displayName;
   const demonstratorName = demonstrator.displayName;
   const timeOfEvent = moment(event.date);
-  const initialPassword = student.initPassword;
+  //const initialPassword = student.initPassword;
 
   return {
     'exercise-description': {
@@ -47,11 +47,11 @@ function generateHandout(event) {
         {
           '@description': 'Mérés időpontja',
           '#text': timeOfEvent.format('YYYY-MM-DD HH:mm')
-        },
-        {
-          '@description': 'Portál jelszó',
-          '#text': initialPassword
         }
+//        ,{
+//          '@description': 'Portál jelszó',
+//          '#text': initialPassword
+//        }
       ]
     }
   };
