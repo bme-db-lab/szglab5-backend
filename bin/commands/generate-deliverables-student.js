@@ -6,16 +6,6 @@ const logger = require('../../utils/logger.js');
 
 module.exports = async (argv) => {
   try {
-    const confirmPromptResult = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'res',
-        message: 'Are you sure?'
-      }
-    ]);
-    if (!confirmPromptResult.res) {
-      throw new Error('Confirmation error!');
-    }
 
     const options = {
       resetExistingDeliverables: argv.resetExistingDeliverables || false
@@ -43,11 +33,33 @@ module.exports = async (argv) => {
         type: 'input',
         name: 'neptun',
         message: 'Neptun'
-      },
+      }
     ]);
+
+    const student = await db.Users.find({
+      where: { neptun: eventTemplateChoice.neptun },
+      include: {
+        model: db.StudentRegistrations
+      }
+    });
+    if (!student) {
+      throw new Error('Student not found!');
+    }
+
     // iterate through event-template's events
     const eventTemplate = await db.EventTemplates.findById(eventTemplateChoice.id);
-    const events = await eventTemplate.getEvents();
+
+    const events = await eventTemplate.getEvents({
+      where: {
+        // TODO student can have more student registrations
+        StudentRegistrationId: student.StudentRegistrations[0].id
+      }
+    });
+    if (!events) {
+      console.log('No events found');
+    }
+    console.log(events);
+
     const deliverableTemplates = await eventTemplate.getDeliverableTemplates();
     logger.info('Generating Deliverables!');
     for (const event of events) {

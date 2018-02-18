@@ -147,7 +147,7 @@ module.exports = async () => {
       });
       console.log(`  Event: loc - "${newEvent.dataValues.location}" date - "${newEvent.dataValues.date}"`);
       // Generate Deliverables
-      if (eventTemplate.id > 3) {
+      if (eventTemplate.id > 5) {
         continue;
       }
       const deliverableTemplates = await eventTemplate.getDeliverableTemplates();

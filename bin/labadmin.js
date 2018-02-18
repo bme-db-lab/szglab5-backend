@@ -201,6 +201,21 @@ yargs // eslint-disable-line no-unused-expressions
     }
   })
   .command({
+    command: 'generate-deliverables-student',
+    aliases: ['gds'],
+    desc: 'Generate deliverables for event-template for a student',
+    handler: async (argv) => {
+      const logger = require('../utils/logger.js');
+      try {
+        const generateDeliverablesStudent = require('./commands/generate-deliverables-student.js');
+        await generateDeliverablesStudent(argv);
+      } catch (err) {
+        logger.error('Error while generating deliverables');
+        logger.error(err);
+      }
+    }
+  })
+  .command({
     command: 'change-user-pass',
     aliases: ['cup'],
     desc: 'Change user\'s password',
