@@ -138,7 +138,7 @@ module.exports = async () => {
       const exerciseSheet = await db.ExerciseSheets.findOne({ where: { ExerciseCategoryId: eventTemplate.dataValues.ExerciseCategoryId, ExerciseTypeId: studentReg.dataValues.ExerciseTypeId } });
 
       const newEvent = await db.Events.create({
-        date: appointment.dataValues.date,
+        date: moment(appointment.dataValues.date).add(15, 'm'),
         location: appointment.dataValues.location,
         StudentRegistrationId: studentReg.dataValues.id,
         EventTemplateId: eventTemplate.id,
@@ -154,7 +154,7 @@ module.exports = async () => {
       for (const deliverableTemplate of deliverableTemplates) {
         console.log(`    DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`);
         const eventDate = newEvent.dataValues.date;
-        const deadline = moment(eventDate).add(1, 'd');
+        const deadline = moment(eventDate).add(1, 'd').add(15, 'm');
         // if (i === 0 || i === 1) {
         //   deadline = moment(eventDate).subtract(1, 'y');
         // }
