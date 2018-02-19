@@ -1,6 +1,7 @@
 const { genErrorObj } = require('../../utils/utils.js');
 const { getJSONApiResponseFromRecord, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
+const { checkIfHasRole } = require('../../utils/roles');
 
 module.exports = async (req, res) => {
   try {
@@ -8,6 +9,15 @@ module.exports = async (req, res) => {
     const reqIdNum = parseInt(reqId, 10);
 
     const db = getDB();
+
+    if (checkIfHasRole(req.userInfo.roles, 'STUDENT')) {
+      // check if userid match request id
+      const { userId } = req.userInfo;
+      if (userId !== reqIdNum) {
+        res.status(403).send(genErrorObj('Unathorized'));
+        return;
+      }
+    }
 
     const record = await db.Users.findById(
       reqIdNum,
