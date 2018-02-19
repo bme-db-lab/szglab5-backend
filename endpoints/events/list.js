@@ -57,7 +57,8 @@ module.exports = async (req, res) => {
   try {
     const { roles } = req.userInfo;
 
-    if (roles.includes('STUDENT')) {
+    // only ADMIN DEMONSTRATOR CORRECTOR
+    if (!roles.includes('ADMIN') && !roles.includes('DEMONSTRATOR') && !roles.includes('CORRECTOR')) {
       res.status(403).send(genErrorObj('Unathorized'));
       return;
     }
@@ -125,12 +126,14 @@ module.exports = async (req, res) => {
       {
         model: db.Users,
         as: 'Demonstrator',
-        where: demonstratorId
+        where: demonstratorId,
+        attributes: ['id', 'displayName', 'email_official', 'email']
       },
       {
         model: db.StudentRegistrations,
         include: {
-          model: db.Users
+          model: db.Users,
+          attributes: ['id', 'neptun', 'displayName', 'email']
         }
       }
     ];
