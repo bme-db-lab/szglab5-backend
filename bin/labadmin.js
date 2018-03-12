@@ -369,6 +369,18 @@ yargs // eslint-disable-line no-unused-expressions
       await zipDeliverables();
     }
   })
+  .command({
+    command: 'seed-init-passwords',
+    aliases: ['sip'],
+    builder: () => yargs
+      .option('file', {
+        default: false
+      }),
+    handler: async (argv) => {
+      const seedInitPasswords = require('./commands/seed-init-passwords');
+      await seedInitPasswords(argv);
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'

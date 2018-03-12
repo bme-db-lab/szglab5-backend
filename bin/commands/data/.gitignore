@@ -1,2 +1,4 @@
 *.json
 !*-test.json
+*.csv
+!*-test.csv
