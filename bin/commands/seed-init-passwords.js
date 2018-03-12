@@ -1,5 +1,5 @@
 const { readFileSync } = require('fs');
-const { join } = require('path');
+const { join, isAbsolute } = require('path');
 
 const { initDB, closeDB } = require('../../db/db.js');
 const parseCSV = require('csv-parse/lib/sync');
@@ -15,7 +15,9 @@ module.exports = async (argv) => {
       throw new Error('No seed file specified!');
     }
 
-    const csvFile = readFileSync(join(__dirname, 'data', options.file));
+    const filePath = isAbsolute(options.file) ? options.file : join(__dirname, 'data', options.file);
+
+    const csvFile = readFileSync(filePath);
     const parsedCsv = parseCSV(csvFile, {
       columns: ['neptun', 'password']
     });
