@@ -251,7 +251,7 @@ module.exports = async () => {
           currentExTypeIndex = 0;
         }
       }
-      console.log(currentExTypeIndex);
+      console.log(`Student exercise type: ${failedExerciseType.shortName} -> ${exTypes[currentExTypeIndex].shortName}`);
       const currentExType = exTypes[currentExTypeIndex];
       if (currentExTypeIndex < exTypes.length - 1) {
         currentExTypeIndex += 1;
