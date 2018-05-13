@@ -203,8 +203,10 @@ module.exports = async () => {
       //   currentRoom = rooms[currentRoomIndex];
       // }
       const failedEvent = studentReg.Events.find((event) => {
-        const eventFailed = event.grade <= 1;
-        return eventFailed;
+        const eventOk = event.grade >= 2;
+        const deliverableOk = event.Deliverables.every(deliverable => deliverable.uploaded && deliverable.grade >= 2);
+
+        return !(eventOk || (deliverableOk && event.grade === null));
       });
       failedEventStats[failedEvent.ExerciseSheet.ExerciseCategory.type]++;
       console.log(failedEventStats);
