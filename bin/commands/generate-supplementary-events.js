@@ -185,6 +185,8 @@ module.exports = async () => {
 
     const exCategories = eventTemplates.map(eventTemplate => eventTemplate.ExerciseCategory.type);
 
+    const exTypeStats = exTypes.map(exType => ({ id: exType.id, count: 0, shortName: exType.shortName }));
+
     const failedEventStats = {};
     exCategories.forEach((exCategory) => {
       failedEventStats[exCategory] = 0;
@@ -253,6 +255,8 @@ module.exports = async () => {
       }
       console.log(`Student exercise type: ${failedExerciseType.shortName} -> ${exTypes[currentExTypeIndex].shortName}`);
       const currentExType = exTypes[currentExTypeIndex];
+      exTypeStats[currentExTypeIndex].count++;
+
       if (currentExTypeIndex < exTypes.length - 1) {
         currentExTypeIndex += 1;
       } else {
@@ -269,6 +273,8 @@ module.exports = async () => {
         ExerciseSheetId: exSheet.id
       });
     }
+    console.log('Exercise type statistics:');
+    console.log(exTypeStats);
   } catch (err) {
     console.log(err);
   } finally {
