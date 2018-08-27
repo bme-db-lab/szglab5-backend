@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+  pgweb:
+    image: sosedoff/pgweb:0.9.12
+    ports:
+      - 8081:8081
+    links:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://laboradmin:laboradmin@postgres:5432/laboradmin?sslmode=disable
+    command: sh -c "/usr/bin/pgweb --bind=0.0.0.0 --listen=8081"
+  postgres:
+    image: postgres:9-alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: laboradmin
+      POSTGRES_PASSWORD: laboradmin
+      POSTGRES_DB: laboradmin
+  backend:
+    build: .
+    ports:
+      - 7000:7000
+    command: >
+      sh -c "
+        until PGPASSWORD=laboradmin psql -h postgres -p 5432 -U laboradmin -d laboradmin -c '\q';
+          do
+            echo 'Waiting for Postgres...'
+            sleep 5
+          done
+        npm run cli:dev dev-init -- -y && \
+        npm run start:dev"
+    environment:
+      LABORADMIN_DB_HOST: postgres
+      LABORADMIN_DB_PORT: 5432
+      LABORADMIN_DB_NAME: laboradmin
+      LABORADMIN_DB_USER: laboradmin
+      LABORADMIN_DB_PASSWORD: laboradmin

@@ -6,7 +6,7 @@ const { initDB, closeDB } = require('../../db/db.js');
 const logger = require('../../utils/logger.js');
 const { seedDBwithJSON, seedDBwithObjects } = require('./../../db/seed');
 
-module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdminPass) => {
+module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdminPass, autoYes) => {
   const code = 'VM007';
 
   const options = {
@@ -15,20 +15,23 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
     xlsBeosztasFileName: beosztas || 'beosztas-minta.xlsx',
     xlsHallgatokFileName: hallgatok || 'hallgatok-minta.xlsx',
     basePath: basePath || 'courses/VM007/xls-data',
-    initAdminPass: initAdminPass || '12345'
+    initAdminPass: initAdminPass || '12345',
+    autoYes: autoYes || false
   };
 
   // reset-database then init-course
   try {
-    const confirmPromptResult = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'res',
-        message: 'Are you sure?'
+    if (!options.autoYes) {
+      const confirmPromptResult = await inquirer.prompt([
+        {
+          type: 'confirm',
+          name: 'res',
+          message: 'Are you sure?'
+        }
+      ]);
+      if (!confirmPromptResult.res) {
+        throw new Error('Confirmation error!');
       }
-    ]);
-    if (!confirmPromptResult.res) {
-      throw new Error('Confirmation error!');
     }
 
     const db = await initDB({ force: true });

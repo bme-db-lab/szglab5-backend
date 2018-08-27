@@ -11,11 +11,11 @@ if (!env) {
 const defaultConfig = {
   db: {
     dialect: 'postgres',
-    host: 'localhost',
-    port: '5432',
-    database: 'laboradmin',
-    username: 'postgres',
-    password: 'devpass'
+    host: process.env.LABORADMIN_DB_HOST || 'localhost',
+    port: process.env.LABORADMIN_DB_PORT || '5432',
+    database: process.env.LABORADMIN_DB_NAME || 'laboradmin',
+    username: process.env.LABORADMIN_DB_USER || 'postgres',
+    password: process.env.LABORADMIN_DB_PASSWORD || 'devpass'
   },
   api: {
     port: 7000
@@ -78,6 +78,7 @@ const defaultConfig = {
   },
   generatedFilesPath: path.join(__dirname, '../generated')
 };
+
 let specConfig = {};
 try {
   const specConfigPath = path.join(__dirname, `./config.${env}.json`);

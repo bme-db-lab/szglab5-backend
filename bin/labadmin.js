@@ -137,13 +137,16 @@ yargs // eslint-disable-line no-unused-expressions
       },
       adminPass: {
         default: '12345'
+      },
+      y: {
+        default: false
       }
     }),
     handler: async (argv) => {
       const logger = require('../utils/logger.js');
       try {
         const init = require('./commands/dev-init.js');
-        await init(argv.allUser, argv.genPass, argv.hallgatok, argv.beosztas, argv.basePath, argv.adminPass);
+        await init(argv.allUser, argv.genPass, argv.hallgatok, argv.beosztas, argv.basePath, argv.adminPass, argv.y);
       } catch (err) {
         logger.error('Error while executing init');
         logger.error(err);
