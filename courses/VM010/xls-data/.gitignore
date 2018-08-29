@@ -8,3 +8,6 @@
 
 *.xls*
 !*-minta.xls*
+
+# LibreOffice lock file
+*.xlsx#

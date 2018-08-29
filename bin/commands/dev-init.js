@@ -7,7 +7,7 @@ const logger = require('../../utils/logger.js');
 const { seedDBwithJSON, seedDBwithObjects } = require('./../../db/seed');
 
 module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdminPass, autoYes) => {
-  const code = 'VM007';
+  const code = 'VM010';
 
   const options = {
     allUser: allUser || false,

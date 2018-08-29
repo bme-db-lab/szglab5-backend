@@ -9,7 +9,7 @@ services:
       - postgres
     environment:
       DATABASE_URL: postgres://laboradmin:laboradmin@postgres:5432/laboradmin?sslmode=disable
-    command: sh -c "/usr/bin/pgweb --bind=0.0.0.0 --listen=8081"
+    command: sh -c "sleep 10 && /usr/bin/pgweb --bind=0.0.0.0 --listen=8081"
   postgres:
     image: postgres:9-alpine
     ports:
