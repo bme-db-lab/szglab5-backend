@@ -5,6 +5,7 @@ const getUser = require('./get.js');
 const updateUser = require('./update.js');
 const listUsers = require('./list.js');
 const addUser = require('./add.js');
+const getByNeptun = require('./getByNeptun.js');
 
 module.exports = (app) => {
   app.use('/users*', auth);
@@ -14,4 +15,5 @@ module.exports = (app) => {
   app.get('/users', listUsers);
   app.patch('/users/:id', updateUser);
   app.post('/users', addUser);
+  app.get('/users/neptun/:neptun', getByNeptun);
 };
