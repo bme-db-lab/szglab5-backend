@@ -15,12 +15,7 @@ module.exports = async (req, res) => {
 
     let demoFilter = {};
     const eventInclude = [];
-    // console.log(0);
-    // console.log(filter);
-    // console.log(isAdmin);
-    // console.log(!(filter && 'asCorrector' in filter));
     if (!isAdmin && !(filter && 'asCorrector' in filter)) {
-      // console.log('1');
       demoFilter = {
         DemonstratorId: userInfo.userId
       };
@@ -46,10 +41,7 @@ module.exports = async (req, res) => {
           }
         ]
       });
-    } else {
-
     }
-
     const records = await db.EventTemplates.findAll(
       {
         include: [
@@ -77,4 +69,3 @@ module.exports = async (req, res) => {
     res.status(500).send(genErrorObj(err.message));
   }
 };
-
