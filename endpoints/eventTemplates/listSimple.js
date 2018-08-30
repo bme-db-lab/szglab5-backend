@@ -18,6 +18,7 @@ module.exports = async (req, res) => {
       }
     });
     const eventTemplateChoices = eventTemplates.map(eventTemplate => ({
+      eventTemplateId: eventTemplate.id,
       eventTemplateType: eventTemplate.type,
       eventTemplateSeq: eventTemplate.seqNumber,
       exerciseCategoryType: eventTemplate.ExerciseCategory.type
