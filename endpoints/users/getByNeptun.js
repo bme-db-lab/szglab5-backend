@@ -38,7 +38,8 @@ module.exports = async (req, res) => {
     res.send({
       displayName: user.displayName,
       neptun: user.neptun,
-      studentGroup: user.StudentRegistrations[0].StudentGroup.name
+      studentGroup: user.StudentRegistrations[0].StudentGroup.name,
+      studentRegistrationId: user.StudentRegistrations[0].id
     });
   } catch (err) {
     if (err.notFound) {
