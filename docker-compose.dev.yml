@@ -27,6 +27,7 @@ services:
             echo 'Waiting for Postgres...'
             sleep 5
           done
+        PGPASSWORD=laboradmin psql -h postgres -p 5432 -U laboradmin -d laboradmin -c 'CREATE EXTENSION unaccent;'
         npm run cli:dev dev-init -- -y && \
         npm run start:dev"
     environment:
