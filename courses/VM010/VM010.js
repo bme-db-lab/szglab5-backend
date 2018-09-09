@@ -35,6 +35,7 @@ module.exports = async (semesterId, options) => {
     const exList = parsedStaff.exList;
     await seedDBwithObjects(db, 'Users', staff);
     for (const record of exList) {
+      console.log(record.data.guru);
       const qGuru = await db.Users.findOne({ where: { email_official: record.data.guru } });
       if (record.data.ex !== undefined && record.data.ex !== null) {
         for (const exItem of record.data.ex) {

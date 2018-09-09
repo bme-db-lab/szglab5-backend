@@ -10,7 +10,7 @@ module.exports = async (options) => {
   let seed = null;
   try {
     const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta.xlsx';
-    const basePath = options.basePath || 'courses/VM007/xls-data';
+    const basePath = options.basePath || 'courses/VM010/xls-data';
 
     const seedFile = join(basePath, xlsFileName);
     const sheetName = 'Nevek, elerhetosegek';
@@ -27,6 +27,7 @@ module.exports = async (options) => {
   const exList = [];
   let conn = { data: {} };
   let user = { data: {} };
+
   Object.keys(seed).some(
     (key) => {
       const reg = /([A-Z]+)([0-9]+)/;
@@ -54,6 +55,7 @@ module.exports = async (options) => {
           case 'C':
             if (seed[key].w !== undefined) {
               user.data.email_official = seed[key].w.trim();
+              users[user.data.email_official] = user;
               user.data.loginName = seed[key].w;
             } else {
               user.data.email_official = null;
@@ -84,7 +86,6 @@ module.exports = async (options) => {
               }
               user.data.initPassword = initPassword;
               user.data.password = initPassword;
-              users[user.data.email_official] = user;
             } else {
               return true;
             }
@@ -132,6 +133,7 @@ module.exports = async (options) => {
           }
           break;
         case 'B':
+        console.log(user.data);
           if (user.data.email_official != null) {
             if (seed[key].w !== undefined) {
               users[user.data.email_official].data.studentgroup_id = seed[key].w;

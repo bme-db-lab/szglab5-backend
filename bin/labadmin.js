@@ -11,7 +11,7 @@ yargs // eslint-disable-line no-unused-expressions
     builder: () => yargs
           .option('path', {
             alias: 'p',
-            default: 'courses/VM007/json-data/dev.seed.json'
+            default: 'courses/VM010/json-data/dev.seed.json'
           }),
     handler: async (argv) => {
       const logger = require('../utils/logger.js');
@@ -133,7 +133,7 @@ yargs // eslint-disable-line no-unused-expressions
         default: 'beosztas-minta.xlsx'
       },
       'base-path': {
-        default: 'courses/VM007/xls-data'
+        default: 'courses/VM010/xls-data'
       },
       adminPass: {
         default: '12345'

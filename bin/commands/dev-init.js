@@ -14,7 +14,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
     genPass: genPass || false,
     xlsBeosztasFileName: beosztas || 'beosztas-minta.xlsx',
     xlsHallgatokFileName: hallgatok || 'hallgatok-minta.xlsx',
-    basePath: basePath || 'courses/VM007/xls-data',
+    basePath: basePath || 'courses/VM010/xls-data',
     initAdminPass: initAdminPass || '12345',
     autoYes: autoYes || false
   };
@@ -108,27 +108,27 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
     }
     logger.info('Event generation succeed!');
 
-    logger.info('Adding admin user');
-    const adminLoginName = 'admin';
-    const admin = [{
-      data: {
-        loginName: adminLoginName,
-        displayName: 'Admin',
-        password: options.initAdminPass
-      }
-    }];
-    await seedDBwithObjects(db, 'Users', admin);
+    // logger.info('Adding admin user');
+    // const adminLoginName = 'admin';
+    // const admin = [{
+    //   data: {
+    //     loginName: adminLoginName,
+    //     displayName: 'Admin',
+    //     password: options.initAdminPass
+    //   }
+    // }];
+    // await seedDBwithObjects(db, 'Users', admin);
 
-    const adminId = await db.Users.findOne({ where: { loginName: adminLoginName } });
-    const roleId = await db.Roles.findOne({ where: { name: 'ADMIN' } });
-    const adminRole = [{
-      data: {
-        RoleId: roleId.dataValues.id,
-        UserId: adminId.dataValues.id
-      }
-    }];
-    await seedDBwithObjects(db, 'UserRoles', adminRole);
-    logger.info('Succesfully added new admin user!');
+    // const adminId = await db.Users.findOne({ where: { loginName: adminLoginName } });
+    // const roleId = await db.Roles.findOne({ where: { name: 'ADMIN' } });
+    // const adminRole = [{
+    //   data: {
+    //     RoleId: roleId.dataValues.id,
+    //     UserId: adminId.dataValues.id
+    //   }
+    // }];
+    // await seedDBwithObjects(db, 'UserRoles', adminRole);
+    // logger.info('Succesfully added new admin user!');
 
     // iterate through event-template's events
     for (let i = 1; i < 6; i++) {

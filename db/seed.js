@@ -18,6 +18,7 @@ async function seedDBwithObjects(db, modelName, data, condition) {
     if (includes !== undefined) {
       includeModels = includes.map(include => db[include]);
     }
+    console.log(obj);
     if (modelName === 'Users') {
       const passwordHash = bcrypt.hashSync(obj.password, config.bcrypt.saltRounds);
       obj.password = passwordHash;

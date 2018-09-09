@@ -12,7 +12,7 @@ module.exports = async (semesterId, options) => {
     const basePath = options.basePath || 'courses/VM010/xls-data';
 
     const seedFilePath = join(basePath, xlsFileName);
-    const sheetName = 'Hallgatoi csoportbeosztas másol';
+    const sheetName = 'Hallgatoi csoportbeosztas';
     const opts = {
       sheetStubs: true,
     };
