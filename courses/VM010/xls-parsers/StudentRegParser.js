@@ -6,6 +6,8 @@ const { join } = require('path');
 module.exports = async (semesterId, options) => {
   const db = getDB();
   let seed = null;
+
+  let currentExType = 0;
   try {
     const xlsFileName = options.xlsHallgatokFileName || 'hallgatok-minta.xlsx';
 
@@ -55,8 +57,18 @@ module.exports = async (semesterId, options) => {
               sreg.data.SemesterId = semesterId;
               // random exercise type distribution
               const qCourse = await db.Semesters.findOne({ where: { id: semesterId } });
-              const qEx = await db.ExerciseTypes.findAll({ where: { CourseId: qCourse.dataValues.id } });
-              const record = qEx[Math.floor(Math.random() * qEx.length)];
+              const qEx = await db.ExerciseTypes.findAll({ where: {
+                CourseId: qCourse.dataValues.id,
+                exerciseId: {
+                  $lte: 34
+                }
+              } });
+              if (currentExType < qEx.length - 1) {
+                currentExType++;
+              } else {
+                currentExType = 0;
+              }
+              const record = qEx[currentExType];
               sreg.data.ExerciseTypeId = record.dataValues.id;
               break;
             case 'C':
