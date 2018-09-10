@@ -46,16 +46,16 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
     }
     // Initialize Semester
     const semesterData = [{ data: {
-      academicyear: '2017/2018',
-      academicterm: 2,
+      academicyear: '2018/2019',
+      academicterm: 1,
       CourseId: 1
     } }];
     await seedDBwithObjects(db, 'Semesters', semesterData);
     const qResult = await db.Semesters.findOne({
       attributes: ['id'],
       where: {
-        academicyear: '2017/2018',
-        academicterm: 2,
+        academicyear: '2018/2019',
+        academicterm: 1,
         CourseId: 1
       }
     });
