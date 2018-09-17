@@ -145,7 +145,7 @@ module.exports = async (argv) => {
     const deliverables = await eventToUpdate.getDeliverables();
     console.log(deliverables.map(del => del.dataValues.id));
     for (const deliverable of deliverables) {
-      const deadline = moment(updateEventInfo.date).add(3, 'd').add(15, 'm');
+      const deadline = moment(updateEventInfo.date).add(1, 'd');
       console.log(deadline);
       await db.Deliverables.update(
         {
