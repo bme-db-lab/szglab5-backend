@@ -9,10 +9,10 @@ yargs // eslint-disable-line no-unused-expressions
     aliases: ['sj'],
     desc: 'Seed the database with models described in json',
     builder: () => yargs
-          .option('path', {
-            alias: 'p',
-            default: 'courses/VM010/json-data/dev.seed.json'
-          }),
+      .option('path', {
+        alias: 'p',
+        default: 'courses/VM010/json-data/dev.seed.json'
+      }),
     handler: async (argv) => {
       const logger = require('../utils/logger.js');
       const seedJSON = require('./commands/seed-json');
@@ -46,14 +46,14 @@ yargs // eslint-disable-line no-unused-expressions
     aliases: ['is'],
     desc: 'Initalize a new semester in a course',
     builder: () => yargs
-    .options({
-      hallgatok: {
-        default: 'hallgatok-minta.xlsx'
-      },
-      beosztas: {
-        default: 'beosztas-minta.xlsx'
-      }
-    }),
+      .options({
+        hallgatok: {
+          default: 'hallgatok-minta.xlsx'
+        },
+        beosztas: {
+          default: 'beosztas-minta.xlsx'
+        }
+      }),
     handler: async (argv) => {
       const logger = require('../utils/logger.js');
       try {
@@ -82,21 +82,21 @@ yargs // eslint-disable-line no-unused-expressions
       }
     }
   })
-   .command({
-     command: 'reset-database',
-     aliases: ['rd'],
-     desc: 'Drops all tables from the database.',
-     handler: async () => {
-       const logger = require('../utils/logger.js');
-       try {
-         const resetDatabase = require('./commands/reset-database');
-         await resetDatabase();
-       } catch (err) {
-         logger.error('Error while resetting database');
-         logger.error(err);
-       }
-     }
-   })
+  .command({
+    command: 'reset-database',
+    aliases: ['rd'],
+    desc: 'Drops all tables from the database.',
+    handler: async () => {
+      const logger = require('../utils/logger.js');
+      try {
+        const resetDatabase = require('./commands/reset-database');
+        await resetDatabase();
+      } catch (err) {
+        logger.error('Error while resetting database');
+        logger.error(err);
+      }
+    }
+  })
   .command({
     command: 'create-git-users',
     aliases: ['cgu'],
@@ -117,31 +117,31 @@ yargs // eslint-disable-line no-unused-expressions
     aliases: ['di'],
     desc: 'Shortcut for rd -> ic -> is -> gse',
     builder: () => yargs
-    .options({
-      'all-user': {
-        type: 'boolean',
-        default: false
-      },
-      'gen-pass': {
-        type: 'boolean',
-        default: false
-      },
-      hallgatok: {
-        default: 'hallgatok-minta.xlsx'
-      },
-      beosztas: {
-        default: 'beosztas-minta.xlsx'
-      },
-      'base-path': {
-        default: 'courses/VM010/xls-data'
-      },
-      adminPass: {
-        default: '12345'
-      },
-      y: {
-        default: false
-      }
-    }),
+      .options({
+        'all-user': {
+          type: 'boolean',
+          default: false
+        },
+        'gen-pass': {
+          type: 'boolean',
+          default: false
+        },
+        hallgatok: {
+          default: 'hallgatok-minta.xlsx'
+        },
+        beosztas: {
+          default: 'beosztas-minta.xlsx'
+        },
+        'base-path': {
+          default: 'courses/VM010/xls-data'
+        },
+        adminPass: {
+          default: '12345'
+        },
+        y: {
+          default: false
+        }
+      }),
     handler: async (argv) => {
       const logger = require('../utils/logger.js');
       try {
@@ -188,10 +188,10 @@ yargs // eslint-disable-line no-unused-expressions
     aliases: ['gd'],
     desc: 'Generate deliverables for event-template',
     builder: () => yargs
-    .option('reset-existing-deliverables', {
-      alias: 'red',
-      default: false
-    }),
+      .option('reset-existing-deliverables', {
+        alias: 'red',
+        default: false
+      }),
     handler: async (argv) => {
       const logger = require('../utils/logger.js');
       try {
@@ -259,10 +259,10 @@ yargs // eslint-disable-line no-unused-expressions
     aliases: ['gsex'],
     desc: 'Get student exerciseTypes',
     builder: () => yargs
-    .option('output-filename', {
-      alias: 'of',
-      default: 'hallgato_feladat_tipus.csv'
-    }),
+      .option('output-filename', {
+        alias: 'of',
+        default: 'hallgato_feladat_tipus.csv'
+      }),
     handler: async (argv) => {
       const getStudentExtypes = require('./commands/get-student-extypes');
       await getStudentExtypes(argv);
@@ -300,14 +300,14 @@ yargs // eslint-disable-line no-unused-expressions
     aliases: ['json-cea'],
     desc: 'Change event\'s attributes from json',
     builder: () => yargs
-    .option('reset-deliverables', {
-      alias: 'rd',
-      default: false
-    })
-    .option('deadline-day', {
-      alias: 'dd',
-      default: 1
-    }),
+      .option('reset-deliverables', {
+        alias: 'rd',
+        default: false
+      })
+      .option('deadline-day', {
+        alias: 'dd',
+        default: 1
+      }),
     handler: async (argv) => {
       const changeEvents = require('./commands/change-event-attributes-json');
       await changeEvents(argv);
@@ -382,6 +382,14 @@ yargs // eslint-disable-line no-unused-expressions
     handler: async (argv) => {
       const seedInitPasswords = require('./commands/seed-init-passwords');
       await seedInitPasswords(argv);
+    }
+  })
+  .command({
+    command: 'add-events-for-group',
+    aliases: ['aefg'],
+    handler: async () => {
+      const addEventsForGroup = require('./commands/add-events-for-group');
+      await addEventsForGroup();
     }
   })
   .option('env', {
