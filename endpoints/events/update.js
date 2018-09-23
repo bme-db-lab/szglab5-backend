@@ -16,6 +16,11 @@ module.exports = async (req, res) => {
       return;
     }
 
+    if (data.attributes.grade === null || data.attributes.grade < 1 || data.attributes.grade > 5) {
+      throw new Error('Please provide proper grade (1-5)');
+    }
+
+
     const event = await db.Events.findById(reqId);
     checkIfExist(event);
     await updateResource(db, 'Events', data);
