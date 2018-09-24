@@ -20,6 +20,11 @@ module.exports = async (req, res) => {
     }
 
     const { data } = req.body;
+
+    if (data.attributes.grade === null || data.attributes.grade < 1 || data.attributes.grade > 5) {
+      throw new Error('Please provide proper grade (1-5)');
+    }
+
     const db = getDB();
     const deliverable = await db.Deliverables.findById(reqId);
     checkIfExist(deliverable);
