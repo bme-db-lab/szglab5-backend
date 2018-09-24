@@ -118,7 +118,7 @@ module.exports = async (argv) => {
     console.log('Updating student\'s event');
     const updatedEvent = await db.Events.update(
       {
-        date: moment(updateEventInfo.date).add(15, 'm'),
+        date: moment(updateEventInfo.date),
         location: updateEventInfo.location,
         DemonstratorId: updateEventInfo.DemonstratorId,
       },
