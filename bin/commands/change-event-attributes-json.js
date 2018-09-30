@@ -67,42 +67,20 @@ module.exports = async (argv) => {
             }
           ]
         });
-        console.log(`Updaing - EventId: ${event.id} date: ${event.dataValues.date} -> ${eventAttribute.date}`);
-        await event.updateAttributes({
-          date: eventAttribute.date
-        });
-        // update deliverables date
-        console.log('Modify deliverables deadline');
-        const deliverables = await event.getDeliverables();
-        for (const deliverable of deliverables) {
-          const deadline = moment(eventAttribute.date).add(options.deadlineDay, 'd');
-          await db.Deliverables.update(
-            {
-              deadline
-            },
-            {
-              where: { id: deliverable.id },
-              include: {
-                model: db.DeliverableTemplates,
-                where: {
-                  type: 'FILE'
-                }
-              }
-            }
-          );
-          if (options.resetDeliverables) {
+
+        if (eventAttribute.date) {
+          console.log(`Updaing - EventId: ${event.id} date: ${event.dataValues.date} -> ${eventAttribute.date}`);
+          await event.updateAttributes({
+            date: eventAttribute.date
+          });
+          // update deliverables date
+          console.log('Modify deliverables deadline');
+          const deliverables = await event.getDeliverables();
+          for (const deliverable of deliverables) {
+            const deadline = moment(eventAttribute.date).add(options.deadlineDay, 'd');
             await db.Deliverables.update(
               {
-                lastSubmittedDate: null,
-                grading: false,
-                grade: null,
-                imsc: 0,
-                finalized: false,
-                comment: null,
-                uploaded: false,
-                filePath: null,
-                originalFileName: null,
-                CorrectorId: null
+                deadline
               },
               {
                 where: { id: deliverable.id },
@@ -114,23 +92,63 @@ module.exports = async (argv) => {
                 }
               }
             );
+            if (options.resetDeliverables) {
+              await db.Deliverables.update(
+                {
+                  lastSubmittedDate: null,
+                  grading: false,
+                  grade: null,
+                  imsc: 0,
+                  finalized: false,
+                  comment: null,
+                  uploaded: false,
+                  filePath: null,
+                  originalFileName: null,
+                  CorrectorId: null
+                },
+                {
+                  where: { id: deliverable.id },
+                  include: {
+                    model: db.DeliverableTemplates,
+                    where: {
+                      type: 'FILE'
+                    }
+                  }
+                }
+              );
+            }
+          }
+
+          // change appointment data
+          console.log('Updating student group\'s appointments');
+          const appointment = await db.Appointments.find({
+            where: {
+              StudentGroupId: studentGroup.id,
+              EventTemplateId: eventAttribute.eventTemplateId
+            }
+          });
+          if (appointment) {
+            await appointment.updateAttributes({
+              date: eventAttribute.date
+            });
           }
         }
-      }
-    }
-    // change appointment data
-    console.log('Updating student group\'s appointments');
-    for (const eventAttribute of eventAttributes) {
-      const appointment = await db.Appointments.find({
-        where: {
-          StudentGroupId: studentGroup.id,
-          EventTemplateId: eventAttribute.eventTemplateId
+        if (eventAttribute.demonstrator) {
+          const demonstrator = await db.Users.find({
+            where: {
+              loginName: eventAttribute.demonstrator
+            }
+          });
+
+          if (!demonstrator) {
+            throw new Error(`Demonstrator not found: ${eventAttribute.demonstrator}`);
+          }
+
+          console.log(`Updaing - EventId: ${event.id} demonstrator: ${event.DemonstratorId} -> ${demonstrator.id}`);
+          await event.updateAttributes({
+            DemonstratorId: demonstrator.id
+          });
         }
-      });
-      if (appointment) {
-        await appointment.updateAttributes({
-          date: eventAttribute.date
-        });
       }
     }
   } catch (err) {
