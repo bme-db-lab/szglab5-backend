@@ -11,7 +11,20 @@ const exTypesToSkip = [
   63
 ];
 
-function getRoomForStudent(rooms, exerciseCategory) {
+function getRoomForStudent(rooms, exerciseCategory, studentNeptun) {
+  // check if student has room preferences
+  const preferedRoom = rooms.find((room) => {
+    const preference = room.studentPreferences.includes(studentNeptun);
+    const hasMoreRoom = room.currentUsage < room.capacity;
+
+    return preference && hasMoreRoom;
+  });
+
+  if (preferedRoom) {
+    return preferedRoom;
+  }
+
+
   const suitableRoom = rooms.find((room) => {
     const exCatok = room.exerciseCategories.includes(exerciseCategory);
     const hasMoreRoom = room.currentUsage < room.capacity;
@@ -69,8 +82,17 @@ module.exports = async () => {
           }
         },
         {
-          // exclude english student group
-          where: { name: { $ne: 'c12-A' } },
+          // exclude english and german student group
+          where: {
+            name: {
+              $and: [
+               { $ne: 'p12-a' },
+               { $ne: 'c16-a2' },
+               { $ne: 'c16-a1' },
+               { $ne: 's16-n' },
+              ]
+            }
+          },
           model: db.StudentGroups
         }
       ]
@@ -126,10 +148,8 @@ module.exports = async () => {
     let nameIndex = 0;
     console.log('Generate StudentGroups and Appointments');
     const rooms = [];
-    let currentRoomIndex = 0;
 
     for (const supplementaryConfigObj of supplementaryConfig) {
-      console.log(nameIndex);
       const demonstrator = await db.Users.find({
         where: {
           loginName: supplementaryConfigObj.demonstrator
@@ -160,6 +180,7 @@ module.exports = async () => {
         studentGroupId: newStudentGroup.id,
         demonstratorId: demonstrator.id,
         exerciseCategories: supplementaryConfigObj.exerciseCategories,
+        studentPreferences: supplementaryConfigObj.studentPreferences,
         currentUsage: 0
       });
     }
@@ -211,7 +232,7 @@ module.exports = async () => {
       failedEventStats[failedEvent.ExerciseSheet.ExerciseCategory.type]++;
       console.log(failedEventStats);
 
-      const currentRoom = getRoomForStudent(rooms, failedEvent.ExerciseSheet.ExerciseCategory.type);
+      const currentRoom = getRoomForStudent(rooms, failedEvent.ExerciseSheet.ExerciseCategory.type, studentReg.User.neptun);
       currentRoom.currentUsage++;
 
       const newEvent = await db.Events.create({
