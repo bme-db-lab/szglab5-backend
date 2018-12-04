@@ -89,7 +89,7 @@
     "pg": "^7.4.3",
     "pluralize": "^4.0.0",
     "remove-accents": "^0.4.2",
-    "sequelize": "^4.3.2",
+    "sequelize": "^4.22.12",
     "tmp": "0.0.33",
     "uppercamelcase": "^3.0.0",
     "winston": "^2.3.1",
