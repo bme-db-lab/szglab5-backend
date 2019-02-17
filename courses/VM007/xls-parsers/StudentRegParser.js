@@ -30,6 +30,13 @@ module.exports = async (semesterId, options) => {
   if (seed !== null) {
     const regs = [];
     let sreg = { data: {} };
+    // for fair exercise distributon
+    const qCourse = await db.Semesters.findOne({ where: { id: semesterId } });
+    const qEx = await db.ExerciseTypes.findAll({ where: { CourseId: qCourse.dataValues.id } });
+
+    let currentExType = 1;
+    const exTypesCount = qEx.length;
+
     for (const key of Object.keys(seed)) {
       const reg = /([A-Z]+)([0-9]+)/;
       const rKey = reg.exec(key);
@@ -53,11 +60,9 @@ module.exports = async (semesterId, options) => {
               }
               sreg.data.neptunSubjectCode = 'DUMMY';
               sreg.data.SemesterId = semesterId;
-              // random exercise type distribution
-              const qCourse = await db.Semesters.findOne({ where: { id: semesterId } });
-              const qEx = await db.ExerciseTypes.findAll({ where: { CourseId: qCourse.dataValues.id } });
-              const record = qEx[Math.floor(Math.random() * qEx.length)];
-              sreg.data.ExerciseTypeId = record.dataValues.id;
+
+              sreg.data.ExerciseTypeId = currentExType;
+              currentExType = currentExType < exTypesCount ? currentExType + 1 : 1;
               break;
             case 'C':
               if (seed[key].w !== undefined) {
