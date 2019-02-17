@@ -10,7 +10,7 @@ module.exports = async (argv) => {
     console.log(argv);
     const options = {
       resetDeliverables: argv.resetDeliverables || false,
-      deadlineDay: argv.deadlineDay || 1
+      deadlineDay: argv.deadlineDay || 3
     };
 
     const studentGroups = await db.StudentGroups.findAll();

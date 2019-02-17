@@ -7,14 +7,14 @@ const logger = require('../../utils/logger.js');
 const { seedDBwithJSON, seedDBwithObjects } = require('./../../db/seed');
 
 module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdminPass, autoYes) => {
-  const code = 'VM010';
+  const code = 'VM007';
 
   const options = {
     allUser: allUser || false,
     genPass: genPass || false,
     xlsBeosztasFileName: beosztas || 'beosztas-minta.xlsx',
     xlsHallgatokFileName: hallgatok || 'hallgatok-minta.xlsx',
-    basePath: basePath || 'courses/VM010/xls-data',
+    basePath: basePath || 'courses/VM007/xls-data',
     initAdminPass: initAdminPass || '12345',
     autoYes: autoYes || false
   };
@@ -141,7 +141,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
         for (const deliverableTemplate of deliverableTemplates) {
           logger.debug(` DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`);
           const eventDate = event.dataValues.date;
-          const deadline = moment(eventDate).add(1, 'd');
+          const deadline = moment(eventDate).add(3, 'd');
           // if (i === 0 || i === 1) {
           //   deadline = moment(eventDate).subtract(1, 'y');
           // }

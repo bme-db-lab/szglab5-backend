@@ -6,9 +6,22 @@
     "configurations": [
         {
             "type": "node",
-            "request": "attach",
-            "name": "Attach to running server",
-            "port": 5858
+            "request": "launch",
+            "name": "Dev init debug",
+            "program": "${workspaceFolder}/bin/labadmin.js",
+            "args": [
+                "dev-init",
+                "--gen-pass",
+                "--all-user",
+                "--hallgatok",
+                "adatbazisok_labor_2018_19_2_hallgatok.xls",
+                "--beosztas",
+                "adatbazisok_labor_2018_19_2_beosztas.xls"
+            ],
+            "console": "integratedTerminal",
+            "env": {
+                "NODE_ENV": "dev"
+            }
         }
     ]
 }

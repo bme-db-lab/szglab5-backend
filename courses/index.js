@@ -1,7 +1,7 @@
 module.exports = [
   {
     name: 'adatlabor',
-    code: 'VM010'
+    code: 'VM007'
   },
   {
     name: 'testcourse',
