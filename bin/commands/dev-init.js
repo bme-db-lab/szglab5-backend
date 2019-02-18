@@ -47,7 +47,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
     // Initialize Semester
     const semesterData = [{ data: {
       academicyear: '2018/2019',
-      academicterm: 1,
+      academicterm: 2,
       CourseId: 1
     } }];
     await seedDBwithObjects(db, 'Semesters', semesterData);
@@ -55,7 +55,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
       attributes: ['id'],
       where: {
         academicyear: '2018/2019',
-        academicterm: 1,
+        academicterm: 2,
         CourseId: 1
       }
     });
