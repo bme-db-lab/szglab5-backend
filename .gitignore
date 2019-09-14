@@ -71,3 +71,4 @@ files/
 *.csv
 hallgatok2.xlsx
 beosztas2.xlsx
+.DS_Store
