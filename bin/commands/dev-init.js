@@ -46,8 +46,8 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
     }
     // Initialize Semester
     const semesterData = [{ data: {
-      academicyear: '2018/2019',
-      academicterm: 2,
+      academicyear: '2019/2020',
+      academicterm: 1,
       CourseId: 1
     } }];
     await seedDBwithObjects(db, 'Semesters', semesterData);
