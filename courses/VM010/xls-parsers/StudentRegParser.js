@@ -7,7 +7,8 @@ module.exports = async (semesterId, options) => {
   const db = getDB();
   let seed = null;
 
-  let currentExType = 0;
+  let currentExTypeHun = 0;
+  let currentExTypeEng = 0;
   try {
     const xlsFileName = options.xlsHallgatokFileName || 'hallgatok-minta.xlsx';
 
@@ -55,21 +56,42 @@ module.exports = async (semesterId, options) => {
               }
               sreg.data.neptunSubjectCode = 'DUMMY';
               sreg.data.SemesterId = semesterId;
+              
               // random exercise type distribution
+              const engStudent = sreg.data.neptunCourseCode.includes('-a');
+
               const qCourse = await db.Semesters.findOne({ where: { id: semesterId } });
-              const qEx = await db.ExerciseTypes.findAll({ where: {
-                CourseId: qCourse.dataValues.id,
-                exerciseId: {
-                  $lte: 34
+              if (engStudent) {
+                // English student
+                const qExEng = await db.ExerciseTypes.findAll({ where: {
+                  CourseId: qCourse.dataValues.id,
+                  exerciseId: {
+                    $gte: 52
+                  }
+                } });
+                if (currentExTypeEng < qExEng.length - 1) {
+                  currentExTypeEng++;
+                } else {
+                  currentExTypeEng = 0;
                 }
-              } });
-              if (currentExType < qEx.length - 1) {
-                currentExType++;
+                const record = qExEng[currentExTypeEng];
+                sreg.data.ExerciseTypeId = record.dataValues.id;
               } else {
-                currentExType = 0;
+                // Hungarian student
+                const qExHun = await db.ExerciseTypes.findAll({ where: {
+                  CourseId: qCourse.dataValues.id,
+                  exerciseId: {
+                    $lte: 34
+                  }
+                } });
+                if (currentExTypeHun < qExHun.length - 1) {
+                  currentExTypeHun++;
+                } else {
+                  currentExTypeHun = 0;
+                }
+                const record = qExHun[currentExTypeHun];
+                sreg.data.ExerciseTypeId = record.dataValues.id;
               }
-              const record = qEx[currentExType];
-              sreg.data.ExerciseTypeId = record.dataValues.id;
               break;
             case 'C':
               if (seed[key].w !== undefined) {
