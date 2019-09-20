@@ -48,10 +48,6 @@ function generateHandout(event) {
           '@description': 'Mérés időpontja',
           '#text': timeOfEvent.format('YYYY-MM-DD HH:mm')
         }
-        ,{
-          '@description': 'Rapid jelszó',
-          '#text': rapidInitialPassword
-        }
       ]
     }
   };
