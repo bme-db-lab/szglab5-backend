@@ -111,7 +111,7 @@ module.exports = async (req, res) => {
     const deliverables = await eventToUpdate.getDeliverables();
 
     for (const deliverable of deliverables) {
-      const deadline = moment(updateEventInfo.date).add(3, 'd');
+      const deadline = moment(updateEventInfo.date).add(1, 'd');
       await db.Deliverables.update(
         {
           deadline,
