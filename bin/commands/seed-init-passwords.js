@@ -4,6 +4,8 @@ const { join, isAbsolute } = require('path');
 const { initDB, closeDB } = require('../../db/db.js');
 const parseCSV = require('csv-parse/lib/sync');
 
+// Use this command to load e.g. rapid shell server passwords to the database
+
 module.exports = async (argv) => {
   try {
     const db = await initDB();

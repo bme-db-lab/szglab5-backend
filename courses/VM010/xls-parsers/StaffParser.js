@@ -84,7 +84,7 @@ module.exports = async (options) => {
                   excludeSimilarCharacters: true
                 });
               }
-              user.data.initPassword = initPassword;
+              // password will be hased before loading into the DB in db/seed.js
               user.data.password = initPassword;
             } else {
               return true;

@@ -49,7 +49,7 @@ module.exports = async (semesterId, options) => {
                 excludeSimilarCharacters: true
               });
             }
-            user.data.initPassword = initPassword;
+            // password will be hased before loading into the DB in db/seed.js
             user.data.password = initPassword;
           } else if (key[0] === 'B') {
             if (seed[key].w) {

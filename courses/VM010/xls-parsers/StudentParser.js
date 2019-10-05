@@ -47,7 +47,7 @@ module.exports = async (semesterId, options) => {
                   excludeSimilarCharacters: true
                 });
               }
-              user.data.initPassword = initPassword;
+              // password will be hased before loading into the DB in db/seed.js
               user.data.password = initPassword;
             }
               break;
@@ -86,7 +86,6 @@ module.exports = async (semesterId, options) => {
               //       numbers: true
               //     });
               //   }
-              //   user.data.initPassword = initPassword;
               //   user.data.password = initPassword;
               // }
               break;
