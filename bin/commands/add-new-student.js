@@ -103,7 +103,6 @@ module.exports = async () => {
       loginName: newUserPromptResult.neptun,
       displayName: newUserPromptResult.displayName,
       password: passwordHash,
-      initPassword,
     });
 
     // Add student role to user
