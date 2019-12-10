@@ -392,6 +392,22 @@ yargs // eslint-disable-line no-unused-expressions
       await addEventsForGroup();
     }
   })
+  .command({
+    command: 'get-supplementary-statistics',
+    aliases: ['gss'],
+    handler: async () => {
+      const getSupplementaryStatistics = require('./commands/get-supplementary-statistics');
+      await getSupplementaryStatistics();
+    }
+  })
+  .command({
+    command: 'generate-semester-events-custom',
+    aliases: ['gsec'],
+    handler: async () => {
+      const generateSupplementaryEventsCustom = require('./commands/generate-supplementary-events-custom.js');
+      await generateSupplementaryEventsCustom();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'

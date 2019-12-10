@@ -86,10 +86,9 @@ module.exports = async () => {
           where: {
             name: {
               $and: [
-               { $ne: 'p12-a' },
+                { $ne: 'c16-a1' },
                { $ne: 'c16-a2' },
-               { $ne: 'c16-a1' },
-               { $ne: 's16-n' },
+               { $ne: 'c16-a3' },
               ]
             }
           },

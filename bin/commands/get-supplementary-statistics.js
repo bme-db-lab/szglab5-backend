@@ -1,21 +1,8 @@
-const { getDB } = require('../../db/db.js');
-const { genErrorObj } = require('../../utils/utils.js');
+const { initDB, closeDB } = require('../../db/db.js');
 
-// Spec in hungarian
-// Azok potolhatnak, akiknek legfeljebb egy laborja elegtelen vagy egy laborjegye hianyzik.
-// A beosztas elkeszitesehez egy olyan tablazat kell, ami azt mutatja meg, hogy labortipusonkent hany hallgato van, aki az elobbiek szerint potolhat, es hany olyan hallgato van, akinek az adott labortipushoz tartozo jegye meg hianyzik. A potlok szamanak meghatarozasa soran azt kell feltetelezni, hogy ha valakinek meg hianyzik laborjegye, akkor feltesszuk, hogy az  elegtelentol kulonbozo lesz (erre azert van szukseg, mert a potlas beosztasat hamarabb el kell kesziteni, mintsem valamennyi jkv. ki lenne javitva). Celszeruen egy ilyen lekerdezest barmikor le lehessen futtatni.
-
-module.exports = async (req, res) => {
+module.exports = async (argv) => {
   try {
-    const db = getDB();
-
-    const { roles } = req.userInfo;
-
-    // only ADMIN DEMONSTRATOR CORRECTOR
-    if (!roles.includes('ADMIN') && !roles.includes('DEMONSTRATOR') && !roles.includes('CORRECTOR')) {
-      res.status(403).send(genErrorObj('Unathorized'));
-      return;
-    }
+    const db = await initDB();
 
     const exerciseCategories = await db.ExerciseCategories.findAll({
       attributes: ['id', 'type']
@@ -56,6 +43,19 @@ module.exports = async (req, res) => {
               name: 'STUDENT'
             }
           }
+        },
+        {
+          // exclude english and german student group
+          where: {
+            name: {
+              $and: [
+                { $ne: 'c16-a1' },
+               { $ne: 'c16-a2' },
+               { $ne: 'c16-a3' },
+              ]
+            }
+          },
+          model: db.StudentGroups
         }
       ]
     });
@@ -84,6 +84,7 @@ module.exports = async (req, res) => {
           const eventCategory = event.ExerciseSheet.ExerciseCategory.type;
           const index = exCatStat.findIndex(exCatStatItem => exCatStatItem.exerciseCategoryType === eventCategory);
           exCatStat[index].gradeNotAvailable++;
+          // console.log(exCatStat[index].exerciseCategoryType, studentReg.User.neptun);
         }
 
         const deliverableOk = event.Deliverables.every(deliverable => deliverable.uploaded && deliverable.grade >= 2);
@@ -118,8 +119,10 @@ module.exports = async (req, res) => {
       data: exCatStat
     };
 
-    res.send(table);
+    console.log(table);
   } catch (error) {
-    res.status(500).send(genErrorObj(error.message));
+    console.log(error);
+  } finally {
+    await closeDB();
   }
 };
