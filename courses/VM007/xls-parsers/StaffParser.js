@@ -10,7 +10,7 @@ module.exports = async (options) => {
   let seed = null;
   try {
     const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta.xlsx';
-    const basePath = options.basePath || 'courses/VM010/xls-data';
+    const basePath = options.basePath || 'courses/VM007/xls-data';
 
     const seedFile = join(basePath, xlsFileName);
     const sheetName = 'Nevek, elerhetosegek';
@@ -103,7 +103,7 @@ module.exports = async (options) => {
   seed = null;
   try {
     const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta.xlsx';
-    const basePath = options.basePath || 'courses/VM010/xls-data';
+    const basePath = options.basePath || 'courses/VM007/xls-data';
 
     const seedFile = join(basePath, xlsFileName);
     const sheetName = 'Laborvezetok';
@@ -180,7 +180,7 @@ module.exports = async (options) => {
   let gurukJavitok = null;
   try {
     const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta.xlsx';
-    const basePath = options.basePath || 'courses/VM010/xls-data';
+    const basePath = options.basePath || 'courses/VM007/xls-data';
 
     const seedFile = join(basePath, xlsFileName);
     const sheetName = 'Guruk, javitok';

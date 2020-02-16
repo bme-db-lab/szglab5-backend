@@ -20,7 +20,7 @@ module.exports = async (options) => {
   let seed = null;
   try {
     const xlsFileName = options.xlsBeosztasFileName || 'beosztas-minta.xlsx';
-    const basePath = options.basePath || 'courses/VM010/xls-data';
+    const basePath = options.basePath || 'courses/VM007/xls-data';
 
     const seedFile = join(basePath, xlsFileName);
     const sheetName = 'Idopontok';
@@ -45,13 +45,13 @@ module.exports = async (options) => {
     }
   }
   const types = exerciseCategories.map(qResult => qResult.dataValues.type);
-
   const apps = [];
   let app = { data: {} };
   if (seed !== null) {
     for (const key of Object.keys(seed)) {
       const reg = /([A-Z]+)([0-9]+)/;
       const rKey = reg.exec(key);
+
       if (seed[key].w !== undefined) {
         if (types.indexOf(seed[key].w) !== -1) {
           app = { data: {} };
@@ -67,6 +67,7 @@ module.exports = async (options) => {
               }
             });
             app.data.StudentGroupId = gQueryResult.dataValues.id;
+            console.log('app', app);
             apps.push(app);
 
             const exCat = exerciseCategories.find(category => (category.dataValues.type === seed[key].w));

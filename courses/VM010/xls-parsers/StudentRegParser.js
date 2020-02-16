@@ -12,7 +12,7 @@ module.exports = async (semesterId, options) => {
   try {
     const xlsFileName = options.xlsHallgatokFileName || 'hallgatok-minta.xlsx';
 
-    const basePath = options.basePath || 'courses/VM010/xls-data';
+    const basePath = options.basePath || 'courses/VM007/xls-data';
 
     const seedFilePath = join(basePath, xlsFileName);
     const sheetName = 'Hallgatoi csoportbeosztas';
