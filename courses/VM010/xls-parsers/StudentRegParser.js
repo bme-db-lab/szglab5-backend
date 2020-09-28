@@ -81,7 +81,7 @@ module.exports = async (semesterId, options) => {
                 const qExHun = await db.ExerciseTypes.findAll({ where: {
                   CourseId: qCourse.dataValues.id,
                   exerciseId: {
-                    $lte: 34
+                    $lte: 35
                   }
                 } });
                 if (currentExTypeHun < qExHun.length - 1) {
