@@ -64,7 +64,7 @@ module.exports = async (req, res) => {
 
     checkIfExist(deliverable);
     const response = getJSONApiResponseFromRecord(db, 'Deliverables', deliverable, {
-      includeModels: ['DeliverableTemplates', 'Events', 'Users']
+      includeModels: ['DeliverableTemplates', 'Users']
     });
     res.send(response);
   } catch (err) {
