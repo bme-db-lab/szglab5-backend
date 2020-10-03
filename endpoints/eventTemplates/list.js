@@ -5,43 +5,7 @@ const { getDB } = require('../../db/db.js');
 module.exports = async (req, res) => {
   try {
     const db = getDB();
-    const filter = req.query.filter;
 
-    const userInfo = req.userInfo;
-    // console.log(userInfo);
-
-    const { roles } = req.userInfo;
-    const isAdmin = roles.find(role => role === 'ADMIN') !== undefined;
-
-    let demoFilter = {};
-    const eventInclude = [];
-    if (!isAdmin && !(filter && 'asCorrector' in filter)) {
-      demoFilter = {
-        DemonstratorId: userInfo.userId
-      };
-      eventInclude.push({
-        where: demoFilter,
-        model: db.Events,
-        include: [
-          {
-            model: db.StudentRegistrations
-          },
-          {
-            model: db.Users,
-            as: 'Demonstrator'
-          },
-          {
-            model: db.Deliverables
-          },
-          {
-            model: db.EventTemplates
-          },
-          {
-            model: db.ExerciseSheets
-          }
-        ]
-      });
-    }
     const records = await db.EventTemplates.findAll(
       {
         include: [
@@ -56,7 +20,6 @@ module.exports = async (req, res) => {
           {
             model: db.DeliverableTemplates
           },
-          ...eventInclude
         ],
         order: ['seqNumber']
       }
