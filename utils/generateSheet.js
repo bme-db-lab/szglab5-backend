@@ -2,12 +2,12 @@ const xmlbuilder = require('xmlbuilder');
 const config = require('../config/config.js');
 const fs = require('fs');
 const tmp = require('tmp');
+const path = require('path');
 const { promisify } = require('util');
-const { exec } = require('child_process');
+const { exec, execSync } = require('child_process');
 const makeDir = require('make-dir');
 const moment = require('moment');
 const logger = require('../utils/logger.js');
-
 
 function generateHandout(event) {
   const exerciseSheet = event.ExerciseSheet;
@@ -66,6 +66,26 @@ function generateXml(handoutsObj) {
   return node.end({ pretty: true });
 }
 
+function generateHandoutPdf(sheetXml, basename, targetDirectory) {
+  // copy xml file to handout folder in a temp folder
+  const tempFolder = tmp.tmpNameSync();
+  const tempPath = path.join(config.handoutGeneratorRoot, 'handout', tempFolder);
+  makeDir.sync(tempPath);
+  fs.writeFileSync(path.join(tempPath, `${basename}.xml`), sheetXml);
+  // generate pdf
+  execSync(`scons HD=${path.join(tempFolder.substr(1), basename)} PDF=1`, {
+    cwd: config.handoutGeneratorRoot
+  });
+
+  const createdPdfPath = path.join(tempPath, `${basename}.pdf`);
+  // copy pdf to target directory
+  execSync(`cp ${createdPdfPath} ${targetDirectory}`);
+  // remove temp folder from handout generator
+  execSync(`rm -rf ${tempPath}`);
+  // return path
+  return path.join(targetDirectory, `${basename}.pdf`);
+}
+
 async function generateZip(studentGroupId, eventTemplateId, sheetXml) {
   const tmpNamePromisified = promisify(tmp.tmpName);
   const fsWriteFilePromisified = promisify(fs.writeFile);
@@ -89,5 +109,6 @@ module.exports = {
   generateHandout,
   generateXml,
   concatHandouts,
-  generateZip
+  generateZip,
+  generateHandoutPdf
 };

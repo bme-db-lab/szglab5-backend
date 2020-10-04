@@ -408,6 +408,14 @@ yargs // eslint-disable-line no-unused-expressions
       await generateSupplementaryEventsCustom();
     }
   })
+  .command({
+    command: 'generate-handout-cache',
+    aliases: ['ghc'],
+    handler: async () => {
+      const generateSupplementaryEventsCustom = require('./commands/generate-handout-cache.js');
+      await generateSupplementaryEventsCustom();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
