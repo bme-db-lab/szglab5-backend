@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const inquirer = require('inquirer');
-const cliProgress = require('cli-progress');
 
 const { initDB, closeDB } = require('../../db/db.js');
 const sheet = require('../../utils/generateSheet.js');
@@ -14,8 +13,6 @@ const EVENT_TEMPLATES = {
 const CACHE_BASE_PATH = path.join(__dirname, '../../handout-cache');
 
 module.exports = async () => {
-  const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-
   try {
     const db = await initDB();
     const confirmPromptResult = await inquirer.prompt([
@@ -83,11 +80,10 @@ module.exports = async () => {
       ],
     });
 
-    progressBar.start(studentRegs.length, 0);
     let count = 0;
 
     for (const studentReg of studentRegs) {
-      progressBar.update(++count);
+      console.log(`${studentReg.User.neptun} - ${++count}/${studentRegs.length}`);
 
       // Create folder for student
       const studentFolderPath = path.join(CACHE_BASE_PATH, studentReg.User.neptun);
@@ -99,15 +95,14 @@ module.exports = async () => {
         const handoutXml = sheet.generateXml({
           handouts: { handout: handoutDescriptor }
         });
-        const basename = `${studentReg.User.neptun}_${event.ExerciseSheet.ExerciseCategory.type}_${event.ExerciseSheet.ExerciseType.exerciseId}`;
-        sheet.generateHandoutPdf(handoutXml, basename, studentFolderPath);
+        const basename = sheet.getHandoutBasenameFromEvent(event);
+        await sheet.generateHandoutPdf(handoutXml, basename, studentFolderPath);
       }
     }
-    progressBar.stop();
   } catch (err) {
+    console.log(err);
     throw err;
   } finally {
-    progressBar.stop();
     await closeDB();
   }
 };

@@ -78,7 +78,6 @@ const defaultConfig = {
   },
   generatedFilesPath: path.join(__dirname, '../generated'),
   handoutGeneratorRoot: '/home/handout/adatlabor-feladatlap'
-  // handoutGeneratorRoot: '/Users/markfejes/projects/adatlabor-feladatlap'
 };
 
 let specConfig = {};

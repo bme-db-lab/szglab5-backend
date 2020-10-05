@@ -4,10 +4,14 @@ const fs = require('fs');
 const tmp = require('tmp');
 const path = require('path');
 const { promisify } = require('util');
-const { exec, execSync } = require('child_process');
+const { exec } = require('child_process');
 const makeDir = require('make-dir');
 const moment = require('moment');
 const logger = require('../utils/logger.js');
+
+function getHandoutBasenameFromEvent(event) {
+  return `${event.StudentRegistration.User.neptun}_${event.ExerciseSheet.ExerciseCategory.type}_${event.ExerciseSheet.ExerciseType.exerciseId}`;
+}
 
 function generateHandout(event) {
   const exerciseSheet = event.ExerciseSheet;
@@ -66,24 +70,43 @@ function generateXml(handoutsObj) {
   return node.end({ pretty: true });
 }
 
-function generateHandoutPdf(sheetXml, basename, targetDirectory) {
+async function generateHandoutPdf(sheetXml, basename, targetDirectory) {
   // copy xml file to handout folder in a temp folder
   const tempFolder = tmp.tmpNameSync();
   const tempPath = path.join(config.handoutGeneratorRoot, 'handout', tempFolder);
-  makeDir.sync(tempPath);
-  fs.writeFileSync(path.join(tempPath, `${basename}.xml`), sheetXml);
+  await makeDir(tempPath);
+  await promisify(fs.writeFile)(path.join(tempPath, `${basename}.xml`), sheetXml);
   // generate pdf
-  execSync(`scons HD=${path.join(tempFolder.substr(1), basename)} PDF=1`, {
+  const scriptOutput = await promisify(exec)(`scons HD=${path.join(tempFolder.substr(1), basename)} PDF=1`, {
     cwd: config.handoutGeneratorRoot
   });
+  logger.debug('genhandout: ', scriptOutput.stdout, '\n', scriptOutput.stderr);
 
   const createdPdfPath = path.join(tempPath, `${basename}.pdf`);
   // copy pdf to target directory
-  execSync(`cp ${createdPdfPath} ${targetDirectory}`);
+  const cpOutput = await promisify(exec)(`cp ${createdPdfPath} ${targetDirectory}`);
+  if (cpOutput.stdout || cpOutput.stderr) {
+    logger.debug('cp: ', cpOutput.stdout, '\n', cpOutput.stderr);
+  }
+
   // remove temp folder from handout generator
-  execSync(`rm -rf ${tempPath}`);
+  const rmOutput = await promisify(exec)(`rm -rf ${tempPath}`);
+  if (rmOutput.stdout || rmOutput.stderr) {
+    logger.debug('rm: ', rmOutput.stdout, '\n', rmOutput.stderr);
+  }
+
   // return path
   return path.join(targetDirectory, `${basename}.pdf`);
+}
+
+function sheetAvailable(event) {
+  const now = moment();
+
+  if (now.isSameOrAfter(moment(event.date))) {
+    return getHandoutBasenameFromEvent(event);
+  } else {
+    return null;
+  }
 }
 
 async function generateZip(studentGroupId, eventTemplateId, sheetXml) {
@@ -110,5 +133,7 @@ module.exports = {
   generateXml,
   concatHandouts,
   generateZip,
-  generateHandoutPdf
+  generateHandoutPdf,
+  getHandoutBasenameFromEvent,
+  sheetAvailable
 };

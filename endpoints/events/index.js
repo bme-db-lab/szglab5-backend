@@ -8,6 +8,7 @@ const getStudent = require('./getStudent.js');
 const listDeliverables = require('./listDeliverables.js');
 const listEvents = require('./list.js');
 const listStudents = require('./listStudents.js');
+const getHandout = require('./get-handout.js');
 
 const auth = require('../../middlewares/auth.js');
 const epLogger = require('../../middlewares/ep-logger');
@@ -26,4 +27,5 @@ module.exports = (app) => {
   app.get('/event-students', listStudents);
   app.patch('/events/:id', updateEvent);
   app.post('/events', addEvent);
+  app.get('/events/:id/get-handout/:filename', getHandout);
 };

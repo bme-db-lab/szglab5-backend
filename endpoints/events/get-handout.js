@@ -1,8 +1,13 @@
 const { genErrorObj } = require('../../utils/utils.js');
 const { getJSONApiResponseFromRecord, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
-const { orderBy } = require('lodash');
-const { getHandoutBasenameFromEvent } = require('../../utils/generateSheet');
+const { sheetAvailable, getHandoutBasenameFromEvent, generateHandout, generateXml, generateHandoutPdf } = require('../../utils/generateSheet');
+const { access } = require('fs');
+const path = require('path');
+const logger = require('../../utils/logger.js');
+const { promisify } = require('util');
+
+const CACHE_BASE_PATH = path.join(__dirname, '../../handout-cache');
 
 module.exports = async (req, res) => {
   try {
@@ -79,17 +84,35 @@ module.exports = async (req, res) => {
     );
     checkIfExist(event);
 
-    const sortedDeliverables = orderBy(event.dataValues.Deliverables, ['DeliverableTemplate.name'], ['asc']);
-    event.dataValues.Deliverables = sortedDeliverables;
+    // validation - time
+    if (!sheetAvailable(event)) {
+      throw new Error('Sheet is not available yet');
+    }
 
-    const response = getJSONApiResponseFromRecord(db, 'Events', event, {
-      includeModels: ['Users', 'ExerciseSheets', 'Deliverables', 'EventTemplates', 'DeliverableTemplates', 'ExerciseCategories']
-    });
-
-    const handoutBaseName = getHandoutBasenameFromEvent(event);
-    // add url for download handout
-    response.data.attributes.handoutUrl = `/events/${event.id}/get-handout/${handoutBaseName}.pdf`;
-    res.send(response);
+    // check if file exists in handout cache
+    const basename = getHandoutBasenameFromEvent(event);
+    const neptun = event.StudentRegistration.User.neptun;
+    const filePath = path.join(CACHE_BASE_PATH, neptun, `${basename}.pdf`);
+    try {
+      await promisify(access)(filePath);
+    } catch (error) {
+      logger.info(`File not exists in cache: "${filePath}" generating on the fly`);
+      try {
+        const handoutDescriptor = generateHandout(event);
+        const handoutXml = generateXml({
+          handouts: { handout: handoutDescriptor }
+        });
+        const studentFolderPath = path.join(CACHE_BASE_PATH, neptun);
+        const generatedFile = await generateHandoutPdf(handoutXml, basename, studentFolderPath);
+  
+        res.sendFile(generatedFile);
+        return;
+      } catch (generationError) {
+        logger.info(generationError);
+        throw new Error('Sheet generation failed');
+      }
+    }
+    res.sendFile(filePath);
   } catch (err) {
     // console.log(err);
     if (err.notFound) {
