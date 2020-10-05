@@ -112,6 +112,7 @@ module.exports = async (req, res) => {
         throw new Error('Sheet generation failed');
       }
     }
+    // sending file from cache
     res.sendFile(filePath);
   } catch (err) {
     // console.log(err);
