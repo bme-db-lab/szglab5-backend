@@ -2,7 +2,7 @@ const { genErrorObj } = require('../../utils/utils.js');
 const { getJSONApiResponseFromRecord, checkIfExist } = require('../../utils/jsonapi.js');
 const { getDB } = require('../../db/db.js');
 const { orderBy } = require('lodash');
-const { getHandoutBasenameFromEvent } = require('../../utils/generateSheet');
+const { sheetAvailable } = require('../../utils/generateSheet');
 
 module.exports = async (req, res) => {
   try {
@@ -86,9 +86,13 @@ module.exports = async (req, res) => {
       includeModels: ['Users', 'ExerciseSheets', 'Deliverables', 'EventTemplates', 'DeliverableTemplates', 'ExerciseCategories']
     });
 
-    const handoutBaseName = getHandoutBasenameFromEvent(event);
-    // add url for download handout
-    response.data.attributes.handoutUrl = `/events/${event.id}/get-handout/${handoutBaseName}.pdf`;
+    const handoutBaseName = sheetAvailable(event);
+    if (handoutBaseName) {
+      // add url for download handout
+      response.data.attributes.handoutUrl = `/events/${event.id}/get-handout/${handoutBaseName}.pdf`;
+    } else {
+      response.data.attributes.handoutUrl = null;
+    }
     res.send(response);
   } catch (err) {
     // console.log(err);
