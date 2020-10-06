@@ -8,16 +8,16 @@ module.exports = async (req, res) => {
     const reqIdNum = parseInt(reqId, 10);
     const { roles } = req.userInfo;
 
-    // only ADMIN DEMONSTRATOR CORRECTOR
-    if (!roles.includes('ADMIN') && !roles.includes('DEMONSTRATOR') && !roles.includes('CORRECTOR')) {
-      res.status(403).send(genErrorObj('Unathorized'));
-      return;
+    let include = []
+    // only ADMIN DEMONSTRATOR CORRECTOR should get included data
+    if (roles.includes('ADMIN') || roles.includes('DEMONSTRATOR') || !roles.includes('CORRECTOR')) {
+      include.push({ all: true })
     }
 
     const db = getDB();
     const record = await db.ExerciseTypes.findById(
       reqIdNum,
-      { include: [{ all: true }] }
+      { include: include }
     );
     checkIfExist(record);
     const response = getJSONApiResponseFromRecord(db, 'ExerciseTypes', record, {
