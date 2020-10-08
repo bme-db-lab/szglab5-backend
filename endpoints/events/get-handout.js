@@ -6,6 +6,7 @@ const { access } = require('fs');
 const path = require('path');
 const logger = require('../../utils/logger.js');
 const { promisify } = require('util');
+const makeDir = require('make-dir');
 
 const CACHE_BASE_PATH = path.join(__dirname, '../../handout-cache');
 
@@ -103,6 +104,8 @@ module.exports = async (req, res) => {
           handouts: { handout: handoutDescriptor }
         });
         const studentFolderPath = path.join(CACHE_BASE_PATH, neptun);
+        await makeDir(studentFolderPath);
+
         const generatedFile = await generateHandoutPdf(handoutXml, basename, studentFolderPath);
   
         res.sendFile(generatedFile);
