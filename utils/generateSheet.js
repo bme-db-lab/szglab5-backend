@@ -80,7 +80,7 @@ async function generateZip(studentGroupId, eventTemplateId, sheetXml) {
 
   const zipBaseName = xmlBaseName.replace(/\.xml/, '.zip');
   const genFilePath = (genFileDir + zipBaseName).replace(/\/\//, '/');
-  const scriptOutput = await pexec(`sudo /usr/local/bin/genhandout.sh ${xmlFileName} ${genFileDir}`);
+  const scriptOutput = await pexec(`/usr/local/bin/genhandout.sh ${xmlFileName} ${genFileDir}`);
   logger.debug('genhandout: ', scriptOutput.stdout, '\n', scriptOutput.stderr);
   return genFilePath;
 }
