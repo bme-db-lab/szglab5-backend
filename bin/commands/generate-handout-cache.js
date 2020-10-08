@@ -15,6 +15,14 @@ const CACHE_BASE_PATH = path.join(__dirname, '../../handout-cache');
 module.exports = async () => {
   try {
     const db = await initDB();
+
+    const exerciseCategories = await db.ExerciseCategories.findAll();
+
+    const exCatChoices = exerciseCategories.map((excat => ({
+      name: excat.type,
+      value: excat.id
+    })));
+
     const confirmPromptResult = await inquirer.prompt([
       {
         type: 'list',
@@ -27,6 +35,7 @@ module.exports = async () => {
             name: 'Supplementary',
             value: EVENT_TEMPLATES.SUPPLEMENTARY,
           },
+          ...exCatChoices
         ],
         name: 'events',
         message: 'Choose events',
@@ -38,6 +47,10 @@ module.exports = async () => {
         ? { attempt: 2 }
         : {};
 
+    const excatCondition = Number.isInteger(confirmPromptResult.events)
+      ? { id: confirmPromptResult.events }
+      : {};
+
     const studentRegs = await db.StudentRegistrations.findAll({
       include: [
         {
@@ -45,10 +58,12 @@ module.exports = async () => {
           model: db.Events,
           include: [
             {
+              where: {},
               model: db.ExerciseSheets,
               include: [
                 {
-                  model: db.ExerciseCategories
+                  model: db.ExerciseCategories,
+                  where: excatCondition
                 },
                 {
                   model: db.ExerciseTypes
@@ -90,7 +105,10 @@ module.exports = async () => {
       if (!fs.existsSync(studentFolderPath)) {
         fs.mkdirSync(studentFolderPath);
       }
+
       for (const event of studentReg.Events) {
+        console.log(`Exercise category: ${event.ExerciseSheet.ExerciseCategory.type}`);
+
         const handoutDescriptor = sheet.generateHandout(event);
         const handoutXml = sheet.generateXml({
           handouts: { handout: handoutDescriptor }
