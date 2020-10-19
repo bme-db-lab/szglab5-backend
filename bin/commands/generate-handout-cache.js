@@ -13,12 +13,15 @@ const EVENT_TEMPLATES = {
 
 const CACHE_BASE_PATH = path.join(__dirname, '../../handout-cache');
 
-module.exports = async () => {
+module.exports = async (argv) => {
   try {
     const db = await initDB();
 
-    const exerciseCategories = await db.ExerciseCategories.findAll();
+    const options = {
+      generatePastEvents: argv.generatePastEvents,
+    };
 
+    const exerciseCategories = await db.ExerciseCategories.findAll();
     const exCatChoices = exerciseCategories.map((excat => ({
       name: excat.type,
       value: excat.id
@@ -109,10 +112,9 @@ module.exports = async () => {
 
       for (const event of studentReg.Events) {
         console.log(`Exercise category: ${event.ExerciseSheet.ExerciseCategory.type}`);
-        
-        
+
         const now = moment();
-        if (now.isSameOrAfter(moment(event.date))) {
+        if (now.isSameOrAfter(moment(event.date)) && !options.generatePastEvents) {
           console.log(`Event already passed: ${event.date}`);
           continue;
         }
