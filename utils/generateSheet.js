@@ -11,6 +11,16 @@ const lockfile = require('proper-lockfile');
 const logger = require('../utils/logger.js');
 const config = require('../config/config.js');
 
+const lockOptions = {
+  stale: 30 * 1000,
+  retries: {
+    retries: 60,
+    factor: 1,
+    minTimeout: 1 * 1000,
+    maxTimeout: 60 * 1000,
+  }
+};
+
 function getHandoutBasenameFromEvent(event) {
   return `${event.StudentRegistration.User.neptun}_${event.ExerciseSheet.ExerciseCategory.type}_${event.ExerciseSheet.ExerciseType.exerciseId}`;
 }
@@ -74,15 +84,7 @@ function generateXml(handoutsObj) {
 
 async function generateHandoutPdf(sheetXml, basename, targetDirectory) {
   console.log('Try to get lockfile...');
-  const release = await lockfile.lock(path.join(__dirname, 'handout-generate.lock'), {
-    stale: 30 * 1000,
-    retries: {
-      retries: 60,
-      factor: 1,
-      minTimeout: 1 * 1000,
-      maxTimeout: 60 * 1000,
-    }
-  });
+  const release = await lockfile.lock(path.join(__dirname, 'handout-generate.lock'), lockOptions);
   console.log('Locking the lock file');
 
   // copy xml file to handout folder in a temp folder
@@ -126,6 +128,10 @@ function sheetAvailable(event) {
 }
 
 async function generateZip(studentGroupId, eventTemplateId, sheetXml) {
+  console.log('Try to get lockfile...');
+  const release = await lockfile.lock(path.join(__dirname, 'handout-generate.lock'), lockOptions);
+  console.log('Locking the lock file');
+
   const tmpNamePromisified = promisify(tmp.tmpName);
   const fsWriteFilePromisified = promisify(fs.writeFile);
   const xmlFileName = await tmpNamePromisified({ prefix: `laboradmin-handouts-${studentGroupId}-${eventTemplateId}`, postfix: '.xml' });
@@ -141,6 +147,8 @@ async function generateZip(studentGroupId, eventTemplateId, sheetXml) {
   const genFilePath = (genFileDir + zipBaseName).replace(/\/\//, '/');
   const scriptOutput = await pexec(`/usr/local/bin/genhandout.sh ${xmlFileName} ${genFileDir}`);
   logger.debug('genhandout: ', scriptOutput.stdout, '\n', scriptOutput.stderr);
+  
+  await release();
   return genFilePath;
 }
 
