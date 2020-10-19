@@ -125,6 +125,8 @@ module.exports = async (argv) => {
         });
         const basename = sheet.getHandoutBasenameFromEvent(event);
         await sheet.generateHandoutPdf(handoutXml, basename, studentFolderPath);
+        // wait some time to give chance locking for other processes
+        await new Promise(resolve => setTimeout(resolve, 5000));
       }
     }
   } catch (err) {
