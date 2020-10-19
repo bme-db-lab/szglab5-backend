@@ -1,5 +1,4 @@
 const xmlbuilder = require('xmlbuilder');
-const config = require('../config/config.js');
 const fs = require('fs');
 const tmp = require('tmp');
 const path = require('path');
@@ -7,7 +6,10 @@ const { promisify } = require('util');
 const { exec } = require('child_process');
 const makeDir = require('make-dir');
 const moment = require('moment');
+const lockfile = require('proper-lockfile');
+
 const logger = require('../utils/logger.js');
+const config = require('../config/config.js');
 
 function getHandoutBasenameFromEvent(event) {
   return `${event.StudentRegistration.User.neptun}_${event.ExerciseSheet.ExerciseCategory.type}_${event.ExerciseSheet.ExerciseType.exerciseId}`;
@@ -71,6 +73,19 @@ function generateXml(handoutsObj) {
 }
 
 async function generateHandoutPdf(sheetXml, basename, targetDirectory) {
+  console.log('Try to get lockfile...');
+  const release = await lockfile.lock(path.join(__dirname, 'handout-generate.lock'), {
+    stale: 30 * 1000,
+    retries: {
+      retries: 10,
+      factor: 1,
+      minTimeout: 1 * 1000,
+      maxTimeout: 5 * 1000,
+      randomize: true,
+    }
+  });
+  console.log('Locking the lock file');
+
   // copy xml file to handout folder in a temp folder
   const tempFolder = tmp.tmpNameSync();
   const tempPath = path.join(config.handoutGeneratorRoot, 'handout', tempFolder);
@@ -94,6 +109,8 @@ async function generateHandoutPdf(sheetXml, basename, targetDirectory) {
   if (rmOutput.stdout || rmOutput.stderr) {
     logger.debug('rm: ', rmOutput.stdout, '\n', rmOutput.stderr);
   }
+
+  await release();
 
   // return path
   return path.join(targetDirectory, `${basename}.pdf`);
