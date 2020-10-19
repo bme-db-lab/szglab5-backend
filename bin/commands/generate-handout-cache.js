@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const inquirer = require('inquirer');
+const moment = require('moment');
 
 const { initDB, closeDB } = require('../../db/db.js');
 const sheet = require('../../utils/generateSheet.js');
@@ -108,6 +109,13 @@ module.exports = async () => {
 
       for (const event of studentReg.Events) {
         console.log(`Exercise category: ${event.ExerciseSheet.ExerciseCategory.type}`);
+        
+        
+        const now = moment();
+        if (now.isSameOrAfter(moment(event.date))) {
+          console.log(`Event already passed: ${event.date}`);
+          continue;
+        }
 
         const handoutDescriptor = sheet.generateHandout(event);
         const handoutXml = sheet.generateXml({
