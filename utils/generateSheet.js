@@ -77,11 +77,10 @@ async function generateHandoutPdf(sheetXml, basename, targetDirectory) {
   const release = await lockfile.lock(path.join(__dirname, 'handout-generate.lock'), {
     stale: 30 * 1000,
     retries: {
-      retries: 10,
+      retries: 60,
       factor: 1,
       minTimeout: 1 * 1000,
       maxTimeout: 60 * 1000,
-      randomize: true,
     }
   });
   console.log('Locking the lock file');
