@@ -80,7 +80,7 @@ async function generateHandoutPdf(sheetXml, basename, targetDirectory) {
       retries: 10,
       factor: 1,
       minTimeout: 1 * 1000,
-      maxTimeout: 5 * 1000,
+      maxTimeout: 60 * 1000,
       randomize: true,
     }
   });
