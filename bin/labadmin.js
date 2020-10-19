@@ -411,9 +411,13 @@ yargs // eslint-disable-line no-unused-expressions
   .command({
     command: 'generate-handout-cache',
     aliases: ['ghc'],
-    handler: async () => {
+    builder: () => yargs
+    .option('generate-past-events', {
+      default: false
+    }),
+    handler: async (argv) => {
       const generateSupplementaryEventsCustom = require('./commands/generate-handout-cache.js');
-      await generateSupplementaryEventsCustom();
+      await generateSupplementaryEventsCustom(argv);
     }
   })
   .option('env', {
