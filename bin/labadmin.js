@@ -420,6 +420,14 @@ yargs // eslint-disable-line no-unused-expressions
       await generateSupplementaryEventsCustom(argv);
     }
   })
+  .command({
+    command: 'change-group-demonstrator',
+    aliases: ['cgd'],
+    handler: async () => {
+      const changeGroupDemonstrator = require('./commands/change-group-demonstrator.js');
+      await changeGroupDemonstrator();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
