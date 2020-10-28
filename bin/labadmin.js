@@ -428,6 +428,14 @@ yargs // eslint-disable-line no-unused-expressions
       await changeGroupDemonstrator();
     }
   })
+  .command({
+    command: 'substitute-demonstrator',
+    aliases: ['sd'],
+    handler: async () => {
+      const substituteDemonstrator = require('./commands/substitute-demonstrator.js');
+      await substituteDemonstrator();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
