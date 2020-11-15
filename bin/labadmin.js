@@ -436,6 +436,14 @@ yargs // eslint-disable-line no-unused-expressions
       await substituteDemonstrator();
     }
   })
+  .command({
+    command: 'generate-zh-events',
+    aliases: ['gzhe'],
+    handler: async () => {
+      const generateZHEvents = require('./commands/generate-zh-events.js');
+      await generateZHEvents();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
