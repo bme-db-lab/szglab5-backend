@@ -104,7 +104,7 @@ module.exports = async () => {
     let sheetCounter = 0;
     for (const studentReg of studentRegs) {
       // skip english students
-      if (studentReg.StudentGroup && (studentReg.StudentGroup.name === 'c16-a1' || studentReg.StudentGroup.name === 'c16-a2')) {
+      if (studentReg.StudentGroup && (studentReg.StudentGroup.name === 'c16-1a' || studentReg.StudentGroup.name === 'c16-2a')) {
         continue;
       }
 
