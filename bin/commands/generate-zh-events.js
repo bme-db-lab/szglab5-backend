@@ -94,15 +94,7 @@ module.exports = async () => {
           }
         },
         {
-          // exclude english student group
-          where: {
-            name: {
-              $and: [
-                { $ne: 'c16-a1' },
-               { $ne: 'c16-a2' },
-              ]
-            }
-          },
+          where: {},
           model: db.StudentGroups,
           required: false
         }
@@ -111,6 +103,11 @@ module.exports = async () => {
 
     let sheetCounter = 0;
     for (const studentReg of studentRegs) {
+      // skip english students
+      if (studentReg.StudentGroup && (studentReg.StudentGroup.name === 'c16-a1' || studentReg.StudentGroup.name === 'c16-a2')) {
+        continue;
+      }
+
       console.log(`Creating event: ${studentReg.User.neptun} - sheetIndex: ${sheetCounter}`);
       // Create Event
       const event = await db.Events.create({
