@@ -63,15 +63,18 @@ module.exports = async () => {
     // Create EventTemplate
     const zhEventTemplate = await db.EventTemplates.create({
       type: zhConfig.eventTemplate.type,
+      seqNumber: zhConfig.eventTemplate.seqNumber,
       ExerciseCategoryId: zhExCat.id
     });
     // Create DeliverableTemplates
     const deliverableTemplates = [];
     for (let i = 0; i < zhConfig.deliverableTemplates.count; i++) {
+      const baseName = `${zhConfig.deliverableTemplates.baseName}_${i + 1}`;
+
       const deliverableTemplate = await db.DeliverableTemplates.create({
-        description: zhConfig.deliverableTemplates.description,
         type: 'FILE',
-        name: `${zhConfig.deliverableTemplates.baseName}_${i + 1}`,
+        description: baseName,
+        name: baseName,
         AKEP: false,
         EventTemplateId: zhEventTemplate.id
       });
