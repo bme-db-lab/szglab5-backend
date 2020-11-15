@@ -444,6 +444,14 @@ yargs // eslint-disable-line no-unused-expressions
       await generateZHEvents();
     }
   })
+  .command({
+    command: 'export-deliverable-paths',
+    aliases: ['edp'],
+    handler: async () => {
+      const exportDeliverablePaths = require('./commands/export-deliverable-paths.js');
+      await exportDeliverablePaths();
+    }
+  })
   .option('env', {
     desc: 'Specify run environment',
     default: 'dev'
