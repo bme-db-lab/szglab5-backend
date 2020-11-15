@@ -104,7 +104,8 @@ module.exports = async () => {
               ]
             }
           },
-          model: db.StudentGroups
+          model: db.StudentGroups,
+          required: false
         }
       ]
     });
