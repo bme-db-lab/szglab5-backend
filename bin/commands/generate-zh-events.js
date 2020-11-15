@@ -1,14 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 const inquirer = require('inquirer');
-const moment = require('moment');
 
 const { initDB, closeDB } = require('../../db/db.js');
 
 module.exports = async () => {
   try {
     const db = await initDB();
-   
+  
     const jsonFiles = fs.readdirSync(path.join(__dirname, 'data'));
     const jsonFileChoices =
       jsonFiles
