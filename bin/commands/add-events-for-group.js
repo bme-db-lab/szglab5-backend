@@ -4,7 +4,7 @@ const path = require('path');
 const inquirer = require('inquirer');
 const moment = require('moment');
 
-module.exports = async () => {
+module.exports = async (argv) => {
   try {
     const db = await initDB();
 
@@ -44,21 +44,26 @@ module.exports = async () => {
     const jsonFile = fs.readFileSync(path.join(__dirname, 'data', prompt.path));
     const appointments = JSON.parse(jsonFile);
     console.log(appointments);
+
+    const createdAppointments = [];
     // Create Appointments
     for (let i = 0; i < appointments.length; i++) {
-      await db.Appointments.create({
+      const createdAppointment = await db.Appointments.create({
         location: appointments[i].location,
         date: new Date(appointments[i].date),
         EventTemplateId: appointments[i].eventTemplateId,
         StudentGroupId: prompt.studentGroupId,
       });
+      createdAppointments.push(createdAppointment);
     }
     // Create Events
     const appointmentsDb = await db.Appointments.findAll({ where: { StudentGroupId: prompt.studentGroupId } });
     const studentRegs = await db.StudentRegistrations.findAll({ where: { StudentGroupId: prompt.studentGroupId } });
 
+    const appointmentsToUse = argv.onlyNew ? createdAppointments : appointmentsDb;
+    
     for (const studentReg of studentRegs) {
-      for (const appointment of appointmentsDb) {
+      for (const appointment of appointmentsToUse) {
         // const exerciseSheet = await db.ExerciseSheets.findOne({ where: { ExerciseCategoryId: appointment.dataValues.ExerciseCategoryId, ExerciseTypeId: sr.dataValues.ExerciseTypeId } });
         const eventTemplate = await appointment.getEventTemplate();
         const studentGroup = await db.StudentGroups.findOne({ where: { id: studentReg.dataValues.StudentGroupId } });

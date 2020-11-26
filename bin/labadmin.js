@@ -387,9 +387,13 @@ yargs // eslint-disable-line no-unused-expressions
   .command({
     command: 'add-events-for-group',
     aliases: ['aefg'],
-    handler: async () => {
+    builder: () => yargs
+    .option('only-new', {
+      default: false
+    }),
+    handler: async (argv) => {
       const addEventsForGroup = require('./commands/add-events-for-group');
-      await addEventsForGroup();
+      await addEventsForGroup(argv);
     }
   })
   .command({
