@@ -101,10 +101,15 @@ module.exports = async () => {
       ]
     });
 
+    const { onlyGivenStudents, students } = zhConfig;
     let sheetCounter = 0;
     for (const studentReg of studentRegs) {
-      // skip english students
-      if (studentReg.StudentGroup && (studentReg.StudentGroup.name === 'c16-1a' || studentReg.StudentGroup.name === 'c16-2a')) {
+      if (
+        // skip english students
+        (studentReg.StudentGroup && (studentReg.StudentGroup.name === 'c16-1a' || studentReg.StudentGroup.name === 'c16-2a')) ||
+        // skip students in potzh
+        (onlyGivenStudents && !(students.includes(studentReg.User.neptun)))
+        ) {
         continue;
       }
 
