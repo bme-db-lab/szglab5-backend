@@ -4,10 +4,13 @@ const inquirer = require('inquirer');
 
 const { initDB, closeDB } = require('../../db/db.js');
 
+function isEnglishGroup(studentReg) {
+  return studentReg.StudentGroup && (studentReg.StudentGroup.name === 'c16-1a' || studentReg.StudentGroup.name === 'c16-2a');
+}
+
 module.exports = async () => {
   try {
     const db = await initDB();
-  
     const jsonFiles = fs.readdirSync(path.join(__dirname, 'data'));
     const jsonFileChoices =
       jsonFiles
@@ -25,10 +28,11 @@ module.exports = async () => {
         name: 'path'
       },
     ]);
-
     // Read config JSON
     const zhConfig = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', prompt.path)));
     console.log(zhConfig);
+    
+    const { onlyGivenStudents, students } = zhConfig;
 
     const zhDemonstrator = await db.Users.findOne({
       where: {
@@ -101,12 +105,20 @@ module.exports = async () => {
       ]
     });
 
-    const { onlyGivenStudents, students } = zhConfig;
+    // Potzh check if every student exists in DB
+    for (const neptun of zhConfig.students) {
+      const studentReg = studentRegs.find(student => student.User.neptun === neptun);
+      console.log(`${neptun} OK: ${studentReg.User.neptun}}`);
+      if (!studentReg && isEnglishGroup(studentReg)) {
+        throw new Error(`Student not found in db: ${studentReg.User.neptun}`);
+      }
+    }
+
     let sheetCounter = 0;
     for (const studentReg of studentRegs) {
       if (
         // skip english students
-        (studentReg.StudentGroup && (studentReg.StudentGroup.name === 'c16-1a' || studentReg.StudentGroup.name === 'c16-2a')) ||
+        (isEnglishGroup(studentReg)) ||
         // skip students in potzh
         (onlyGivenStudents && !(students.includes(studentReg.User.neptun)))
         ) {
