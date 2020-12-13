@@ -36,9 +36,16 @@ module.exports = async () => {
               model: db.Deliverables,
               include: {
                 model: db.DeliverableTemplates,
-                attributes: ['id', 'description'],
+                attributes: ['id', 'description', 'type'],
                 where: {
-                  type: 'FILE'
+                  $or: [
+                    {
+                      type: 'FILE'
+                    },
+                    {
+                      type: 'BEUGRO'
+                    }
+                  ]
                 }
               }
             }]
@@ -80,16 +87,22 @@ module.exports = async () => {
         const eventFound = studentReg.Events.find(event => exCategory.id === event.ExerciseSheet.ExerciseCategory.id && event.attempt === null);
         if (eventFound) {
           grade = eventFound.grade;
-        }
-        statObj[exCategory.type] = grade;
-        statObj[`${exCategory.type}_imsc_labor`] = eventFound.imsc;
-        let deliverablesIMSC = null;
-        for (const deliverable of eventFound.Deliverables) {
-          if (deliverable.imsc) {
-            deliverablesIMSC += deliverable.imsc;
+
+          statObj[exCategory.type] = grade;
+          statObj[`${exCategory.type}_imsc_labor`] = eventFound.imsc;
+          let deliverablesIMSC = null;
+          for (const deliverable of eventFound.Deliverables) {
+            if (deliverable.imsc) {
+              deliverablesIMSC += deliverable.imsc;
+            }
+          }
+          statObj[`${exCategory.type}_imsc_beadando`] = deliverablesIMSC;
+
+          const entryTestDeliverable = eventFound.Deliverables.find(deliverable => deliverable.DeliverableTemplate.type === 'BEUGRO');
+          if (entryTestDeliverable) {
+            statObj[`${exCategory.type}_beugro`] = entryTestDeliverable.grade;
           }
         }
-        statObj[`${exCategory.type}_imsc_beadando`] = deliverablesIMSC;
       });
 
       const supplEvent = studentReg.Events.find(event => event.attempt === 2);
@@ -122,7 +135,7 @@ module.exports = async () => {
       return statObj;
     });
 
-    const fields = flatten(['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => [exCat.type, `${exCat.type}_imsc_labor`, `${exCat.type}_imsc_beadando`]), 'Pot', 'Pot_imsc_labor', 'Pot_imsc_beadando']);
+    const fields = flatten(['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => [exCat.type, `${exCat.type}_imsc_labor`, `${exCat.type}_imsc_beadando`, `${exCat.type}_beugro`]), 'Pot', 'Pot_imsc_labor', 'Pot_imsc_beadando']);
     const result = json2csv({ data: studentRegData, fields });
     const pathToWrite = path.join(__dirname, `semester_results_${moment().format('YYYY_MM_DD_HH-mm')}.csv`);
     fs.writeFileSync(pathToWrite, result);
