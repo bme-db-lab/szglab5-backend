@@ -68,7 +68,13 @@ module.exports = async () => {
                   model: db.ExerciseTypes
                 }
               ]
-            }
+            },
+            {
+              model: db.EventTemplates,
+              where: {
+                type: 'Labor',
+              },
+            },
           ]
         },
         {
@@ -86,9 +92,8 @@ module.exports = async () => {
           where: {
             name: {
               $and: [
-                { $ne: 'c16-a1' },
-               { $ne: 'c16-a2' },
-               { $ne: 'c16-a3' },
+                { $ne: 'c16-1a' },
+               { $ne: 'c16-2a' },
               ]
             }
           },
@@ -103,9 +108,9 @@ module.exports = async () => {
         const eventOk = event.grade >= 2;
         const deliverableOk = event.Deliverables.every(deliverable => deliverable.uploaded && deliverable.grade >= 2);
 
-        return eventOk || (deliverableOk && event.grade === null);
+        return eventOk || (deliverableOk && event.grade === null) || moment(event.date).isBetween(moment('2020-11-11T00:00:00.000Z'), moment('2020-11-13T23:59:00.000Z'));
       });
-      return okEvents.length === 4;
+      return okEvents.length === studentRegs.Events.length - 1;
     });
 
     const capacityNeeded = studentRegsWithSupplementary.length;

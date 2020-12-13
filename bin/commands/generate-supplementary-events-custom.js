@@ -95,7 +95,7 @@ module.exports = async () => {
       for (const deliverableTemplate of deliverableTemplates) {
         console.log(` DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`);
         const eventDate = newEvent.date;
-        const deadline = moment(eventDate).add(2, 'd');
+        const deadline = moment(eventDate).add(1, 'd');
 
         await db.Deliverables.create({
           deadline,

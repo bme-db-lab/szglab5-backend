@@ -36,7 +36,7 @@ module.exports = async () => {
               model: db.Deliverables,
               include: {
                 model: db.DeliverableTemplates,
-                attributes: ['id', 'description', 'type'],
+                attributes: ['id', 'description', 'type', 'name'],
                 where: {
                   $or: [
                     {
@@ -48,7 +48,14 @@ module.exports = async () => {
                   ]
                 }
               }
-            }]
+            },
+            {
+              model: db.EventTemplates,
+              where: {
+                type: 'Labor',
+              },
+            },
+          ]
         },
         {
           model: db.ExerciseTypes
@@ -98,6 +105,11 @@ module.exports = async () => {
           }
           statObj[`${exCategory.type}_imsc_beadando`] = deliverablesIMSC;
 
+          const fileDeliverables = eventFound.Deliverables.filter(deliverable => deliverable.DeliverableTemplate.type === 'FILE');
+          for (const deliverable of fileDeliverables) {
+            statObj[`${exCategory.type}_${deliverable.DeliverableTemplate.description.replace(' ', '')}_beadando`] = deliverable.grade;
+          }
+
           const entryTestDeliverable = eventFound.Deliverables.find(deliverable => deliverable.DeliverableTemplate.type === 'BEUGRO');
           if (entryTestDeliverable) {
             statObj[`${exCategory.type}_beugro`] = entryTestDeliverable.grade;
@@ -135,7 +147,11 @@ module.exports = async () => {
       return statObj;
     });
 
-    const fields = flatten(['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => [exCat.type, `${exCat.type}_imsc_labor`, `${exCat.type}_imsc_beadando`, `${exCat.type}_beugro`]), 'Pot', 'Pot_imsc_labor', 'Pot_imsc_beadando']);
+
+    const fields = Object.keys(studentRegData[0]);
+    console.log(Object.keys(studentRegData[0]));
+
+    // const fields = flatten(['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => [exCat.type, `${exCat.type}_imsc_labor`, `${exCat.type}_imsc_beadando`, `${exCat.type}_beugro`]), 'Pot', 'Pot_imsc_labor', 'Pot_imsc_beadando']);
     const result = json2csv({ data: studentRegData, fields });
     const pathToWrite = path.join(__dirname, `semester_results_${moment().format('YYYY_MM_DD_HH-mm')}.csv`);
     fs.writeFileSync(pathToWrite, result);

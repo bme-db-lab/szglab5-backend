@@ -1,3 +1,8 @@
+const json2csv = require('json2csv');
+const path = require('path');
+const fs = require('fs');
+const moment = require('moment');
+
 const { initDB, closeDB } = require('../../db/db.js');
 
 module.exports = async (argv) => {
@@ -5,9 +10,14 @@ module.exports = async (argv) => {
     const db = await initDB();
 
     const exerciseCategories = await db.ExerciseCategories.findAll({
-      attributes: ['id', 'type']
+      attributes: ['id', 'type'],
+      where: {
+        type: {
+          $and: [{ $ne: 'zh2020osz' }, { $ne: 'pzh2020osz' }],
+        },
+      },
     });
-    const exerciseCategoryNames = exerciseCategories.map(exCat => exCat.type);
+    const exerciseCategoryNames = exerciseCategories.map((exCat) => exCat.type);
 
     const studentRegs = await db.StudentRegistrations.findAll({
       include: [
@@ -22,17 +32,23 @@ module.exports = async (argv) => {
                 model: db.DeliverableTemplates,
                 attributes: ['id', 'description'],
                 where: {
-                  type: 'FILE'
-                }
-              }
+                  type: 'FILE',
+                },
+              },
             },
             {
               model: db.ExerciseSheets,
               include: {
-                model: db.ExerciseCategories
-              }
-            }
-          ]
+                model: db.ExerciseCategories,
+              },
+            },
+            {
+              model: db.EventTemplates,
+              where: {
+                type: 'Labor',
+              },
+            },
+          ],
         },
         {
           where: {},
@@ -40,86 +56,72 @@ module.exports = async (argv) => {
           include: {
             model: db.Roles,
             where: {
-              name: 'STUDENT'
-            }
-          }
+              name: 'STUDENT',
+            },
+          },
         },
         {
           // exclude english and german student group
           where: {
             name: {
-              $and: [
-                { $ne: 'c16-a1' },
-               { $ne: 'c16-a2' },
-               { $ne: 'c16-a3' },
-              ]
-            }
+              $and: [{ $ne: 'c16-1a' }, { $ne: 'c16-2a' }],
+            },
           },
-          model: db.StudentGroups
-        }
-      ]
+          model: db.StudentGroups,
+        },
+      ],
     });
 
-    const exCatStat = [];
-    exerciseCategoryNames.forEach((exCatName) => {
-      exCatStat.push({
-        exerciseCategoryType: exCatName,
-        gradeNotAvailable: 0,
-        supplementaryAvailable: 0,
-        supplementaryAvailableOptimist: 0,
+    const exCatStat = exerciseCategoryNames.reduce((acc, cur) => {
+      return {
+        [cur]: 0,
+        ...acc,
+      };
+    }, {});
+
+    const eventOkFunc = (event) => {
+      const eventOk = event.grade >= 2;
+      const deliverableOk = event.Deliverables.every(
+        (deliverable) => deliverable.uploaded && deliverable.grade >= 2
+      );
+
+      return eventOk || (deliverableOk && event.grade === null) || moment(event.date).isBetween(moment('2020-11-11T00:00:00.000Z'), moment('2020-11-13T23:59:00.000Z'));
+    };
+
+    const studentRegsWithSupplementary = studentRegs.filter((studentReg) => {
+      const okEvents = studentReg.Events.filter(eventOkFunc);
+      return okEvents.length === studentReg.Events.length - 1;
+    });
+
+    const supplementaryData = [];
+    studentRegsWithSupplementary.forEach((supplementaryStudentReg) => {
+      const failedEvent = supplementaryStudentReg.Events.find((event) =>
+        !eventOkFunc(event)
+      );
+
+      exCatStat[failedEvent.ExerciseSheet.ExerciseCategory.type] += 1;
+      supplementaryData.push({
+        Neptun: supplementaryStudentReg.User.neptun,
+        ExerciseCategory: failedEvent.ExerciseSheet.ExerciseCategory.type,
       });
     });
 
-    for (const studentReg of studentRegs) {
-      let failedEvent = null;
-      let okEventCount = 0;
-
-      let okEventCountPlus = 0;
-      let failedEventPlus = null;
-
-      // console.log(studentReg.id);
-      for (const event of studentReg.Events) {
-        // console.log(`${event.id}: ${event.grade}`);
-        if (event.grade === null) {
-          const eventCategory = event.ExerciseSheet.ExerciseCategory.type;
-          const index = exCatStat.findIndex(exCatStatItem => exCatStatItem.exerciseCategoryType === eventCategory);
-          exCatStat[index].gradeNotAvailable++;
-          // console.log(exCatStat[index].exerciseCategoryType, studentReg.User.neptun);
-        }
-
-        const deliverableOk = event.Deliverables.every(deliverable => deliverable.uploaded && deliverable.grade >= 2);
-
-        if (event.grade >= 2 || (deliverableOk && event.grade === null)) {
-          okEventCountPlus++;
-        } else {
-          failedEventPlus = event;
-        }
-
-        if (event.grade >= 2 || event.grade == null) {
-          okEventCount++;
-        } else {
-          failedEvent = event;
-        }
-      }
-
-      if (okEventCount === 4) {
-        const eventCategory = failedEvent.ExerciseSheet.ExerciseCategory.type;
-        const index = exCatStat.findIndex(exCatStatItem => exCatStatItem.exerciseCategoryType === eventCategory);
-        exCatStat[index].supplementaryAvailableOptimist++;
-      }
-
-      if (okEventCountPlus === 4) {
-        const eventCategory = failedEventPlus.ExerciseSheet.ExerciseCategory.type;
-        const index = exCatStat.findIndex(exCatStatItem => exCatStatItem.exerciseCategoryType === eventCategory);
-        exCatStat[index].supplementaryAvailable++;
-      }
-    }
-    const table = {
-      headers: ['exerciseCategoryType', 'gradeNotAvailable', 'supplementaryAvailable', 'supplementaryAvailableOptimist'],
-      data: exCatStat
+    const stats = {
+      headers: ['exerciseCategoryType', 'supplementaryAvailable'],
+      data: exCatStat,
     };
+    console.log(stats);
 
-    console.log(table);
+    const fields = ['Neptun', 'ExerciseCategory'];
+    const result = json2csv({ data: supplementaryData, fields });
+    const pathToWrite = path.join(
+      __dirname,
+      `supplementary_stats_${moment().format('YYYY_MM_DD_HH-mm')}.csv`
+    );
+    // console.log('csv:');
+    // console.log(result);
+    fs.writeFileSync(pathToWrite, result);
+    console.log(`CSV file created at: ${pathToWrite}`);
   } catch (error) {
     console.log(error);
   } finally {
