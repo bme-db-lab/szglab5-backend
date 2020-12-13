@@ -8,7 +8,12 @@ const { initDB, closeDB } = require('../../db/db.js');
 const exTypesToSkip = [
   52,
   57,
-  63
+  63,
+  101,
+  102,
+  103,
+  104,
+  105
 ];
 
 function getRoomForStudent(rooms, exerciseCategory, studentNeptun) {
@@ -110,7 +115,7 @@ module.exports = async () => {
 
         return eventOk || (deliverableOk && event.grade === null) || moment(event.date).isBetween(moment('2020-11-11T00:00:00.000Z'), moment('2020-11-13T23:59:00.000Z'));
       });
-      return okEvents.length === studentRegs.Events.length - 1;
+      return okEvents.length === studentReg.Events.length - 1;
     });
 
     const capacityNeeded = studentRegsWithSupplementary.length;
@@ -231,7 +236,7 @@ module.exports = async () => {
         const eventOk = event.grade >= 2;
         const deliverableOk = event.Deliverables.every(deliverable => deliverable.uploaded && deliverable.grade >= 2);
 
-        return !(eventOk || (deliverableOk && event.grade === null));
+        return !(eventOk || (deliverableOk && event.grade === null) || moment(event.date).isBetween(moment('2020-11-11T00:00:00.000Z'), moment('2020-11-13T23:59:00.000Z')));
       });
       failedEventStats[failedEvent.ExerciseSheet.ExerciseCategory.type]++;
       console.log(failedEventStats);
