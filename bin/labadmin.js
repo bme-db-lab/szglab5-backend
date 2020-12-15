@@ -350,6 +350,15 @@ yargs // eslint-disable-line no-unused-expressions
     }
   })
   .command({
+    command: 'generate-supplementary-add-later',
+    aliases: [],
+    desc: 'Add later a student to supplementary group',
+    handler: async () => {
+      const generateSupplementaryAddLater = require('./commands/generate-supplementary-add-later');
+      await generateSupplementaryAddLater();
+    }
+  })
+  .command({
     command: 'generate-semester-results',
     aliases: ['gsr'],
     desc: 'Generate semester results csv file',
