@@ -35,7 +35,7 @@ const defaultConfig = {
     saltRounds: 10
   },
   logger: {
-    consoleLevel: 'debug',
+    consoleLevel: 'info',
     consoleLogEnabled: true,
     fileLevel: 'info',
     fileLogEnabled: true,

@@ -32,6 +32,10 @@ module.exports = async (options) => {
     (key) => {
       const reg = /([A-Z]+)([0-9]+)/;
       const rKey = reg.exec(key);
+      if (!key.match(reg)) {
+        return false;
+      }
+
       if (rKey === null) {
         return false;
       }
@@ -119,6 +123,11 @@ module.exports = async (options) => {
   (key) => {
     const reg = /([A-Z]+)([0-9]+)/;
     const rKey = reg.exec(key);
+
+    if (!key.match(reg)) {
+      return false;
+    }
+
     if (rKey === null) {
       return false;
     }
@@ -133,7 +142,6 @@ module.exports = async (options) => {
           }
           break;
         case 'B':
-        console.log(user.data);
           if (user.data.email_official != null) {
             if (seed[key].w !== undefined) {
               users[user.data.email_official].data.studentgroup_id = seed[key].w;
@@ -326,7 +334,6 @@ module.exports = async (options) => {
   //   });
 
   const simpleUsers = Object.keys(users).map(usersKey => users[usersKey]);
-
 
   // Object.keys(users).some(
   //   (key) => {
