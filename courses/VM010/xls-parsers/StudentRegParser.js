@@ -58,7 +58,7 @@ module.exports = async (semesterId, options) => {
               sreg.data.SemesterId = semesterId;
               
               // random exercise type distribution
-              const engStudent = sreg.data.neptunCourseCode.includes('-a');
+              const engStudent = sreg.data.neptunCourseCode.startsWith('a');
 
               const qCourse = await db.Semesters.findOne({ where: { id: semesterId } });
               if (engStudent) {
