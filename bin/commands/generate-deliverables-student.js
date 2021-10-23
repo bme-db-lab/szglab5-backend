@@ -46,6 +46,19 @@ module.exports = async (argv) => {
       throw new Error('Student not found!');
     }
 
+    console.log(`Regarding "Shall we reset existing deliverables?", your choice was: ${options.resetExistingDeliverables}`);
+
+    const confirmPromptResult = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'res',
+        message: 'Are you sure?'
+      }
+    ]);
+    if (!confirmPromptResult.res) {
+      throw new Error('Confirmation error!');
+    }
+
     // iterate through event-template's events
     const eventTemplate = await db.EventTemplates.findById(eventTemplateChoice.id);
 
