@@ -6,17 +6,6 @@ const logger = require('../../utils/logger.js');
 
 module.exports = async (argv) => {
   try {
-    const confirmPromptResult = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'res',
-        message: 'Are you sure?'
-      }
-    ]);
-    if (!confirmPromptResult.res) {
-      throw new Error('Confirmation error!');
-    }
-
     const options = {
       resetExistingDeliverables: argv.resetExistingDeliverables || false
     };
@@ -39,12 +28,21 @@ module.exports = async (argv) => {
         message: 'Please select an event template',
         choices: eventTemplateChoices
       },
-      {
-        type: 'input',
-        name: 'neptun',
-        message: 'Neptun'
-      },
     ]);
+
+    console.log(`Regarding "Shall we reset existing deliverables?", your choice was: ${options.resetExistingDeliverables}`);
+
+    const confirmPromptResult = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'res',
+        message: 'Are you sure?'
+      }
+    ]);
+    if (!confirmPromptResult.res) {
+      throw new Error('Confirmation error!');
+    }
+
     // iterate through event-template's events
     const eventTemplate = await db.EventTemplates.findById(eventTemplateChoice.id);
     const events = await eventTemplate.getEvents();
