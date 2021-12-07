@@ -350,6 +350,15 @@ yargs // eslint-disable-line no-unused-expressions
     }
   })
   .command({
+    command: 'generate-supplementary-events-english',
+    aliases: [],
+    desc: 'Generate supplementary events english',
+    handler: async () => {
+      const generateSupplementaryEvents = require('./commands/generate-supplementary-events-english');
+      await generateSupplementaryEvents();
+    }
+  })
+  .command({
     command: 'generate-supplementary-add-later',
     aliases: [],
     desc: 'Add later a student to supplementary group',
