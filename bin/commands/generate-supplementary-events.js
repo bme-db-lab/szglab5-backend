@@ -97,8 +97,12 @@ module.exports = async () => {
           where: {
             name: {
               $and: [
-                { $ne: 'c16-1a' },
-               { $ne: 'c16-2a' },
+                { $ne: 'a1' },
+               { $ne: 'a2' },
+               { $ne: 'a3' },
+               { $ne: 'pot0' },
+               { $ne: 'pot1' },
+               { $ne: 'pot2' },
               ]
             }
           },
@@ -169,7 +173,7 @@ module.exports = async () => {
       }
 
       const newStudentGroup = await db.StudentGroups.create({
-        name: `pot${nameIndex}`,
+        name: `pot_labor_${nameIndex}`,
         SemesterId: 1,
         UserId: demonstrator.id,
         language: 'magyar'
@@ -222,6 +226,11 @@ module.exports = async () => {
       failedEventStats[exCategory] = 0;
     });
 
+    const failedEventStatsNeptuns = {};
+    exCategories.forEach((exCategory) => {
+      failedEventStatsNeptuns[exCategory] = [];
+    });
+
     for (const studentReg of studentRegsWithSupplementary) {
       console.log(`Creating event for ${studentReg.User.neptun}`);
       // // Check room
@@ -239,6 +248,7 @@ module.exports = async () => {
         return !(eventOk || (deliverableOk && event.grade === null) || moment(event.date).isBetween(moment('2020-11-11T00:00:00.000Z'), moment('2020-11-13T23:59:00.000Z')));
       });
       failedEventStats[failedEvent.ExerciseSheet.ExerciseCategory.type]++;
+      failedEventStatsNeptuns[failedEvent.ExerciseSheet.ExerciseCategory.type].push(studentReg.User.neptun);
       console.log(failedEventStats);
 
       const currentRoom = getRoomForStudent(rooms, failedEvent.ExerciseSheet.ExerciseCategory.type, studentReg.User.neptun);
@@ -307,6 +317,8 @@ module.exports = async () => {
     }
     console.log('Exercise type statistics:');
     console.log(exTypeStats);
+
+    console.log(failedEventStatsNeptuns);
   } catch (err) {
     console.log(err);
   } finally {
