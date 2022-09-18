@@ -38,6 +38,10 @@ module.exports = async (semesterId, options) => {
       const rKey = reg.exec(key);
       if (rKey !== null) {
         if (rKey[2] !== '1') {
+          if (!seed[key].w) {
+            break;
+          }
+
           switch (key[0]) {
             case 'A':
               sreg = { data: {} };
