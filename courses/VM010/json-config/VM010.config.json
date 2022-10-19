@@ -96,7 +96,7 @@
       "data": {
         "type": "FILE",
         "name": "jegyzokonyv_1",
-        "description": "Jegyzőkönyv",
+        "description": "Labordokumentáció",
         "EventTemplateId": 1
       }
     },
@@ -111,7 +111,7 @@
       "data": {
         "type": "FILE",
         "name": "jegyzokonyv_2",
-        "description": "Jegyzőkönyv",
+        "description": "Labordokumentáció",
         "EventTemplateId": 2
       }
     },
@@ -167,7 +167,7 @@
       "data": {
         "type": "FILE",
         "name": "jegyzokonyv",
-        "description": "Jegyzőkönyv",
+        "description": "Labordokumentáció",
         "EventTemplateId": 5,
         "AKEP": true
       }
