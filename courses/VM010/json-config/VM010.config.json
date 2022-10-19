@@ -134,6 +134,14 @@
     {
       "data": {
         "type": "FILE",
+        "name": "jegyzokonyv_3",
+        "description": "Labordokumentáció",
+        "EventTemplateId": 3
+      }
+    },
+    {
+      "data": {
+        "type": "FILE",
         "name": "sql_3",
         "description": "SQL file",
         "EventTemplateId": 3,
@@ -144,6 +152,14 @@
       "data": {
         "name": "Beugro",
         "type": "BEUGRO",
+        "EventTemplateId": 4
+      }
+    },
+    {
+      "data": {
+        "type": "FILE",
+        "name": "jegyzokonyv_4",
+        "description": "Labordokumentáció",
         "EventTemplateId": 4
       }
     },
