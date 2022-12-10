@@ -147,12 +147,11 @@ module.exports = async () => {
       return statObj;
     });
 
-
-    const fields = Object.keys(studentRegData[0]);
-    console.log(Object.keys(studentRegData[0]));
-
     // const fields = flatten(['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => [exCat.type, `${exCat.type}_imsc_labor`, `${exCat.type}_imsc_beadando`, `${exCat.type}_beugro`]), 'Pot', 'Pot_imsc_labor', 'Pot_imsc_beadando']);
-    const result = json2csv({ data: studentRegData, fields });
+    //const result = json2csv({ data: studentRegData, fields });
+    // generate column in the CSV for all the toplevel fields of the objects
+    const result = json2csv({ data: studentRegData });
+
     const pathToWrite = path.join(__dirname, `semester_results_${moment().format('YYYY_MM_DD_HH-mm')}.csv`);
     fs.writeFileSync(pathToWrite, result);
     console.log(`CSV file created at: ${pathToWrite}`);
