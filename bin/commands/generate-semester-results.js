@@ -145,7 +145,7 @@ module.exports = async () => {
         statObj.Pot = '-';
       }
       return statObj;
-    });
+    }).sort((a, b) => a.Nev.localeCompare(b.Nev));
 
     // const fields = flatten(['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => [exCat.type, `${exCat.type}_imsc_labor`, `${exCat.type}_imsc_beadando`, `${exCat.type}_beugro`]), 'Pot', 'Pot_imsc_labor', 'Pot_imsc_beadando']);
     //const result = json2csv({ data: studentRegData, fields });
