@@ -126,26 +126,24 @@ module.exports = async () => {
       const supplEvent = studentReg.Events.find(event => event.attempt === 2);
 
       if (supplEvent) {
-        if (supplEvent.grade) {
-          statObj.Pot = supplEvent.grade;
-          statObj.Pot_imsc_labor = supplEvent.imsc;
-          let deliverablesIMSC = null;
-          for (const deliverable of supplEvent.Deliverables) {
-            if (deliverable.imsc) {
-              deliverablesIMSC += deliverable.imsc;
-            }
+        statObj.Pot = supplEvent.grade;
+        statObj.Pot_imsc_labor = supplEvent.imsc;
+        let deliverablesIMSC = null;
+        for (const deliverable of supplEvent.Deliverables) {
+          if (deliverable.imsc) {
+            deliverablesIMSC += deliverable.imsc;
           }
-          statObj.Pot_imsc_beadando = deliverablesIMSC;
-        } else {
-          let grade = null;
-          for (const deliverable of supplEvent.Deliverables) {
-            if (!deliverable.grade) {
-              grade = null;
-              break;
-            }
-            grade += deliverable.grade / supplEvent.Deliverables.length;
-          }
-          statObj.Pot = grade;
+        }
+        statObj.Pot_imsc_beadando = deliverablesIMSC;
+
+        const fileDeliverables = supplEvent.Deliverables.filter(deliverable => deliverable.DeliverableTemplate.type === 'FILE');
+        for (const deliverable of fileDeliverables) {
+          statObj[`Pot_${deliverable.DeliverableTemplate.description.replace(' ', '')}_beadando`] = deliverable.grade;
+        }
+
+        const entryTestDeliverable = supplEvent.Deliverables.find(deliverable => deliverable.DeliverableTemplate.type === 'BEUGRO');
+        if (entryTestDeliverable) {
+          statObj[`Pot_beugro`] = entryTestDeliverable.grade;
         }
       } else {
         statObj.Pot = '-';
@@ -153,12 +151,15 @@ module.exports = async () => {
       return statObj;
     }).sort((a, b) => a.Nev.localeCompare(b.Nev));
 
+    // generate a list of all possible file deliverables, as they may occure at the supplementary event
+    const supplDeliverableDescriptions = Array.from(new Set(flatten(exCategories.map(exCat => exCat.fileDeliverableDescriptions)))).sort();
     // generate column in the CSV for the required fields.
     // Don't forget to modify this when data fields are generated above
     const fields = flatten(['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => [
       exCat.type, `${exCat.type}_imsc_labor`, `${exCat.type}_imsc_beadando`, `${exCat.type}_beugro`,
       ...exCat.fileDeliverableDescriptions.map(fDD => `${exCat.type}_${fDD.replace(' ', '')}_beadando`)]),
-      'Pot', 'Pot_imsc_labor', 'Pot_imsc_beadando',
+      'Pot', 'Pot_imsc_labor', 'Pot_imsc_beadando', 'Pot_beugro',
+      ...supplDeliverableDescriptions.map(sDD => `Pot_${sDD.replace(' ', '')}_beadando`),
     ]);
 
     const result = json2csv({ data: studentRegData, fields });
