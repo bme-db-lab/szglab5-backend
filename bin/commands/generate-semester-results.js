@@ -68,15 +68,21 @@ module.exports = async () => {
     });
 
     const eventTemplates = await db.EventTemplates.findAll({
-      include: {
-        model: db.ExerciseCategories
-      },
+      include: [
+        {
+          model: db.ExerciseCategories
+        },
+        {
+          model: db.DeliverableTemplates
+        }
+      ],
       order: ['seqNumber']
     });
 
     const exCategories = eventTemplates.map(eventTemplate => ({
       type: eventTemplate.ExerciseCategory.type,
-      id: eventTemplate.ExerciseCategory.id
+      id: eventTemplate.ExerciseCategory.id,
+      fileDeliverableDescriptions: eventTemplate.DeliverableTemplates.filter(deliverableTemplate => deliverableTemplate.type === 'FILE').map((deliverableTemplate) => (deliverableTemplate.description)).sort(),
     }));
 
     const studentRegData = studentRegs.map((studentReg) => {
@@ -147,10 +153,17 @@ module.exports = async () => {
       return statObj;
     }).sort((a, b) => a.Nev.localeCompare(b.Nev));
 
-    // const fields = flatten(['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => [exCat.type, `${exCat.type}_imsc_labor`, `${exCat.type}_imsc_beadando`, `${exCat.type}_beugro`]), 'Pot', 'Pot_imsc_labor', 'Pot_imsc_beadando']);
-    //const result = json2csv({ data: studentRegData, fields });
+    // generate column in the CSV for the required fields.
+    // Don't forget to modify this when data fields are generated above
+    const fields = flatten(['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => [
+      exCat.type, `${exCat.type}_imsc_labor`, `${exCat.type}_imsc_beadando`, `${exCat.type}_beugro`,
+      ...exCat.fileDeliverableDescriptions.map(fDD => `${exCat.type}_${fDD.replace(' ', '')}_beadando`)]),
+      'Pot', 'Pot_imsc_labor', 'Pot_imsc_beadando',
+    ]);
+
+    const result = json2csv({ data: studentRegData, fields });
     // generate column in the CSV for all the toplevel fields of the objects
-    const result = json2csv({ data: studentRegData });
+    //const result = json2csv({ data: studentRegData });
 
     const pathToWrite = path.join(__dirname, `semester_results_${moment().format('YYYY_MM_DD_HH-mm')}.csv`);
     fs.writeFileSync(pathToWrite, result);
