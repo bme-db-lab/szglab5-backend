@@ -54,6 +54,9 @@ module.exports = async () => {
               where: {
                 type: 'Labor',
               },
+              include: {
+                model: db.ExerciseCategories
+              },
             },
           ]
         },
@@ -127,6 +130,7 @@ module.exports = async () => {
 
       if (supplEvent) {
         statObj.Pot = supplEvent.grade;
+        statObj.Pot_labornev = supplEvent.EventTemplate.ExerciseCategory.type;
         statObj.Pot_imsc_labor = supplEvent.imsc;
         let deliverablesIMSC = null;
         for (const deliverable of supplEvent.Deliverables) {
@@ -146,7 +150,7 @@ module.exports = async () => {
           statObj[`Pot_beugro`] = entryTestDeliverable.grade;
         }
       } else {
-        statObj.Pot = '-';
+        statObj.Pot_labornev = '-';
       }
       return statObj;
     }).sort((a, b) => a.Nev.localeCompare(b.Nev));
@@ -158,6 +162,7 @@ module.exports = async () => {
     const fields = flatten(['Nev', 'Neptun', 'Csoport_kod', 'Feladat_kod', 'email', ...exCategories.map(exCat => [
       exCat.type, `${exCat.type}_imsc_labor`, `${exCat.type}_imsc_beadando`, `${exCat.type}_beugro`,
       ...exCat.fileDeliverableDescriptions.map(fDD => `${exCat.type}_${fDD.replace(' ', '')}_beadando`)]),
+      'Pot_labornev',
       'Pot', 'Pot_imsc_labor', 'Pot_imsc_beadando', 'Pot_beugro',
       ...supplDeliverableDescriptions.map(sDD => `Pot_${sDD.replace(' ', '')}_beadando`),
     ]);
