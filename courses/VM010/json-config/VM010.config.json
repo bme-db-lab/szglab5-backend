@@ -96,7 +96,7 @@
       "data": {
         "type": "FILE",
         "name": "jegyzokonyv_1",
-        "description": "Labordokumentáció",
+        "description": "Lab report",
         "EventTemplateId": 1
       }
     },
@@ -111,7 +111,7 @@
       "data": {
         "type": "FILE",
         "name": "jegyzokonyv_2",
-        "description": "Labordokumentáció",
+        "description": "Lab report",
         "EventTemplateId": 2
       }
     },
@@ -135,7 +135,7 @@
       "data": {
         "type": "FILE",
         "name": "jegyzokonyv_3",
-        "description": "Labordokumentáció",
+        "description": "Lab report",
         "EventTemplateId": 3
       }
     },
@@ -159,7 +159,7 @@
       "data": {
         "type": "FILE",
         "name": "jegyzokonyv_4",
-        "description": "Labordokumentáció",
+        "description": "Lab report",
         "EventTemplateId": 4
       }
     },
@@ -183,7 +183,7 @@
       "data": {
         "type": "FILE",
         "name": "jegyzokonyv",
-        "description": "Labordokumentáció",
+        "description": "Lab report",
         "EventTemplateId": 5,
         "AKEP": true
       }
