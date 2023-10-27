@@ -1,3 +1,4 @@
+const config = require('../../config/config.js');
 const { initDB, closeDB } = require('../../db/db.js');
 const inquirer = require('inquirer');
 const path = require('path');
@@ -10,7 +11,7 @@ module.exports = async (argv) => {
     console.log(argv);
     const options = {
       resetDeliverables: argv.resetDeliverables || false,
-      deadlineDay: argv.deadlineDay || 2
+      deadlineDay: argv.deadlineDay || config.defaultDeadlineDays
     };
 
     const studentGroups = await db.StudentGroups.findAll();

@@ -1,3 +1,4 @@
+const config = require('../../config/config.js');
 const { initDB, closeDB } = require('../../db/db.js');
 const inquirer = require('inquirer');
 const moment = require('moment');
@@ -145,7 +146,7 @@ module.exports = async (argv) => {
     const deliverables = await eventToUpdate.getDeliverables();
     console.log(deliverables.map(del => del.dataValues.id));
     for (const deliverable of deliverables) {
-      const deadline = moment(updateEventInfo.date).add(2, 'd');
+      const deadline = moment(updateEventInfo.date).add(config.defaultDeadlineDays, 'd');
       console.log(deadline);
       await db.Deliverables.update(
         {

@@ -1,3 +1,4 @@
+const config = require('../../config/config.js');
 const { genErrorObj } = require('../../utils/utils.js');
 const { getDB } = require('../../db/db.js');
 const moment = require('moment');
@@ -111,7 +112,7 @@ module.exports = async (req, res) => {
     const deliverables = await eventToUpdate.getDeliverables();
 
     for (const deliverable of deliverables) {
-      const deadline = moment(updateEventInfo.date).add(2, 'd').add(15, 'm');
+      const deadline = moment(updateEventInfo.date).add(config.defaultDeadlineDays, 'd').add(15, 'm');
       await db.Deliverables.update(
         {
           deadline,

@@ -2,6 +2,7 @@ const path = require('path');
 const inquirer = require('inquirer');
 
 const moment = require('moment');
+const config = require('../../config/config.js');
 const { initDB, closeDB } = require('../../db/db.js');
 const logger = require('../../utils/logger.js');
 const { seedDBwithJSON, seedDBwithObjects } = require('./../../db/seed');
@@ -141,7 +142,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
         for (const deliverableTemplate of deliverableTemplates) {
           logger.debug(` DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`);
           const eventDate = event.dataValues.date;
-          const deadline = moment(eventDate).add(2, 'd');
+          const deadline = moment(eventDate).add(config.defaultDeadlineDays, 'd');
           // if (i === 0 || i === 1) {
           //   deadline = moment(eventDate).subtract(1, 'y');
           // }

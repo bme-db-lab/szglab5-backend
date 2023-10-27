@@ -76,6 +76,8 @@ const defaultConfig = {
       }
     ]
   },
+  // Note: this should be given for each course in a future version
+  defaultDeadlineDays: 2,
   generatedFilesPath: path.join(__dirname, '../generated'),
   handoutGeneratorRoot: '/home/backend/adatlabor-feladatlap'
 };

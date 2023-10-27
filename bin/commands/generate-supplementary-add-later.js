@@ -3,6 +3,7 @@ const path = require('path');
 const inquirer = require('inquirer');
 const moment = require('moment');
 
+const config = require('../../config/config.js');
 const { initDB, closeDB } = require('../../db/db.js');
 
 module.exports = async () => {
@@ -127,7 +128,7 @@ module.exports = async () => {
         ` DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`
       );
       const eventDate = newEvent.date;
-      const deadline = moment(eventDate).add(2, 'd');
+      const deadline = moment(eventDate).add(config.defaultDeadlineDays, 'd');
 
       await db.Deliverables.create({
         deadline,

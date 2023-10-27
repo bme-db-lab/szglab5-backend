@@ -3,8 +3,8 @@ const generator = require('generate-password');
 const bcrypt = require('bcrypt');
 const moment = require('moment');
 
+const config = require('../../config/config.js');
 const { initDB, closeDB } = require('../../db/db.js');
-const config = require('../../config/config');
 
 module.exports = async () => {
   try {
@@ -153,7 +153,7 @@ module.exports = async () => {
       for (const deliverableTemplate of deliverableTemplates) {
         console.log(`    DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`);
         const eventDate = newEvent.dataValues.date;
-        const deadline = moment(eventDate).add(2, 'd');
+        const deadline = moment(eventDate).add(config.defaultDeadlineDays, 'd');
         // if (i === 0 || i === 1) {
         //   deadline = moment(eventDate).subtract(1, 'y');
         // }

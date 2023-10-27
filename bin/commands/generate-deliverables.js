@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const moment = require('moment');
 
+const config = require('../../config/config.js');
 const { initDB, closeDB } = require('../../db/db.js');
 const logger = require('../../utils/logger.js');
 
@@ -70,7 +71,7 @@ module.exports = async (argv) => {
       for (const deliverableTemplate of deliverableTemplates) {
         logger.debug(` DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`);
         const eventDate = event.dataValues.date;
-        const deadline = moment(eventDate).add(2, 'd');
+        const deadline = moment(eventDate).add(config.defaultDeadlineDays, 'd');
 
         await db.Deliverables.create({
           deadline,

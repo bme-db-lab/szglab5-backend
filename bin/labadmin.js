@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const yargs = require('yargs');
+const config = require('../config/config.js');
 // console.log(process.argv);
 
 yargs // eslint-disable-line no-unused-expressions
@@ -306,7 +307,7 @@ yargs // eslint-disable-line no-unused-expressions
       })
       .option('deadline-day', {
         alias: 'dd',
-        default: 1
+        default: config.defaultDeadlineDays
       }),
     handler: async (argv) => {
       const changeEvents = require('./commands/change-event-attributes-json');
