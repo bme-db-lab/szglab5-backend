@@ -311,7 +311,7 @@ yargs // eslint-disable-line no-unused-expressions
       }),
     handler: async (argv) => {
       const changeEvents = require('./commands/change-event-attributes-json');
-      await changeEvents(argv);
+      await changeEvents(argv.resetDeliverables, argv.deadlineDay);
     }
   })
   .command({

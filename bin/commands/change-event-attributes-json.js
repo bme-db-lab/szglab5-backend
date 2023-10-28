@@ -1,18 +1,12 @@
-const config = require('../../config/config.js');
 const { initDB, closeDB } = require('../../db/db.js');
 const inquirer = require('inquirer');
 const path = require('path');
 const fs = require('fs');
 const moment = require('moment');
 
-module.exports = async (argv) => {
+module.exports = async (resetDeliverables, deadlineDay) => {
   try {
     const db = await initDB();
-    console.log(argv);
-    const options = {
-      resetDeliverables: argv.resetDeliverables || false,
-      deadlineDay: argv.deadlineDay || config.defaultDeadlineDays
-    };
 
     const studentGroups = await db.StudentGroups.findAll();
     const studentGroupsChoices = [];
@@ -78,7 +72,7 @@ module.exports = async (argv) => {
           console.log('Modify deliverables deadline');
           const deliverables = await event.getDeliverables();
           for (const deliverable of deliverables) {
-            const deadline = moment(eventAttribute.date).add(options.deadlineDay, 'd');
+            const deadline = moment(eventAttribute.date).add(deadlineDay, 'd');
             await db.Deliverables.update(
               {
                 deadline
@@ -93,7 +87,7 @@ module.exports = async (argv) => {
                 }
               }
             );
-            if (options.resetDeliverables) {
+            if (resetDeliverables) {
               await db.Deliverables.update(
                 {
                   lastSubmittedDate: null,
