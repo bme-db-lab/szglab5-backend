@@ -408,7 +408,7 @@ yargs // eslint-disable-line no-unused-expressions
     aliases: ['aefg'],
     builder: () => yargs
     .option('only-new', {
-      default: false
+      default: true
     })
     .option('deadline-day', {
       alias: 'dd',
