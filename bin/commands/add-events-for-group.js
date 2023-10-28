@@ -5,6 +5,8 @@ const inquirer = require('inquirer');
 const moment = require('moment');
 
 module.exports = async (onlyNew, deadlineDay) => {
+  console.log(`Parameters received in call: onlyNew: ${onlyNew}; deadlineDay: ${deadlineDay}`);
+
   try {
     const db = await initDB();
 

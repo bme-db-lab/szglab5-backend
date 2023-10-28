@@ -5,6 +5,8 @@ const fs = require('fs');
 const moment = require('moment');
 
 module.exports = async (resetDeliverables, deadlineDay) => {
+  console.log(`Parameters received in call: resetDeliverables: ${resetDeliverables}; deadlineDay: ${deadlineDay}`);
+
   try {
     const db = await initDB();
 

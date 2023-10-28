@@ -6,18 +6,17 @@ const parseCSV = require('csv-parse/lib/sync');
 
 // Use this command to load e.g. rapid shell server passwords to the database
 
-module.exports = async (argv) => {
+module.exports = async (fileName) => {
+  console.log(`Parameters received in call: fileName: ${fileName}`);
+
   try {
     const db = await initDB();
-    const options = {
-      file: argv.file,
-    };
 
-    if (!options.file) {
+    if (!fileName) {
       throw new Error('No seed file specified!');
     }
 
-    const filePath = isAbsolute(options.file) ? options.file : join(__dirname, 'data', options.file);
+    const filePath = isAbsolute(fileName) ? fileName : join(__dirname, 'data', fileName);
 
     const csvFile = readFileSync(filePath);
     const parsedCsv = parseCSV(csvFile, {

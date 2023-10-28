@@ -3,13 +3,10 @@ const { initDB, closeDB } = require('../../db/db.js');
 const inquirer = require('inquirer');
 const moment = require('moment');
 
-module.exports = async (argv) => {
-  try {
-    const options = {
-      resetGrades: argv.resetGrades || false,
-    };
-    console.log(`Reset grades: ${options.resetGrades}`);
+module.exports = async (resetGrades) => {
+  console.log(`Parameters received in call: resetGrades: ${resetGrades}`);
 
+  try {
     const db = await initDB();
     const studentNeptunResult = await inquirer.prompt([
       {
@@ -127,7 +124,7 @@ module.exports = async (argv) => {
         where: { id: eventToUpdate.id }
       }
     );
-    if (options.resetGrades) {
+    if (resetGrades) {
       console.log('Reset event grade');
       await db.Events.update(
         {
@@ -164,7 +161,7 @@ module.exports = async (argv) => {
       );
     }
     console.log('Deliverables deadline modified!');
-    if (options.resetGrades) {
+    if (resetGrades) {
       console.log('Reset deliverables grading');
       for (const deliverable of deliverables) {
         await db.Deliverables.update(

@@ -197,7 +197,7 @@ yargs // eslint-disable-line no-unused-expressions
       const logger = require('../utils/logger.js');
       try {
         const generateDeliverables = require('./commands/generate-deliverables.js');
-        await generateDeliverables(argv);
+        await generateDeliverables(argv.resetExistingDeliverables);
       } catch (err) {
         logger.error('Error while generating deliverables');
         logger.error(err);
@@ -243,7 +243,7 @@ yargs // eslint-disable-line no-unused-expressions
       }),
     handler: async (argv) => {
       const studentNewGroup = require('./commands/student-new-group.js');
-      await studentNewGroup(argv);
+      await studentNewGroup(argv.resetGrades);
     }
   })
   .command({
@@ -266,7 +266,7 @@ yargs // eslint-disable-line no-unused-expressions
       }),
     handler: async (argv) => {
       const getStudentExtypes = require('./commands/get-student-extypes');
-      await getStudentExtypes(argv);
+      await getStudentExtypes(argv.outputFilename);
     }
   })
   .command({
@@ -400,7 +400,7 @@ yargs // eslint-disable-line no-unused-expressions
       }),
     handler: async (argv) => {
       const seedInitPasswords = require('./commands/seed-init-passwords');
-      await seedInitPasswords(argv);
+      await seedInitPasswords(argv.file);
     }
   })
   .command({
@@ -443,8 +443,8 @@ yargs // eslint-disable-line no-unused-expressions
       default: false
     }),
     handler: async (argv) => {
-      const generateSupplementaryEventsCustom = require('./commands/generate-handout-cache.js');
-      await generateSupplementaryEventsCustom(argv);
+      const generateHandoutCache = require('./commands/generate-handout-cache.js');
+      await generateHandoutCache(argv.generatePastEvents);
     }
   })
   .command({

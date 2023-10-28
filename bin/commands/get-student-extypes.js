@@ -3,7 +3,9 @@ const json2csv = require('json2csv');
 const fs = require('fs');
 const path = require('path');
 
-module.exports = async (argv) => {
+module.exports = async (outputFilename) => {
+  console.log(`Parameters received in call: outputFilename: ${outputFilename}`);
+
   try {
     const db = await initDB();
 
@@ -41,7 +43,7 @@ module.exports = async (argv) => {
     );
     const fields = ['neptun', 'feladat_tipus'];
     const result = json2csv({ data: studentExTypes, fields });
-    const pathToWrite = path.join(__dirname, argv.outputFilename);
+    const pathToWrite = path.join(__dirname, outputFilename);
     fs.writeFileSync(pathToWrite, result);
     console.log(`CSV file created at: ${pathToWrite}`);
   } catch (err) {
