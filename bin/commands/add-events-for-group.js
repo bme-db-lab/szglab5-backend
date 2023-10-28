@@ -1,11 +1,10 @@
-const config = require('../../config/config.js');
 const { initDB, closeDB } = require('../../db/db.js');
 const fs = require('fs');
 const path = require('path');
 const inquirer = require('inquirer');
 const moment = require('moment');
 
-module.exports = async (argv) => {
+module.exports = async (onlyNew, deadlineDay) => {
   try {
     const db = await initDB();
 
@@ -61,7 +60,7 @@ module.exports = async (argv) => {
     const appointmentsDb = await db.Appointments.findAll({ where: { StudentGroupId: prompt.studentGroupId } });
     const studentRegs = await db.StudentRegistrations.findAll({ where: { StudentGroupId: prompt.studentGroupId } });
 
-    const appointmentsToUse = argv.onlyNew ? createdAppointments : appointmentsDb;
+    const appointmentsToUse = onlyNew ? createdAppointments : appointmentsDb;
     
     for (const studentReg of studentRegs) {
       for (const appointment of appointmentsToUse) {
@@ -85,7 +84,7 @@ module.exports = async (argv) => {
         for (const deliverableTemplate of deliverableTemplates) {
           console.log(` DeliverableTemplate: type - "${deliverableTemplate.dataValues.type}" name - "${deliverableTemplate.dataValues.name}" desc - "${deliverableTemplate.dataValues.description}"`);
           const eventDate = event.dataValues.date;
-          const deadline = moment(eventDate).add(config.defaultDeadlineDays, 'd');
+          const deadline = moment(eventDate).add(deadlineDay, 'd');
 
           await db.Deliverables.create({
             deadline,

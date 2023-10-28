@@ -409,10 +409,14 @@ yargs // eslint-disable-line no-unused-expressions
     builder: () => yargs
     .option('only-new', {
       default: false
+    })
+    .option('deadline-day', {
+      alias: 'dd',
+      default: config.defaultDeadlineDays
     }),
     handler: async (argv) => {
       const addEventsForGroup = require('./commands/add-events-for-group');
-      await addEventsForGroup(argv);
+      await addEventsForGroup(argv.onlyNew, argv.deadlineDay);
     }
   })
   .command({
