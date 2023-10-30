@@ -296,9 +296,9 @@ yargs // eslint-disable-line no-unused-expressions
     command: 'change-exercise-types-json',
     aliases: ['json-cet'],
     desc: 'Change student\'s exercise types from json file',
-    handler: async (argv) => {
+    handler: async () => {
       const changeExTypes = require('./commands/change-exercise-types-json');
-      await changeExTypes(argv);
+      await changeExTypes();
     }
   })
   .command({
