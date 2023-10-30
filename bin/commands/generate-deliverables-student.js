@@ -5,13 +5,10 @@ const config = require('../../config/config.js');
 const { initDB, closeDB } = require('../../db/db.js');
 const logger = require('../../utils/logger.js');
 
-module.exports = async (argv) => {
+module.exports = async (resetExistingDeliverables) => {
+  console.log(`Parameters received in call: resetExistingDeliverables: ${resetExistingDeliverables}`);
+
   try {
-
-    const options = {
-      resetExistingDeliverables: argv.resetExistingDeliverables || false
-    };
-
     const db = await initDB();
     // prompt for user eventTemplate
     const eventTemplates = await db.EventTemplates.findAll();
@@ -47,7 +44,7 @@ module.exports = async (argv) => {
       throw new Error('Student not found!');
     }
 
-    console.log(`Regarding "Shall we reset existing deliverables?", your choice was: ${options.resetExistingDeliverables}`);
+    console.log(`Regarding "Shall we reset existing deliverables?", your choice was: ${resetExistingDeliverables}`);
 
     const confirmPromptResult = await inquirer.prompt([
       {
@@ -81,7 +78,7 @@ module.exports = async (argv) => {
       const deliverables = await event.getDeliverables();
       if (deliverables.length !== 0) {
         console.log('Event already has deliverables!');
-        if (options.resetExistingDeliverables) {
+        if (resetExistingDeliverables) {
           console.log('Remove existing deliverables ...');
           // remove existing deliverables
           for (const deliverable of deliverables) {

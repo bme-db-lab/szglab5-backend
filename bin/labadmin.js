@@ -208,11 +208,16 @@ yargs // eslint-disable-line no-unused-expressions
     command: 'generate-deliverables-student',
     aliases: ['gds'],
     desc: 'Generate deliverables for event-template for a student',
+    builder: () => yargs
+      .option('reset-existing-deliverables', {
+        alias: 'red',
+        default: false
+      }),
     handler: async (argv) => {
       const logger = require('../utils/logger.js');
       try {
         const generateDeliverablesStudent = require('./commands/generate-deliverables-student.js');
-        await generateDeliverablesStudent(argv);
+        await generateDeliverablesStudent(argv.resetExistingDeliverables);
       } catch (err) {
         logger.error('Error while generating deliverables');
         logger.error(err);
