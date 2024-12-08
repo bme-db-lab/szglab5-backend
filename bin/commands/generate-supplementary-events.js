@@ -97,14 +97,7 @@ module.exports = async () => {
           // exclude english and german student group
           where: {
             name: {
-              $and: [
-                { $ne: 'a1' },
-               { $ne: 'a2' },
-               { $ne: 'a3' },
-               { $ne: 'pot0' },
-               { $ne: 'pot1' },
-               { $ne: 'pot2' },
-              ]
+              $and: [{ $ne: 'cs16a-1' }, { $ne: 'cs16a-2' }, { $ne: 'cs16a-3' }]
             }
           },
           model: db.StudentGroups
@@ -118,7 +111,7 @@ module.exports = async () => {
         const eventOk = event.grade >= 2;
         const deliverableOk = event.Deliverables.every(deliverable => deliverable.uploaded && deliverable.grade >= 2);
 
-        return eventOk || (deliverableOk && event.grade === null) || moment(event.date).isBetween(moment('2020-11-11T00:00:00.000Z'), moment('2020-11-13T23:59:00.000Z'));
+        return eventOk || (deliverableOk && event.grade === null) || moment(event.date).isBetween(moment('2024-11-29T00:00:00.000Z'), moment('2024-11-29T23:59:00.000Z'));
       });
       return okEvents.length === studentReg.Events.length - 1;
     });
@@ -246,7 +239,7 @@ module.exports = async () => {
         const eventOk = event.grade >= 2;
         const deliverableOk = event.Deliverables.every(deliverable => deliverable.uploaded && deliverable.grade >= 2);
 
-        return !(eventOk || (deliverableOk && event.grade === null) || moment(event.date).isBetween(moment('2020-11-11T00:00:00.000Z'), moment('2020-11-13T23:59:00.000Z')));
+        return !(eventOk || (deliverableOk && event.grade === null) || moment(event.date).isBetween(moment('2024-11-29T00:00:00.000Z'), moment('2024-11-29T23:59:00.000Z')));
       });
       failedEventStats[failedEvent.ExerciseSheet.ExerciseCategory.type]++;
       failedEventStatsNeptuns[failedEvent.ExerciseSheet.ExerciseCategory.type].push(studentReg.User.neptun);

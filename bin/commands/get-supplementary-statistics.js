@@ -64,7 +64,7 @@ module.exports = async (argv) => {
           // exclude english and german student group
           where: {
             name: {
-              $and: [{ $ne: 'c16-1a' }, { $ne: 'c16-2a' }],
+              $and: [{ $ne: 'cs16a-1' }, { $ne: 'cs16a-2' }, { $ne: 'cs16a-3' }],
             },
           },
           model: db.StudentGroups,
@@ -85,7 +85,7 @@ module.exports = async (argv) => {
         (deliverable) => deliverable.uploaded && deliverable.grade >= 2
       );
 
-      return eventOk || (deliverableOk && event.grade === null) || moment(event.date).isBetween(moment('2020-11-11T00:00:00.000Z'), moment('2020-11-13T23:59:00.000Z'));
+      return eventOk || (deliverableOk && event.grade === null) || moment(event.date).isBetween(moment('2024-11-29T00:00:00.000Z'), moment('2024-11-29T23:59:00.000Z'));
     };
 
     const studentRegsWithSupplementary = studentRegs.filter((studentReg) => {
