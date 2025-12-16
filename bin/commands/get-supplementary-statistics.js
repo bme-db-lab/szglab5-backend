@@ -64,7 +64,7 @@ module.exports = async (argv) => {
           // exclude english and german student group
           where: {
             name: {
-              $and: [{ $ne: 'cs16a-1' }, { $ne: 'cs16a-2' }, { $ne: 'cs16a-3' }],
+              $and: [{ $ne: 'c16a-1' }, { $ne: 'c16a-2' }, { $ne: 'c16a-3' }],
             },
           },
           model: db.StudentGroups,
