@@ -29,6 +29,7 @@ async function initDB(_options) {
       host,
       port,
       dialect,
+      quoteIdentifiers: false, // use case-insensitive identifiers
       logging: (msg) => {
         logger.verbose(msg);
       }

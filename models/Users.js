@@ -29,6 +29,9 @@ module.exports = (sequelize, DataTypes) => {
     classroom: DataTypes.STRING,
     spec: DataTypes.STRING,
     initPassword: DataTypes.STRING
+  }, {
+    // avoid converting Users to the singular form User, which is a reserved word in SQL, when used unquoted
+    freezeTableName: true
   });
 
   Users.associate = (models) => {
