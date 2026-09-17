@@ -47,7 +47,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
     }
     // Initialize Semester
     const semesterData = [{ data: {
-      academicyear: '2025/2026',
+      academicyear: '2026/2027',
       academicterm: 1,
       CourseId: 1
     } }];
@@ -55,7 +55,7 @@ module.exports = async (allUser, genPass, hallgatok, beosztas, basePath, initAdm
     const qResult = await db.Semesters.findOne({
       attributes: ['id'],
       where: {
-        academicyear: '2025/2026',
+        academicyear: '2026/2027',
         academicterm: 1,
         CourseId: 1
       }
