@@ -116,7 +116,7 @@ module.exports = async (resetGrades) => {
     console.log('Updating student\'s event');
     const updatedEvent = await db.Events.update(
       {
-        date: moment(updateEventInfo.date),
+        date: moment(updateEventInfo.date).add(15, 'm'),
         location: updateEventInfo.location,
         DemonstratorId: updateEventInfo.DemonstratorId,
       },
@@ -143,7 +143,7 @@ module.exports = async (resetGrades) => {
     const deliverables = await eventToUpdate.getDeliverables();
     console.log(deliverables.map(del => del.dataValues.id));
     for (const deliverable of deliverables) {
-      const deadline = moment(updateEventInfo.date).add(config.defaultDeadlineDays, 'd');
+      const deadline = moment(updateEventInfo.date).add(config.defaultDeadlineDays, 'd').add(15, 'm');
       console.log(deadline);
       await db.Deliverables.update(
         {
